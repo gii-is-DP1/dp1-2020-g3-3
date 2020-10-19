@@ -31,6 +31,23 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
+    
+    <developers>
+ 		<developer>
+ 		<id>antvinper</id>
+ 		<name>Antonio</name>
+ 		<email>antonio@tmht.com</email>
+ 		<url>http://www.tmht.com/antvinper</url>
+ 		<roles>
+ 			<role>leader</role>
+ 		</roles>
+ 		<properties>
+ 		<picUrl>
+ 			https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x?format=jpg&#38;name=large
+ 		</picUrl>
+ 		</properties>
+ 		</developer>
+	</developers>
 
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
