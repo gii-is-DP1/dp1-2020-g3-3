@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
-    <artifactId>G3-3</artifactId>
+    <artifactId>G3-03</artifactId>
     <version>2.2.0.BUILD-SNAPSHOT</version>
 
     <parent>
@@ -12,7 +12,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
     </parent>
-    <name>G3-3</name>
+    <name>G3-03</name>
 
     <properties>
 
@@ -31,6 +31,22 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
+    
+    <developers>
+ 		<developer>
+ 		<id>felescgon</id>
+ 		<name>Felipe</name>
+ 		<email>felipescalera99@gmail.com</email>
+ 		<roles>
+ 			<role>leader</role>
+ 		</roles>
+ 		<properties>
+ 		<picUrl>
+ 			https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x?format=jpg&#38;name=large
+ 		</picUrl>
+ 		</properties>
+ 		</developer>
+	</developers>
 
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
