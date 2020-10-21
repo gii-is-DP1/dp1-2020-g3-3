@@ -64,19 +64,20 @@
 		</developer>
 		
 		<developer>
- 		<id>angtordom1</id>
- 		<name>Ángel</name>
- 		<email>angtordom1@tmht.com</email>
- 		<url>http://www.tmht.com/angtordom1</url>
- 		<roles>
- 			<role>leader</role>
- 		</roles>
- 		<properties>
- 		<picUrl>
- 			https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x?format=jpg&#38;name=large
- 		</picUrl>
- 		</properties>
+ 			<id>angtordom1</id>
+ 			<name>Ángel</name>
+ 			<email>angtordom1@tmht.com</email>
+ 			<url>http://www.tmht.com/angtordom1</url>
+ 			<roles>
+ 				<role>leader</role>
+ 			</roles>
+ 			<properties>
+ 				<picUrl>
+ 					https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x?format=jpg&#38;name=large
+ 				</picUrl>
+ 			</properties>
  		</developer>
+ 		
 	</developers>
 
 	<dependencies>
