@@ -126,7 +126,7 @@ m2=1..*
       <w>208</w>
       <h>40</h>
     </coordinates>
-    <panel_attributes>lt=-
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
 m2=*
 &lt; oferta</panel_attributes>
