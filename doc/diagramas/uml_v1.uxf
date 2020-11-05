@@ -189,7 +189,7 @@ compra</panel_attributes>
       <x>632</x>
       <y>552</y>
       <w>136</w>
-      <h>96</h>
+      <h>104</h>
     </coordinates>
     <panel_attributes>Cliente
 --
@@ -304,6 +304,7 @@ lleva</panel_attributes>
 --
 idEquipaje
 peso
+medidas
 
 </panel_attributes>
     <additional_attributes/>
