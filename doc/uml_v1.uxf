@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>352</x>
-      <y>232</y>
+      <x>328</x>
+      <y>160</y>
       <w>128</w>
       <h>104</h>
     </coordinates>
@@ -22,8 +22,8 @@ fechaFabricacion</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>408</x>
-      <y>328</y>
+      <x>384</x>
+      <y>256</y>
       <w>56</w>
       <h>128</h>
     </coordinates>
@@ -36,10 +36,10 @@ tiene v</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
-      <y>440</y>
+      <x>336</x>
+      <y>368</y>
       <w>112</w>
-      <h>104</h>
+      <h>128</h>
     </coordinates>
     <panel_attributes>Vuelo
 --
@@ -48,14 +48,16 @@ fechaVuelo
 horaSalida
 horaLlegada
 precio
-tipo: tipoVuelo</panel_attributes>
+tipo: tipoVuelo
+codigoIATAOrigen
+codigoIATADestino</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>664</x>
-      <y>128</y>
+      <x>640</x>
+      <y>56</y>
       <w>104</w>
       <h>104</h>
     </coordinates>
@@ -73,8 +75,8 @@ tipo: rol
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>664</x>
-      <y>272</y>
+      <x>640</x>
+      <y>200</y>
       <w>104</w>
       <h>104</h>
     </coordinates>
@@ -91,8 +93,8 @@ idiomas</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>472</x>
-      <y>176</y>
+      <x>448</x>
+      <y>104</y>
       <w>208</w>
       <h>112</h>
     </coordinates>
@@ -107,8 +109,8 @@ m2=1..*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>472</x>
-      <y>288</y>
+      <x>448</x>
+      <y>216</y>
       <w>208</w>
       <h>72</h>
     </coordinates>
@@ -121,8 +123,8 @@ m2=1..*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>464</x>
-      <y>480</y>
+      <x>440</x>
+      <y>408</y>
       <w>208</w>
       <h>40</h>
     </coordinates>
@@ -135,8 +137,8 @@ m2=*
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>656</x>
-      <y>440</y>
+      <x>632</x>
+      <y>368</y>
       <w>136</w>
       <h>104</h>
     </coordinates>
@@ -153,8 +155,8 @@ tipo: clase</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>808</x>
-      <y>384</y>
+      <x>784</x>
+      <y>312</y>
       <w>96</w>
       <h>80</h>
     </coordinates>
@@ -170,8 +172,8 @@ primeraClase
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>712</x>
-      <y>536</y>
+      <x>688</x>
+      <y>464</y>
       <w>64</w>
       <h>104</h>
     </coordinates>
@@ -184,8 +186,8 @@ compra</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>656</x>
-      <y>624</y>
+      <x>632</x>
+      <y>552</y>
       <w>136</w>
       <h>96</h>
     </coordinates>
@@ -202,8 +204,8 @@ direccionFacturacion
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>96</x>
-      <y>440</y>
+      <x>72</x>
+      <y>368</y>
       <w>112</w>
       <h>96</h>
     </coordinates>
@@ -219,8 +221,8 @@ telefono</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>200</x>
-      <y>464</y>
+      <x>176</x>
+      <y>392</y>
       <w>176</w>
       <h>40</h>
     </coordinates>
@@ -234,8 +236,8 @@ m2=salida *
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>200</x>
-      <y>496</y>
+      <x>176</x>
+      <y>424</y>
       <w>176</w>
       <h>40</h>
     </coordinates>
@@ -248,8 +250,8 @@ m2=llegada *
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>784</x>
-      <y>480</y>
+      <x>760</x>
+      <y>408</y>
       <w>192</w>
       <h>40</h>
     </coordinates>
@@ -262,8 +264,8 @@ m2=*
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>960</x>
-      <y>440</y>
+      <x>936</x>
+      <y>368</y>
       <w>136</w>
       <h>104</h>
     </coordinates>
@@ -278,8 +280,8 @@ alérgenos
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>784</x>
-      <y>664</y>
+      <x>760</x>
+      <y>592</y>
       <w>192</w>
       <h>40</h>
     </coordinates>
@@ -292,8 +294,8 @@ Lleva</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>960</x>
-      <y>624</y>
+      <x>936</x>
+      <y>552</y>
       <w>120</w>
       <h>96</h>
     </coordinates>
@@ -308,8 +310,8 @@ peso
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>352</x>
-      <y>632</y>
+      <x>328</x>
+      <y>560</y>
       <w>120</w>
       <h>104</h>
     </coordinates>
@@ -326,22 +328,22 @@ iban
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>408</x>
-      <y>536</y>
+      <x>384</x>
+      <y>488</y>
       <w>64</w>
-      <h>112</h>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=*
 m2=*
 Gestiona</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>792</x>
-      <y>152</y>
+      <x>768</x>
+      <y>80</y>
       <w>104</w>
       <h>80</h>
     </coordinates>
