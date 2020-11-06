@@ -214,7 +214,7 @@ direccionFacturacion
 Nombre
 localizacion
 codigoIATA
-codigoICAO
+codigoOACI
 telefono</panel_attributes>
     <additional_attributes/>
   </element>
