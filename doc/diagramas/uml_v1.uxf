@@ -12,7 +12,7 @@
     <panel_attributes>Avión
 --
 idAvion
-tipo: tipoAvion
+tipoAvion
 capacidadPasajero
 pesoMaximoEquipaje
 horasAcumuladas
@@ -59,7 +59,7 @@ codigoIATADestino</panel_attributes>
       <x>640</x>
       <y>56</y>
       <w>104</w>
-      <h>104</h>
+      <h>112</h>
     </coordinates>
     <panel_attributes>PersonalControl
 --
@@ -79,7 +79,7 @@ salario
       <x>640</x>
       <y>200</y>
       <w>104</w>
-      <h>104</h>
+      <h>112</h>
     </coordinates>
     <panel_attributes>Azafato
 --
@@ -88,7 +88,7 @@ nombre
 apellidos
 nif
 iban
-idiomas
+idiomas [2..*]
 salario</panel_attributes>
     <additional_attributes/>
   </element>
@@ -215,6 +215,7 @@ contraseña
     </coordinates>
     <panel_attributes>Aeropuerto
 --
+idAeropuerto
 Nombre
 localizacion
 codigoIATA
