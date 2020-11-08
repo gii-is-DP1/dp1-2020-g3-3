@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>8</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>328</x>
-      <y>160</y>
-      <w>128</w>
-      <h>104</h>
+      <x>511</x>
+      <y>98</y>
+      <w>112</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Avión
 --
@@ -16,30 +16,31 @@ tipoAvion
 capacidadPasajero
 pesoMaximoEquipaje
 horasAcumuladas
-fechaFabricacion</panel_attributes>
+fechaFabricacion
+Disponibilidad: boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>384</x>
-      <y>256</y>
-      <w>56</w>
-      <h>128</h>
+      <x>560</x>
+      <y>189</y>
+      <w>49</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
 m2=*
 tiene v</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>336</x>
-      <y>368</y>
-      <w>112</w>
-      <h>128</h>
+      <x>518</x>
+      <y>280</y>
+      <w>98</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>Vuelo
 --
@@ -48,90 +49,50 @@ fechaVuelo
 horaSalida
 horaLlegada
 precio
-tipo: tipoVuelo
 codigoIATAOrigen
 codigoIATADestino</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>640</x>
-      <y>56</y>
-      <w>104</w>
-      <h>112</h>
-    </coordinates>
-    <panel_attributes>PersonalControl
---
-idPiloto
-nombre
-apellidos
-nif
-iban
-tipo: rol
-salario
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>640</x>
-      <y>200</y>
-      <w>104</w>
-      <h>112</h>
-    </coordinates>
-    <panel_attributes>Azafato
---
-idAzafato
-nombre
-apellidos
-nif
-iban
-idiomas [2..*]
-salario</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>104</y>
-      <w>208</w>
-      <h>112</h>
+      <x>616</x>
+      <y>49</y>
+      <w>182</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=*
 m2=1..*
 
 
-&lt; pilota</panel_attributes>
+&lt; opera</panel_attributes>
     <additional_attributes>10.0;110.0;120.0;110.0;120.0;10.0;240.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
-      <y>216</y>
-      <w>208</w>
-      <h>72</h>
+      <x>616</x>
+      <y>147</y>
+      <w>182</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=*
 m2=1..*
-&lt; opera en </panel_attributes>
+&lt; pilota </panel_attributes>
     <additional_attributes>10.0;10.0;120.0;10.0;120.0;60.0;240.0;60.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>440</x>
-      <y>408</y>
-      <w>208</w>
-      <h>40</h>
+      <x>609</x>
+      <y>315</y>
+      <w>182</w>
+      <h>35</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
+    <panel_attributes>lt=-
+m1=1..*
 m2=*
 &lt; oferta</panel_attributes>
     <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
@@ -139,10 +100,10 @@ m2=*
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>632</x>
-      <y>368</y>
-      <w>136</w>
-      <h>104</h>
+      <x>777</x>
+      <y>280</y>
+      <w>119</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>Billete
 --
@@ -157,10 +118,10 @@ tipo: clase</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>784</x>
-      <y>312</y>
-      <w>96</w>
-      <h>80</h>
+      <x>903</x>
+      <y>238</y>
+      <w>84</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enum&gt;&gt;
 Clase
@@ -174,10 +135,10 @@ primeraClase
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>688</x>
-      <y>464</y>
-      <w>64</w>
-      <h>104</h>
+      <x>826</x>
+      <y>364</y>
+      <w>56</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -188,10 +149,10 @@ compra</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>632</x>
-      <y>552</y>
-      <w>136</w>
-      <h>112</h>
+      <x>777</x>
+      <y>441</y>
+      <w>119</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Cliente
 --
@@ -208,10 +169,10 @@ contraseña
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>72</x>
-      <y>368</y>
-      <w>112</w>
-      <h>96</h>
+      <x>287</x>
+      <y>280</y>
+      <w>98</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>Aeropuerto
 --
@@ -226,10 +187,10 @@ telefono</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>176</x>
-      <y>392</y>
-      <w>176</w>
-      <h>40</h>
+      <x>378</x>
+      <y>301</y>
+      <w>154</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1 origen
@@ -241,10 +202,10 @@ m2=salida *
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>176</x>
-      <y>424</y>
-      <w>176</w>
-      <h>40</h>
+      <x>378</x>
+      <y>329</y>
+      <w>154</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1 destino
@@ -255,24 +216,24 @@ m2=llegada *
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>760</x>
-      <y>408</y>
-      <w>192</w>
-      <h>40</h>
+      <x>889</x>
+      <y>315</y>
+      <w>161</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..1
 m2=*
 &lt; contiene</panel_attributes>
-    <additional_attributes>220.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>368</y>
-      <w>136</w>
-      <h>104</h>
+      <x>1036</x>
+      <y>280</y>
+      <w>119</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>Menú
 --
@@ -285,24 +246,24 @@ alérgenos
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>760</x>
-      <y>592</y>
-      <w>192</w>
-      <h>40</h>
+      <x>889</x>
+      <y>476</y>
+      <w>133</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;
-m1=*
+m1=0..3
 m2=1
 lleva</panel_attributes>
-    <additional_attributes>220.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>936</x>
-      <y>552</y>
-      <w>120</w>
-      <h>96</h>
+      <x>1008</x>
+      <y>448</y>
+      <w>105</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>Equipaje
 --
@@ -316,10 +277,10 @@ medidas
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>328</x>
-      <y>560</y>
-      <w>120</w>
-      <h>104</h>
+      <x>511</x>
+      <y>448</y>
+      <w>105</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>Personal Oficina
 --
@@ -335,10 +296,10 @@ salario
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>384</x>
-      <y>488</y>
-      <w>64</w>
-      <h>88</h>
+      <x>560</x>
+      <y>385</y>
+      <w>56</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=*
@@ -349,10 +310,10 @@ gestiona</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>768</x>
-      <y>80</y>
-      <w>104</w>
-      <h>80</h>
+      <x>882</x>
+      <y>84</y>
+      <w>91</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enum&gt;&gt;
 Rol
@@ -362,5 +323,328 @@ Copiloto
 Ingeniero de Vuelo
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>266</x>
+      <y>238</y>
+      <w>266</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;360.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>266</x>
+      <y>238</y>
+      <w>84</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>224</x>
+      <y>182</y>
+      <w>105</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Dos vuelos no 
+pueden despegar ni 
+aterrizar a la misma 
+hora desde la misma 
+pista.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>609</x>
+      <y>490</y>
+      <w>42</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>637</x>
+      <y>462</y>
+      <w>119</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>
+Ningún sueldo registrado 
+puede estar por debajo 
+del salario mínimo.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>784</x>
+      <y>0</y>
+      <w>91</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>Azafato
+--
+idAzafato
+nombre
+apellidos
+nif
+iban
+idiomas [2..*]
+salario</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>784</x>
+      <y>140</y>
+      <w>91</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>PersonalControl
+--
+idPiloto
+nombre
+apellidos
+nif
+iban
+tipo: rol
+salario
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>616</x>
+      <y>189</y>
+      <w>56</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>60.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>609</x>
+      <y>259</y>
+      <w>42</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;30.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>749</x>
+      <y>266</y>
+      <w>42</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>637</x>
+      <y>217</y>
+      <w>119</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Las fechas asociadas a 
+dos vuelos cuyos aviones 
+o pilotos son los mismos 
+siempre deben ser 
+diferentes. 
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>182</y>
+      <w>63</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>917</x>
+      <y>161</y>
+      <w>112</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>
+Un personal de Control 
+no puede ejercer más 
+de un rol a la vez  
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>322</x>
+      <y>357</y>
+      <w>42</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>40.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>287</x>
+      <y>399</y>
+      <w>133</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>
+Cuando un vuelo sea 
+internacional se utilizará 
+para indicar las horas de 
+salida y llegada de un vuelo,
+la del país de salida.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>413</x>
+      <y>378</y>
+      <w>119</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>525</y>
+      <w>21</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1015</x>
+      <y>560</y>
+      <w>98</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>
+Se debe registrar 
+equipaje que pese
+más de 3 kg.
+
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1155</x>
+      <y>455</y>
+      <w>154</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>El equipaje a bordo no podrá 
+exceder las dimensiones 
+56cm x 40cm x 25cm. 
+De no cumplir con la normativa, 
+deberá facturarse y abonar el 
+coste por exceso de equipaje.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1106</x>
+      <y>483</y>
+      <w>63</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>357</x>
+      <y>182</y>
+      <w>28</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>20.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>413</x>
+      <y>182</y>
+      <w>126</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;160.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>336</x>
+      <y>98</y>
+      <w>140</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>Ningún avión puede superar 
+el límite de 14 horas 
+seguidas en vuelo, siendo 
+por tanto obligatorio el 
+uso de escalas para aquellos 
+destinos que superen esta 
+distancia.
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>469</x>
+      <y>126</y>
+      <w>56</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
   </element>
 </diagram>
