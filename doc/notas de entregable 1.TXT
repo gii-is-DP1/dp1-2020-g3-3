@@ -1,0 +1,78 @@
+Historias de usuario (hacer índice de historias de usuario)
+
+-> En escenarios hay que incluir datos reales 
+
+->H1-E1 (NO ES) lo seria si no hubiese ningun vuelo por mostrar
+
+->H2- necesita más información en general, dependiendo de la clase etc
+
+->H3- faltan datos concretos H3-E1 se puede quitar
+
+->H4- faltan datos de quién se loggea etc
+
+->H7-H5 hay que especificar más (meter datos de equipajes en la H-7)
+
+->H9 hay que retocar lo de las escalas
+
+->H11 se pasa a restricción simple QUITAR
+
+->H12 restricción simple
+
+->H13 restricción simple 
+
+->H14 restricción simple
+
+->H17 pasa a ser que X menús estén incluídos
+
+->H19 esa hay que quitarla -> muy parecida a la H4
+
+->H20 se puede dividir en 3 historias de usuario
+
+->H21 puede pasarse a RN
+
+->EXTRA se puede incluir
+
+Diagrama UML
+
+-> No incluir carta vuelo - billete - avion 
+
+-> Personal de oficina, lo que tiene es restricción simple
+
+-> Billete incluimos si cliente es celiaco
+
+RNS
+
+-> RN EXTRA PRIMERA se aplica usando relación cliente - cliente
+
+-> RN-9 reescribir un poco (para que se entienda)
+
+-> RN-10 (quitarla o dejar como última)
+
+---------------------------------------
+Notas Ángel
+Historias de usuario faltan mucha información concreta
+Concretar las historias de usuario: Ponerlo de tal manera que ya haya ejemplos iniciales
+Cambiar caso negativo historia 2
+caso negativo historia 3 fuera
+Historia 7 meter datos equipaje, para poner un número máximos de maletas (posible regla de negocio)
+Historia 10-> alta de cliente
+Historia 11 fuera
+Historia 12 fuera
+Historia 13 fuera
+Historia 14 fuera
+Historia alérgenos cambiar por el alta Menú.
+Historia 19 no es una historia de usuario
+Historia 20, 3 historias distintas.
+Historia 21 no es una historia de usuario. Se puede dar de alta la oferta, hay que tenerlo en cuenta en el diagrama UML
+Historia extra, podría haber una opción de solicitud de reembolso
+Añadir atributo alérgenos a cliente
+RN 10 o se quita o se deja como última regla de negocio
+
+----------------------------------------
+Notas Antonio V
+
+Concretar los escenarios de prueba con más datos -> para que pasen a ser pruebas "ya pensadas"
+Escenarios negativos fuera: H3
+Historias fuera por ser restricciones: H11, H12, H14, H17, H21
+Historia H20 se divide en 3
+
