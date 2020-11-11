@@ -1,0 +1,39 @@
+Historias de usuario (hacer índice de historias de usuario)
+
+-> En escenarios hay que incluir datos reales 
+
+-> Faltan desde la 18 en adelante por retocar + añadir más historias
+
+->EXTRA se puede incluir
+
+Diagrama UML
+
+-> No incluir carta vuelo - billete - avion 
+
+-> Personal de oficina, lo que tiene es restricción simple
+
+-> Billete incluimos si cliente es celiaco
+
+-> Una persona puede tener más de 1 menú en vuelos largos
+
+RNS
+
+-> RN EXTRA PRIMERA se aplica usando relación cliente - añadir edad del cliente a uml
+
+-> RN-10 (quitarla o dejar como última)
+
+---------------------------------------
+Notas Ángel
+Historias de usuario faltan mucha información concreta
+Concretar las historias de usuario: Ponerlo de tal manera que ya haya ejemplos iniciales
+Historia 21 no es una historia de usuario. Se puede dar de alta la oferta, hay que tenerlo en cuenta en el diagrama UML
+Historia extra, podría haber una opción de solicitud de reembolso
+Añadir atributo alérgenos a cliente -> MUY IMPORTANTE
+RN 10 o se quita o se deja como última regla de negocio
+
+----------------------------------------
+Notas Antonio V
+
+Concretar los escenarios de prueba con más datos -> para que pasen a ser pruebas "ya pensadas"
+Historias fuera por ser restricciones:  H21
+
