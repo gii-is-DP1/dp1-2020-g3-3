@@ -31,6 +31,10 @@ public class Avion extends IdEntity{
 	@NotEmpty
 	protected Boolean disponibilidad;
 	
+	//La fecha de Revision coincidirá con la fecha de fabricacion si no ha habido ninguna
+	@NotEmpty
+	protected Date fechaRevision;
+	
 	// Getters y setters
 
 	public String getTipoAvion() {
@@ -79,6 +83,13 @@ public class Avion extends IdEntity{
 
 	public void setDisponibilidad(Boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
+	}
+	public Date getFechaRevision() {
+		return fechaRevision;
+	}
+
+	public void setFechaRevision(Date fechaRevision) {
+		this.fechaRevision = fechaRevision;
 	}
 		
 }
