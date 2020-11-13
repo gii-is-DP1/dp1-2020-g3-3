@@ -33,11 +33,11 @@ public class Menu extends IdEntity {
 	@NotEmpty
 	private Double precio;
 
-	@Column(name = "primerPlato")
+	@Column(name = "primer_plato")
 	@NotEmpty
 	private String primerPlato;
 	
-	@Column(name = "segundoPlato")
+	@Column(name = "segundo_plato")
 	@NotEmpty
 	private String segundoPlato;
 	
