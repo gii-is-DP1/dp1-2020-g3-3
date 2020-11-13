@@ -13,10 +13,12 @@ import lombok.EqualsAndHashCode;
  * Entidad simple que representa un equipaje
  */
 
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "equipaje")
+  
 public class Equipaje extends IdEntity{
 	
 	//Atributos
@@ -29,5 +31,4 @@ public class Equipaje extends IdEntity{
 	@NotEmpty
 	protected String dimensiones;	
 	
-
 }
