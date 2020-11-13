@@ -1,41 +1,34 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
+import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Entidad simple que representa un equipaje
  */
 
-@MappedSuperclass
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "equipaje")
+  
 public class Equipaje extends IdEntity{
 	
 	//Atributos
 	
+	@Column(name = "peso")
 	@NotEmpty
 	protected Integer peso;
 	
+	@Column(name = "dimensiones")
 	@NotEmpty
-	protected String dimensiones;
-
-	public Integer getPeso() {
-		return peso;
-	}
+	protected String dimensiones;	
 	
-	// Getters y setters
-
-	public void setPeso(Integer peso) {
-		this.peso = peso;
-	}
-
-	public String getDimensiones() {
-		return dimensiones;
-	}
-
-	public void setDimensiones(String dimensiones) {
-		this.dimensiones = dimensiones;
-	}
-	
-	
-
 }
