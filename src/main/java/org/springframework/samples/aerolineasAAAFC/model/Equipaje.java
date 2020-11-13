@@ -1,7 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
