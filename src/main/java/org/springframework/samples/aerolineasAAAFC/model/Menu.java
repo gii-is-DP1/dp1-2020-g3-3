@@ -30,8 +30,7 @@ import lombok.EqualsAndHashCode;
 public class Menu extends IdEntity {
 
 	@Column(name = "precio")
-	@NotEmpty
-	private Double precio;
+	private double precio;
 
 	@Column(name = "primer_plato")
 	@NotEmpty
