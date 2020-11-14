@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,11 +22,11 @@ import lombok.EqualsAndHashCode;
 public class Billete extends IdEntity{
 
 	@Column(name = "coste")
-	@NotEmpty
-	private Double coste;
+	private double coste;
 
 	@Column(name = "asiento")
 	@NotEmpty
+	@Pattern(regexp="^[A-I]\\d{2}$")
 	private String asiento;
 	
 	@Column(name = "fecha_reserva")
@@ -34,7 +35,6 @@ public class Billete extends IdEntity{
 	private LocalDate fechaReserva;
 	
 	@Column(name = "equipaje_facturado")
-	@NotEmpty
 	@Range(min=0,max=3)
 	private Integer equipajeFacturado;
 	
