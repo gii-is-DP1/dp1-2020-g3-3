@@ -23,26 +23,32 @@ import javax.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+* Entidad simple que representa un menú
+*/
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "menu")
 public class Menu extends IdEntity {
+	
+	//Atributos
 
 	@Column(name = "precio")
-	private double precio;
+	protected double precio;
 
 	@Column(name = "primer_plato")
 	@NotEmpty
-	private String primerPlato;
+	protected String primerPlato;
 	
 	@Column(name = "segundo_plato")
 	@NotEmpty
-	private String segundoPlato;
+	protected String segundoPlato;
 	
 	@Column(name = "postre")
 	@NotEmpty
-	private String postre;
+	protected String postre;
 	
 
 }

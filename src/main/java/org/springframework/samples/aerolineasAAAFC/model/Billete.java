@@ -21,25 +21,28 @@ import lombok.EqualsAndHashCode;
 @Table(name = "billete")
 public class Billete extends IdEntity{
 
+	//Atributos
+
+	
 	@Column(name = "coste")
-	private double coste;
+	protected double coste;
 
 	@Column(name = "asiento")
 	@NotEmpty
 	@Pattern(regexp="^[A-I]\\d{2}$")
-	private String asiento;
+	protected String asiento;
 	
 	@Column(name = "fecha_reserva")
 	@NotEmpty
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate fechaReserva;
+	protected LocalDate fechaReserva;
 	
 	@Column(name = "equipaje_facturado")
 	@Range(min=0,max=3)
-	private Integer equipajeFacturado;
+	protected Integer equipajeFacturado;
 	
 	@Column(name = "clase")
 	@NotEmpty
-	private Clase clase;
+	protected Clase clase;
 	
 }

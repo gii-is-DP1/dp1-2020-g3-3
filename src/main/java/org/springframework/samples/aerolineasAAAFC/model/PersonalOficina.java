@@ -30,10 +30,12 @@ public class PersonalOficina extends IdEntity{
 	
 	@Column(name = "nif")
 	@NotEmpty
+	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
 	protected String nif;
 	
 	@Column(name = "iban")
 	@NotEmpty
+	@Pattern(regexp="^ES\\d{22}$")
 	protected String iban;
 	
 	@Column(name = "salario")

@@ -1,87 +1,56 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
-* Entidad simple que representa un señor Vuelo 
-* PD: No ha habido ningun tipo de error en la frase anterior
+* Entidad simple que representa un vuelo
 */
 
-@MappedSuperclass
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "vuelo")
 public class Vuelo extends IdEntity{
 	
 	//Atributos
+
+	@Column(name = "fechaVuelo")
+	@NotEmpty
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	protected LocalDate  fechaVuelo;
 	
-		@NotEmpty
-		protected Date fechaVuelo;
-		
-		@NotEmpty
-		protected Date horaSalida;
-		
-		@NotEmpty
-		protected Date horaLlegada;
-		
-		@NotEmpty
-		protected Double precio;
-		
-		@NotEmpty
-		protected String codigoIATAOrigen;
-		
-		@NotEmpty
-		protected String codigoIATADestino;
+	@Column(name = "horaSalida")
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	protected Date  horaSalida;
 
-		
-		//Getters and Setters
-		public Date getFechaVuelo() {
-			return fechaVuelo;
-		}
+	@Column(name = "horaLlegada")
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	protected Date  horaLlegada;
+	
+	@Column(name = "coste")
+	protected double coste;
+	
+	@Column(name = "codigoIATAOrigen")
+	@NotEmpty
+	protected String codigoIATAOrigen;
+	
+	@Column(name = "codigoIATADestino")
+	@NotEmpty
+	protected String codigoIATADestino;
+	
 
-		public void setFechaVuelo(Date fechaVuelo) {
-			this.fechaVuelo = fechaVuelo;
-		}
-
-		public Date getHoraSalida() {
-			return horaSalida;
-		}
-
-		public void setHoraSalida(Date horaSalida) {
-			this.horaSalida = horaSalida;
-		}
-
-		public Date getHoraLlegada() {
-			return horaLlegada;
-		}
-
-		public void setHoraLlegada(Date horaLlegada) {
-			this.horaLlegada = horaLlegada;
-		}
-
-		public Double getPrecio() {
-			return precio;
-		}
-
-		public void setPrecio(Double precio) {
-			this.precio = precio;
-		}
-
-		public String getCodigoIATAOrigen() {
-			return codigoIATAOrigen;
-		}
-
-		public void setCodigoIATAOrigen(String codigoIATAOrigen) {
-			this.codigoIATAOrigen = codigoIATAOrigen;
-		}
-
-		public String getCodigoIATADestino() {
-			return codigoIATADestino;
-		}
-
-		public void setCodigoIATADestino(String codigoIATADestino) {
-			this.codigoIATADestino = codigoIATADestino;
-		}
-		
-		
+	
 }

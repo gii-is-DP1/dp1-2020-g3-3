@@ -32,6 +32,7 @@ public class Cliente extends IdEntity{
 
 	@Column(name = "nif")
 	@NotEmpty
+	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
 	protected String nif;
 
 	@Column(name = "direccionFacturacion")
@@ -40,14 +41,16 @@ public class Cliente extends IdEntity{
 
 	@Column(name = "iban")
 	@NotEmpty
+	@Pattern(regexp="^ES\\d{22}$")
 	protected String iban;
 
-	@Column(name = "contraseña")
+	@Column(name = "contrasenya")
 	@NotEmpty
-	protected String contraseña;
+	protected String contrasenya;
 
 	@Column(name = "fechaNacimiento")
 	@NotEmpty
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	protected Date fechaNacimiento;
 
 }

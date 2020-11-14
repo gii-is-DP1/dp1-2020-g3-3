@@ -1,82 +1,50 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 /**
-* Entidad simple que representa un señor/a/es/xr personal de control
+* Entidad simple que representa un personal de control
 */
 
-@MappedSuperclass
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "personalControl")
 public class PersonalControl extends IdEntity{
+
 	//Atributos
 	
-		@NotEmpty
-		protected String nombre;
-		
-		@NotEmpty
-		protected String apellidos;
-		
-		@NotEmpty
-		protected String nif;
-		
-		@NotEmpty
-		protected String iban;
-		
-		@NotEmpty
-		protected Rol rol;
-		
-		@NotEmpty
-		protected Double Salario;
+	@Column(name = "nombre")
+	@NotEmpty
+	protected String nombre;
+	
+	@Column(name = "apellidos")
+	@NotEmpty
+	protected String apellidos;
+	
+	@Column(name = "nif")
+	@NotEmpty
+	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
+	protected String nif;
+	
+	@Column(name = "iban")
+	@NotEmpty
+	@Pattern(regexp="^ES\\d{22}$")
+	protected String iban;
+	
+	@Column(name = "rol")
+	@NotEmpty
+	protected String rol;
+	
+	@Column(name = "salario")
+	@NotEmpty
+	protected Double Salario;
 
-		
-		//Getters and Setters
-		public String getNombre() {
-			return nombre;
-		}
-
-		public void setNombre(String nombre) {
-			this.nombre = nombre;
-		}
-
-		public String getApellidos() {
-			return apellidos;
-		}
-
-		public void setApellidos(String apellidos) {
-			this.apellidos = apellidos;
-		}
-
-		public String getNif() {
-			return nif;
-		}
-
-		public void setNif(String nif) {
-			this.nif = nif;
-		}
-
-		public String getIban() {
-			return iban;
-		}
-
-		public void setIban(String iban) {
-			this.iban = iban;
-		}
-
-		public Rol getRol() {
-			return rol;
-		}
-
-		public void setRol(Rol rol) {
-			this.rol = rol;
-		}
-
-		public Double getSalario() {
-			return Salario;
-		}
-
-		public void setSalario(Double salario) {
-			Salario = salario;
-		}
-		
+	
 }
