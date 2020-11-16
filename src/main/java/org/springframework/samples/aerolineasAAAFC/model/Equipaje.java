@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "equipaje")
   
-public class Equipaje extends IdEntity{
+public class Equipaje extends BaseEntity{
 	
 	//Atributos
 	

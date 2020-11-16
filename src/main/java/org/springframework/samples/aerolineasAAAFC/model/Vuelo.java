@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "vuelo")
-public class Vuelo extends IdEntity{
+public class Vuelo extends BaseEntity{
 	
 	//Atributos
 

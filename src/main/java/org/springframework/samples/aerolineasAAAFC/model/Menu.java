@@ -24,14 +24,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
-* Entidad simple que representa un menú
+* Entidad simple que representa un menï¿½
 */
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "menu")
-public class Menu extends IdEntity {
+public class Menu extends BaseEntity {
 	
 	//Atributos
 

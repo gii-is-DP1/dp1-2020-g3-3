@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "avion")
-public class Avion extends IdEntity{
+public class Avion extends BaseEntity{
 	
 	//Atributos
 
@@ -49,6 +49,15 @@ public class Avion extends IdEntity{
 	@Column(name = "disponibilidad")
 	@NotEmpty
 	protected Boolean disponibilidad;
+	
+	@Column(name = "plazas_economica")
+	private int plazasEconomica;
+	
+	@Column(name = "plazas_ejecutiva")
+	private int plazasEjecutiva;
+	
+	@Column(name = "plazas_primera")
+	private int plazasPrimera;
 	
 
 	

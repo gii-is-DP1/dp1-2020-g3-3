@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
  */
 
 @MappedSuperclass
-public class IdEntity {
+public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
