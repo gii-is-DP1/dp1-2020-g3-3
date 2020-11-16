@@ -8,7 +8,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -19,7 +18,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "billete")
-public class Billete extends IdEntity{
+public class Billete extends BaseEntity{
 
 	//Atributos
 
@@ -36,10 +35,6 @@ public class Billete extends IdEntity{
 	@NotEmpty
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	protected LocalDate fechaReserva;
-	
-	@Column(name = "equipaje_facturado")
-	@Range(min=0,max=3)
-	protected Integer equipajeFacturado;
 	
 	@Column(name = "clase")
 	@NotEmpty

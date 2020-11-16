@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "personalControl")
-public class PersonalControl extends IdEntity{
+public class PersonalControl extends BaseEntity{
 
 	//Atributos
 	

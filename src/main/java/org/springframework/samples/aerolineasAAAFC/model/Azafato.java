@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "azafato")
-public class Azafato extends IdEntity{
+public class Azafato extends BaseEntity{
 
 	//Atributos
 	
