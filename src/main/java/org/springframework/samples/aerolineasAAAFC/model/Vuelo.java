@@ -28,22 +28,24 @@ public class Vuelo extends BaseEntity{
 	
 	//Atributos
 
-	@Column(name = "fechaVuelo")
+	@Column(name = "FECHAVUELO")
 	@NotEmpty
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate  fechaVuelo;
 	
-	@Column(name = "horaSalida")
+	@Column(name = "HORASALIDA")
 	@DateTimeFormat(pattern = "hh:mm")
 	protected Date  horaSalida;
 
-	@Column(name = "horaLlegada")
+	@Column(name = "HORALLEGADA")
 	@DateTimeFormat(pattern = "hh:mm")
 	protected Date  horaLlegada;
 	
-	@Column(name = "coste")
+	@Column(name = "COSTE")
 	protected double coste;
 	
+	
+	/*
 	@Column(name = "codigoIATAOrigen")
 	@NotEmpty
 	protected String codigoIATAOrigen;
@@ -51,7 +53,7 @@ public class Vuelo extends BaseEntity{
 	@Column(name = "codigoIATADestino")
 	@NotEmpty
 	protected String codigoIATADestino;
-	
+	*/
 
 		
 	
