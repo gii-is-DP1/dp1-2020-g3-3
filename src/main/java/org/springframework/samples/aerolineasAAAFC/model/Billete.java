@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -40,4 +42,7 @@ public class Billete extends BaseEntity{
 	@NotEmpty
 	protected Clase clase;
 	
+	@ManyToOne(optional=false)
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
 }
