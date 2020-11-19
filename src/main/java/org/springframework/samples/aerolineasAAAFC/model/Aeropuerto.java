@@ -1,60 +1,43 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Entidad simple que representa un aeropuerto
  */
 
-@MappedSuperclass
-public class Aeropuerto extends IdEntity{
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "aeropuerto")
+public class Aeropuerto extends BaseEntity{
 	
-	// Atributos
-	
+	//Atributos
+
+	@Column(name = "nombre")
 	@NotEmpty
 	protected String nombre;
-	
+
+	@Column(name = "localizacion")
 	@NotEmpty
 	protected String localizacion;
-	
+
+	@Column(name = "codigoIATA")
 	@NotEmpty
 	protected String codigoIATA;
-	
+
+	@Column(name = "telefono")
 	@NotEmpty
+	@Pattern(regexp="^(\\+34|0034|34)?[6|7|9][0-9]{8}$")
 	protected String telefono;
+
 	
-	// Getters y setters
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getLocalizacion() {
-		return localizacion;
-	}
-
-	public void setLocalizacion(String localizacion) {
-		this.localizacion = localizacion;
-	}
-
-	public String getCodigoIATA() {
-		return codigoIATA;
-	}
-
-	public void setCodigoIATA(String codigoIATA) {
-		this.codigoIATA = codigoIATA;
-	}
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
 }

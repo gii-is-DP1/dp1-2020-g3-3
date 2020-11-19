@@ -10,14 +10,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
-* Entidad simple que representa un personal de control
+* Entidad simple que representa un personal de oficina
 */
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "personalControl")
-public class PersonalControl extends BaseEntity{
+@Table(name = "personalOficina")
+public class PersonalOficina extends BaseEntity{
 
 	//Atributos
 	
@@ -38,10 +38,6 @@ public class PersonalControl extends BaseEntity{
 	@NotEmpty
 	@Pattern(regexp="^ES\\d{22}$")
 	protected String iban;
-	
-	@Column(name = "rol")
-	@NotEmpty
-	protected String rol;
 	
 	@Column(name = "salario")
 	@NotEmpty

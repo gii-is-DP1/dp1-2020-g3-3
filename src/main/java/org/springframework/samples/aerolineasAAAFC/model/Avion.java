@@ -1,95 +1,64 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
+
 import java.util.Date;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 /**
- * Entidad simple que representa una aeronave
- */
-@MappedSuperclass
-public class Avion extends IdEntity{
+* Entidad simple que representa un avion
+*/
+
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "avion")
+public class Avion extends BaseEntity{
 	
-	// Atributos
-	
-	@NotEmpty
+	//Atributos
+
+	@Column(name = "tipoAvion")
 	protected String tipoAvion;
-	
-	@NotEmpty
+
+	@Column(name = "capacidadPasajero")
 	protected Integer capacidadPasajero;
 	
-	@NotEmpty
+	@Column(name = "pesoMaximoEquipaje")
+	@Range(min=0,max=32)
 	protected Integer pesoMaximoEquipaje;
 	
-	@NotEmpty
+	@Column(name = "horasAcumuladas")
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	protected Integer horasAcumuladas;
 	
+	@Column(name = "fechaFabricacion")
 	@NotEmpty
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	protected Date fechaFabricacion;
 	
+	@Column(name = "disponibilidad")
 	@NotEmpty
 	protected Boolean disponibilidad;
 	
-	//La fecha de Revision coincidirá con la fecha de fabricacion si no ha habido ninguna
-	@NotEmpty
-	protected Date fechaRevision;
+	@Column(name = "plazas_economica")
+	private int plazasEconomica;
 	
-	// Getters y setters
+	@Column(name = "plazas_ejecutiva")
+	private int plazasEjecutiva;
+	
+	@Column(name = "plazas_primera")
+	private int plazasPrimera;
+	
 
-	public String getTipoAvion() {
-		return tipoAvion;
-	}
-
-	public void setTipoAvion(String tipoAvion) {
-		this.tipoAvion = tipoAvion;
-	}
-
-	public Integer getCapacidadPasajero() {
-		return capacidadPasajero;
-	}
-
-	public void setCapacidadPasajero(Integer capacidadPasajero) {
-		this.capacidadPasajero = capacidadPasajero;
-	}
-
-	public Integer getPesoMaximoEquipaje() {
-		return pesoMaximoEquipaje;
-	}
-
-	public void setPesoMaximoEquipaje(Integer pesoMaximoEquipaje) {
-		this.pesoMaximoEquipaje = pesoMaximoEquipaje;
-	}
-
-	public Integer getHorasAcumuladas() {
-		return horasAcumuladas;
-	}
-
-	public void setHorasAcumuladas(Integer horasAcumuladas) {
-		this.horasAcumuladas = horasAcumuladas;
-	}
-
-	public Date getFechaFabricacion() {
-		return fechaFabricacion;
-	}
-
-	public void setFechaFabricacion(Date fechaFabricacion) {
-		this.fechaFabricacion = fechaFabricacion;
-	}
-
-	public Boolean getDisponibilidad() {
-		return disponibilidad;
-	}
-
-	public void setDisponibilidad(Boolean disponibilidad) {
-		this.disponibilidad = disponibilidad;
-	}
-	public Date getFechaRevision() {
-		return fechaRevision;
-	}
-
-	public void setFechaRevision(Date fechaRevision) {
-		this.fechaRevision = fechaRevision;
-	}
-		
+	
 }

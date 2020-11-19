@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
  */
 
 @MappedSuperclass
-public class IdEntity {
+public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
@@ -21,6 +21,10 @@ public class IdEntity {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public boolean isNew() {
+		return this.id == null;
 	}
 
 }
