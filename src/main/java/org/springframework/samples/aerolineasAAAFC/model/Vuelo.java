@@ -34,16 +34,18 @@ public class Vuelo extends BaseEntity{
 	protected LocalDate  fechaVuelo;
 	
 	@Column(name = "horaSalida")
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@DateTimeFormat(pattern = "hh:mm:ss")
 	protected Date  horaSalida;
 
 	@Column(name = "horaLlegada")
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@DateTimeFormat(pattern = "hh:mm:ss")
 	protected Date  horaLlegada;
 	
 	@Column(name = "coste")
 	protected double coste;
 	
+	
+	/*
 	@Column(name = "codigoIATAOrigen")
 	@NotEmpty
 	protected String codigoIATAOrigen;
@@ -51,7 +53,7 @@ public class Vuelo extends BaseEntity{
 	@Column(name = "codigoIATADestino")
 	@NotEmpty
 	protected String codigoIATADestino;
-	
+	*/
 
 		
 	
