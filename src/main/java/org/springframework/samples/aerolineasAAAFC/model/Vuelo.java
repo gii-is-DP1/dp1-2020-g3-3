@@ -2,7 +2,10 @@ package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -11,25 +14,32 @@ import javax.validation.constraints.NotEmpty;
 */
 
 @MappedSuperclass
+@Entity
+@Table(name = "vuelos")
 public class Vuelo extends IdEntity{
 	
 	//Atributos
-	
+		@Column(name = "fechaVuelo")
 		@NotEmpty
 		protected Date fechaVuelo;
 		
+		@Column(name = "horaSalida")
 		@NotEmpty
 		protected Date horaSalida;
 		
+		@Column(name = "horaLlegada")
 		@NotEmpty
 		protected Date horaLlegada;
 		
+		@Column(name = "precio")
 		@NotEmpty
 		protected Double precio;
 		
+		@Column(name = "codigoIATAOrigen")
 		@NotEmpty
 		protected String codigoIATAOrigen;
 		
+		@Column(name = "codigoIATADestino")
 		@NotEmpty
 		protected String codigoIATADestino;
 
@@ -82,6 +92,15 @@ public class Vuelo extends IdEntity{
 		public void setCodigoIATADestino(String codigoIATADestino) {
 			this.codigoIATADestino = codigoIATADestino;
 		}
+
+		@Override
+		public String toString() {
+			return "Vuelo [fechaVuelo=" + fechaVuelo + ", horaSalida=" + horaSalida + ", horaLlegada=" + horaLlegada
+					+ ", precio=" + precio + ", codigoIATAOrigen=" + codigoIATAOrigen + ", codigoIATADestino="
+					+ codigoIATADestino + "]";
+		}
+		
+		
 		
 		
 }

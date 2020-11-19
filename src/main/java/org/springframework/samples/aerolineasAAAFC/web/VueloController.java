@@ -8,5 +8,5 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class VueloController {
-
+	//private static final String VIEWS_VUELO_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 }
