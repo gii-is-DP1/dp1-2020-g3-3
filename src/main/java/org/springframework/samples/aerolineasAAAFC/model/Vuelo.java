@@ -30,15 +30,15 @@ public class Vuelo extends BaseEntity{
 
 	@Column(name = "fechaVuelo")
 	@NotEmpty
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate  fechaVuelo;
 	
 	@Column(name = "horaSalida")
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@DateTimeFormat(pattern = "hh:mm")
 	protected Date  horaSalida;
 
 	@Column(name = "horaLlegada")
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@DateTimeFormat(pattern = "hh:mm")
 	protected Date  horaLlegada;
 	
 	@Column(name = "coste")
