@@ -1,3 +1,5 @@
+
+
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.time.LocalDate;
@@ -21,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "vuelo")
+@Table(name = "vuelos")
 public class Vuelo extends BaseEntity{
 	
 	//Atributos
@@ -51,5 +53,7 @@ public class Vuelo extends BaseEntity{
 	protected String codigoIATADestino;
 	
 
+		
 	
 }
+

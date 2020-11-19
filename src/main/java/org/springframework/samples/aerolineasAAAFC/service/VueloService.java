@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.repository.OwnerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,28 +33,28 @@ public class VueloService {
 		}
 	 
 	 @Transactional(readOnly = false)
-		public Vuelo modificarFechaVuelo(Date date) throws DataAccessException {
-			return vueloRepository.modificarFecha(date);
+		public Vuelo modificarFechaVuelo(Date date,int id) throws DataAccessException {
+			return vueloRepository.modificarFecha(date, id);
 		}
 	 @Transactional(readOnly = false)
-		public Vuelo modificarHoraSalidaVuelo(Date hora) throws DataAccessException {
-			return vueloRepository.modificarHoraSalida(hora);
+		public Vuelo modificarHoraSalidaVuelo(Date hora,int id) throws DataAccessException {
+			return vueloRepository.modificarHoraSalida(hora, id);
 		}
 	 @Transactional(readOnly = false)
-		public Vuelo modificarHoraLlegadaVuelo(Date hora) throws DataAccessException {
-			return vueloRepository.modificarHoraLlegada(hora);
+		public Vuelo modificarHoraLlegadaVuelo(Date hora,int id) throws DataAccessException {
+			return vueloRepository.modificarHoraLlegada(hora, id);
 		}
 	 @Transactional(readOnly = false)
-		public Vuelo modificarPrecioVuelo(Double precio) throws DataAccessException {
-			return vueloRepository.modificarPrecio(precio);
+		public Vuelo modificarPrecioVuelo(Double precio,int id) throws DataAccessException {
+			return vueloRepository.modificarPrecio(precio, id);
 		}
 	 @Transactional(readOnly = false)
-		public Vuelo modificarCodigoIATAOrigenVuelo(String codigo) throws DataAccessException {
-			return vueloRepository.modificarCodigoIATAOrigen(codigo);
+		public Vuelo modificarCodigoIATAOrigenVuelo(String codigo,int id) throws DataAccessException {
+			return vueloRepository.modificarCodigoIATAOrigen(codigo, id);
 		}
 	 @Transactional(readOnly = false)
-		public Vuelo modificarCodigoIATADestinoVuelo(String codigo) throws DataAccessException {
-			return vueloRepository.modificarCodigoIATADestino(codigo);
+		public Vuelo modificarCodigoIATADestinoVuelo(String codigo,int id) throws DataAccessException {
+			return vueloRepository.modificarCodigoIATADestino(codigo, id);
 		}
 	 
 	 @Transactional(readOnly = false)
