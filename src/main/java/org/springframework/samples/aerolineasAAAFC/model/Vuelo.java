@@ -28,20 +28,20 @@ public class Vuelo extends BaseEntity{
 	
 	//Atributos
 
-	@Column(name = "fechaVuelo")
+	@Column(name = "FECHAVUELO")
 	@NotEmpty
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate  fechaVuelo;
 	
-	@Column(name = "horaSalida")
-	@DateTimeFormat(pattern = "hh:mm:ss")
+	@Column(name = "HORASALIDA")
+	@DateTimeFormat(pattern = "hh:mm")
 	protected Date  horaSalida;
 
-	@Column(name = "horaLlegada")
-	@DateTimeFormat(pattern = "hh:mm:ss")
+	@Column(name = "HORALLEGADA")
+	@DateTimeFormat(pattern = "hh:mm")
 	protected Date  horaLlegada;
 	
-	@Column(name = "coste")
+	@Column(name = "COSTE")
 	protected double coste;
 	
 	
