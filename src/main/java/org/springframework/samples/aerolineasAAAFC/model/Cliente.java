@@ -1,9 +1,13 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -20,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "cliente")
+@Table(name = "clientes")
 public class Cliente extends BaseEntity{
 
 	//Atributos
@@ -56,4 +60,9 @@ public class Cliente extends BaseEntity{
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	protected Date fechaNacimiento;
 
+	
+	//TODO relacion billete-cliente
+	/*@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente", fetch = FetchType.EAGER) 
+	private Set<Billete> billetes;*/
+	
 }
