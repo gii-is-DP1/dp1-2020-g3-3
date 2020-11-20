@@ -1,11 +1,7 @@
-
-
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -24,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "vuelos")
+@Table(name = "VUELOS")
 public class Vuelo extends BaseEntity{
 	
 	//Atributos
@@ -44,16 +40,7 @@ public class Vuelo extends BaseEntity{
 	
 	@Column(name = "coste")
 	private double coste;
-	/*
-	@Column(name = "codigo_IATA_origen")
-	@NotEmpty
-	private String codigoIATAOrigen;
-	
-	@Column(name = "codigo_IATA_destino")
-	@NotEmpty
-	private String codigoIATADestino;
-*/
-		
+
 	
 }
 
