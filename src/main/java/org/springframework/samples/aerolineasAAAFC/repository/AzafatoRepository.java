@@ -31,7 +31,7 @@ public interface AzafatoRepository extends Repository<Azafato, Integer>{
 	 * @return the <code>Azafato</code> if found
 	 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 	 */	
-	@Query("SELECT azafato FROM Azafato owner left join fetch azafato WHERE azafato.id =:id")
+	@Query("SELECT azafato FROM Azafatos owner left join fetch azafato WHERE azafato.id =:id")
 	public Azafato findById(@Param("id") int id);
 
 }
