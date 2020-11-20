@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "equipaje")
+@Table(name = "equipajes")
   
 public class Equipaje extends BaseEntity{
 	
@@ -24,10 +24,10 @@ public class Equipaje extends BaseEntity{
 	
 	@Column(name = "peso")
 	@NotEmpty
-	protected Integer peso;
+	private Integer peso;
 	
 	@Column(name = "dimensiones")
 	@NotEmpty
-	protected String dimensiones;	
+	private String dimensiones;	
 	
 }

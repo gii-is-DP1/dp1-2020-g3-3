@@ -23,30 +23,30 @@ public class Azafato extends BaseEntity{
 	
 	@Column(name = "nombre")
 	@NotEmpty
-	protected String nombre;
+	private String nombre;
 	
 	@Column(name = "apellidos")
 	@NotEmpty
-	protected String apellidos;
+	private String apellidos;
 	
 	@Column(name = "nif")
 	@NotEmpty
 	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-	protected String nif;
+	private String nif;
 	
 	@Column(name = "iban")
 	@NotEmpty
 	@Pattern(regexp="^ES\\d{22}$")
-	protected String iban;
+	private String iban;
 	
 	@Column(name = "idiomas")
 	@NotEmpty
-	protected String idiomas;
+	private String idiomas;
 	
 	
 	@Column(name = "salario")
 	@NotEmpty
-	protected Double Salario;
+	private Double Salario;
 
 	
 }

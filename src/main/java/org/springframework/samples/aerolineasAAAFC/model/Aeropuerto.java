@@ -16,27 +16,27 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "aeropuerto")
+@Table(name = "aeropuertos")
 public class Aeropuerto extends BaseEntity{
 	
 	//Atributos
 
 	@Column(name = "nombre")
 	@NotEmpty
-	protected String nombre;
+	private String nombre;
 
 	@Column(name = "localizacion")
 	@NotEmpty
-	protected String localizacion;
+	private String localizacion;
 
-	@Column(name = "codigoIATA")
+	@Column(name = "codigo_IATA")
 	@NotEmpty
-	protected String codigoIATA;
+	private String codigoIATA;
 
 	@Column(name = "telefono")
 	@NotEmpty
 	@Pattern(regexp="^(\\+34|0034|34)?[6|7|9][0-9]{8}$")
-	protected String telefono;
+	private String telefono;
 
 	
 
