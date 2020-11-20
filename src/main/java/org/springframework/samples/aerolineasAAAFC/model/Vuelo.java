@@ -1,5 +1,3 @@
-
-
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.sql.Time;
@@ -42,6 +40,7 @@ public class Vuelo extends BaseEntity{
 	
 	@Column(name = "coste")
 	private double coste;
+
 	
 }
 
