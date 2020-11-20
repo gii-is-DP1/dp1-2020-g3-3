@@ -31,34 +31,34 @@ public class Cliente extends BaseEntity{
 
 	@Column(name = "nombre")
 	@NotEmpty
-	protected String nombre;
+	private String nombre;
 
 	@Column(name = "apellidos")
 	@NotEmpty
-	protected String apellidos;
+	private String apellidos;
 
 	@Column(name = "nif")
 	@NotEmpty
 	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-	protected String nif;
+	private String nif;
 
-	@Column(name = "direccionFacturacion")
+	@Column(name = "direccion_facturacion")
 	@NotEmpty
-	protected String direccionFacturacion;
+	private String direccionFacturacion;
 
 	@Column(name = "iban")
 	@NotEmpty
 	@Pattern(regexp="^ES\\d{22}$")
-	protected String iban;
+	private String iban;
 
 	@Column(name = "contrasenya")
 	@NotEmpty
-	protected String contrasenya;
+	private String contrasenya;
 
-	@Column(name = "fechaNacimiento")
+	@Column(name = "fecha_nacimiento")
 	@NotEmpty
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	protected Date fechaNacimiento;
+	private Date fechaNacimiento;
 
 	
 	//TODO relacion billete-cliente

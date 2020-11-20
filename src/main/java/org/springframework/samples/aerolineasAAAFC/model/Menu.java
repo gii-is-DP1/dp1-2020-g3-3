@@ -30,25 +30,25 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "menu")
+@Table(name = "menus")
 public class Menu extends BaseEntity {
 	
 	//Atributos
 
 	@Column(name = "precio")
-	protected double precio;
+	private double precio;
 
 	@Column(name = "primer_plato")
 	@NotEmpty
-	protected String primerPlato;
+	private String primerPlato;
 	
 	@Column(name = "segundo_plato")
 	@NotEmpty
-	protected String segundoPlato;
+	private String segundoPlato;
 	
 	@Column(name = "postre")
 	@NotEmpty
-	protected String postre;
+	private String postre;
 	
 
 }

@@ -26,21 +26,21 @@ public class Billete extends BaseEntity{
 
 	
 	@Column(name = "coste")
-	protected double coste;
+	private double coste;
 
 	@Column(name = "asiento")
 	@NotEmpty
 	@Pattern(regexp="^[A-I]\\d{2}$")
-	protected String asiento;
+	private String asiento;
 	
 	@Column(name = "fecha_reserva")
 	@NotEmpty
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	protected LocalDate fechaReserva;
+	private LocalDate fechaReserva;
 	
 	@Column(name = "clase")
 	@NotEmpty
-	protected Clase clase;
+	private Clase clase;
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "cliente_id")

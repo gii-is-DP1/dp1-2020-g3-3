@@ -22,33 +22,32 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "avion")
+@Table(name = "aviones")
 public class Avion extends BaseEntity{
 	
 	//Atributos
 
-	@Column(name = "tipoAvion")
-	protected String tipoAvion;
+	@Column(name = "tipo_avion")
+	private String tipoAvion;
 
-	@Column(name = "capacidadPasajero")
-	protected Integer capacidadPasajero;
+	@Column(name = "capacidad_pasajero")
+	private Integer capacidadPasajero;
 	
-	@Column(name = "pesoMaximoEquipaje")
+	@Column(name = "peso_maximo_equipaje")
 	@Range(min=0,max=32)
-	protected Integer pesoMaximoEquipaje;
+	private Integer pesoMaximoEquipaje;
 	
-	@Column(name = "horasAcumuladas")
-	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-	protected Integer horasAcumuladas;
+	@Column(name = "horas_acumuladas")
+	private Integer horasAcumuladas;
 	
-	@Column(name = "fechaFabricacion")
+	@Column(name = "fecha_fabricacion")
 	@NotEmpty
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	protected Date fechaFabricacion;
+	private Date fechaFabricacion;
 	
 	@Column(name = "disponibilidad")
 	@NotEmpty
-	protected Boolean disponibilidad;
+	private Boolean disponibilidad;
 	
 	@Column(name = "plazas_economica")
 	private int plazasEconomica;
