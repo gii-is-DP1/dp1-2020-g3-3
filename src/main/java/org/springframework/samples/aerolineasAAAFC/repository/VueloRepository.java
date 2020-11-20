@@ -21,37 +21,37 @@ public interface VueloRepository extends Repository<Vuelo, Integer> {
 
 	
 	
-	@Query("SELECT vuelo FROM Vuelo vuelo left join fetch vuelo WHERE vuelo.id =:id")
+	@Query("SELECT vuelo FROM Vuelos vuelo left join fetch vuelo WHERE vuelo.id =:id")
 	public Vuelo findById(@Param("id") int id);
 
 	
-	@Query("UPDATE Vuelo vuelo SET vuelo.fechaVuelo = fechaVuelo WHERE vuelo.id =:id")
-	public Vuelo modificarFecha(@Param("fechaVuelo") Date fechaVuelo, @Param("id") int id);
+	@Query("UPDATE Vuelos vuelo SET vuelo.fecha_vuelo = fecha_vuelo WHERE vuelo.id =:id")
+	public Vuelo modificarFecha(@Param("fecha_vuelo") Date fechaVuelo, @Param("id") int id);
 	
 	
-	@Query("UPDATE Vuelo vuelo SET vuelo.horaSalida = horaSalida WHERE vuelo.id =:id")
-	public Vuelo modificarHoraSalida(@Param("horaSalida") Date horaSalida, @Param("id") int id);
+	@Query("UPDATE Vuelos vuelo SET vuelo.hora_salida = hora_salida WHERE vuelo.id =:id")
+	public Vuelo modificarHoraSalida(@Param("hora_salida") Date horaSalida, @Param("id") int id);
 	
 	
-	@Query("UPDATE Vuelo vuelo SET vuelo.horaLlegada = horaLlegada WHERE vuelo.id =:id")
-	public Vuelo modificarHoraLlegada(@Param("horaLlegada") Date horaLlegada, @Param("id") int id);
+	@Query("UPDATE Vuelos vuelo SET vuelo.hora_llegada = hora_llegada WHERE vuelo.id =:id")
+	public Vuelo modificarHoraLlegada(@Param("hora_llegada") Date horaLlegada, @Param("id") int id);
 	
 	
-	@Query("UPDATE Vuelo vuelo SET vuelo.precio = precio WHERE vuelo.id =:id")
+	@Query("UPDATE Vuelos vuelo SET vuelo.precio = precio WHERE vuelo.id =:id")
 	public Vuelo modificarPrecio(@Param("precio") Double precio, @Param("id") int id);
 	
 	
-	@Query("UPDATE Vuelo vuelo SET vuelo.codigoIATAOrigen = codigoIATAOrigen WHERE vuelo.id =:id")
+	@Query("UPDATE Vuelos vuelo SET vuelo.codigo_IATA_origen = codigo_IATA_origen WHERE vuelo.id =:id")
 	public Vuelo modificarCodigoIATAOrigen(
-			@Param("codigoIATAOrigen") String codigoIATAOrigen, @Param("id") int id);
+			@Param("codigo_IATA_origen") String codigoIATAOrigen, @Param("id") int id);
 	
 	
-	@Query("UPDATE Vuelo vuelo SET vuelo.codigoIATADestino = codigoIATADestino WHERE vuelo.id =:id")
+	@Query("UPDATE Vuelos vuelo SET vuelo.codigo_IATA_destino = codigo_IATA_destino WHERE vuelo.id =:id")
 	public Vuelo modificarCodigoIATADestino(
-			@Param("codigoIATADestino") String codigoIATADestino, @Param("id") int id);
+			@Param("codigo_IATA_destino") String codigoIATADestino, @Param("id") int id);
 	
 	
-	@Query("DELETE FROM Vuelo owner WHERE vuelo.id =:id")
+	@Query("DELETE FROM Vuelos owner WHERE vuelo.id =:id")
 	public Vuelo eliminarVuelo(@Param("id") int id);
 	
 	/*

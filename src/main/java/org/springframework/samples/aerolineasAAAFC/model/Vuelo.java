@@ -44,16 +44,13 @@ public class Vuelo extends BaseEntity{
 	@Column(name = "coste")
 	private double coste;
 	
-	
-	/*
-	@Column(name = "codigoIATAOrigen")
+	@Column(name = "codigo_IATA_origen")
 	@NotEmpty
-	protected String codigoIATAOrigen;
+	private String codigoIATAOrigen;
 	
-	@Column(name = "codigoIATADestino")
+	@Column(name = "codigo_IATA_destino")
 	@NotEmpty
-	protected String codigoIATADestino;
-	*/
+	private String codigoIATADestino;
 
 		
 	
