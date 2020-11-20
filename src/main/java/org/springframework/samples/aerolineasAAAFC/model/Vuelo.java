@@ -2,6 +2,7 @@
 
 package org.springframework.samples.aerolineasAAAFC.model;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -35,15 +36,15 @@ public class Vuelo extends BaseEntity{
 	
 	@Column(name = "hora_salida")
 	@DateTimeFormat(pattern = "hh:mm")
-	private Date  horaSalida;
+	private Time  horaSalida;
 
 	@Column(name = "hora_llegada")
 	@DateTimeFormat(pattern = "hh:mm")
-	private Date  horaLlegada;
+	private Time  horaLlegada;
 	
 	@Column(name = "coste")
 	private double coste;
-	
+	/*
 	@Column(name = "codigo_IATA_origen")
 	@NotEmpty
 	private String codigoIATAOrigen;
@@ -51,7 +52,7 @@ public class Vuelo extends BaseEntity{
 	@Column(name = "codigo_IATA_destino")
 	@NotEmpty
 	private String codigoIATADestino;
-
+*/
 		
 	
 }
