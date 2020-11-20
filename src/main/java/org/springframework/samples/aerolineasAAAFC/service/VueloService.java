@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -14,21 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class VueloService {
+	
 	 private VueloRepository vueloRepository;
-/* 
-	 @Autowired
-		private UserService userService;
-		
-	@Autowired
-		private AuthoritiesService authoritiesService;
-*/
+
 	 @Autowired
 		public VueloService(VueloRepository vueloRepository) {
 			this.vueloRepository = vueloRepository;
 		}	
-	 
+	 /*
 	 @Transactional(readOnly = true)
-		public Vuelo findVueloById(int id) throws DataAccessException {
+		public Optional<Vuelo> findVueloById(int id) throws DataAccessException {
 			return vueloRepository.findById(id);
 		}
 	 
@@ -48,18 +44,11 @@ public class VueloService {
 		public Vuelo modificarPrecioVuelo(Double precio,int id) throws DataAccessException {
 			return vueloRepository.modificarPrecio(precio, id);
 		}
+
+	 */
 	 @Transactional(readOnly = false)
-		public Vuelo modificarCodigoIATAOrigenVuelo(String codigo,int id) throws DataAccessException {
-			return vueloRepository.modificarCodigoIATAOrigen(codigo, id);
-		}
-	 @Transactional(readOnly = false)
-		public Vuelo modificarCodigoIATADestinoVuelo(String codigo,int id) throws DataAccessException {
-			return vueloRepository.modificarCodigoIATADestino(codigo, id);
-		}
-	 
-	 @Transactional(readOnly = false)
-		public Vuelo eliminarVuelo(int id) throws DataAccessException {
-			return vueloRepository.eliminarVuelo(id);
+		public void eliminarVuelo(int id) throws DataAccessException {
+			vueloRepository.deleteById(id);
 		}
 	 
 }

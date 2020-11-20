@@ -25,7 +25,7 @@ public class ClienteService {
 		clienteRepository.save(cliente);
 	}
 	
-	public Optional<Cliente> findCliente(Integer id){
+	public Optional<Cliente> findClienteById(Integer id){
 		return clienteRepository.findById(id);
 	}
 	

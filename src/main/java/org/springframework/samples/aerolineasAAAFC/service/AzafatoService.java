@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
@@ -18,7 +20,7 @@ public class AzafatoService {
 	}	
 	
 	@Transactional(readOnly = true)
-	public Azafato findOwnerById(int id) throws DataAccessException {
+	public Optional<Azafato> findAzafatoById(int id) {
 		return azafatoRepository.findById(id);
 	}
 }

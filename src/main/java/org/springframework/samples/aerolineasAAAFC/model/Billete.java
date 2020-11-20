@@ -1,11 +1,9 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -36,13 +34,15 @@ public class Billete extends BaseEntity{
 	@Column(name = "fecha_reserva")
 	@NotEmpty
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate fechaReserva;
+	private Date fechaReserva;
 	
 	@Column(name = "clase")
 	@NotEmpty
 	private Clase clase;
 	
+	//TODO relacion billete-cliente
+	/*
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
+	private Cliente cliente;*/
 }
