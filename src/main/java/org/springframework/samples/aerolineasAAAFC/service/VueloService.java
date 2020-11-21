@@ -1,8 +1,5 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
-import java.util.Date;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
@@ -17,7 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class VueloService {
 	
 	 private VueloRepository vueloRepository;
-
+	 
+	 @Transactional
+		public void saveVuelo(Vuelo vuelo) throws DataAccessException{
+		 vueloRepository.save(vuelo);
+		}
+	 
+	
+	 @Transactional(readOnly = true)
+		public Vuelo findVueloById(int id) throws DataAccessException{
+			return vueloRepository.findById(id);
+		}
+	 
+	 
 	 @Autowired
 		public VueloService(VueloRepository vueloRepository) {
 			this.vueloRepository = vueloRepository;
@@ -46,11 +55,11 @@ public class VueloService {
 		}
 
 	 */
-	 @Transactional(readOnly = false)
+	/* @Transactional(readOnly = false)
 		public void eliminarVuelo(int id) throws DataAccessException {
 			vueloRepository.deleteById(id);
 		}
-	 
+	*/ 
 }
 
 
