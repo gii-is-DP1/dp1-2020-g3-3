@@ -49,6 +49,11 @@ public class Avion extends BaseEntity{
 	@NotEmpty
 	private Boolean disponibilidad;
 	
+	@Column(name = "fecha_revision")
+	@NotEmpty
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	private Date fechaRevision;
+	
 	@Column(name = "plazas_economica")
 	private int plazasEconomica;
 	
