@@ -1,6 +1,8 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
@@ -29,5 +31,9 @@ public class Equipaje extends BaseEntity{
 	@Column(name = "dimensiones")
 	@NotEmpty
 	private String dimensiones;	
+	
+	@ManyToOne(optional=false)
+	@JoinColumn(name = "billete_id")
+	private Billete billete;
 	
 }

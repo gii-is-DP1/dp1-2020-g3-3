@@ -1,9 +1,14 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -39,10 +44,14 @@ public class Billete extends BaseEntity{
 	@Column(name = "clase")
 	@NotEmpty
 	private Clase clase;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
+	private Set<Equipaje> equipajes;
 	
-	//TODO relacion billete-cliente
-	/*
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
+	private Set<Menu> menus;
+	
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;*/
+	private Cliente cliente;
 }
