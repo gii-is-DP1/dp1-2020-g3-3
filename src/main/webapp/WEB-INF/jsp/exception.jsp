@@ -1,8 +1,8 @@
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="error">
+<aerolineasAAAFC:layout pageName="error">
 
   
 
@@ -10,4 +10,4 @@
 
     <p>${exception.message}</p>
 
-</petclinic:layout>
+</aerolineasAAAFC:layout>

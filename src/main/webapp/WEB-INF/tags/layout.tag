@@ -1,5 +1,5 @@
 <%@ tag trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="AAAFC" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ attribute name="pageName" required="true" %>
@@ -7,10 +7,10 @@
 
 <!doctype html>
 <html>
-<AAAFC:htmlHeader/>
+<aerolineasAAAFC:htmlHeader/>
 
 <body>
-<AAAFC:bodyHeader menuName="${pageName}"/>
+<aerolineasAAAFC:bodyHeader menuName="${pageName}"/>
 
 <div class="container-fluid">
     <div class="container xd-container">
@@ -27,7 +27,7 @@
 
     </div>
 </div>
-<AAAFC:footer/>
+<aerolineasAAAFC:footer/>
 <jsp:invoke fragment="customScript" />
 
 </body>
