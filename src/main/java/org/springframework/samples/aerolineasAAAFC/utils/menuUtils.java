@@ -121,5 +121,9 @@ public class menuUtils {
 
 		return precio;
 	}
+	
+	public static Boolean validaPlatos() {
+		return true;
+	}
 
 }
