@@ -10,8 +10,12 @@
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand"
-				href="<spring:url value="/" htmlEscape="true" />"><span></span></a>
+		    <spring:url value="/resources/images/logo.png" var="logo"/>
+			<a class="header_logo"
+				href="<spring:url value="/" htmlEscape="true" />"><span>
+				<img alt="AAAFC logo" src="${logo}" style="height: 50px;">
+				</span></a>
+				
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#main-navbar">
 				<span class="sr-only"><os-p>Toggle navigation</os-p></span> <span
@@ -28,10 +32,10 @@
 					<span>Home</span>
 				</aerolineasAAAFC:menuItem>
 
-				<aerolineasAAAFC:menuItem active="${name eq 'cliente'}" url="/clientes/find"
-					title="find clientes">
+				<aerolineasAAAFC:menuItem active="${name eq 'vuelos'}"
+					url="urlparavuelos" title="find vuelos">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find owners</span>
+					<span>Buscar vuelos</span>
 				</aerolineasAAAFC:menuItem>
 
 				<aerolineasAAAFC:menuItem active="${name eq 'vets'}" url="/vets"
@@ -53,8 +57,8 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Login</a></li>
-					<li><a href="<c:url value="/users/new" />">Register</a></li>
+					<li><a href="<c:url value="/login" />">Entra</a></li>
+					<li><a href="<c:url value="/users/new" />">Regístrate</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -84,7 +88,7 @@
 								</div>
 							</li>
 							<li class="divider"></li>
-<!-- 							
+							<!-- 							
                             <li> 
 								<div class="navbar-login navbar-login-session">
 									<div class="row">
