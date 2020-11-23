@@ -7,7 +7,7 @@
 
 <!-- Pagina en la que se mostraran los vuelos y se permitira acceder a modificarlos -->
 
-<aerolineasAAAFC:layout pageName="vuelosList">
+<aerolineasAAAFC:layout pageName="vuelos">
     <h2>Aviones</h2>
 
     <table id="tablaVuelos" class="table table-striped">

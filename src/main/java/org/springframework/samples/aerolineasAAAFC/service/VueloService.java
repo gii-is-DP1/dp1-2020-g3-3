@@ -55,11 +55,10 @@ public class VueloService {
 		}
 
 	 */
-	/* @Transactional(readOnly = false)
 		public void eliminarVuelo(int id) throws DataAccessException {
 			vueloRepository.deleteById(id);
 		}
-	*/ 
+	
 }
 
 

@@ -1,8 +1,12 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.util.Date;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -46,18 +50,14 @@ public class Cliente extends BaseEntity{
 	@Pattern(regexp="^ES\\d{22}$")
 	private String iban;
 
-	@Column(name = "contrasenya")
-	@NotEmpty
-	private String contrasenya;
-
 	@Column(name = "fecha_nacimiento")
 	@NotEmpty
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date fechaNacimiento;
 
 	
-	//TODO relacion billete-cliente
-	/*@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente", fetch = FetchType.EAGER) 
-	private Set<Billete> billetes;*/
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
+	private Set<Billete> billetes;
 	
 }

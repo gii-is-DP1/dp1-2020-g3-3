@@ -48,10 +48,7 @@ public class AvionController {
 		}
 		else {
 			this.avionService.saveAvion(avion);
-			
-			// Ahora mismo no debería devolver a ningún sitio,
-			// pero dejamos esto como placeholder para cuando
-			// hagamos el listado o consulta de aviones
+
 			return "redirect:/aviones/" + avion.getId();
 		}
 	}
@@ -75,7 +72,6 @@ public class AvionController {
 			avion.setId(avionId);
 			this.avionService.saveAvion(avion);
 			
-			// Igual que en el alta de aviones
 			return "redirect:/aviones/{avionId}";
 		}
 	}

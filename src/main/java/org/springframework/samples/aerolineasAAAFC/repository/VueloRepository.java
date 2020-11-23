@@ -17,9 +17,9 @@ public interface VueloRepository extends Repository<Vuelo,Integer> {
 	
 	@Query("SELECT DISTINCT vuelo FROM Vuelo vuelo WHERE vuelo.id = :id")
 	public Vuelo findById(@Param("id") int id) throws DataAccessException;
-	
-	//@Query("DELETE vuelo FROM Vuelo vuelo WHERE vuelo.id = :id")
-	//public Vuelo deleteById(@Param("id") int id) throws DataAccessException;
+
+//	@Query("DELETE vuelo FROM Vuelo vuelo WHERE vuelo.id = :id")
+	public Vuelo deleteById(@Param("id") int id) throws DataAccessException;
 
 /*
 	@Query("UPDATE Vuelos vuelo SET vuelo.fecha_vuelo = fecha_vuelo WHERE vuelo.id =:id")
