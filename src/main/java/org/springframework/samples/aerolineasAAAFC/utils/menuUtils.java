@@ -2,6 +2,14 @@ package org.springframework.samples.aerolineasAAAFC.utils;
 
 public class menuUtils {
 //necesita un throw exception para el caso de que no se introduzcan los menús que figuran
+	
+	public static Boolean validaPrecio(Double precio, String primerPlato, String segundoPlato, String postre) {
+		
+		Boolean cond = (precio.equals(calculaPrecio(primerPlato, segundoPlato, postre)));
+			
+		return cond;
+	}
+	
 	public static Double calculaPrecio(String primerPlato, String segundoPlato, String postre) {
 		Double precio = 0.;
 
@@ -37,7 +45,7 @@ public class menuUtils {
 		case "CerealesMiniatura":
 			precio += 0.56;
 			break;
-			//aqui iria la excepcion
+		// aqui iria la excepcion
 		}
 
 		switch (segundoPlato) {
@@ -84,9 +92,9 @@ public class menuUtils {
 		case "MuffinVainilla":
 			precio += 1.29;
 			break;
-			//aqui iria la excepcion
+		// aqui iria la excepcion
 		}
-		
+
 		switch (postre) {
 
 		case "Manzana":
@@ -116,14 +124,135 @@ public class menuUtils {
 		case "Macarons":
 			precio += 1.74;
 			break;
-			//aqui iria la excepcion
 		}
 
 		return precio;
 	}
-	
-	public static Boolean validaPlatos() {
-		return true;
+
+	public static boolean validarPrimerPlato(String menuField) {
+		Boolean cond = false;
+
+		switch (menuField) {
+
+		case "SopaDeMiso":
+			cond = true;
+			break;
+		case "EnsaladaCésar":
+			cond = true;
+			break;
+		case "RevueltoDeSetasYGambas":
+			cond = true;
+			break;
+		case "TortelliniDeTerneraSinGluten":
+			cond = true;
+			break;
+		case "FideuaDeAlmejas":
+			cond = true;
+			break;
+		case "SalmonConCitricos":
+			cond = true;
+			break;
+		case "TomateConMozzarella":
+			cond = true;
+			break;
+		case "PanMantequilla":
+			cond = true;
+			break;
+		case "PanMantequillaSinGluten":
+			cond = true;
+			break;
+		case "CerealesMiniatura":
+			cond = true;
+			break;
+		}
+
+		return cond;
+	}
+
+	public static boolean validarSegundoPlato(String menuField) {
+		Boolean cond = false;
+
+		switch (menuField) {
+		case "PolloTikkaMasala":
+			cond = true;
+			break;
+		case "ArrozTerneraCurry":
+			cond = true;
+			break;
+		case "ArrozPolloCurry":
+			cond = true;
+			break;
+		case "PatoPekinesa":
+			cond = true;
+			break;
+		case "GnocchiPatataSinGluten":
+			cond = true;
+			break;
+		case "TerneraConPatatas":
+			cond = true;
+			break;
+		case "MerluzaAlHorno":
+			cond = true;
+			break;
+		case "RisottoVegetal":
+			cond = true;
+			break;
+		case "TortillaConVerduras":
+			cond = true;
+			break;
+		case "BagelConJamon":
+			cond = true;
+			break;
+		case "CruasanJamonCocido":
+			cond = true;
+			break;
+		case "RolloDeCanela":
+			cond = true;
+			break;
+		case "MuffinChocolate":
+			cond = true;
+			break;
+		case "MuffinVainilla":
+			cond = true;
+			break;
+		}
+
+		return cond;
+	}
+
+	public static boolean validarPostres(String menuField) {
+		Boolean cond = false;
+
+		switch (menuField) {
+		case "Manzana":
+			cond = true;
+			break;
+		case "Platano":
+			cond = true;
+			break;
+		case "Pera":
+			cond = true;
+			break;
+		case "Naranja":
+			cond = true;
+			break;
+		case "CremeBrulee":
+			cond = true;
+			break;
+		case "Tiramisu":
+			cond = true;
+			break;
+		case "Flan":
+			cond = true;
+			break;
+		case "PannaCotta":
+			cond = true;
+			break;
+		case "Macarons":
+			cond = true;
+			break;
+		}
+		return cond;
 	}
 
 }
