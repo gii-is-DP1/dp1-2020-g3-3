@@ -11,4 +11,8 @@
     <h2> Group ${group}</h2>
     <img src="WEB-INF/jsp/favicon-32x32.png">
     </div>
+    
+    <form method="get" action="/vuelosList.jsp">
+		 <button type="submit">Vuelos</button>
+	</form>
 </AAAFC:layout>
