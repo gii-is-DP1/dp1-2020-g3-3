@@ -1,8 +1,12 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.util.Date;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -56,8 +60,8 @@ public class Cliente extends BaseEntity{
 	private Date fechaNacimiento;
 
 	
-	//TODO relacion billete-cliente
-	/*@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente", fetch = FetchType.EAGER) 
-	private Set<Billete> billetes;*/
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
+	private Set<Billete> billetes;
 	
 }
