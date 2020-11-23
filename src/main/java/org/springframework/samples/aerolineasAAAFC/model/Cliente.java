@@ -50,10 +50,6 @@ public class Cliente extends BaseEntity{
 	@Pattern(regexp="^ES\\d{22}$")
 	private String iban;
 
-	@Column(name = "contrasenya")
-	@NotEmpty
-	private String contrasenya;
-
 	@Column(name = "fecha_nacimiento")
 	@NotEmpty
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
