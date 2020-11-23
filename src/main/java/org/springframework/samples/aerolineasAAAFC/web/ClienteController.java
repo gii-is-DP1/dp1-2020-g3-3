@@ -36,6 +36,10 @@ public class ClienteController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
+	
+
+	
+	
 	/*
 	 * ALTA DE UN NUEVO CLIENTE
 	 */
@@ -62,6 +66,7 @@ public class ClienteController {
 	/*
 	 * MODIFICACIÓN DE UN CLIENTE
 	 */
+	
 	@GetMapping(value = "/clientes/{clienteId}/edit")
 	public String initUpdateAvionForm(@PathVariable("clienteId") int clienteId, Model model) {
 		Optional<Cliente> cliente = this.clienteService.findClienteById(clienteId);
@@ -84,14 +89,8 @@ public class ClienteController {
 	
 	//BÚSQUEDA CLIENTE/S
 	
-	@GetMapping(value = "/clientes/find")
-	public String initFindForm(Map<String, Object> model) {
-		model.put("cliente", new Cliente());
-		return "clientes/findClientes";
-	}
-	
 	@GetMapping("/clientes/{clienteId}")
-	public ModelAndView showOwner(@PathVariable("clienteId") int clienteId) {
+	public ModelAndView showCliente(@PathVariable("clienteId") int clienteId) {
 		ModelAndView mav = new ModelAndView("clientes/clienteDetails");
 		mav.addObject(this.clienteService.findClienteById(clienteId));
 		return mav;
