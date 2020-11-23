@@ -51,10 +51,7 @@ public class VueloController {
 		}
 		else {
 			this.vueloService.saveVuelo(vuelo);
-			
-			// Ahora mismo no debería devolver a ningún sitio,
-			// pero dejamos esto como placeholder para cuando
-			// hagamos el listado o consulta de aviones
+
 			return "redirect:/vuelos/" + vuelo.getId();
 		}
 	}
@@ -77,7 +74,7 @@ public class VueloController {
 			vuelo.setId(vueloId);
 			this.vueloService.saveVuelo(vuelo);
 			
-			// Igual que en el alta de aviones
+			
 			return "redirect:/vuelos/{vueloId}";
 		}
 	}

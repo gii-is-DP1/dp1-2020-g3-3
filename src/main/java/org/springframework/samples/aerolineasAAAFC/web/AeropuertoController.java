@@ -6,9 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
-import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
-import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,9 +48,6 @@ public class AeropuertoController {
 		else {
 			this.aeropuertoService.saveAeropuerto(aeropuerto);
 			
-			// Ahora mismo no debería devolver a ningún sitio,
-			// pero dejamos esto como placeholder para cuando
-			// hagamos el listado o consulta de aviones
 			return "redirect:/aeropuertos/" + aeropuerto.getId();
 		}
 	}
@@ -75,7 +70,7 @@ public class AeropuertoController {
 			aeropuerto.setId(aeropuertoId);
 			this.aeropuertoService.saveAeropuerto(aeropuerto);
 			
-			// Igual que en el alta de aviones
+			
 			return "redirect:/aeropuertos/{aeropuertoId}";
 		}
 	}
