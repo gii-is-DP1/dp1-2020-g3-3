@@ -12,7 +12,10 @@
 
     <title>Aerolineas AAAFC</title>
 
-    <spring:url value="/resources/css/petclinic.css" var="petclinicCss"/>
+    <spring:url value="/resources/style/common.css" var="mainCss"/>
+    <link href="${mainCss}" rel="stylesheet"/>
+    
+        <spring:url value="/resources/css/petclinic.css" var="petclinicCss"/>
     <link href="${petclinicCss}" rel="stylesheet"/>
 
     <spring:url value="/webjars/jquery-ui/1.11.4/jquery-ui.min.css" var="jQueryUiCss"/>
