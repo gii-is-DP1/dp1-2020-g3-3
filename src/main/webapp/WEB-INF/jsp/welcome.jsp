@@ -11,4 +11,7 @@
     <h2> Group ${group}</h2>
     <img src="WEB-INF/jsp/favicon-32x32.png">
     </div>
+
+</AAAFC:layout>
 </aerolineasAAAFC:layout>
+
