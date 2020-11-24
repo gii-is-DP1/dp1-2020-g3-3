@@ -17,11 +17,11 @@ public class AzafatoService {
 	
 	public AzafatoRepository azafatoRepository;
 	
-//	@Autowired
-//	private UserService userService;
-//	
-//	@Autowired
-//	private AuthoritiesService authoritiesService;
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private AuthoritiesService authoritiesService;
 	
 
 	@Autowired
@@ -34,13 +34,10 @@ public class AzafatoService {
 		return azafatoRepository.findById(id);
 	}
 	
-//	@Transactional
-//	public void saveAzafato(Azafato azafato) throws DataAccessException {
-//		//creating owner
-//		azafatoRepository.save(azafato);		
-//		//creating user
-//		userService.saveUser(azafato.getUser());
-//		//creating authorities
-//		authoritiesService.saveAuthorities(azafato.getUser().getUsername(), "azafato");
-//	}		
+	@Transactional
+	public void saveAzafato(Azafato azafato) throws DataAccessException {
+		azafatoRepository.save(azafato);		
+		userService.saveUser(azafato.getUser());
+		authoritiesService.saveAuthorities(azafato.getUser().getUsername(), "azafato");
+	}		
 }
