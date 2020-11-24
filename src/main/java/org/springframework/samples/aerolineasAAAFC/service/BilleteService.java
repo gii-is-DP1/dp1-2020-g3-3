@@ -13,13 +13,24 @@ public class BilleteService {
 	private BilleteRepository billeteRepository;
 	
 	@Autowired
+	private MenuService menuService;
+	
+	@Autowired
+	private EquipajeService equipajeService;
+	
+	@Autowired
 	public BilleteService(BilleteRepository billeteRepository) {
 		this.billeteRepository = billeteRepository;
 	}
 	
 	@Transactional
 	public void saveBillete(Billete billete) throws DataAccessException{
+		
 		billeteRepository.save(billete);
+		
+		menuService.saveMenus(billete.getMenus());
+		
+		equipajeService.saveEquipajes(billete.getEquipajes());
 	}
 	
 	@Transactional(readOnly = true)
