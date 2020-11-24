@@ -1,14 +1,19 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+
+import org.springframework.samples.petclinic.model.User;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,6 +58,12 @@ public class PersonalControl extends BaseEntity{
 
 	// Relaciones de tabla:
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = CascadeType.ALL)
 	private Set<Avion> aviones;
+  
+	@OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "username", referencedColumnName = "username")
+	private User user;
+	
+  
 }
