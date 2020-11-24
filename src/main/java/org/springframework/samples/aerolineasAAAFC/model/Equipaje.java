@@ -7,6 +7,9 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Range;
+import org.springframework.samples.aerolineasAAAFC.service.businessrules.MedidasEquipajesConstraint;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -26,10 +29,11 @@ public class Equipaje extends BaseEntity{
 	
 	@Column(name = "peso")
 	@NotEmpty
+	@Range(min=3,max=32)
 	private Integer peso;
 	
 	@Column(name = "dimensiones")
-	@NotEmpty
+	@MedidasEquipajesConstraint
 	private String dimensiones;	
 	
 	@ManyToOne(optional=false)

@@ -2,9 +2,11 @@ package org.springframework.samples.aerolineasAAAFC.model;
 
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -25,7 +27,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "aviones")
 public class Avion extends BaseEntity{
 	
-	//Atributos
+	// Atributos:
 
 	@Column(name = "tipo_avion")
 	private String tipoAvion;
@@ -63,6 +65,15 @@ public class Avion extends BaseEntity{
 	@Column(name = "plazas_primera")
 	private int plazasPrimera;
 	
-
+	// Relaciones de tablas:
+	
+	@ManyToMany(mappedBy="aviones")
+	private Set<Vuelo> vuelos;
+	
+	@ManyToMany(mappedBy="aviones")
+	private Set<Azafato> azafatos;
+	
+	@ManyToMany(mappedBy="aviones")
+	private Set<PersonalControl> personalControl;
 	
 }

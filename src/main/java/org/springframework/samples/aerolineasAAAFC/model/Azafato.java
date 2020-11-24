@@ -1,11 +1,16 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
+
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -24,7 +29,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "azafato")
 public class Azafato extends BaseEntity{
 
-	//Atributos
+	// Atributos:
 	
 	@Column(name = "nombre")
 	@NotEmpty
@@ -52,9 +57,13 @@ public class Azafato extends BaseEntity{
 	@NotEmpty
 	private Double Salario;
 	
+	// Relaciones de tabla:
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username")
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Set<Avion> aviones;
+  
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 	
 }
