@@ -1,7 +1,11 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -19,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "personal_oficina")
 public class PersonalOficina extends BaseEntity{
 
-	//Atributos
+	// Atributos:
 	
 	@Column(name = "nombre")
 	@NotEmpty
@@ -43,5 +47,8 @@ public class PersonalOficina extends BaseEntity{
 	@NotEmpty
 	private Double Salario;
 
+	// Relaciones de tabla:
 	
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Collection<Vuelo> vuelos;
 }
