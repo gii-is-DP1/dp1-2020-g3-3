@@ -19,6 +19,7 @@
             <th>NIF</th>
             <th>IBAN</th>
             <th>Salario</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -44,6 +45,12 @@
                 </td>
                 <td>
                     <c:out value="${personalOficina.salario}"/>
+                </td>
+                <td>
+                	<spring:url value="{pOficinaId}/edit" var="pOficinaUrl">
+        			<spring:param name="pOficinaId" value="${personalOficina.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar oficinista</a>
                 </td>   
             </tr>
         </c:forEach>

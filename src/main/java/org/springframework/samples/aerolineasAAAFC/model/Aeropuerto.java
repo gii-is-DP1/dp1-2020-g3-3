@@ -1,7 +1,11 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -19,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "aeropuertos")
 public class Aeropuerto extends BaseEntity{
 	
-	//Atributos
+	// Atributos:
 
 	@Column(name = "nombre")
 	@NotEmpty
@@ -38,6 +42,9 @@ public class Aeropuerto extends BaseEntity{
 	@Pattern(regexp="^(\\+34|0034|34)?[6|7|9][0-9]{8}$")
 	private String telefono;
 
+	// Relaciones de tabla:
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="aeropuertos")
+	private Set<Vuelo> vuelos;
 
 }

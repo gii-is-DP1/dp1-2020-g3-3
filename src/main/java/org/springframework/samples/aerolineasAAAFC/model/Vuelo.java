@@ -2,8 +2,13 @@ package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -23,7 +28,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "VUELOS")
 public class Vuelo extends BaseEntity{
 	
-	//Atributos
+	// Atributos:
 
 	@Column(name = "fecha_vuelo")
 	@NotEmpty
@@ -40,7 +45,20 @@ public class Vuelo extends BaseEntity{
 	
 	@Column(name = "coste")
 	private double coste;
-
 	
+	// Relaciones de tabla:
+
+	@ManyToMany(mappedBy = "VUELOS")
+	private Set<Billete> billetes;
+	
+	@ManyToMany(mappedBy = "VUELOS")
+	private Set<PersonalOficina> personalOficina;
+	
+	// Relacion con aeropuerto: ¿dos ManyToOne? o se hace algo diferente
+	@ManyToOne(optional=false)
+	private Aeropuerto aeropuerto;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Set<Avion> aviones;
 }
 
