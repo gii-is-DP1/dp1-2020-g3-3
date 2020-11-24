@@ -36,11 +36,8 @@ public class AzafatoService {
 	
 	@Transactional
 	public void saveAzafato(Azafato azafato) throws DataAccessException {
-		//creating owner
 		azafatoRepository.save(azafato);		
-		//creating user
 		userService.saveUser(azafato.getUser());
-		//creating authorities
 		authoritiesService.saveAuthorities(azafato.getUser().getUsername(), "azafato");
 	}		
 }
