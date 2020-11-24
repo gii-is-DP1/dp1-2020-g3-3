@@ -10,26 +10,26 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AeropuertoService {
 
-	 private AeropuertoRepository aeropuertoRepository;
-	 
-	 @Transactional
-		public void saveAeropuerto(Aeropuerto aeropuerto) throws DataAccessException{
-		 aeropuertoRepository.save(aeropuerto);
-		}
-	 
-	
-	 @Transactional(readOnly = true)
-		public Aeropuerto findAeropuertoById(int id) throws DataAccessException{
-			return aeropuertoRepository.findById(id);
-		}
-	 
-	 
-	 @Autowired
-		public AeropuertoService(AeropuertoRepository aeropuertoRepository) {
-			this.aeropuertoRepository = aeropuertoRepository;
-		}	
-	 
-	 public void eliminarAeropuerto(int id) throws DataAccessException {
-		 aeropuertoRepository.deleteById(id);
-		}
+	private AeropuertoRepository aeropuertoRepository;
+
+	@Autowired
+	public AeropuertoService(AeropuertoRepository aeropuertoRepository) {
+		this.aeropuertoRepository = aeropuertoRepository;
+	}	
+
+	@Transactional
+	public void saveAeropuerto(Aeropuerto aeropuerto) throws DataAccessException{
+		aeropuertoRepository.save(aeropuerto);
+	}
+
+
+	@Transactional(readOnly = true)
+	public Aeropuerto findAeropuertoById(int id) throws DataAccessException{
+		return aeropuertoRepository.findById(id);
+	}
+
+
+	public void eliminarAeropuerto(int id) throws DataAccessException {
+		aeropuertoRepository.deleteById(id);
+	}
 }

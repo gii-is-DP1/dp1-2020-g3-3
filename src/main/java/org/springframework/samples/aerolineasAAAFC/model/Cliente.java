@@ -6,12 +6,15 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.samples.petclinic.model.User;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -55,9 +58,12 @@ public class Cliente extends BaseEntity{
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date fechaNacimiento;
 
-	
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
 	private Set<Billete> billetes;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username", referencedColumnName = "username")
+	private User user;
 	
 }
