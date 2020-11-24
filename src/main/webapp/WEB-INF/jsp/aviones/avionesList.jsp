@@ -25,6 +25,7 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
             <th>Plazas clase económica</th>
             <th>Plazas clase ejecutiva</th>
             <th>Plazas primera clase</th>
+            <th> </th>
         </tr>
         </thead>
         <tbody>
@@ -71,7 +72,13 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
                 </td>
                 <td>
                     <c:out value="${avion.plazasPrimera}"/>
-                </td>    
+                </td>
+                <td>
+                	<spring:url value="{avionId}/edit" var="avionUrl">
+        			<spring:param name="avionId" value="${avion.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar avión</a>
+                </td>     
             </tr>
         </c:forEach>
         </tbody>
