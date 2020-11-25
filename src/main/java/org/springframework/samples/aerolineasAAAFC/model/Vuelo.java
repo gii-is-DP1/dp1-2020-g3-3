@@ -77,7 +77,7 @@ public class Vuelo extends BaseEntity{
 	
 	//
 	
-	
+	/*
 	public String getCodigoIATAOrigen() {
 		return this.getAeropuertoOrigen().getCodigoIATA();
 	}
@@ -92,6 +92,6 @@ public class Vuelo extends BaseEntity{
 	public void addBillete(Billete billete) {
 		this.billetes.add(billete);
 	}
-	
+	*/
 }
 

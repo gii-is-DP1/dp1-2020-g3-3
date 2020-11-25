@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -52,13 +52,15 @@ public class AvionServiceTests {
 	void updateFechaFabricacionAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		Date fecha;
-		try {
-			fecha = new SimpleDateFormat("yyyy/MM/dd").parse("2010/05/16");
-			avion.setFechaFabricacion(fecha);
-			assertThat(avion.getFechaFabricacion()).isEqualTo("2010/05/16");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+			try {
+				fecha = new SimpleDateFormat("yyyy/MM/dd").parse("2010/05/16");
+				avion.setFechaFabricacion(fecha);
+				assertThat(avion.getFechaFabricacion()).isEqualTo(fecha);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
 	}
 
 	@Test
