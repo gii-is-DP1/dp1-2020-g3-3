@@ -24,7 +24,7 @@ public class BilleteServiceTests {
 	@Autowired
 	protected VueloService vueloService;
 
-
+	
 	@Transactional
 	public void shouldInsertPetIntoDatabaseAndGenerateId() {
 

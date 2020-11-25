@@ -28,7 +28,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "VUELOS")
+@Table(name = "vuelos")
 public class Vuelo extends BaseEntity{
 	
 	// Atributos:
@@ -54,18 +54,18 @@ public class Vuelo extends BaseEntity{
 	
 	// Relaciones de tabla:
 
-	@ManyToMany(mappedBy = "VUELOS")
+	@ManyToMany(mappedBy = "vuelos")
 	private Set<Billete> billetes;
 	
-	@ManyToMany(mappedBy = "VUELOS")
+	@ManyToMany(mappedBy = "vuelos")
 	private Set<PersonalOficina> personalOficina;
 	
 	// Relacion con aeropuerto: ¿dos ManyToOne? o se hace algo diferente
-	@OneToOne(optional=false)
+	@ManyToOne(optional=false)
 	@UniqueElements
 	private Aeropuerto aeropuertoOrigen;
 	
-	@OneToOne(optional=false)
+	@ManyToOne(optional=false)
 	@UniqueElements
 	private Aeropuerto aeropuertoDestino;
 	
@@ -85,10 +85,7 @@ public class Vuelo extends BaseEntity{
 	public String getCodigoIATADestino() {
 		return this.getAeropuertoDestino().getCodigoIATA();
 	}
-	
 
-	
-	
 	public Set<Billete> getBilletes() {
 		return this.billetes;
 	}

@@ -1,14 +1,15 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.repository.ClienteRepository;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,11 @@ public class ClienteService {
 	
 	public Optional<Cliente> findClienteById(Integer id){
 		return clienteRepository.findById(id);
+	}
+	
+	public Collection<Cliente> findClientes(){
+		return StreamSupport.stream(clienteRepository.findAll().spliterator(), false)
+			    .collect(Collectors.toList());
 	}
 	
 	public void deleteClienteById(int id) throws DataAccessException{
