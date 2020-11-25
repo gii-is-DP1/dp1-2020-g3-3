@@ -23,7 +23,7 @@ public class VueloService {
 	
 	 @Transactional(readOnly = true)
 		public Vuelo findVueloById(int id) throws DataAccessException{
-			return vueloRepository.findById(id);
+			return vueloRepository.findById(id).get();
 		}
 	 
 	 

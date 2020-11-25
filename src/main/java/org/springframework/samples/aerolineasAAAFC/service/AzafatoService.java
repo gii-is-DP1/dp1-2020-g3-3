@@ -1,12 +1,9 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.repository.AzafatoRepository;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Service;
@@ -30,8 +27,8 @@ public class AzafatoService {
 	}	
 	
 	@Transactional(readOnly = true)
-	public Optional<Azafato> findAzafatoById(int id) {
-		return azafatoRepository.findById(id);
+	public Azafato findAzafatoById(int id) {
+		return azafatoRepository.findById(id).get();
 	}
 	
 	@Transactional

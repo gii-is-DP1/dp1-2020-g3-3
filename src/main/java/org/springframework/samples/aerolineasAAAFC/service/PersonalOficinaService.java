@@ -32,6 +32,6 @@ public class PersonalOficinaService {
 	
 	@Transactional(readOnly=true)
 	public PersonalOficina findPersonalOficinaById(int id) throws DataAccessException{
-		return pOficinaRepository.findById(id);
+		return pOficinaRepository.findById(id).get();
 	}
 }

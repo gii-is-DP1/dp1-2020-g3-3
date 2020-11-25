@@ -1,25 +1,11 @@
 package org.springframework.samples.aerolineasAAAFC.repository;
 
-import org.springframework.data.repository.Repository;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 
 
-
-/**
- */
-
-public interface VueloRepository extends Repository<Vuelo,Integer> {
+public interface VueloRepository extends CrudRepository<Vuelo,Integer> {
 	
-	void save(Vuelo vuelo) throws DataAccessException;
-	
-	@Query("SELECT DISTINCT vuelo FROM Vuelo vuelo WHERE vuelo.id = :id")
-	public Vuelo findById(@Param("id") int id) throws DataAccessException;
-
-//	@Query("DELETE vuelo FROM Vuelo vuelo WHERE vuelo.id = :id")
-	public Vuelo deleteById(@Param("id") int id) throws DataAccessException;
 
 /*
 	@Query("UPDATE Vuelos vuelo SET vuelo.fecha_vuelo = fecha_vuelo WHERE vuelo.id =:id")

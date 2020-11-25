@@ -25,7 +25,7 @@ public class AeropuertoService {
 
 	@Transactional(readOnly = true)
 	public Aeropuerto findAeropuertoById(int id) throws DataAccessException{
-		return aeropuertoRepository.findById(id);
+		return aeropuertoRepository.findById(id).get();
 	}
 
 

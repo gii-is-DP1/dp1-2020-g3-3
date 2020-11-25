@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.repository.BilleteRepository;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.MenuPriceException;
 import org.springframework.transaction.annotation.Transactional;
 
 public class BilleteService {
@@ -28,9 +29,17 @@ public class BilleteService {
 		
 		billeteRepository.save(billete);
 		
-		menuService.saveMenus(billete.getMenus());
+		billete.getMenus().stream().forEach(menu -> {
+			try {
+				menuService.saveMenu(menu);
+			} catch (MenuPriceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 		
-		equipajeService.saveEquipajes(billete.getEquipajes());
+		billete.getEquipajes().stream().forEach(equipaje -> equipajeService.saveEquipaje(equipaje));
+	
 	}
 	
 	@Transactional(readOnly = true)

@@ -1,9 +1,15 @@
 package org.springframework.samples.aerolineasAAAFC.utils;
 
+import org.springframework.samples.aerolineasAAAFC.model.Menu;
+
 public class menuUtils {
-//necesita un throw exception para el caso de que no se introduzcan los menús que figuran
 	
-	public static Boolean validaPrecio(Double precio, String primerPlato, String segundoPlato, String postre) {
+	public static Boolean validaPrecio(Menu menu) {
+		
+		Double precio = menu.getPrecio();
+		String primerPlato = menu.getPrimerPlato();
+		String segundoPlato = menu.getSegundoPlato();
+		String postre = menu.getPostre();
 		
 		Boolean cond = (precio.equals(calculaPrecio(primerPlato, segundoPlato, postre)));
 			
@@ -45,7 +51,6 @@ public class menuUtils {
 		case "CerealesMiniatura":
 			precio += 0.56;
 			break;
-		// aqui iria la excepcion
 		}
 
 		switch (segundoPlato) {
@@ -92,7 +97,6 @@ public class menuUtils {
 		case "MuffinVainilla":
 			precio += 1.29;
 			break;
-		// aqui iria la excepcion
 		}
 
 		switch (postre) {
