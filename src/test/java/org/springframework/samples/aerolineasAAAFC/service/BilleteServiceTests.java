@@ -45,7 +45,7 @@ public class BilleteServiceTests {
 		}
 
 
-		vuelo.addBillete(billete);
+		vuelo.getBilletes().add(billete);
 
 
 		assertThat(vuelo.getBilletes().size()).isEqualTo(nBilletes + 1);

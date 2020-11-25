@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "billete")
+@Table(name = "billetes")
 public class Billete extends BaseEntity{
 
 	// Atributos:
