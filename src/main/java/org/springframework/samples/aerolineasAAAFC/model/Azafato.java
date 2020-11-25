@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "azafato")
+@Table(name = "azafatos")
 public class Azafato extends BaseEntity{
 
 	// Atributos:
@@ -53,7 +53,7 @@ public class Azafato extends BaseEntity{
 
 	@Column(name = "salario")
 	@NotEmpty
-	private Double Salario;
+	private Double salario;
 
 	// Relaciones de tabla:
 
