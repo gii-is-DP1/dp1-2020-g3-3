@@ -9,9 +9,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -36,6 +39,7 @@ public class Vuelo extends BaseEntity{
 	private LocalDate  fechaVuelo;
 	
 	@Column(name = "hora_salida")
+	@NotEmpty
 	@DateTimeFormat(pattern = "hh:mm")
 	private Time  horaSalida;
 
@@ -43,6 +47,8 @@ public class Vuelo extends BaseEntity{
 	@DateTimeFormat(pattern = "hh:mm")
 	private Time  horaLlegada;
 	
+	@NotEmpty
+	@Positive
 	@Column(name = "coste")
 	private double coste;
 	
@@ -55,8 +61,13 @@ public class Vuelo extends BaseEntity{
 	private Set<PersonalOficina> personalOficina;
 	
 	// Relacion con aeropuerto: ¿dos ManyToOne? o se hace algo diferente
-	@ManyToOne(optional=false)
-	private Aeropuerto aeropuerto;
+	@OneToOne(optional=false)
+	@UniqueElements
+	private Aeropuerto aeropuertoOrigen;
+	
+	@OneToOne(optional=false)
+	@UniqueElements
+	private Aeropuerto aeropuertoDestino;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<Avion> aviones;
@@ -64,16 +75,23 @@ public class Vuelo extends BaseEntity{
 	
 	
 	
-	//getters
+	//
+	
+	
+	public String getCodigoIATAOrigen() {
+		return this.getAeropuertoOrigen().getCodigoIATA();
+	}
+	
+	public String getCodigoIATADestino() {
+		return this.getAeropuertoDestino().getCodigoIATA();
+	}
+	
+
+	
 	
 	public Set<Billete> getBilletes() {
 		return this.billetes;
 	}
-	
-	//setters
-	
-	//other
-	
 	public void addBillete(Billete billete) {
 		this.billetes.add(billete);
 	}
