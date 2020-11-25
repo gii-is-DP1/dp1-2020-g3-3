@@ -11,17 +11,31 @@ import org.springframework.transaction.annotation.Transactional;
 public class EquipajeService {
 
 	private EquipajeRepository equipajeRepository;
-	
+
 	@Autowired
 	public EquipajeService(EquipajeRepository equipajeRepository) {
 		this.equipajeRepository = equipajeRepository;
 	}
-	
+
 	@Transactional
 	public void saveEquipaje(Equipaje equipaje) throws DataAccessException {
-		
+
 		equipajeRepository.save(equipaje);
-	
+
 	}
-	
+
+	@Transactional
+	public void deleteEquipaje(int id) throws DataAccessException {
+		equipajeRepository.deleteById(id);
+
+	}
+
+	@Transactional(readOnly = true)
+	public Equipaje findEquipajeById(int id) throws DataAccessException{
+		
+		Equipaje equipaje = equipajeRepository.findById(id).orElseGet(null);
+		
+		return equipaje;
+	}
+
 }

@@ -1,10 +1,65 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.EquipajeService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.BadRequestException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
 public class EquipajeController {
-	
-	private static final String VIEWS_BILLETE_CREATE_OR_UPDATE_FORM = "billetes/createOrUpdateBilleteForm";
-	
-	//private final BilleteService billeteService;
-	
+
+	private static final String VIEWS_BILLETE_CREATE_FORM = "billetes/createOrUpdateBilleteForm";
+
+	private final BilleteService billeteService;
+	private final EquipajeService equipajeService;
+
+	@Autowired
+	public EquipajeController(EquipajeService equipajeService, BilleteService billeteService) {
+		this.equipajeService = equipajeService;
+		this.billeteService = billeteService;
+	}
+
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
+	}
+
+	@GetMapping(value = "/equipajes/new")
+	public String initCreationForm(Map<String, Object> model) {
+		Billete billete = new Billete();
+		model.put("billete", billete);
+		return VIEWS_BILLETE_CREATE_FORM;
+	}
+
+	@PostMapping(value = "/equipajes/new")
+	public String processCreationForm(@Valid Billete billete, BindingResult result) {
+		if (result.hasErrors()) {
+			return VIEWS_BILLETE_CREATE_FORM;
+		} else {
+			this.billeteService.saveBillete(billete);
+			return "redirect:/";
+		}
+	}
+
+//	@DeleteMapping("/equipajes/{id}")
+//	public void delete(@PathVariable("id") int id) throws BadRequestException {
+//
+//		if (equipajeService.findEquipajeById(id) == null) {
+//			throw new BadRequestException("Oops! Parece que no se ha encontrado el equipaje");
+//		} else {
+//			equipajeService.deleteEquipaje(id);
+//		}
+//	}
 
 }

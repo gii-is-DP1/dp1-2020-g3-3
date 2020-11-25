@@ -32,4 +32,17 @@ public class MenuService {
 
 	}
 
+	@Transactional
+	public void deleteMenu(int id) throws DataAccessException {
+		menuRepository.deleteById(id);
+	}
+
+	@Transactional (readOnly = true)
+	public Menu findMenuById(int id) throws DataAccessException {
+		
+		Menu menu = menuRepository.findById(id).orElseGet(null);
+		
+		return menu;
+	}
+
 }

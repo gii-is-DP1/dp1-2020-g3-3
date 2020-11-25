@@ -9,9 +9,7 @@
     <div class="row">
     <h2> Project ${title}</h2>
     <h2> Group ${group}</h2>
-    <img src="WEB-INF/jsp/favicon-32x32.png">
     </div>
 
-</AAAFC:layout>
 </aerolineasAAAFC:layout>
 
