@@ -60,5 +60,23 @@ public class Vuelo extends BaseEntity{
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<Avion> aviones;
+	
+	
+	
+	
+	//getters
+	
+	public Set<Billete> getBilletes() {
+		return this.billetes;
+	}
+	
+	//setters
+	
+	//other
+	
+	public void addBillete(Billete billete) {
+		this.billetes.add(billete);
+	}
+	
 }
 
