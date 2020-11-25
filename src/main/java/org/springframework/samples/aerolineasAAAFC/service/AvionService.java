@@ -24,6 +24,6 @@ public class AvionService {
 	
 	@Transactional(readOnly = true)
 	public Avion findAvionById(int id) throws DataAccessException{
-		return avionRepository.findById(id);
+		return avionRepository.findById(id).get();
 	}
 }

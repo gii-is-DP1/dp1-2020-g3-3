@@ -1,7 +1,5 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
@@ -20,9 +18,9 @@ public class EquipajeService {
 	}
 	
 	@Transactional
-	public void saveEquipajes(Set<Equipaje> set) throws DataAccessException {
+	public void saveEquipaje(Equipaje equipaje) throws DataAccessException {
 		
-		set.stream().forEach(equipaje -> equipajeRepository.save(equipaje));
+		equipajeRepository.save(equipaje);
 	
 	}
 	
