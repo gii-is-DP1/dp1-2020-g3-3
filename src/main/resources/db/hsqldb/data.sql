@@ -1,3 +1,6 @@
+
+
+
 INSERT INTO vuelos(fecha_vuelo,hora_salida,hora_llegada,coste) 
 VALUES ('2040-12-11','10:40','14:40',64);
 

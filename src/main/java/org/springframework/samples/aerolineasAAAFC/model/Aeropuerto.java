@@ -44,7 +44,11 @@ public class Aeropuerto extends BaseEntity{
 
 	// Relaciones de tabla:
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="aeropuertos")
-	private Set<Vuelo> vuelos;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="aeropuertoOrigen")
+	private Set<Vuelo> vuelosSalida;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="aeropuertoDestino")
+	private Set<Vuelo> vuelosLlegada;
+	
 
 }

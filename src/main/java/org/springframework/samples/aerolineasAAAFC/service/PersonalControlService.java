@@ -6,8 +6,6 @@ import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.transaction.annotation.Transactional;
 
 public class PersonalControlService {
