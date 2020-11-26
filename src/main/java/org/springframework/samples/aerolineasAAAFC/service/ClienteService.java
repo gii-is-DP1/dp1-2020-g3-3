@@ -36,8 +36,8 @@ public class ClienteService {
 		authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "cliente");
 	}
 	
-	public Optional<Cliente> findClienteById(Integer id){
-		return clienteRepository.findById(id);
+	public Cliente findClienteById(Integer id){
+		return clienteRepository.findById(id).get();
 	}
 	
 	public Collection<Cliente> findClientes(){

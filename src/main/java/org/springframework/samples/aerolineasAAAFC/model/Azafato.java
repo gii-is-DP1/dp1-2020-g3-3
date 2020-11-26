@@ -46,7 +46,7 @@ public class Azafato extends BaseEntity{
 
 	@Column(name = "iban")
 	@NotEmpty
-	@Pattern(regexp="^ES\\d{22}$")
+	@Pattern(regexp="^ES\\s\\d{22}$")
 	private String iban;
 
 	@ManyToMany(fetch = FetchType.EAGER)

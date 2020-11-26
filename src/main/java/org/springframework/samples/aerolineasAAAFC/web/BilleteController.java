@@ -59,7 +59,7 @@ public class BilleteController {
 	 */
 	@GetMapping(value = "/billetes/{billeteId}/edit")
 	public String initUpdateBilleteForm(@PathVariable("billeteId") int billeteId, Model model) {
-		Optional<Billete> billete = this.billeteService.findBilleteById(billeteId);
+		Billete billete = this.billeteService.findBilleteById(billeteId);
 		model.addAttribute(billete);
 		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 	}

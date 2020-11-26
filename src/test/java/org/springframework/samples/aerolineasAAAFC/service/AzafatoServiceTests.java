@@ -2,7 +2,8 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -39,7 +40,7 @@ public class AzafatoServiceTests {
 	void getIbanAzafatoSuccessful() {
 		Azafato azafato = azafatoService.findAzafatoById(1);
 		assertThat(azafato.getIban()).isNotEmpty();
-		assertThat(azafato.getIban()).containsPattern("^ES\\d{22}$");
+		assertThat(azafato.getIban()).containsPattern("^ES\\s\\d{22}$");
 	}
 	
 	@Test
