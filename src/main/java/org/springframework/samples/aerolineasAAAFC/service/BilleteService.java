@@ -43,8 +43,8 @@ public class BilleteService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Optional<Billete> findBilleteById(int id) throws DataAccessException{
-		return billeteRepository.findById(id);
+	public Billete findBilleteById(int id) throws DataAccessException{
+		return billeteRepository.findById(id).get();
 	}
 
 }

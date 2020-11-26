@@ -4,12 +4,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.stereotype.Service;
@@ -20,7 +25,49 @@ public class ClienteServiceTests {
 	
 	@Autowired
 	protected ClienteService clienteService;
+	
+	@Test
+	void getNombreClienteSuccessful() {
+		Cliente cliente = clienteService.findClienteById(1);
+		assertThat(cliente.getNombre()).isNotEmpty();
+	}
 
+	@Test
+	void getApellidosClienteSuccessful() {
+		Cliente cliente = clienteService.findClienteById(1);
+		assertThat(cliente.getApellidos()).isNotEmpty();
+	}
+
+	@Test
+	void getNifClienteSuccessful() {
+		Cliente cliente = clienteService.findClienteById(1);
+		assertThat(cliente.getNif()).isNotEmpty();
+		assertThat(cliente.getNif()).containsPattern("^\\d{8}[a-zA-Z]$");
+	}
+	
+	@Test
+	void getDirFacturacionClienteSuccessful() {
+		Cliente cliente = clienteService.findClienteById(1);
+		assertThat(cliente.getDireccionFacturacion()).isNotEmpty();
+	}
+
+	@Test
+	void getIbanClienteSuccessful() {
+		Cliente cliente = clienteService.findClienteById(1);
+		assertThat(cliente.getIban()).isNotEmpty();
+		assertThat(cliente.getIban()).containsPattern("^ES\\s\\d{22}$");
+	}
+	
+	@Test
+	void getfechaNacimientoAzafatoSuccessful() {
+		Cliente cliente = clienteService.findClienteById(1);
+		String now = LocalDate.now().toString();
+		assertThat(cliente.getFechaNacimiento()).isBefore(now);
+		assertThat(cliente.getFechaNacimiento()).useDefaultDateFormatsOnly();
+	}
+
+/*
+	
 	@Test
 	@Transactional
 	public void shouldInsertCliente() throws ParseException {
@@ -31,7 +78,7 @@ public class ClienteServiceTests {
 		cliente.setNombre("Juan Jesús");
 		cliente.setApellidos("Ferrero Gutiérrez");
 		cliente.setNif("28976897W");
-		cliente.setDireccionFacturacion("Calle Carbón, 35 - 41007 Sevilla");
+		cliente.setDireccionFacturacion("Calle Carbón, 35 4ºB Sevilla");
 		cliente.setIban("ES 6621000418401234567893");
 		Date fecha = new SimpleDateFormat("yyyy/MM/dd").parse("1997/06/03");  
 		cliente.setFechaNacimiento(fecha);
@@ -46,7 +93,7 @@ public class ClienteServiceTests {
 
 		clientes = this.clienteService.findClientes();
 		assertThat(clientes.size()).isEqualTo(found + 1);
-	}
+	}*/
 
 	
 }

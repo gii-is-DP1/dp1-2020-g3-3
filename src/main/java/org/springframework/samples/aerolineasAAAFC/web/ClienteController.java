@@ -69,7 +69,7 @@ public class ClienteController {
 	
 	@GetMapping(value = "/clientes/{clienteId}/edit")
 	public String initUpdateAvionForm(@PathVariable("clienteId") int clienteId, Model model) {
-		Optional<Cliente> cliente = this.clienteService.findClienteById(clienteId);
+		Cliente cliente = this.clienteService.findClienteById(clienteId);
 		model.addAttribute(cliente);
 		return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 	}
