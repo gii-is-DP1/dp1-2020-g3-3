@@ -46,7 +46,7 @@ public class AzafatoServiceTests {
 	void getIdiomasAzafatoSuccessful() {
 		Azafato azafato = azafatoService.findAzafatoById(1);
 		assertThat(azafato.getIdiomas()).isNotNull();
-		assertThat(azafato.getIdiomas()).min(2);
+		assertThat(azafato.getIdiomas().size()).isGreaterThanOrEqualTo(2);
 	}
 
 	@Test

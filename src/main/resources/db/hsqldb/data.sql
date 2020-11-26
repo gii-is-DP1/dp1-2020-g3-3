@@ -1,4 +1,3 @@
-
 INSERT INTO users(username,password,enabled) VALUES ('28976897W','Fly_High14&',TRUE);
 
 INSERT INTO authorities(id,username,authority) VALUES (1,'28976897W','cliente');
@@ -34,6 +33,4 @@ VALUES (80,'F4','2020-04-06',0);
 
 INSERT INTO vuelos(fecha_vuelo,hora_salida,hora_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id) 
 VALUES ('2040-12-11','10:40','14:40',64,1,2);
-
-
 

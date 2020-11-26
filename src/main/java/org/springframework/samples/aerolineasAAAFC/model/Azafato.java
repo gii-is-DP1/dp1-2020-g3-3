@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -49,7 +50,7 @@ public class Azafato extends BaseEntity{
 
 	@Column(name = "idiomas")
 	@NotEmpty
-	private String idiomas;
+	private ArrayList<String> idiomas;
 
 	@Column(name = "salario")
 	@NotEmpty
