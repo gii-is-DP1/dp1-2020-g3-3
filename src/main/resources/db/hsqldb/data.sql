@@ -12,7 +12,7 @@ INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acu
 VALUES ('Airbus A320', 300, 2, 1700, '2015-09-24', true, '2017-09-24', 200, 80, 20);
 
 INSERT INTO azafatos
-VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 'Inglés, Francés, Español', 2500,'21333214R');
+VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', ('Inglés', 'Francés', 'Español'), 2500,'21333214R');
 
 INSERT INTO billetes
 VALUES (1,80,'F4','2020/04/06',Clase.ECONOMICA);

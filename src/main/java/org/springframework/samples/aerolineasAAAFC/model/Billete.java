@@ -1,4 +1,4 @@
-package org.springframework.samples.aerolineasAAAFC.model;
+	package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.util.Date;
 import java.util.Set;
