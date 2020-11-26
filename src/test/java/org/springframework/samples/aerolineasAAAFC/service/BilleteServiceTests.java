@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,6 +28,7 @@ public class BilleteServiceTests {
 
 	
 	@Transactional
+	@Test
 	public void shouldInsertPetIntoDatabaseAndGenerateId() {
 
 		Vuelo vuelo = this.vueloService.findVueloById(1);
