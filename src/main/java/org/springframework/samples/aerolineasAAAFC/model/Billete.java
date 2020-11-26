@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -43,6 +45,7 @@ public class Billete extends BaseEntity{
 	
 	@Column(name = "clase")
 	@NotEmpty
+	@Enumerated(EnumType.ORDINAL)
 	private Clase clase;
 	
 	// Relaciones de tabla:
@@ -53,7 +56,7 @@ public class Billete extends BaseEntity{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
 	private Set<Menu> menus;
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=true) //segun el model un billete no tiene por qué ir asociado a un cliente
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
