@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -58,7 +59,7 @@ public class Cliente extends BaseEntity{
 	private Date fechaNacimiento;
 
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente" ) //fetch = FetchType.EAGER 
 	private Set<Billete> billetes;
 	
 	@OneToOne(cascade = CascadeType.ALL)
