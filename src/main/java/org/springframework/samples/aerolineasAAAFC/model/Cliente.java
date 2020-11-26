@@ -59,7 +59,7 @@ public class Cliente extends BaseEntity{
 	private Date fechaNacimiento;
 
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente" ) //fetch = FetchType.EAGER 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
 	private Set<Billete> billetes;
 	
 	@OneToOne(cascade = CascadeType.ALL)
