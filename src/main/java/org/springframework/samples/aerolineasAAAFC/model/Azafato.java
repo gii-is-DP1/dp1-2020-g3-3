@@ -1,13 +1,14 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -48,9 +49,11 @@ public class Azafato extends BaseEntity{
 	@Pattern(regexp="^ES\\d{22}$")
 	private String iban;
 
-	@Column(name = "idiomas")
-	@NotEmpty
-	private ArrayList<String> idiomas;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "idiomas_azafato", 
+	joinColumns = @JoinColumn(name = "azafato_id"),
+	inverseJoinColumns = @JoinColumn(name = "idioma_id"))
+	private Set<Idioma> idiomas;
 
 	@Column(name = "salario")
 	@NotEmpty

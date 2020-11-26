@@ -7,30 +7,43 @@ INSERT INTO users(username,password,enabled) VALUES ('21333214R','A3224234232%ad
 INSERT INTO authorities(id,username,authority) VALUES (2,'21333214R','azafato');
 
 
+--Aeropuertos
 INSERT INTO aeropuertos(id,nombre,localizacion,codigo_IATA,telefono)
 VALUES (1,'Aeropuerto de São Paulo Guarulhos','São Paulo, Brasil' , 'GRU', '11 2445 2945');
 
 INSERT INTO aeropuertos(id,nombre,localizacion,codigo_IATA,telefono)
 VALUES (2,'Aeropuerto de Barajas','São Paulo, Sevilla' , 'MAD', '913 21 10 00');
 
-
-
+--Aviones
 INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
 VALUES ('Airbus A320', 300, 2, 1700, '2015-09-24', true, '2017-09-24', 200, 80, 20);
 
+--Azafatos
+INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
+VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R');
 
-INSERT INTO azafatos(nombre,apellidos,nif,iban,idiomas,salario,username)
-VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 'Inglés, Francés, Español', 2500,'21333214R');
+INSERT INTO idiomas VALUES (1, 'Español');
+INSERT INTO idiomas VALUES (2, 'Inglés');
+INSERT INTO idiomas VALUES (3, 'Francés');
+INSERT INTO idiomas VALUES (4, 'Alemán');
+INSERT INTO idiomas VALUES (5, 'Japonés');
+INSERT INTO idiomas VALUES (6, 'Chino');
+INSERT INTO idiomas VALUES (7, 'Ruso');
+INSERT INTO idiomas VALUES (8, 'Polaco');
 
+INSERT INTO idiomas_azafato VALUES (1, 1);
+INSERT INTO idiomas_azafato VALUES (1, 2);
+INSERT INTO idiomas_azafato VALUES (1, 3);
+
+--Clientes
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,username)
 VALUES ('Juan Jesús', 'Ferrero Gutiérrez', '28976897W', 'Calle Carbón ,35 - 41007 Sevilla', 'ES 6621000418401234567893', '1997-06-03','28976897W');
 
-
+--Billetes
 INSERT INTO billetes(coste,asiento,fecha_reserva,clase)
 VALUES (80,'F4','2020-04-06',0);
 
-
-
+--Vuelos
 INSERT INTO vuelos(fecha_vuelo,hora_salida,hora_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id) 
 VALUES ('2040-12-11','10:40','14:40',64,1,2);
 
