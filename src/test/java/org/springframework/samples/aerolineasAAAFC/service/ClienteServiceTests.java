@@ -22,6 +22,8 @@ public class ClienteServiceTests {
 	@Autowired
 	protected ClienteService clienteService;
 	
+	
+	//Tests Consultar
 	@Test
 	void getNombreClienteSuccessful() {
 		Cliente cliente = clienteService.findClienteById(1);
@@ -62,6 +64,8 @@ public class ClienteServiceTests {
 		assertThat(cliente.getFechaNacimiento()).hasToString("1995-03-08");
 	}
 	
+	//Tests Añadir
+	
 	@Test
 	@Transactional
 	public void shouldInsertCliente(){
@@ -88,6 +92,17 @@ public class ClienteServiceTests {
 		clientes = this.clienteService.findClientes();
 		assertThat(clientes.size()).isEqualTo(found + 1);
 	}
-
 	
+	//Tests Actualizar
+	
+	
+	
+	//Tests Eliminar
+	
+	@Test
+	@Transactional
+	public void shouldDeleteCliente() {
+		
+	}
+
 }

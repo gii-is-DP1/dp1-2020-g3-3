@@ -2,6 +2,7 @@ package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -32,20 +33,15 @@ import lombok.EqualsAndHashCode;
 public class Vuelo extends BaseEntity{
 	
 	// Atributos:
-
-	@Column(name = "fecha_vuelo")
-	@NotEmpty
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate  fechaVuelo;
 	
-	@Column(name = "hora_salida")
+	@Column(name = "fecha_salida")
 	@NotEmpty
-	@DateTimeFormat(pattern = "hh:mm")
-	private Time  horaSalida;
+	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm")
+	private LocalDate  fechaSalida;
 
-	@Column(name = "hora_llegada")
-	@DateTimeFormat(pattern = "hh:mm")
-	private Time  horaLlegada;
+	@Column(name = "fecha_llegada")
+	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm")
+	private LocalDate  fechaLlegada;
 	
 	@NotEmpty
 	@Positive
