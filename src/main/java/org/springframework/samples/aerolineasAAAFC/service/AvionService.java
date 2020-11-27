@@ -4,14 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.repository.AvionRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class AvionService {
 	
 	private AvionRepository avionRepository;
 	
 	// Duda: ¿hay que meter en nuestros servicios 
-	//       el UserService y el AuthoritiesService?
+	//       el UserService y el AuthoritiesService? Solo en aquellos donde tenga relacionado la entidad user, como cliente o azafato
 	@Autowired
 	public AvionService(AvionRepository avionRepository) {
 		this.avionRepository = avionRepository;

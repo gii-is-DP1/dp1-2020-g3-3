@@ -1,17 +1,17 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,13 +50,13 @@ public class Cliente extends BaseEntity{
 
 	@Column(name = "iban")
 	@NotEmpty
-	@Pattern(regexp="^ES\\d{22}$")
+	@Pattern(regexp="^ES\\s\\d{22}$")
 	private String iban;
 
 	@Column(name = "fecha_nacimiento")
-	@NotEmpty
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
