@@ -1,7 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,18 +44,18 @@ public class Avion extends BaseEntity{
 	private Integer horasAcumuladas;
 	
 	@Column(name = "fecha_fabricacion")
-	@NotEmpty
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private Date fechaFabricacion;
+	private LocalDate fechaFabricacion;
 	
 	@Column(name = "disponibilidad")
 	@NotEmpty
 	private Boolean disponibilidad;
 	
 	@Column(name = "fecha_revision")
-	@NotEmpty
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private Date fechaRevision;
+	private LocalDate fechaRevision;
 	
 	@Column(name = "plazas_economica")
 	private int plazasEconomica;

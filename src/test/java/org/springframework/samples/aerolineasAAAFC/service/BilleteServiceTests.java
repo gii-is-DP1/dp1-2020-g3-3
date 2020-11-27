@@ -2,9 +2,13 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,32 +40,40 @@ public class BilleteServiceTests {
 
 
 	@Test
+
 	@Transactional
 	public void shouldInsertBilleteIntoDatabaseAndGenerateId() throws ParseException {
 
-		Vuelo vuelo = this.vueloService.findVueloById(1);
 
+		Vuelo vuelo = this.vueloService.findVueloById(1);
+		
 		int nBilletes=vuelo.getBilletes().size();
 
 		Billete billete = new Billete();
+
 		Clase clase=Clase.ECONOMICA;
 		billete.setClase(clase);
 		billete.setAsiento("A44");
+
 		billete.setCoste(12);
-		Date reserva=new SimpleDateFormat("yyyy/MM/dd").parse("2010/05/16");
+		LocalDate reserva=LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE);
 		billete.setFechaReserva(reserva);
 
 
 		
 		//se comprueba que se añadio correctamente el billete
+
 		vuelo.getBilletes().add(billete);
 		assertThat(vuelo.getBilletes().size()).isEqualTo(nBilletes + 1);
 
 
-		//this.billeteService.saveBillete(billete);
-		
 		//se comprueba que se guarda exitosamente los cambios en vuelo
+
+		
+		//this.billeteService.saveBillete(billete);
+
 		this.vueloService.saveVuelo(vuelo);
+
 		vuelo = this.vueloService.findVueloById(1);
 		assertThat(vuelo.getBilletes().size()).isEqualTo(nBilletes + 1);
 		

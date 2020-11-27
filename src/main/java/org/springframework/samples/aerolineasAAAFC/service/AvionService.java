@@ -13,7 +13,7 @@ public class AvionService {
 	private AvionRepository avionRepository;
 	
 	// Duda: ¿hay que meter en nuestros servicios 
-	//       el UserService y el AuthoritiesService?
+	//       el UserService y el AuthoritiesService? Solo en aquellos donde tenga relacionado la entidad user, como cliente o azafato
 	@Autowired
 	public AvionService(AvionRepository avionRepository) {
 		this.avionRepository = avionRepository;

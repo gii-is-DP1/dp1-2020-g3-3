@@ -3,13 +3,13 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -51,29 +51,22 @@ public class AvionServiceTests {
 	@Test
 	void updateFechaFabricacionAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
-		Date fecha;
-			try {
-				fecha = new SimpleDateFormat("yyyy/MM/dd").parse("2010/05/16");
-				avion.setFechaFabricacion(fecha);
-				assertThat(avion.getFechaFabricacion()).isEqualTo(fecha);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	
+		LocalDate fecha = LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE); 
+		avion.setFechaFabricacion(fecha);
+		assertThat(avion.getFechaFabricacion()).isEqualTo(fecha);
+
+
 	}
 
 	@Test
 	void updateFechaRevisionAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
-		Date fecha;
-		try {
-			fecha = new SimpleDateFormat("yyyy/MM/dd").parse("2015/12/28");
-			avion.setFechaRevision(fecha);
-			assertThat(avion.getFechaRevision()).isEqualTo("2015-12-28");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+
+		LocalDate fecha = LocalDate.parse("2015-12-28", DateTimeFormatter.ISO_DATE);
+		avion.setFechaRevision(fecha);
+		assertThat(avion.getFechaRevision()).isEqualTo("2015-12-28");
+
+
 	}
 
 	@Test

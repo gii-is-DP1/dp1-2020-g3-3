@@ -1,6 +1,6 @@
 	package org.springframework.samples.aerolineasAAAFC.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -43,7 +43,7 @@ public class Billete extends BaseEntity{
 	//@NotEmpty
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private Date fechaReserva;
+	private LocalDate fechaReserva;
 	
 	@Column(name = "clase")
 	//@NotEmpty
