@@ -17,6 +17,7 @@ public class Authorities extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "username")
+	@EqualsAndHashCode.Exclude
 	User user;
 	
 	@Size(min = 3, max = 50)

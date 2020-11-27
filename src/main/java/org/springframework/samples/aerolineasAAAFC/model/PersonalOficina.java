@@ -54,10 +54,12 @@ public class PersonalOficina extends BaseEntity{
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
+	@EqualsAndHashCode.Exclude
 	private User user;
 
 	// Relaciones de tabla:
 	
 	@ManyToMany(cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
 	private Collection<Vuelo> vuelos;
 }

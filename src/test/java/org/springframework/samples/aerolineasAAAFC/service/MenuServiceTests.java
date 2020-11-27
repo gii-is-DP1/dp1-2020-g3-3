@@ -46,11 +46,11 @@ public class MenuServiceTests {
 		assertThat(billete1.getMenus().size()).isEqualTo(found + 1);
 		
 		menu.setBillete(billete1);
-		Logger.getLogger(MenuServiceTests.class.getName()).log(Level.INFO, "Existe billete con menús: "+billete1.getMenus().size());
+		Logger.getLogger(MenuServiceTests.class.getName()).log(Level.INFO, "Existe billete con menús: "+billete1.toString());
 		
 		try {
 			Logger.getLogger(MenuServiceTests.class.getName()).log(Level.INFO, "Introducimos el menú: "
-		+menu.getPostre()+" "+menu.getPrimerPlato()+" "+menu.getSegundoPlato());
+		+ menu.toString());
 			
 			menuService.saveMenu(menu);
 		} catch (MenuPriceException ex) {
@@ -59,6 +59,8 @@ public class MenuServiceTests {
 		}
 		
 		this.billeteService.saveBillete(billete1);
+		Logger.getLogger(MenuServiceTests.class.getName()).log(Level.INFO, "El menú tiene id: "
+				+ menu.getId());
 		assertThat(billete1.getMenus().size()).isEqualTo(found + 1);
 		// checks that id has been generated
 		assertThat(menu.getId()).isNotNull();
