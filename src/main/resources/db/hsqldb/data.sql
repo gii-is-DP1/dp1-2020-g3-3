@@ -1,6 +1,6 @@
-INSERT INTO users(username,password,enabled) VALUES ('28976897W','Fly_High14&',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('01446551N','Fly_High14&',TRUE);
 
-INSERT INTO authorities(id,username,authority) VALUES (1,'28976897W','cliente');
+INSERT INTO authorities(id,username,authority) VALUES (1,'01446551N','cliente');
 
 INSERT INTO users(username,password,enabled) VALUES ('21333214R','A3224234232%adsa',TRUE);
 
@@ -11,11 +11,11 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'21333214R','azafato');
 --VALUES (1,'Camila','García Pérez','48736253T','ES 1221089893201234561111',1,5345);
 
 --Aeropuertos
-INSERT INTO aeropuertos(id,nombre,localizacion,codigo_IATA,telefono)
-VALUES (1,'Aeropuerto de São Paulo Guarulhos','São Paulo, Brasil' , 'GRU', '11 2445 2945');
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
+VALUES ('Aeropuerto de São Paulo Guarulhos','São Paulo, Brasil' , 'GRU', '11 2445 2945');
 
-INSERT INTO aeropuertos(id,nombre,localizacion,codigo_IATA,telefono)
-VALUES (2,'Aeropuerto de Barajas','São Paulo, Sevilla' , 'MAD', '913 21 10 00');
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
+VALUES ('Aeropuerto de Barajas','São Paulo, Sevilla' , 'MAD', '913 21 10 00');
 
 --Aviones
 INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
@@ -41,7 +41,7 @@ INSERT INTO idiomas_azafato VALUES (1, 3);
 
 --Clientes
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,username)
-VALUES ('Juan Jesús', 'Ferrero Gutiérrez', '28976897W', 'Calle Carbón ,35 - 41007 Sevilla', 'ES 6621000418401234567893', '1997-06-03','28976897W');
+VALUES ('María', 'Soto Ramírez', '01446551N', 'C/Enladrillada,2 1ºB Sevilla', 'ES 7771056418401234567893', '1995-03-08','01446551N');
 --INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,username)
 --VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 - 41011 Sevilla', 'ES 4422000418403334567812', '1989-12-03','29565800A'); hay que añadirle el usuario
 
