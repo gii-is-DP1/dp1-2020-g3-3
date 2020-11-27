@@ -50,6 +50,6 @@ INSERT INTO billetes(id,coste,asiento,fecha_reserva,clase)
 VALUES (1,80,'F4','2020-04-06',0);
 
 --Vuelos
-INSERT INTO vuelos(fecha_vuelo,hora_salida,hora_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id) 
-VALUES ('2040-12-11','10:40','14:40',64,1,2);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id) 
+VALUES (parsedatetime('2040-12-11 10:40','dd-MM-yyyy hh:mm'),parsedatetime('2040-12-12 10:40','dd-MM-yyyy hh:mm'),64,1,2);
 
