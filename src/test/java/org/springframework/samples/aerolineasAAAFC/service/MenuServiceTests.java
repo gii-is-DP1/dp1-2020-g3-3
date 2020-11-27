@@ -29,7 +29,7 @@ public class MenuServiceTests {
 	@Transactional
 	public void shouldInsertMenuAndGenerateId() {
 
-		Billete billete1 = this.billeteService.findBilleteById(1).get();
+		Billete billete1 = this.billeteService.findBilleteById(1);
 		int found = billete1.getMenus().size();
 		
 		Menu menu = new Menu();
@@ -38,14 +38,20 @@ public class MenuServiceTests {
 		menu.setPrecio(1.21+5.54+0.19);
 		menu.setPrimerPlato("EnsaladaCésar");
 		menu.setSegundoPlato("PatoPekinesa");
-		menu.setPrimerPlato("Pera");
+		menu.setPostre("Pera");
 		
 		Set<Menu> oldMenus = billete1.getMenus();
 		oldMenus.add(menu);
 		billete1.setMenus(oldMenus);
 		assertThat(billete1.getMenus().size()).isEqualTo(found + 1);
 		
+		menu.setBillete(billete1);
+		Logger.getLogger(MenuServiceTests.class.getName()).log(Level.INFO, "Existe billete con menús: "+billete1.getMenus().size());
+		
 		try {
+			Logger.getLogger(MenuServiceTests.class.getName()).log(Level.INFO, "Introducimos el menú: "
+		+menu.getPostre()+" "+menu.getPrimerPlato()+" "+menu.getSegundoPlato());
+			
 			menuService.saveMenu(menu);
 		} catch (MenuPriceException ex) {
 			//Parece que se han introducido precios incorrectos
