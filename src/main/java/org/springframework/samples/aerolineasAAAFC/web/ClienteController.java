@@ -36,10 +36,7 @@ public class ClienteController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
-	
 
-	
-	
 	/*
 	 * ALTA DE UN NUEVO CLIENTE
 	 */
@@ -87,7 +84,9 @@ public class ClienteController {
 		}
 	}
 	
-	//BÚSQUEDA CLIENTE/S
+	/*
+	 * BÚSQUEDA CLIENTE/S
+	 */
 	
 	@GetMapping("/clientes/{clienteId}")
 	public ModelAndView showCliente(@PathVariable("clienteId") int clienteId) {

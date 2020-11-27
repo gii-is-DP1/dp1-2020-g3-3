@@ -10,8 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -62,12 +62,8 @@ public class AvionControllerTests {
 		apache.setAzafatos(new HashSet<>());
 		apache.setCapacidadPasajero(100);
 		apache.setDisponibilidad(false);
-		try {
-			apache.setFechaRevision(new SimpleDateFormat("yyyy/MM/dd").parse("2019/12/08"));
-			apache.setFechaFabricacion(new SimpleDateFormat("yyyy/MM/dd").parse("2015/12/28"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		apache.setFechaRevision(LocalDate.parse("2019-12-08", DateTimeFormatter.ISO_DATE));
+		apache.setFechaFabricacion(LocalDate.parse("2015-12-08", DateTimeFormatter.ISO_DATE));
 		apache.setHorasAcumuladas(12);
 		apache.setPersonalControl(new HashSet<>());
 		apache.setPesoMaximoEquipaje(21);
@@ -89,9 +85,9 @@ public class AvionControllerTests {
 		.andExpect(model().attribute("avion", hasProperty("capacidadPasajero", is(100))))
 		.andExpect(model().attribute("avion", hasProperty("pesoMaximoEquipaje", is(12))))
 		.andExpect(model().attribute("avion", hasProperty("horasAcumuladas", is(0))))
-		.andExpect(model().attribute("avion", hasProperty("fechaFabricacion", is(new SimpleDateFormat("yyyy/MM/dd").parse("2015/12/28")))))
+		.andExpect(model().attribute("avion", hasProperty("fechaFabricacion", is(LocalDate.parse("2015-12-28", DateTimeFormatter.ISO_DATE)))))
 		.andExpect(model().attribute("avion", hasProperty("disponibilidad", is(true))))
-		.andExpect(model().attribute("avion", hasProperty("fechaRevision", is(new SimpleDateFormat("yyyy/MM/dd").parse("2020/12/28")))))
+		.andExpect(model().attribute("avion", hasProperty("fechaRevision", is(LocalDate.parse("2020-12-08", DateTimeFormatter.ISO_DATE)))))
 		.andExpect(model().attribute("avion", hasProperty("plazasEconomica", is(60))))
 		.andExpect(model().attribute("avion", hasProperty("plazasEjecutiva", is(12))))
 		.andExpect(model().attribute("avion", hasProperty("plazasPrimera", is(12))))
@@ -106,14 +102,14 @@ public class AvionControllerTests {
 				.param("tipoAvion", "TIPE3")
 				.param("pesoMaximoEquipaje", "12")
 				.param("horasAcumuladas", "0")
-				.param("fechaFabricacion","2015/12/28")
-				.param("fechaResion","2020/12/28")
+				.param("fechaFabricacion","2015-12-28")
+				.param("fechaResion","2020-12-28")
 				.param("disponibilidad", "true")
 				.param("plazasEconomica", "60")
 				.param("plazasEjecutiva", "12")
 				.param("plazasPrimera", "5"))
-		.andExpect(status().is3xxRedirection())
-		.andExpect(view().name("redirect:/aviones/{avionId}")));
+				.andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/aviones/{avionId}")));
 	}
 
 	@WithMockUser(value = "spring")
@@ -121,14 +117,14 @@ public class AvionControllerTests {
 	void testProcessUpdateOwnerFormHasErrors() throws Exception {
 		mockMvc.perform((RequestBuilder) ((ResultActions) post("/aviones/{avionId}/edit", TEST_AVION_ID)
 				.with(csrf())
-				.param("fechaResion","2020/12/28")
+				.param("fechaResion","2020-12-28")
 				.param("disponibilidad", "false")
 				.param("plazasEconomica", "ocho")
 				.param("plazasEjecutiva", "12"))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("avion"))
-		.andExpect(model().attributeHasFieldErrors("avion", "plazasEconomica"))
-		.andExpect(view().name("aviones/createOrUpdateAvionForm")));
+				.andExpect(status().isOk())
+				.andExpect(model().attributeHasErrors("avion"))
+				.andExpect(model().attributeHasFieldErrors("avion", "plazasEconomica"))
+				.andExpect(view().name("aviones/createOrUpdateAvionForm")));
 	}
 
 

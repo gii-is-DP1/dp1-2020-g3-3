@@ -1,6 +1,6 @@
 	package org.springframework.samples.aerolineasAAAFC.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,12 +40,12 @@ public class Billete extends BaseEntity{
 	private String asiento;
 	
 	@Column(name = "fecha_reserva")
-	@NotEmpty
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private Date fechaReserva;
+	private LocalDate fechaReserva;
 	
 	@Column(name = "clase")
-	@NotEmpty
+	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private Clase clase;
 	

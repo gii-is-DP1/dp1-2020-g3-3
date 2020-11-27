@@ -6,8 +6,10 @@ import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class PersonalControlService {
 
 

@@ -2,19 +2,15 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.Date;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.stereotype.Service;
@@ -63,14 +59,12 @@ public class ClienteServiceTests {
 		Cliente cliente = clienteService.findClienteById(1);
 		String now = LocalDate.now().toString();
 		assertThat(cliente.getFechaNacimiento()).isBefore(now);
-		assertThat(cliente.getFechaNacimiento()).useDefaultDateFormatsOnly();
+		assertThat(cliente.getFechaNacimiento()).hasToString("1995-03-08");
 	}
-
-/*
 	
 	@Test
 	@Transactional
-	public void shouldInsertCliente() throws ParseException {
+	public void shouldInsertCliente(){
 		Collection<Cliente> clientes = this.clienteService.findClientes();
 		int found = clientes.size();
 
@@ -80,7 +74,7 @@ public class ClienteServiceTests {
 		cliente.setNif("28976897W");
 		cliente.setDireccionFacturacion("Calle Carbón, 35 4ºB Sevilla");
 		cliente.setIban("ES 6621000418401234567893");
-		Date fecha = new SimpleDateFormat("yyyy/MM/dd").parse("1997/06/03");  
+		LocalDate fecha = LocalDate.parse("1997-06-03", DateTimeFormatter.ISO_DATE);
 		cliente.setFechaNacimiento(fecha);
                 User user = new User();
                 user.setUsername("28976897W");
@@ -93,7 +87,7 @@ public class ClienteServiceTests {
 
 		clientes = this.clienteService.findClientes();
 		assertThat(clientes.size()).isEqualTo(found + 1);
-	}*/
+	}
 
 	
 }
