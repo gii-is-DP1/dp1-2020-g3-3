@@ -61,9 +61,11 @@ public class AvionServiceTests {
 	@Test
 	void updateFechaRevisionAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
+
 		LocalDate fecha = LocalDate.parse("2015-12-28", DateTimeFormatter.ISO_DATE);
 		avion.setFechaRevision(fecha);
 		assertThat(avion.getFechaRevision()).isEqualTo("2015-12-28");
+
 
 	}
 

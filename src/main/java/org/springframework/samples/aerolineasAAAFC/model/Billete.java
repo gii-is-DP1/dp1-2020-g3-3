@@ -40,11 +40,13 @@ public class Billete extends BaseEntity{
 	private String asiento;
 	
 	@Column(name = "fecha_reserva")
+	//@NotEmpty
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate fechaReserva;
 	
 	@Column(name = "clase")
+	//@NotEmpty
 	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private Clase clase;
