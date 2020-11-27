@@ -6,6 +6,9 @@ INSERT INTO users(username,password,enabled) VALUES ('21333214R','A3224234232%ad
 
 INSERT INTO authorities(id,username,authority) VALUES (2,'21333214R','azafato');
 
+--PersonalControl
+--INSERT INTO personal_control(id,nombre,apellidos,nif,iban,rol,salario)   hay que añadirles un usuario
+--VALUES (1,'Camila','García Pérez','48736253T','ES 1221089893201234561111',1,5345);
 
 --Aeropuertos
 INSERT INTO aeropuertos(id,nombre,localizacion,codigo_IATA,telefono)
@@ -22,6 +25,7 @@ VALUES ('Airbus A320', 300, 2, 1700, '2015-09-24', true, '2017-09-24', 200, 80, 
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
 VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R');
 
+--Idiomas
 INSERT INTO idiomas VALUES (1, 'Español');
 INSERT INTO idiomas VALUES (2, 'Inglés');
 INSERT INTO idiomas VALUES (3, 'Francés');
@@ -38,10 +42,12 @@ INSERT INTO idiomas_azafato VALUES (1, 3);
 --Clientes
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,username)
 VALUES ('Juan Jesús', 'Ferrero Gutiérrez', '28976897W', 'Calle Carbón ,35 - 41007 Sevilla', 'ES 6621000418401234567893', '1997-06-03','28976897W');
+--INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,username)
+--VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 - 41011 Sevilla', 'ES 4422000418403334567812', '1989-12-03','29565800A'); hay que añadirle el usuario
 
 --Billetes
-INSERT INTO billetes(coste,asiento,fecha_reserva,clase)
-VALUES (80,'F4','2020-04-06',0);
+INSERT INTO billetes(id,coste,asiento,fecha_reserva,clase)
+VALUES (1,80,'F4','2020-04-06',0);
 
 --Vuelos
 INSERT INTO vuelos(fecha_vuelo,hora_salida,hora_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id) 

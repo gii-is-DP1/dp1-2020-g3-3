@@ -1,0 +1,63 @@
+package org.springframework.samples.aerolineasAAAFC.service;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Menu;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.MenuPriceException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+public class MenuServiceTests {
+
+	@Autowired
+	protected MenuService menuService;
+
+	@Autowired
+	protected BilleteService billeteService;
+
+	@Test
+	@Transactional
+	public void shouldInsertMenuAndGenerateId() {
+
+		Billete billete1 = this.billeteService.findBilleteById(1).get();
+		int found = billete1.getMenus().size();
+		
+		Menu menu = new Menu();
+		
+		//Correspondientes a ensalada césar, pato a la pekinesa y pera
+		menu.setPrecio(1.21+5.54+0.19);
+		menu.setPrimerPlato("EnsaladaCésar");
+		menu.setSegundoPlato("PatoPekinesa");
+		menu.setPrimerPlato("Pera");
+		
+		Set<Menu> oldMenus = billete1.getMenus();
+		oldMenus.add(menu);
+		billete1.setMenus(oldMenus);
+		assertThat(billete1.getMenus().size()).isEqualTo(found + 1);
+		
+		try {
+			menuService.saveMenu(menu);
+		} catch (MenuPriceException ex) {
+			//Parece que se han introducido precios incorrectos
+			Logger.getLogger(MenuServiceTests.class.getName()).log(Level.SEVERE, "Parece que ha introducido un precio incorrecto.", ex);
+		}
+		
+		this.billeteService.saveBillete(billete1);
+		assertThat(billete1.getMenus().size()).isEqualTo(found + 1);
+		// checks that id has been generated
+		assertThat(menu.getId()).isNotNull();
+		
+		
+	}
+
+}

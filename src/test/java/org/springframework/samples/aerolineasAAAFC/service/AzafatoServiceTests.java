@@ -53,7 +53,7 @@ public class AzafatoServiceTests {
 	void getSalarioAzafatoSuccessful() {
 		Azafato azafato = azafatoService.findAzafatoById(1);
 		assertThat(azafato.getSalario()).isNotNull();
-		assertThat(azafato.getSalario()).isGreaterThan(100);
+		assertThat(azafato.getSalario()).isGreaterThan(1000);
 	}
 
 	
