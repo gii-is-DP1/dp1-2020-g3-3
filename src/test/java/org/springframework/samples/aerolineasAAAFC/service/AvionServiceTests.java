@@ -70,7 +70,7 @@ public class AvionServiceTests {
 		try {
 			fecha = new SimpleDateFormat("yyyy/MM/dd").parse("2015/12/28");
 			avion.setFechaRevision(fecha);
-			assertThat(avion.getFechaRevision()).isEqualTo("2015/12/28");
+			assertThat(avion.getFechaRevision()).isEqualTo("2015-12-28");
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

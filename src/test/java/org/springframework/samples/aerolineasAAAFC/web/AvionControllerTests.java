@@ -25,27 +25,31 @@ import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
-import org.springframework.samples.petclinic.web.OwnerController;
+import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 
-@WebMvcTest(controllers=OwnerController.class,
+@WebMvcTest(controllers=AvionController.class,
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
 public class AvionControllerTests {
 
 
-	private static final int TEST_AVION_ID = 1;
+	private static final int TEST_AVION_ID = 2;
 
 	@Autowired
 	private AvionController avionController;
 
 	@MockBean
+	@Autowired
 	private AvionService avionService;
-
+	
+    @MockBean
+	private UserService userService;
+    
 	@MockBean
 	private AuthoritiesService authoritiesService; 
 
@@ -61,7 +65,7 @@ public class AvionControllerTests {
 		apache.setId(TEST_AVION_ID);
 		apache.setAzafatos(new HashSet<>());
 		apache.setCapacidadPasajero(100);
-		apache.setDisponibilidad(false);
+		apache.setDisponibilidad(true);
 		try {
 			apache.setFechaRevision(new SimpleDateFormat("yyyy/MM/dd").parse("2019/12/08"));
 			apache.setFechaFabricacion(new SimpleDateFormat("yyyy/MM/dd").parse("2015/12/28"));
@@ -87,15 +91,15 @@ public class AvionControllerTests {
 		.andExpect(model().attributeExists("avion"))
 		.andExpect(model().attribute("avion", hasProperty("tipoAvion", is("AIRBUS"))))
 		.andExpect(model().attribute("avion", hasProperty("capacidadPasajero", is(100))))
-		.andExpect(model().attribute("avion", hasProperty("pesoMaximoEquipaje", is(12))))
-		.andExpect(model().attribute("avion", hasProperty("horasAcumuladas", is(0))))
+		.andExpect(model().attribute("avion", hasProperty("pesoMaximoEquipaje", is(21))))
+		.andExpect(model().attribute("avion", hasProperty("horasAcumuladas", is(12))))
 		.andExpect(model().attribute("avion", hasProperty("fechaFabricacion", is(new SimpleDateFormat("yyyy/MM/dd").parse("2015/12/28")))))
 		.andExpect(model().attribute("avion", hasProperty("disponibilidad", is(true))))
-		.andExpect(model().attribute("avion", hasProperty("fechaRevision", is(new SimpleDateFormat("yyyy/MM/dd").parse("2020/12/28")))))
-		.andExpect(model().attribute("avion", hasProperty("plazasEconomica", is(60))))
-		.andExpect(model().attribute("avion", hasProperty("plazasEjecutiva", is(12))))
-		.andExpect(model().attribute("avion", hasProperty("plazasPrimera", is(12))))
-		.andExpect(view().name("owners/createOrUpdateVueloForm"));
+		.andExpect(model().attribute("avion", hasProperty("fechaRevision", is(new SimpleDateFormat("yyyy/MM/dd").parse("2019/12/08")))))
+		.andExpect(model().attribute("avion", hasProperty("plazasEconomica", is(3))))
+		.andExpect(model().attribute("avion", hasProperty("plazasEjecutiva", is(3))))
+		.andExpect(model().attribute("avion", hasProperty("plazasPrimera", is(65))))
+		.andExpect(view().name("aviones/createOrUpdateAvionForm"));
 	}
 
 	@WithMockUser(value = "spring")
