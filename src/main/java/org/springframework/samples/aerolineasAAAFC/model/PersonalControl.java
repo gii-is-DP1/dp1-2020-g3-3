@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
@@ -47,7 +49,8 @@ public class PersonalControl extends BaseEntity{
 	
 	@Column(name = "rol")
 	@NotEmpty
-	private String rol;
+	@Enumerated(EnumType.ORDINAL)
+	private Rol rol;
 	
 	@Column(name = "salario")
 	@NotEmpty

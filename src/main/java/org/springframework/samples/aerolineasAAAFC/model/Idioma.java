@@ -3,6 +3,7 @@ package org.springframework.samples.aerolineasAAAFC.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,5 +15,6 @@ import lombok.EqualsAndHashCode;
 public class Idioma extends BaseEntity{
 
 	@Column(name = "idioma")
+	@NotEmpty
 	private String idioma; 
 }
