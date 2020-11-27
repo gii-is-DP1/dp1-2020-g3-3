@@ -2,10 +2,13 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Date;
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,10 +32,18 @@ public class BilleteServiceTests {
 	@Autowired
 	protected VueloService vueloService;
 
-	
-	@Transactional
+
+
+
+
+
+
+
 	@Test
-	public void shouldInsertBilleteIntoDatabaseAndGenerateId() {
+
+	@Transactional
+	public void shouldInsertBilleteIntoDatabaseAndGenerateId() throws ParseException {
+
 
 		Vuelo vuelo = this.vueloService.findVueloById(1);
 		
@@ -39,21 +51,35 @@ public class BilleteServiceTests {
 
 		Billete billete = new Billete();
 
-		billete.setCoste(12);
+		Clase clase=Clase.ECONOMICA;
+		billete.setClase(clase);
 		billete.setAsiento("A44");
-		billete.setFechaReserva(LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE));
-		billete.setClase(Clase.ECONOMICA);
+
+		billete.setCoste(12);
+		LocalDate reserva=LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE);
+		billete.setFechaReserva(reserva);
+
+
 		
+		//se comprueba que se añadio correctamente el billete
+
 		vuelo.getBilletes().add(billete);
 		assertThat(vuelo.getBilletes().size()).isEqualTo(nBilletes + 1);
 
+
+		//se comprueba que se guarda exitosamente los cambios en vuelo
+
 		
-		this.billeteService.saveBillete(billete);
+		//this.billeteService.saveBillete(billete);
+
 		this.vueloService.saveVuelo(vuelo);
 
-//		vuelo = this.vueloService.findVueloById(1);
-//		assertThat(vuelo.getBilletes().size()).isEqualTo(nBilletes + 1);
-		// checks that id has been generated
+		vuelo = this.vueloService.findVueloById(1);
+		assertThat(vuelo.getBilletes().size()).isEqualTo(nBilletes + 1);
+		
+		
+		//se comprueba que el id se añade correctamente
+		billete.setId(2);
 		assertThat(billete.getId()).isNotNull();
 	}
 
