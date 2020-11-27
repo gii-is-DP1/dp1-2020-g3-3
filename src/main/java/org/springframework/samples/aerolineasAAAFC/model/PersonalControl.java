@@ -59,10 +59,12 @@ public class PersonalControl extends BaseEntity{
 	// Relaciones de tabla:
 	
 	@ManyToMany(cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
 	private Set<Avion> aviones;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
+	@EqualsAndHashCode.Exclude
 	private User user;
 
 	

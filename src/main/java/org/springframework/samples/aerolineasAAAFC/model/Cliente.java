@@ -60,10 +60,12 @@ public class Cliente extends BaseEntity{
 
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
+	@EqualsAndHashCode.Exclude
 	private Set<Billete> billetes;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
+	@EqualsAndHashCode.Exclude
 	private User user;
 	
 }
