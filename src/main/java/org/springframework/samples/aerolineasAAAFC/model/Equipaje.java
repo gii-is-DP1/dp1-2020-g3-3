@@ -5,8 +5,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Column;
-import javax.validation.constraints.NotEmpty;
-
 import org.hibernate.validator.constraints.Range;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.MedidasEquipajesConstraint;
 
@@ -28,7 +26,6 @@ public class Equipaje extends BaseEntity{
 	//Atributos
 	
 	@Column(name = "peso")
-	@NotEmpty
 	@Range(min=3,max=32)
 	private Integer peso;
 	
@@ -40,5 +37,11 @@ public class Equipaje extends BaseEntity{
 	@JoinColumn(name = "billete_id")
 	@EqualsAndHashCode.Exclude
 	private Billete billete;
+	
+	public String toString() {
+		
+		return "Id equipaje "+this.getId()+" Dimensiones "+this.getDimensiones()+" Id Billete "+(this.getBillete()==null?"":this.getBillete().getId());
+	}
+	
 	
 }

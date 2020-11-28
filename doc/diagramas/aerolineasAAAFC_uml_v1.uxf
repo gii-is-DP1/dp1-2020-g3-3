@@ -44,17 +44,14 @@ tiene v</panel_attributes>
       <x>329</x>
       <y>350</y>
       <w>98</w>
-      <h>112</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>Vuelo
 --
 idVuelo
-fechaVuelo
-horaSalida
-horaLlegada
-precio
-codigoIATAOrigen
-codigoIATADestino</panel_attributes>
+fechaSalida
+fechaLlegada
+precio</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -302,15 +299,15 @@ salario
     <id>Relation</id>
     <coordinates>
       <x>371</x>
-      <y>455</y>
+      <y>413</y>
       <w>56</w>
-      <h>77</h>
+      <h>119</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=*
 m2=*
 gestiona</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
