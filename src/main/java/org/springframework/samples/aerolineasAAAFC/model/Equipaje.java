@@ -38,6 +38,7 @@ public class Equipaje extends BaseEntity{
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "billete_id")
+	@EqualsAndHashCode.Exclude
 	private Billete billete;
 	
 }

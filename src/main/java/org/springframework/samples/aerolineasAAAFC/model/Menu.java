@@ -41,7 +41,13 @@ public class Menu extends BaseEntity {
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "billete_id")
+	@EqualsAndHashCode.Exclude 
 	private Billete billete;
+	
+	public String toString() {
+		
+		return "Id menú "+this.getId()+" Precio "+this.getPrecio()+" Id Billete "+(this.getBillete()==null?"":this.getBillete().getId());
+	}
 	
 
 }

@@ -53,6 +53,7 @@ public class Azafato extends BaseEntity{
 	@JoinTable(name = "idiomas_azafato", 
 	joinColumns = @JoinColumn(name = "azafato_id"),
 	inverseJoinColumns = @JoinColumn(name = "idioma_id"))
+	@EqualsAndHashCode.Exclude 
 	private Set<Idioma> idiomas;
 
 	@Column(name = "salario")
@@ -62,10 +63,12 @@ public class Azafato extends BaseEntity{
 	// Relaciones de tabla:
 
 	@ManyToMany(cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude 
 	private Set<Avion> aviones;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "username", referencedColumnName = "username")
+	@EqualsAndHashCode.Exclude 
 	private User user;
 
 }

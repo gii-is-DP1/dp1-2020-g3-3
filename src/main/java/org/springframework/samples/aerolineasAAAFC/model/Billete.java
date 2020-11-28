@@ -1,4 +1,4 @@
-	package org.springframework.samples.aerolineasAAAFC.model;
+package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -18,13 +18,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
 @Entity
 @Table(name = "billetes")
 public class Billete extends BaseEntity{
@@ -54,9 +53,11 @@ public class Billete extends BaseEntity{
 	// Relaciones de tabla:
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
+	@EqualsAndHashCode.Exclude
 	private Set<Equipaje> equipajes;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
+	@EqualsAndHashCode.Exclude 
 	private Set<Menu> menus;
 	
 	@ManyToOne(optional=true) //segun el model un billete no tiene por qué ir asociado a un cliente
@@ -65,4 +66,9 @@ public class Billete extends BaseEntity{
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<Vuelo> vuelos;
+	
+	public String toString() {
+		
+		return this.getId()+" "+this.getAsiento()+" "+this.getMenus()+" "+this.getEquipajes();
+	}
 }

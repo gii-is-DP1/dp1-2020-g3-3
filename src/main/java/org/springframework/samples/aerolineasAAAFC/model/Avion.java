@@ -72,9 +72,11 @@ public class Avion extends BaseEntity{
 	private Set<Vuelo> vuelos;
 	
 	@ManyToMany(mappedBy="aviones")
+	@EqualsAndHashCode.Exclude
 	private Set<Azafato> azafatos;
 	
 	@ManyToMany(mappedBy="aviones")
+	@EqualsAndHashCode.Exclude
 	private Set<PersonalControl> personalControl;
 	
 }

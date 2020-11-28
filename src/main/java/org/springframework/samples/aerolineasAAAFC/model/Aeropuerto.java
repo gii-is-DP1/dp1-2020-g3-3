@@ -45,9 +45,11 @@ public class Aeropuerto extends BaseEntity{
 	// Relaciones de tabla:
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="aeropuertoOrigen")
+	@EqualsAndHashCode.Exclude
 	private Set<Vuelo> vuelosSalida;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="aeropuertoDestino")
+	@EqualsAndHashCode.Exclude
 	private Set<Vuelo> vuelosLlegada;
 	
 

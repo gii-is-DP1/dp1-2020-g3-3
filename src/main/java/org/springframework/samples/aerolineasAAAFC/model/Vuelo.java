@@ -51,21 +51,26 @@ public class Vuelo extends BaseEntity{
 	// Relaciones de tabla:
 
 	@ManyToMany(mappedBy = "vuelos")
+	@EqualsAndHashCode.Exclude
 	private Set<Billete> billetes;
 	
 	@ManyToMany(mappedBy = "vuelos")
+	@EqualsAndHashCode.Exclude
 	private Set<PersonalOficina> personalOficina;
 	
 	// Relacion con aeropuerto: ¿dos ManyToOne? o se hace algo diferente
 	@ManyToOne(optional=false)
 	@UniqueElements
+	@EqualsAndHashCode.Exclude
 	private Aeropuerto aeropuertoOrigen;
 	
 	@ManyToOne(optional=false)
 	@UniqueElements
+	@EqualsAndHashCode.Exclude
 	private Aeropuerto aeropuertoDestino;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
+	@EqualsAndHashCode.Exclude
 	private Set<Avion> aviones;
 	
 	
