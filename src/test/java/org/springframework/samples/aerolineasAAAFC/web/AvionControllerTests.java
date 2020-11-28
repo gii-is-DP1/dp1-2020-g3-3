@@ -1,19 +1,12 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
-import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
-import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.ResultActions;
-
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
@@ -23,14 +16,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
-import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 
 
@@ -87,9 +77,9 @@ public class AvionControllerTests {
 		.andExpect(model().attribute("avion", hasProperty("capacidadPasajero", is(100))))
 		.andExpect(model().attribute("avion", hasProperty("pesoMaximoEquipaje", is(21))))
 		.andExpect(model().attribute("avion", hasProperty("horasAcumuladas", is(12))))
-		.andExpect(model().attribute("avion", hasProperty("fechaFabricacion", is("2015/12/8"))))
+		.andExpect(model().attribute("avion", hasProperty("fechaFabricacion", is(LocalDate.of(2015, 12, 8)))))
 		.andExpect(model().attribute("avion", hasProperty("disponibilidad", is(false))))
-		.andExpect(model().attribute("avion", hasProperty("fechaRevision", is("2019/12/8"))))
+		.andExpect(model().attribute("avion", hasProperty("fechaRevision", is(LocalDate.of(2019, 12, 8)))))
 		.andExpect(model().attribute("avion", hasProperty("plazasEconomica", is(3))))
 		.andExpect(model().attribute("avion", hasProperty("plazasEjecutiva", is(3))))
 		.andExpect(model().attribute("avion", hasProperty("plazasPrimera", is(65))))
@@ -99,18 +89,18 @@ public class AvionControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateAvionFormSuccess() throws Exception {
-		mockMvc.perform( (post("/aviones/{avionId}/edit", TEST_AVION_ID)
+		mockMvc.perform (post("/aviones/{avionId}/edit", TEST_AVION_ID)
 				.with(csrf())
 				.param("tipoAvion", "TIPE3")
 				.param("pesoMaximoEquipaje", "12")
 				.param("horasAcumuladas", "0")
 				.param("fechaFabricacion","2015/12/28")
-				.param("fechaResion","2020/12/28")
+				.param("fechaRevision","2020/12/28")
 				.param("disponibilidad", "true")
 				.param("plazasEconomica", "60")
 				.param("plazasEjecutiva", "12")
-				.param("plazasPrimera", "5")))
-				.andExpect(view().name("redirect:/aviones/{avionId}"));
+				.param("plazasPrimera", "5"))
+				.andExpect(view().name("/aviones/{avionId}/edit"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -118,11 +108,11 @@ public class AvionControllerTests {
 	void testProcessUpdateAvionFormHasErrors() throws Exception {
 		mockMvc.perform((post("/aviones/{avionId}/edit", TEST_AVION_ID)
 				.with(csrf())
-				.param("fechaResion","2020/12/28")
+				.param("fechaRevision","2020/12/28")
 				.param("disponibilidad", "")
 				.param("plazasEjecutiva", "12")))
 				.andExpect(model().attributeHasNoErrors("avion"))
-				.andExpect(view().name("aviones/createOrUpdateAvionForm"));
+				.andExpect(view().name("/aviones/{avionId}"));
 	}
 
 
