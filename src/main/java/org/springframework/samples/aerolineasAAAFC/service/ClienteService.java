@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.repository.ClienteRepository;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,14 +31,23 @@ public class ClienteService {
 	}
 	
 	@Transactional
-	public void saveCliente(Cliente cliente) throws DataAccessException{
-		clienteRepository.save(cliente);
-		userService.saveUser(cliente.getUser());
-		authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "cliente");
+	public void saveCliente(Cliente cliente) throws DataAccessException, NifDuplicadoException{
+		Cliente aux = clienteRepository.findByNif(cliente.getNif());
+		if(aux!=null) {
+			throw new NifDuplicadoException();
+		}else {
+			clienteRepository.save(cliente);
+			userService.saveUser(cliente.getUser());
+			authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "cliente");
+		}
 	}
 	
 	public Cliente findClienteById(Integer id){
 		return clienteRepository.findById(id).get();
+	}
+	
+	public Cliente findClienteByNif(String nif) {
+		return clienteRepository.findByNif(nif);
 	}
 	
 	public Collection<Cliente> findClientes(){

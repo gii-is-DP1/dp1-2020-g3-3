@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AvionController {
@@ -79,13 +80,12 @@ public class AvionController {
 		}
 	}
 	
-	// DUDA: ¿usamos el ModelAndView que usan en petclinic? habría que hacer
-	//        el display de los detalles del avion en avionDetails.jsp y ya
-//	@GetMapping("/aviones/{avionId}")
-//	public ModelAndView showAvion(@PathVariable("avionId") int avionId) {
-//		ModelAndView mav = new ModelAndView("aviones/avionDetails");
-//		mav.addObject(this.avionService.findAvionById(avionId));
-//		return mav;
-//	}
+	
+	@GetMapping("/aviones/{avionId}")
+	public ModelAndView showAvion(@PathVariable("avionId") int avionId) {
+		ModelAndView mav = new ModelAndView("aviones/avionDetails");
+		mav.addObject(this.avionService.findAvionById(avionId));
+		return mav;
+	}
 
 }

@@ -47,14 +47,7 @@ public class AvionControllerTests {
 	private AvionController avionController;
 
 	@MockBean
-	@Autowired
 	private AvionService avionService;
-
-	@MockBean
-	private UserService userService;
-
-	@MockBean
-	private AuthoritiesService authoritiesService; 
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -68,11 +61,11 @@ public class AvionControllerTests {
 		apache.setId(TEST_AVION_ID);
 		apache.setAzafatos(new HashSet<>());
 		apache.setCapacidadPasajero(100);
-
+		
 		apache.setDisponibilidad(false);
-		apache.setFechaRevision(LocalDate.parse("2019-12-08", DateTimeFormatter.ISO_DATE));
-		apache.setFechaFabricacion(LocalDate.parse("2015-12-08", DateTimeFormatter.ISO_DATE));
-
+		apache.setFechaRevision(LocalDate.of(2019, 12, 8));
+		apache.setFechaFabricacion(LocalDate.of(2015, 12, 8));
+	
 		apache.setHorasAcumuladas(12);
 		apache.setPersonalControl(new HashSet<>());
 		apache.setPesoMaximoEquipaje(21);
@@ -94,9 +87,9 @@ public class AvionControllerTests {
 		.andExpect(model().attribute("avion", hasProperty("capacidadPasajero", is(100))))
 		.andExpect(model().attribute("avion", hasProperty("pesoMaximoEquipaje", is(21))))
 		.andExpect(model().attribute("avion", hasProperty("horasAcumuladas", is(12))))
-		.andExpect(model().attribute("avion", hasProperty("fechaFabricacion", is(LocalDate.parse("2015-12-08", DateTimeFormatter.ISO_DATE)))))
+		.andExpect(model().attribute("avion", hasProperty("fechaFabricacion", is("2015/12/8"))))
 		.andExpect(model().attribute("avion", hasProperty("disponibilidad", is(false))))
-		.andExpect(model().attribute("avion", hasProperty("fechaRevision", is(LocalDate.parse("2019-12-08", DateTimeFormatter.ISO_DATE)))))
+		.andExpect(model().attribute("avion", hasProperty("fechaRevision", is("2019/12/8"))))
 		.andExpect(model().attribute("avion", hasProperty("plazasEconomica", is(3))))
 		.andExpect(model().attribute("avion", hasProperty("plazasEjecutiva", is(3))))
 		.andExpect(model().attribute("avion", hasProperty("plazasPrimera", is(65))))
@@ -111,15 +104,13 @@ public class AvionControllerTests {
 				.param("tipoAvion", "TIPE3")
 				.param("pesoMaximoEquipaje", "12")
 				.param("horasAcumuladas", "0")
-				.param("fechaFabricacion","2015-12-28")
-				.param("fechaResion","2020-12-28")
+				.param("fechaFabricacion","2015/12/28")
+				.param("fechaResion","2020/12/28")
 				.param("disponibilidad", "true")
 				.param("plazasEconomica", "60")
 				.param("plazasEjecutiva", "12")
 				.param("plazasPrimera", "5")))
-				.andExpect(status().isOk());
-				//Por algun motivo se lanza una excepcion y no se por qué
-				//.andExpect(view().name("redirect:/aviones/{avionId}"));
+				.andExpect(view().name("redirect:/aviones/{avionId}"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -127,13 +118,11 @@ public class AvionControllerTests {
 	void testProcessUpdateAvionFormHasErrors() throws Exception {
 		mockMvc.perform((post("/aviones/{avionId}/edit", TEST_AVION_ID)
 				.with(csrf())
-				.param("fechaResion","2020-12-28")
+				.param("fechaResion","2020/12/28")
 				.param("disponibilidad", "")
 				.param("plazasEjecutiva", "12")))
 				.andExpect(model().attributeHasNoErrors("avion"))
-				.andExpect(status().isOk());
-				//la redirreccion es hacia una excepcion
-				//.andExpect(view().name("aviones/createOrUpdateAvionForm"));
+				.andExpect(view().name("aviones/createOrUpdateAvionForm"));
 	}
 
 

@@ -2,17 +2,22 @@ package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
-
 import javax.validation.Valid;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
+import org.springframework.samples.aerolineasAAAFC.service.UserService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -20,6 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+
+@Controller
 public class ClienteController {
 	
 	private static final String VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM = "clientes/createOrUpdateClienteForm";
@@ -27,7 +34,7 @@ public class ClienteController {
 	private final ClienteService clienteService;
 	
 	@Autowired
-	public ClienteController(ClienteService clienteService) {
+	public ClienteController(ClienteService clienteService,  UserService userService, AuthoritiesService authoritiesService) {
 		this.clienteService = clienteService;
 	}
 	
@@ -54,7 +61,12 @@ public class ClienteController {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.clienteService.saveCliente(cliente);
+			try {
+				this.clienteService.saveCliente(cliente);
+			} catch (NifDuplicadoException e) {
+				 result.rejectValue("nif", "duplicate", "already exists");
+				 return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
+			}
 			
 			return "redirect:/clientes/" + cliente.getId();
 		}
@@ -78,7 +90,12 @@ public class ClienteController {
 		}
 		else {
 			cliente.setId(clienteId);
-			this.clienteService.saveCliente(cliente);
+			try {
+				this.clienteService.saveCliente(cliente);
+			} catch (NifDuplicadoException e) {
+				 result.rejectValue("nif", "duplicate", "already exists");
+				 return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
+			}
 			
 			return "redirect:/clientes/{clienteId}";
 		}
@@ -87,6 +104,31 @@ public class ClienteController {
 	/*
 	 * BÚSQUEDA CLIENTE/S
 	 */
+	
+	@GetMapping(value = "/clientes/find")
+	public String initFindForm(Map<String, Object> model) {
+		model.put("cliente", new Cliente());
+		return "clientes/findClientes";
+	}
+
+	@GetMapping(value = "/clientes")
+	public String processFindForm(Cliente cliente, BindingResult result, Map<String, Object> model) {
+
+		if (cliente.getNif() == null) {
+			cliente.setNif("00000000X"); 
+		}
+
+		Cliente resultado = this.clienteService.findClienteByNif(cliente.getNif());
+		
+		if (resultado == null) {
+			result.rejectValue("nif", "notFound", "nif no encontrado");
+			return "clientes/findClientes";
+		} else {
+			Logger.getLogger(ClienteController.class.getName()).log(Level.INFO, "Cliente: " + cliente);
+			return "redirect:/clientes/" + cliente.getId();
+		}
+		
+	}
 	
 	@GetMapping("/clientes/{clienteId}")
 	public ModelAndView showCliente(@PathVariable("clienteId") int clienteId) {

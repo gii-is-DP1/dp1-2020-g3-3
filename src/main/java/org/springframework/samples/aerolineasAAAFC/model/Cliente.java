@@ -29,29 +29,28 @@ import lombok.EqualsAndHashCode;
 @Table(name = "clientes")
 public class Cliente extends BaseEntity{
 
-	//Atributos
-
+	// Atributos
 	@Column(name = "nombre")
 	@NotEmpty
-	private String nombre;
-
+	protected String nombre;
+	
 	@Column(name = "apellidos")
 	@NotEmpty
-	private String apellidos;
-
+	protected String apellidos;
+	
 	@Column(name = "nif")
 	@NotEmpty
 	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-	private String nif;
-
-	@Column(name = "direccion_facturacion")
-	@NotEmpty
-	private String direccionFacturacion;
-
+	protected String nif;
+	
 	@Column(name = "iban")
 	@NotEmpty
 	@Pattern(regexp="^ES\\s\\d{22}$")
-	private String iban;
+	protected String iban;
+	
+	@Column(name = "direccion_facturacion")
+	@NotEmpty
+	private String direccionFacturacion;
 
 	@Column(name = "fecha_nacimiento")
 	@NotNull

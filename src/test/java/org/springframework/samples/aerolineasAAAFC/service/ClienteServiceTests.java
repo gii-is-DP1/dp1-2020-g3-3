@@ -5,67 +5,71 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.validation.ConstraintViolationException;
+
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.User;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class ClienteServiceTests {
-	
+
 	@Autowired
 	protected ClienteService clienteService;
-	
-	
-	//Tests Consultar
-	@Test
-	void getNombreClienteSuccessful() {
-		Cliente cliente = clienteService.findClienteById(1);
-		assertThat(cliente.getNombre()).isNotEmpty();
-	}
 
-	@Test
-	void getApellidosClienteSuccessful() {
-		Cliente cliente = clienteService.findClienteById(1);
-		assertThat(cliente.getApellidos()).isNotEmpty();
-	}
+
+	//Tests Consultar
 
 	@Test
 	void getNifClienteSuccessful() {
 		Cliente cliente = clienteService.findClienteById(1);
-		assertThat(cliente.getNif()).isNotEmpty();
-		assertThat(cliente.getNif()).containsPattern("^\\d{8}[a-zA-Z]$");
-	}
-	
-	@Test
-	void getDirFacturacionClienteSuccessful() {
-		Cliente cliente = clienteService.findClienteById(1);
-		assertThat(cliente.getDireccionFacturacion()).isNotEmpty();
+		assertThat(cliente.getNif())
+		.isNotEmpty()
+		.containsPattern("^\\d{8}[a-zA-Z]$");
 	}
 
 	@Test
 	void getIbanClienteSuccessful() {
 		Cliente cliente = clienteService.findClienteById(1);
-		assertThat(cliente.getIban()).isNotEmpty();
-		assertThat(cliente.getIban()).containsPattern("^ES\\s\\d{22}$");
+		assertThat(cliente.getIban())
+		.isNotEmpty()
+		.containsPattern("^ES\\s\\d{22}$");
+	}
+
+	@Test
+	void getfechaNacimientoClienteSuccessful() {
+		Cliente cliente = clienteService.findClienteById(1);
+		String now = LocalDate.now().toString();
+		assertThat(cliente.getFechaNacimiento())
+		.isBefore(now)
+		.hasToString("1995-03-08")
+		.isBefore(LocalDate.now().minusYears(18));
 	}
 	
 	@Test
-	void getfechaNacimientoAzafatoSuccessful() {
-		Cliente cliente = clienteService.findClienteById(1);
-		String now = LocalDate.now().toString();
-		assertThat(cliente.getFechaNacimiento()).isBefore(now);
-		assertThat(cliente.getFechaNacimiento()).hasToString("1995-03-08");
+	void shouldGetClienteByNif() {
+		Cliente cliente = clienteService.findClienteByNif("01446551N");
+		assertThat(cliente.getId()).isNotNull();
 	}
-	
+
 	//Tests Añadir
-	
+
 	@Test
 	@Transactional
 	public void shouldInsertCliente(){
@@ -80,29 +84,77 @@ public class ClienteServiceTests {
 		cliente.setIban("ES 6621000418401234567893");
 		LocalDate fecha = LocalDate.parse("1997-06-03", DateTimeFormatter.ISO_DATE);
 		cliente.setFechaNacimiento(fecha);
-                User user = new User();
-                user.setUsername("28976897W");
-                user.setPassword("*Fly_High14&");
-                user.setEnabled(true);
-                cliente.setUser(user);                
-                
-		this.clienteService.saveCliente(cliente);
+		
+		User user = new User();
+		user.setUsername("28976897W");
+		user.setPassword("*Fly_High14&");
+		user.setEnabled(true);
+		cliente.setUser(user);                
+
+		try {
+			this.clienteService.saveCliente(cliente);
+		} catch (NifDuplicadoException ex) {
+			Logger.getLogger(ClienteServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
 		clientes = this.clienteService.findClientes();
 		assertThat(clientes.size()).isEqualTo(found + 1);
 	}
-	
-	//Tests Actualizar
-	
-	
-	
-	//Tests Eliminar
-	
+
 	@Test
 	@Transactional
-	public void shouldDeleteCliente() {
+	public void shouldNotInsertClienteRepetido(){
+		Collection<Cliente> clientes = this.clienteService.findClientes();
+		int found = clientes.size();
+
+		Cliente cliente = new Cliente();
+		cliente.setNombre("María");
+		cliente.setApellidos("Soto Ramírez");
+		cliente.setNif("01446551N");
+		cliente.setDireccionFacturacion("C/Enladrillada,2 1ºB Sevilla");
+		cliente.setIban("ES 7771056418401234567893");
+		LocalDate fecha = LocalDate.parse("1995-03-08", DateTimeFormatter.ISO_DATE);
+		cliente.setFechaNacimiento(fecha);
+
+		User user = new User();
+		user.setUsername("01446551Z");
+		user.setPassword("*Fly_High14&");
+		user.setEnabled(true);
+		cliente.setUser(user);                    
+
+
+		Assertions.assertThrows(NifDuplicadoException.class, ()->{ this.clienteService.saveCliente(cliente); });
+		clientes = this.clienteService.findClientes();
+		assertThat(clientes.size()).isEqualTo(found);
+	}
+
+	//Tests Actualizar
+
+	@Test
+	void shouldUpdateDirFacturacionSuccessful() {
+		Cliente cliente = clienteService.findClienteById(1);
+
+		cliente.setDireccionFacturacion("Calle Almira, 17 3ºC Segovia");
+
+		assertThat(cliente.getDireccionFacturacion())
+		.isNotEmpty()
+		.isEqualTo("Calle Almira, 17 3ºC Segovia");
+	}
+
+	//Tests Eliminar
+
+	@Test
+	@Transactional
+	public void shouldDeleteClienteById() {
+		Collection<Cliente> clientes = this.clienteService.findClientes();
+		int found = clientes.size();
 		
+		clienteService.deleteClienteById(1);
+		
+		clientes = this.clienteService.findClientes();
+		assertThat(clientes.size()).isEqualTo(found - 1);
 	}
 
 }
