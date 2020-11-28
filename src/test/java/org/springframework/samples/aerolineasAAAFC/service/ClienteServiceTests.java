@@ -29,13 +29,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class ClienteServiceTests {
-	
+
 	@Autowired
 	protected ClienteService clienteService;
-	
-	
+
+
 	//Tests Consultar
-	
+
 	@Test
 	void getNifClienteSuccessful() {
 		Cliente cliente = clienteService.findClienteById(1);
@@ -51,7 +51,7 @@ public class ClienteServiceTests {
 		.isNotEmpty()
 		.containsPattern("^ES\\s\\d{22}$");
 	}
-	
+
 	@Test
 	void getfechaNacimientoClienteSuccessful() {
 		Cliente cliente = clienteService.findClienteById(1);
@@ -62,8 +62,14 @@ public class ClienteServiceTests {
 		.isBefore(LocalDate.now().minusYears(18));
 	}
 	
+	@Test
+	void shouldGetClienteByNif() {
+		Cliente cliente = clienteService.findClienteByNif("01446551N");
+		assertThat(cliente.getId()).isNotNull();
+	}
+
 	//Tests Añadir
-	
+
 	@Test
 	@Transactional
 	public void shouldInsertCliente(){
@@ -78,31 +84,31 @@ public class ClienteServiceTests {
 		cliente.setIban("ES 6621000418401234567893");
 		LocalDate fecha = LocalDate.parse("1997-06-03", DateTimeFormatter.ISO_DATE);
 		cliente.setFechaNacimiento(fecha);
-                User user = new User();
-                user.setUsername("28976897W");
-                user.setPassword("*Fly_High14&");
-                user.setEnabled(true);
-                cliente.setUser(user);                
-                
+		
+		User user = new User();
+		user.setUsername("28976897W");
+		user.setPassword("*Fly_High14&");
+		user.setEnabled(true);
+		cliente.setUser(user);                
+
 		try {
 			this.clienteService.saveCliente(cliente);
 		} catch (NifDuplicadoException ex) {
-			 Logger.getLogger(ClienteServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(ClienteServiceTests.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		
+
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
 		clientes = this.clienteService.findClientes();
 		assertThat(clientes.size()).isEqualTo(found + 1);
 	}
-	
+
 	@Test
 	@Transactional
 	public void shouldNotInsertClienteRepetido(){
 		Collection<Cliente> clientes = this.clienteService.findClientes();
 		int found = clientes.size();
-		Logger.getLogger(ClienteServiceTests.class.getName()).log(Level.INFO, "Clientes encontrados: " + found);
-		
+
 		Cliente cliente = new Cliente();
 		cliente.setNombre("María");
 		cliente.setApellidos("Soto Ramírez");
@@ -111,40 +117,44 @@ public class ClienteServiceTests {
 		cliente.setIban("ES 7771056418401234567893");
 		LocalDate fecha = LocalDate.parse("1995-03-08", DateTimeFormatter.ISO_DATE);
 		cliente.setFechaNacimiento(fecha);
-                
-			User user = new User();
-            user.setUsername("01446551Z");
-            user.setPassword("*Fly_High14&");
-            user.setEnabled(true);
-            cliente.setUser(user);                    
 
-        
-        Assertions.assertThrows(NifDuplicadoException.class, ()->{ this.clienteService.saveCliente(cliente); });
+		User user = new User();
+		user.setUsername("01446551Z");
+		user.setPassword("*Fly_High14&");
+		user.setEnabled(true);
+		cliente.setUser(user);                    
+
+
+		Assertions.assertThrows(NifDuplicadoException.class, ()->{ this.clienteService.saveCliente(cliente); });
 		clientes = this.clienteService.findClientes();
 		assertThat(clientes.size()).isEqualTo(found);
 	}
-	
+
 	//Tests Actualizar
-	
+
 	@Test
 	void shouldUpdateDirFacturacionSuccessful() {
 		Cliente cliente = clienteService.findClienteById(1);
-		
-		//Logger.getLogger(ClienteServiceTests.class.getName()).log(Level.INFO, "Cambiando dirección de Facturación de cliente de: " + cliente.getDireccionFacturacion() + " a " + "Calle Almira, 17 3ºC Segovia");
-		
+
 		cliente.setDireccionFacturacion("Calle Almira, 17 3ºC Segovia");
-		
+
 		assertThat(cliente.getDireccionFacturacion())
 		.isNotEmpty()
 		.isEqualTo("Calle Almira, 17 3ºC Segovia");
 	}
-	
+
 	//Tests Eliminar
-	
+
 	@Test
 	@Transactional
-	public void shouldDeleteCliente() {
+	public void shouldDeleteClienteById() {
+		Collection<Cliente> clientes = this.clienteService.findClientes();
+		int found = clientes.size();
 		
+		clienteService.deleteClienteById(1);
+		
+		clientes = this.clienteService.findClientes();
+		assertThat(clientes.size()).isEqualTo(found - 1);
 	}
 
 }
