@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -53,7 +54,7 @@ public class PersonalControl extends BaseEntity{
 	private Rol rol;
 	
 	@Column(name = "salario")
-	@NotEmpty
+	@Min(value = 1000)
 	private Double Salario;
 	
 	// Relaciones de tabla:

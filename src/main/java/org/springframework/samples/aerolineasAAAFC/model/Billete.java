@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class Billete extends BaseEntity{
 	// Atributos:
 	
 	@Column(name = "coste")
+	@Positive
 	private double coste;
 
 	@Column(name = "asiento")
@@ -69,6 +71,7 @@ public class Billete extends BaseEntity{
 	
 	public String toString() {
 		
-		return this.getId()+" "+this.getAsiento()+" "+this.getMenus()+" "+this.getEquipajes();
+		return "Id de billete: " + this.getId()+" Asiento: "+this.getAsiento()+
+				" Menús: "+this.getMenus()+" Equipajes: "+this.getEquipajes();
 	}
 }

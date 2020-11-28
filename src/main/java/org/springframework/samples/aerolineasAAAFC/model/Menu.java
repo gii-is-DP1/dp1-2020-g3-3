@@ -25,6 +25,7 @@ public class Menu extends BaseEntity {
 	//Atributos
 
 	@Column(name = "precio")
+	//No hace falta añadir @Positive, hacemos una comprobación de precio con excepciones
 	private double precio;
 
 	@Column(name = "primer_plato")
