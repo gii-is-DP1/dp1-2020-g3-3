@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,25 +29,23 @@ import lombok.EqualsAndHashCode;
 @Table(name = "personal_control")
 public class PersonalControl extends BaseEntity{
 
-	//Atributos
+	// Atributos
 	
 	@Column(name = "nombre")
 	@NotEmpty
-	private String nombre;
+	protected String nombre;
 	
 	@Column(name = "apellidos")
 	@NotEmpty
-	private String apellidos;
+	protected String apellidos;
 	
-	@Column(name = "nif")
 	@NotEmpty
 	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-	private String nif;
+	protected String nif;
 	
-	@Column(name = "iban")
 	@NotEmpty
-	@Pattern(regexp="^ES\\d{22}$")
-	private String iban;
+	@Pattern(regexp="^ES\\s\\d{22}$")
+	protected String iban;
 	
 	@Column(name = "rol")
 	@NotEmpty

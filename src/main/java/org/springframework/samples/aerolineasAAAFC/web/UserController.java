@@ -5,9 +5,11 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +47,12 @@ public class UserController {
 		}
 		else {
 			//creating cliente, user, and authority
-			this.clienteService.saveCliente(cliente);
+			try {
+				this.clienteService.saveCliente(cliente);
+			} catch (NifDuplicadoException e) {
+				 result.rejectValue("nif", "duplicate", "already exists");
+				 return VIEWS_CLIENTE_CREATE_FORM;
+			}
 			return "redirect:/";
 		}
 	}

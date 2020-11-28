@@ -7,9 +7,11 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,7 +56,12 @@ public class ClienteController {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.clienteService.saveCliente(cliente);
+			try {
+				this.clienteService.saveCliente(cliente);
+			} catch (NifDuplicadoException e) {
+				 result.rejectValue("nif", "duplicate", "already exists");
+				 return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
+			}
 			
 			return "redirect:/clientes/" + cliente.getId();
 		}
@@ -78,7 +85,12 @@ public class ClienteController {
 		}
 		else {
 			cliente.setId(clienteId);
-			this.clienteService.saveCliente(cliente);
+			try {
+				this.clienteService.saveCliente(cliente);
+			} catch (NifDuplicadoException e) {
+				 result.rejectValue("nif", "duplicate", "already exists");
+				 return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
+			}
 			
 			return "redirect:/clientes/{clienteId}";
 		}

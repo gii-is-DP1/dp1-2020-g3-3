@@ -1,10 +1,9 @@
 INSERT INTO users(username,password,enabled) VALUES ('01446551N','Fly_High14&',TRUE);
-
 INSERT INTO authorities(id,username,authority) VALUES (1,'01446551N','cliente');
 
 INSERT INTO users(username,password,enabled) VALUES ('21333214R','A3224234232%adsa',TRUE);
-
 INSERT INTO authorities(id,username,authority) VALUES (2,'21333214R','azafato');
+
 
 --PersonalControl
 --INSERT INTO personal_control(id,nombre,apellidos,nif,iban,rol,salario)   hay que añadirles un usuario

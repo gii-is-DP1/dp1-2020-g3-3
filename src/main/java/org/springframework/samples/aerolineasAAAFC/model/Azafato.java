@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -29,26 +31,23 @@ import lombok.EqualsAndHashCode;
 @Table(name = "azafatos")
 public class Azafato extends BaseEntity{
 
-	// Atributos:
-
+	// Atributos
 	@Column(name = "nombre")
 	@NotEmpty
-	private String nombre;
-
+	protected String nombre;
+	
 	@Column(name = "apellidos")
 	@NotEmpty
-	private String apellidos;
-
-	@Column(name = "nif")
+	protected String apellidos;
+	
 	@NotEmpty
 	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-	private String nif;
-
-	@Column(name = "iban")
+	protected String nif;
+	
 	@NotEmpty
 	@Pattern(regexp="^ES\\s\\d{22}$")
-	private String iban;
-
+	protected String iban;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "idiomas_azafato", 
 	joinColumns = @JoinColumn(name = "azafato_id"),
