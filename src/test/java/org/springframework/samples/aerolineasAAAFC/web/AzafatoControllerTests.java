@@ -68,6 +68,7 @@ public class AzafatoControllerTests {
 		Martina.setIban("ES 01225905418408934560815");
 		Martina.setNif("89565804G");
 		Martina.setIdiomas("frances");
+		Martina.setIdiomas("castellano");
 		Martina.setSalario(1200.);
 
 		given(this.azafatoService.findAzafatoById(TEST_AZAFATO_ID)).willReturn(Martina);

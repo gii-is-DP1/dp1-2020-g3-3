@@ -69,5 +69,10 @@ public class Azafato extends BaseEntity{
 	@JoinColumn(name = "username", referencedColumnName = "username")
 	@EqualsAndHashCode.Exclude 
 	private User user;
+	
+	public String toString() {
+		
+		return "Id azafato "+this.getId()+" User "+this.getNif()+" Id Idiomas " + this.getIdiomas();
+	}
 
 }
