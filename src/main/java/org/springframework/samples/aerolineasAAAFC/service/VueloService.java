@@ -1,9 +1,15 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,25 +18,37 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class VueloService {
-	
-	 private VueloRepository vueloRepository;
 	 
-	 @Transactional
-		public void saveVuelo(Vuelo vuelo) throws DataAccessException{
-		 vueloRepository.save(vuelo);
+	private VueloRepository vueloRepository;
+	 
+	@Transactional
+	public void saveVuelo(Vuelo vuelo) throws DataAccessException, HorasImposiblesException{
+		LocalDate salida = vuelo.getFechaSalida();
+		LocalDate llegada = vuelo.getFechaLlegada();
+		if(salida.isAfter(llegada)) {
+			throw new HorasImposiblesException();
+		}else {
+			vueloRepository.save(vuelo); 
 		}
+	}
 	 
 	
-	 @Transactional(readOnly = true)
-		public Vuelo findVueloById(int id) throws DataAccessException{
-			return vueloRepository.findById(id).get();
-		}
+	@Transactional(readOnly = true)
+	public Vuelo findVueloById(int id) throws DataAccessException{
+		return vueloRepository.findById(id).get();
+	}
 	 
 	 
-	 @Autowired
-		public VueloService(VueloRepository vueloRepository) {
-			this.vueloRepository = vueloRepository;
-		}	
+	@Autowired
+	public VueloService(VueloRepository vueloRepository) {
+		this.vueloRepository = vueloRepository;
+	}
+	 
+	@Transactional
+	public Collection<Vuelo> findVuelos(){
+		return StreamSupport.stream(vueloRepository.findAll().spliterator(), false)
+				.collect(Collectors.toList());
+	}
 	 /*
 	 @Transactional(readOnly = true)
 		public Optional<Vuelo> findVueloById(int id) throws DataAccessException {
@@ -55,9 +73,10 @@ public class VueloService {
 		}
 
 	 */
-		public void eliminarVuelo(int id) throws DataAccessException {
-			vueloRepository.deleteById(id);
-		}
+		
+	public void eliminarVuelo(int id) throws DataAccessException {
+		vueloRepository.deleteById(id);
+	}
 	
 }
 
