@@ -57,5 +57,6 @@ public class EquipajeServiceTests {
 		assertThat(equipaje.getId()).isNotNull();
 
 	}
+	
 
 }

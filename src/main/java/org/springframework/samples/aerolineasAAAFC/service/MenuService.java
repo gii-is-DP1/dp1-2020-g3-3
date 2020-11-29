@@ -1,5 +1,9 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Menu;
@@ -43,6 +47,11 @@ public class MenuService {
 		Menu menu = menuRepository.findById(id).orElseGet(null);
 		
 		return menu;
+	}
+
+	public Collection<Menu> findMenus(){
+		return StreamSupport.stream(menuRepository.findAll().spliterator(), false)
+			    .collect(Collectors.toList());
 	}
 
 }
