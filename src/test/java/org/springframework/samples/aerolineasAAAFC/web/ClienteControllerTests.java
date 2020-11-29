@@ -66,13 +66,15 @@ public class ClienteControllerTests {
 		dolores.setNombre("Dolores");
 		dolores.setApellidos("Ramos Ceballos");
 		dolores.setNif("29565800A");
-		dolores.setDireccionFacturacion("Calle Parera ,15 - 41011 Sevilla");
+		dolores.setDireccionFacturacion("Calle Parera ,15 5ºA - 41011 Sevilla");
 		dolores.setIban("ES 4422000418403334567812");
 		dolores.setFechaNacimiento(LocalDate.of(1989, 12, 03));
 
 		given(this.clienteService.findClienteById(TEST_CLIENTE_ID)).willReturn(dolores);
 	}
 
+	//TESTS CREACIÓN
+	
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
@@ -108,6 +110,8 @@ public class ClienteControllerTests {
 		.andExpect(view().name("clientes/createOrUpdateClienteForm"));
 	}
 
+	//TESTS BÚSQUEDA
+	
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitFindForm() throws Exception {
@@ -117,7 +121,7 @@ public class ClienteControllerTests {
 
 	@WithMockUser(value = "spring")
 	@Test
-	void testProcessFindFormById() throws Exception {
+	void testProcessFindFormByNif() throws Exception {
 		given(this.clienteService.findClienteByNif(dolores.getNif())).willReturn(dolores);
 		Logger.getLogger(ClienteControllerTests.class.getName()).log(Level.INFO, "Dolores: " + dolores);
 		
@@ -132,6 +136,36 @@ public class ClienteControllerTests {
 		.andExpect(model().attributeHasFieldErrors("cliente", "nif"))
 		.andExpect(model().attributeHasFieldErrorCode("cliente", "nif", "notFound"))
 		.andExpect(view().name("clientes/findClientes"));
+	}
+	
+	//TESTS ACTUALIZACIÓN
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateClienteSuccess() throws Exception {
+		mockMvc.perform(post("/clientes/{clienteId}/edit",TEST_CLIENTE_ID)
+				.with(csrf())
+				.param("nombre", "Dolores")
+				.param("apellidos", "Ramos Ceballos")
+				.param("nif", "29565800A")
+				.param("direccionFacturacion", "Calle Parera, 23 1ºD - 41011 Sevilla")
+				.param("iban", "ES 6621000418401234567893")
+				.param("fechaNacimiento", "1997/06/03"))
+		.andExpect(view().name("redirect:/clientes/{clienteId}"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateClienteError() throws Exception {
+		mockMvc.perform(post("/clientes/{clienteId}/edit",TEST_CLIENTE_ID)
+				.with(csrf())
+				.param("direccionFacturacion", "")
+				.param("iban", "ES 662100018401234567893"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeHasErrors("cliente"))
+		.andExpect(model().attributeHasFieldErrors("cliente", "direccionFacturacion"))
+		.andExpect(model().attributeHasFieldErrors("cliente", "iban"))
+		.andExpect(view().name("clientes/createOrUpdateClienteForm"));
 	}
 
 }

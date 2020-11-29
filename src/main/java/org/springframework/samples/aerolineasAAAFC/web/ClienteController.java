@@ -77,14 +77,14 @@ public class ClienteController {
 	 */
 	
 	@GetMapping(value = "/clientes/{clienteId}/edit")
-	public String initUpdateAvionForm(@PathVariable("clienteId") int clienteId, Model model) {
+	public String initUpdateClienteForm(@PathVariable("clienteId") int clienteId, Model model) {
 		Cliente cliente = this.clienteService.findClienteById(clienteId);
 		model.addAttribute(cliente);
 		return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/clientes/{clienteId}/edit")
-	public String processUpdateAvionForm(@Valid Cliente cliente, BindingResult result, @PathVariable("clienteId") int clienteId) {
+	public String processUpdateClienteForm(@Valid Cliente cliente, BindingResult result, @PathVariable("clienteId") int clienteId) {
 		if(result.hasErrors()) {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}
@@ -115,7 +115,7 @@ public class ClienteController {
 	public String processFindForm(Cliente cliente, BindingResult result, Map<String, Object> model) {
 
 		if (cliente.getNif() == null) {
-			cliente.setNif("00000000X"); 
+			cliente.setNif(""); 
 		}
 
 		Cliente resultado = this.clienteService.findClienteByNif(cliente.getNif());
@@ -125,7 +125,7 @@ public class ClienteController {
 			return "clientes/findClientes";
 		} else {
 			Logger.getLogger(ClienteController.class.getName()).log(Level.INFO, "Cliente: " + cliente);
-			return "redirect:/clientes/" + cliente.getId();
+			return "redirect:/clientes/" + resultado.getId();
 		}
 		
 	}
