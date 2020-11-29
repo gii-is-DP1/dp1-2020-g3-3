@@ -14,7 +14,7 @@ INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
 VALUES ('Aeropuerto de São Paulo Guarulhos','São Paulo, Brasil' , 'GRU', '+551124452945');
 
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de Barajas','São Paulo, Sevilla' , 'MAD', '913 21 10 00');
+VALUES ('Aeropuerto de Madrid-Barajas','Madrid, España' , 'MAD', '+34913211000');
 
 --Aviones
 INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)

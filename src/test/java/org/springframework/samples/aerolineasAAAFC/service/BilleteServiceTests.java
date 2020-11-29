@@ -8,7 +8,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
-
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,7 +67,12 @@ public class BilleteServiceTests {
 		
 		//this.billeteService.saveBillete(billete);
 
-		this.vueloService.saveVuelo(vuelo);
+//		this.vueloService.saveVuelo(vuelo); AHORA SE TIENE EN CUENTA LA EXCEPCION DE HORAS
+		try {
+			this.vueloService.saveVuelo(vuelo);
+		} catch (HorasImposiblesException ex) {
+			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+		}
 
 		vuelo = this.vueloService.findVueloById(1);
 		assertThat(vuelo.getBilletes().size()).isEqualTo(nBilletes + 1);

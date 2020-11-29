@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,8 +51,12 @@ public class VueloController {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.vueloService.saveVuelo(vuelo);
-
+			try {
+				this.vueloService.saveVuelo(vuelo);
+			} catch (HorasImposiblesException e) {
+				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
+				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
+			}
 			return "redirect:/vuelos/" + vuelo.getId();
 		}
 	}
@@ -72,8 +77,12 @@ public class VueloController {
 		}
 		else {
 			vuelo.setId(vueloId);
-			this.vueloService.saveVuelo(vuelo);
-			
+			try {
+				this.vueloService.saveVuelo(vuelo);
+			} catch (HorasImposiblesException e) {
+				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
+				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
+			}
 			
 			return "redirect:/vuelos/{vueloId}";
 		}

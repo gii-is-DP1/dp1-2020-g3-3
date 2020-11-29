@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import org.hibernate.validator.constraints.UniqueElements;
@@ -32,15 +33,16 @@ public class Vuelo extends BaseEntity{
 	// Atributos:
 	
 	@Column(name = "fecha_salida")
-	@NotEmpty
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm")
 	private LocalDate  fechaSalida;
 
 	@Column(name = "fecha_llegada")
+	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm")
 	private LocalDate  fechaLlegada;
 	
-	@NotEmpty
+	@NotNull
 	@Positive
 	@Column(name = "coste")
 	private double coste;
@@ -57,12 +59,12 @@ public class Vuelo extends BaseEntity{
 	
 	// Relacion con aeropuerto: ¿dos ManyToOne? o se hace algo diferente
 	@ManyToOne(optional=false)
-	@UniqueElements
+//	@UniqueElements
 	@EqualsAndHashCode.Exclude
 	private Aeropuerto aeropuertoOrigen;
 	
 	@ManyToOne(optional=false)
-	@UniqueElements
+//	@UniqueElements
 	@EqualsAndHashCode.Exclude
 	private Aeropuerto aeropuertoDestino;
 	
