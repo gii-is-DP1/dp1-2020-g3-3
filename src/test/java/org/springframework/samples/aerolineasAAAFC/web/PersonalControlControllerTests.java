@@ -21,7 +21,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
+import org.springframework.samples.aerolineasAAAFC.model.Rol;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
@@ -54,7 +56,7 @@ public class PersonalControlControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 
-	private PersonalOficina Juan;
+	private PersonalControl Juan;
 
 
 
@@ -67,7 +69,7 @@ public class PersonalControlControllerTests {
 		Juan.setNombre("Marie");
 		Juan.setIban("ES 0159480518801639865810");
 		Juan.setNif("01582301T");
-		Juan.setRol("copiloto");
+		Juan.setRol(Rol.COPILOTO);
 		Juan.setSalario(2000.);
 
 		given(this.personalControlService.findPersonalControlById(TEST_PERSONALCONTROL_ID)).willReturn(Juan);
