@@ -11,7 +11,7 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'21333214R','azafato');
 
 --Aeropuertos
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de São Paulo Guarulhos','São Paulo, Brasil' , 'GRU', '11 2445 2945');
+VALUES ('Aeropuerto de São Paulo Guarulhos','São Paulo, Brasil' , 'GRU', '+551124452945');
 
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
 VALUES ('Aeropuerto de Barajas','São Paulo, Sevilla' , 'MAD', '913 21 10 00');

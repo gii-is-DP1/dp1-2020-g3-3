@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoErroneoException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class AeropuertoController {
-	private static final String VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM = "aeropuerto/createOrUpdateAeropuertoForm";
+	private static final String VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM = "aeropuertos/createOrUpdateAeropuertoForm";
 
 	private final AeropuertoService aeropuertoService;
 	
@@ -33,20 +34,25 @@ public class AeropuertoController {
 	}
 	
 	
-	@GetMapping(value = "/aeropuerto/new") 
+	@GetMapping(value = "/aeropuertos/new") 
 	public String initCreationAeropuertoForm(Map<String, Object> model) {
 		Aeropuerto aeropuerto = new Aeropuerto();
 		model.put("aeropuerto", aeropuerto);
 		return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
 	}
 	
-	@PostMapping(value = "/aeropuerto/new")
+	@PostMapping(value = "/aeropuertos/new")
 	public String processCreationVueloForm(@Valid Aeropuerto aeropuerto, BindingResult result) {
 		if(result.hasErrors()) {
 			return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.aeropuertoService.saveAeropuerto(aeropuerto);
+			try {
+				this.aeropuertoService.saveAeropuerto(aeropuerto);
+			} catch (TelefonoErroneoException e) {
+				 result.rejectValue("telefono", "invalid", "invalid phone number");
+				 return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
+			}
 			
 			return "redirect:/aeropuertos/" + aeropuerto.getId();
 		}
@@ -54,7 +60,7 @@ public class AeropuertoController {
 	
 	//MODIFICACION
 	
-	@GetMapping(value = "/aeropuerto/{aeropuertoId}/edit")
+	@GetMapping(value = "/aeropuertos/{aeropuertoId}/edit")
 	public String initUpdateAeropuertoForm(@PathVariable("aeropuertoId") int aeropuertoId, Model model) {
 		Aeropuerto aeropuerto = this.aeropuertoService.findAeropuertoById(aeropuertoId);
 		model.addAttribute(aeropuerto);
@@ -62,20 +68,22 @@ public class AeropuertoController {
 	}
 	
 	@PostMapping(value = "/aeropuertos/{aeropuertoId}/edit")
-	public String processUpdateVueloForm(@Valid Aeropuerto aeropuerto, BindingResult result, @PathVariable("vueloId") int aeropuertoId) {
+	public String processUpdateAeropuertoForm(@Valid Aeropuerto aeropuerto, BindingResult result, @PathVariable("aeropuertoId") int aeropuertoId) {
 		if(result.hasErrors()) {
 			return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			aeropuerto.setId(aeropuertoId);
-			this.aeropuertoService.saveAeropuerto(aeropuerto);
+			try {
+				this.aeropuertoService.saveAeropuerto(aeropuerto);
+			} catch (TelefonoErroneoException e) {
+				 result.rejectValue("telefono", "invalid", "invalid phone number");
+				 return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
+			}
 			
-			
+		
 			return "redirect:/aeropuertos/{aeropuertoId}";
 		}
 	}
-	
-	
-	
 
 }

@@ -39,7 +39,7 @@ public class Aeropuerto extends BaseEntity{
 
 	@Column(name = "telefono")
 	@NotEmpty
-	@Pattern(regexp="^(\\+34|0034|34)?[6|7|9][0-9]{8}$")
+	@Pattern(regexp="^(\\+|\\d)[0-9]{7,16}$")
 	private String telefono;
 
 	// Relaciones de tabla:
