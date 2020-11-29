@@ -24,6 +24,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
+import org.springframework.samples.aerolineasAAAFC.model.Menu;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
@@ -40,6 +41,7 @@ public class BilleteControllerTests {
 
 
 	private static final int TEST_BILLETE_ID = 2;
+	private static final int TEST_MENU_ID = 2;
 
 	@Autowired
 	private BilleteController billeteController;
@@ -57,6 +59,10 @@ public class BilleteControllerTests {
 	private MockMvc mockMvc;
 
 	private Billete billetazo;
+	
+	private Menu wrongMenu;
+	
+	private Set<Menu> wrongMenus = new HashSet<Menu>();
 
 
 	@BeforeEach
@@ -68,10 +74,20 @@ public class BilleteControllerTests {
 		billetazo.setClase(Clase.ECONOMICA);
 		//billetazo.setCliente(cliente);
 		billetazo.setCoste(123.56);
+		
 		//billetazo.setEquipajes(equipajes);
+		
 		billetazo.setFechaReserva(LocalDate.of(2789, 12, 03));
 		//billetazo.setMenus(menus);
 		//billetazo.setVuelos(vuelos);
+		
+		wrongMenu.setBillete(billetazo);
+		wrongMenu.setPostre("Bacalao");
+		wrongMenu.setPrecio(5.);
+		wrongMenu.setPrimerPlato("Caracoles");
+		wrongMenu.setSegundoPlato("CaracolesX2");
+		wrongMenus.add(wrongMenu);
+		
 
 
 		given(this.billeteService.findBilleteById(TEST_BILLETE_ID)).willReturn(billetazo);
@@ -126,6 +142,26 @@ public class BilleteControllerTests {
 				.param("clase", "ECONOMICA"))
 		//.param("equipajes", equipajes)
 		//.param("menus",)
+		//.param("cliente",)
+		//.param("vuelos",))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeHasErrors("billete"))
+		//.andExpect(model().attributeHasFieldErrors("owner", "address"))
+		.andExpect(model().attributeHasFieldErrors("billete", "coste"))
+		.andExpect(view().name("billetes/createOrUpdateBilleteForm"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateBilleteErrorMenu() throws Exception {
+		mockMvc.perform (post("/billetes/new", TEST_BILLETE_ID)
+				.with(csrf())
+				.param("coste", "5")
+				.param("asiento", "F99")
+				.param("fechaReserva", "1999/11/03")
+				.param("clase", "ECONOMICA"))
+		//.param("equipajes", equipajes)
+		.param("menus",wrongMenus)
 		//.param("cliente",)
 		//.param("vuelos",))
 		.andExpect(status().isOk())

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.repository.EquipajeRepository;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
+import org.springframework.samples.aerolineasAAAFC.utils.equipajeUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +24,15 @@ public class EquipajeService {
 	}
 
 	@Transactional
-	public void saveEquipaje(Equipaje equipaje) throws DataAccessException {
+	public void saveEquipaje(Equipaje equipaje) throws DataAccessException, EquipajePriceException {
 
-		equipajeRepository.save(equipaje);
+		if (!equipajeUtils.validaPrecio(equipaje)) {
+			throw new EquipajePriceException("El precio recibido no se corresponde con el estipulado en web.");
+		}
+
+		else {
+			equipajeRepository.save(equipaje);
+		}
 
 	}
 

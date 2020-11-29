@@ -1,13 +1,13 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.util.Map;
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,7 +50,12 @@ public class BilleteController {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			this.billeteService.saveBillete(billete);
+			try {
+				this.billeteService.saveBillete(billete);
+			} catch (TooManyItemsBilleteException e) {
+				 result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
+					return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+			}
 			
 			return "redirect:/billetes/" + billete.getId();
 		}
@@ -73,7 +78,12 @@ public class BilleteController {
 		}
 		else {
 			billete.setId(billeteId);
-			this.billeteService.saveBillete(billete);
+			try {
+				this.billeteService.saveBillete(billete);
+			} catch (TooManyItemsBilleteException e) {
+				 result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
+					return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+			}
 			
 			return "redirect:/billetes/{billeteId}";
 		}
