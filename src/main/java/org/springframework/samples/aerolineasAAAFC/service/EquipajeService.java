@@ -1,5 +1,9 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
@@ -36,6 +40,11 @@ public class EquipajeService {
 		Equipaje equipaje = equipajeRepository.findById(id).orElseGet(null);
 		
 		return equipaje;
+	}
+
+	public Collection<Equipaje> findEquipajes() {
+		return StreamSupport.stream(equipajeRepository.findAll().spliterator(), false)
+			    .collect(Collectors.toList());
 	}
 
 }

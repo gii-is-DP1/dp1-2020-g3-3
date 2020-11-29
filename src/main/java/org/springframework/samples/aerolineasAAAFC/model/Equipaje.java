@@ -26,7 +26,7 @@ public class Equipaje extends BaseEntity{
 	//Atributos
 	
 	@Column(name = "peso")
-	@Range(min=3,max=32)
+	@Range(min=3,max=32,message="El peso debe de estar entre los 3kg y 32kg")
 	private Integer peso;
 	
 	@Column(name = "dimensiones")
