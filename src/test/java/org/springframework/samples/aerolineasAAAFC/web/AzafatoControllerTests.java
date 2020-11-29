@@ -71,11 +71,16 @@ public class AzafatoControllerTests {
 		Martina.setNombre("Martina");
 		Martina.setIban("ES 01225905418408934560815");
 		Martina.setNif("89565804G");
+
 		Idioma lng = new Idioma();
 		lng.setIdioma("Francés");
+    Idioma lng2 = new Idioma();
+		lng.setIdioma("Castellano");
 		Set<Idioma> lngs = new HashSet<Idioma>();
 		lngs.add(lng);
+    lngs.add(lng2);
 		Martina.setIdiomas(lngs);
+
 		Martina.setSalario(1200.);
 
 		given(this.azafatoService.findAzafatoById(TEST_AZAFATO_ID)).willReturn(Martina);

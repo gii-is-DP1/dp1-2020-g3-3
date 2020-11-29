@@ -2,7 +2,6 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

@@ -5,12 +5,10 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
-import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,9 +56,12 @@ public class AzafatoController {
 				this.azafatoService.saveAzafato(azafato);
 			} catch (NifDuplicadoException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
-				e.printStackTrace();
+				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			} catch (IbanDuplicadoException e) {
 				result.rejectValue("iban", "duplicate", "already exists");
+				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
+			} catch (IdiomasNoSuficientesException e) {
+				result.rejectValue("idiomas", "not enough", "not enough languages");
 				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			}
 			
@@ -92,6 +93,9 @@ public class AzafatoController {
 				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			} catch (IbanDuplicadoException e) {
 				result.rejectValue("iban", "duplicate", "already exists");
+				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
+			} catch (IdiomasNoSuficientesException e) {
+				result.rejectValue("idiomas", "not enough", "not enough languages");
 				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			}
 			
