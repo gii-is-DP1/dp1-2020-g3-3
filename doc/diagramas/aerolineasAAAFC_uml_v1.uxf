@@ -223,7 +223,7 @@ m2=llegada *
     </coordinates>
     <panel_attributes>lt=-
 m1=0..3
-m2=*
+m2=1
 &lt; contiene</panel_attributes>
     <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
   </element>
@@ -265,13 +265,14 @@ lleva</panel_attributes>
       <x>826</x>
       <y>469</y>
       <w>105</w>
-      <h>56</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>Equipaje
 --
 idEquipaje
 peso
 medidas
+precio
 
 </panel_attributes>
     <additional_attributes/>

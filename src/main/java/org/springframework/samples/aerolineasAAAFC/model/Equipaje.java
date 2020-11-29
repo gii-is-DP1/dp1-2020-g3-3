@@ -33,6 +33,9 @@ public class Equipaje extends BaseEntity{
 	@MedidasEquipajesConstraint
 	private String dimensiones;	
 	
+	@Column(name = "precio")
+	private double precio;
+	
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "billete_id")
 	@EqualsAndHashCode.Exclude

@@ -34,7 +34,6 @@ public class BilleteServiceTests {
 
 
 	@Test
-
 	@Transactional
 	public void shouldInsertBilleteIntoDatabaseAndGenerateId() throws ParseException {
 

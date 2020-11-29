@@ -89,6 +89,7 @@ class ValidatorTests {
 
 		equipaje.setDimensiones("11x110x78");
 		equipaje.setPeso(24);
+		equipaje.setPrecio(30.);
 		
 		Validator validator = createValidator();
 		Set<ConstraintViolation<Equipaje>> constraintViolations = validator.validate(equipaje);
@@ -108,6 +109,7 @@ class ValidatorTests {
 
 		equipaje.setDimensiones("110x110x78");
 		equipaje.setPeso(2);
+		equipaje.setPrecio(30.);
 		
 		Validator validator = createValidator();
 		Set<ConstraintViolation<Equipaje>> constraintViolations = validator.validate(equipaje);

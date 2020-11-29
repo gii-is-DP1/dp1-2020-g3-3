@@ -9,6 +9,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.MenuService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.BadRequestException;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -51,7 +52,13 @@ public class MenuController {
 			return VIEWS_BILLETE_CREATE_FORM;
 		}
 		else {
-			this.billeteService.saveBillete(billete);
+			
+			try {
+				this.billeteService.saveBillete(billete);
+			} catch (TooManyItemsBilleteException e) {
+				 result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
+					return VIEWS_BILLETE_CREATE_FORM;
+			}
 			return "redirect:/";
 		}
 	}

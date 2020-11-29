@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Menu;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.MenuPriceException;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,7 +63,12 @@ public class MenuServiceTests {
 					"Parece que ha introducido un precio incorrecto.", ex);
 		}
 
-		this.billeteService.saveBillete(billete1);
+		try {
+			this.billeteService.saveBillete(billete1);
+		} catch (TooManyItemsBilleteException e) {
+			 e.printStackTrace();
+		}
+		
 		Logger.getLogger(MenuServiceTests.class.getName()).log(Level.INFO, "El menú tiene id: " + menu.getId());
 		assertThat(billete1.getMenus().size()).isEqualTo(found + 1);
 		// checks that id has been generated
