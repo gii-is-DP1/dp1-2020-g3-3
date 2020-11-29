@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +22,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
+import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.Idioma;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
@@ -54,7 +58,7 @@ public class AzafatoControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 
-	private PersonalOficina Martina;
+	private Azafato Martina;
 
 
 
@@ -67,7 +71,11 @@ public class AzafatoControllerTests {
 		Martina.setNombre("Martina");
 		Martina.setIban("ES 01225905418408934560815");
 		Martina.setNif("89565804G");
-		Martina.setIdiomas("frances");
+		Idioma lng = new Idioma();
+		lng.setIdioma("Francés");
+		Set<Idioma> lngs = new HashSet<Idioma>();
+		lngs.add(lng);
+		Martina.setIdiomas(lngs);
 		Martina.setSalario(1200.);
 
 		given(this.azafatoService.findAzafatoById(TEST_AZAFATO_ID)).willReturn(Martina);
