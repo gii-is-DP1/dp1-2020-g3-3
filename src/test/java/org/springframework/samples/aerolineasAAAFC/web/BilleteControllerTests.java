@@ -161,7 +161,7 @@ public class BilleteControllerTests {
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
 		//.param("equipajes", equipajes)
-		.param("menus",wrongMenus)
+		//.param("menus",wrongMenus)
 		//.param("cliente",)
 		//.param("vuelos",))
 		.andExpect(status().isOk())

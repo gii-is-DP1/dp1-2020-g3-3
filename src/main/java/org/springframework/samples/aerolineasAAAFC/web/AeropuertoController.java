@@ -1,5 +1,8 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoErroneoException;
+import org.springframework.samples.petclinic.model.Vets;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +36,15 @@ public class AeropuertoController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
+	
+	@GetMapping(value = { "/aeropuertos" })
+	public String showVetList(Map<String, Object> model) {
+		List<Aeropuerto> aeropuertos = new ArrayList<>();
+		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
+		model.put("aeropuertos", aeropuertos);
+		return "aeropuertos/aeropuertosList";
+	}
+	
 	
 	
 	@GetMapping(value = "/aeropuertos/new") 

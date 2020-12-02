@@ -18,6 +18,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class AvionServiceTests {
@@ -26,6 +27,7 @@ public class AvionServiceTests {
 	protected AvionService avionService;
 
 	@Test
+	@Transactional
 	void updateCapacidadPasajeroAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		avion.setCapacidadPasajero(100);
@@ -33,6 +35,7 @@ public class AvionServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void updateAzafatosAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		Set<Azafato> azafatos=new HashSet<>();
@@ -42,6 +45,7 @@ public class AvionServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void updateDisponibilidadAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		avion.setDisponibilidad(false);
@@ -49,6 +53,7 @@ public class AvionServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void updateFechaFabricacionAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		LocalDate fecha = LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE); 
@@ -59,6 +64,7 @@ public class AvionServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void updateFechaRevisionAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 
@@ -70,12 +76,14 @@ public class AvionServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void updateHorasAcumuladasAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		avion.setHorasAcumuladas(140);
 		assertThat(avion.getHorasAcumuladas()).isEqualTo(140);
 	}
 	@Test
+	@Transactional
 	void updatePersonalControlAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		Set<PersonalControl> personal= new HashSet<>();
@@ -85,6 +93,7 @@ public class AvionServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void updatePesoMaximoEquipajeAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		avion.setPesoMaximoEquipaje(32);
@@ -92,6 +101,7 @@ public class AvionServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void updatePlazasEconomicaAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		avion.setPlazasEconomica(14);
@@ -99,12 +109,14 @@ public class AvionServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void updatePlazasPrimeraAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		avion.setPlazasPrimera(40);
 		assertThat(avion.getPlazasPrimera()).isEqualTo(40);
 	}
 	@Test
+	@Transactional
 	void updateTipoAvionAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		avion.setTipoAvion("Enterprise");
@@ -112,6 +124,7 @@ public class AvionServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void updateVuelosAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		Set<Vuelo> vuelos=new HashSet<>();
