@@ -8,7 +8,7 @@
 <!-- Pagina en la que se mostraran los aeropuertos y se permitira acceder a modificarlos -->
 
 <aerolineasAAAFC:layout pageName="aeropuertos">
-    <h2>Aviones</h2>
+    <h2>Aeropuertos</h2>
 
     <table id="tablaAeropuertos" class="table table-striped">
         <thead>
@@ -21,14 +21,16 @@
            
         </tr>
         </thead>
+
         <tbody>
-        <c:forEach items="${selections}" var="aeropuerto">
+                  <c:forEach items="${aeropuertos}" var="aeropuerto">
             <tr>
                 <td>
-                    <spring:url value="/aeropuerto/{aeropuertoId}" var="aeropuertoURL">
+                    <%--- <spring:url value="/aeropuerto/{aeropuertoId}" var="aeropuertoURL">
                         <spring:param name="aeropuertoId" value="${aeropuerto.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(aeropuertoUrl)}"><c:out value="${aeropuerto.id}"/></a>
+                    <a href="${fn:escapeXml(aeropuertoUrl)}">--%>
+                    <c:out value="${aeropuerto.id}"/>
                 </td>
                 <td>
                     <c:out value="${aeropuerto.nombre}"/>
@@ -43,7 +45,8 @@
                     <c:out value="${aeropuerto.telefono}"/>
                 </td>
            </tr>
-        </c:forEach>
+        </c:forEach>         
         </tbody>
+
     </table>
 </aerolineasAAAFC:layout>

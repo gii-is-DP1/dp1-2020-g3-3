@@ -5,7 +5,8 @@ import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 
 public interface AeropuertoRepository extends CrudRepository<Aeropuerto,Integer>{
 
+	
+	
 }
-
 
 
