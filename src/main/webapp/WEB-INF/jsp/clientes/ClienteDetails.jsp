@@ -39,7 +39,7 @@
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Cliente</a>
 
 
-    <br/>
+   <%-- <br/>
     <br/>
     <br/>
     <h2>Billetes</h2>
@@ -63,6 +63,7 @@
             </tr>
 
         </c:forEach>
-    </table>
+    </table> 
+    --%>
 
 </petclinic:layout>
