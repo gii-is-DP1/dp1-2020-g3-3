@@ -67,7 +67,7 @@ public class AeropuertoController {
 				 return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
 			}
 			
-			return "redirect:/aeropuertos/" + aeropuerto.getId();
+			return "redirect:/aeropuertos";
 		}
 	}
 	

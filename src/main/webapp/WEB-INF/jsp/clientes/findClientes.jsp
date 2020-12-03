@@ -16,10 +16,10 @@
     <form:form modelAttribute="cliente" action="/clientes" method="get" class="form-horizontal"
                id="search-owner-form">
         <div class="form-group">
-            <div class="control-group" id="id">
-                <label class="col-sm-2 control-label">ID </label>
+            <div class="control-group" id="nif">
+                <label class="col-sm-2 control-label">NIF </label>
                 <div class="col-sm-10">
-                    <form:input class="form-control" path="id" size="30" maxlength="80"/>
+                    <form:input class="form-control" path="nif" size="9" maxlength="9" minlength="9" type="text"/>
                     <span class="help-inline"><form:errors path="*"/></span>
                 </div>
             </div>
