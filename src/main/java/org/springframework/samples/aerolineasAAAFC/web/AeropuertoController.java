@@ -38,7 +38,7 @@ public class AeropuertoController {
 	}
 	
 	@GetMapping(value = { "/aeropuertos" })
-	public String showVetList(Map<String, Object> model) {
+	public String showAeropuertosList(Map<String, Object> model) {
 		List<Aeropuerto> aeropuertos = new ArrayList<>();
 		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
 		model.put("aeropuertos", aeropuertos);
@@ -95,7 +95,7 @@ public class AeropuertoController {
 			}
 			
 		
-			return "redirect:/aeropuertos/{aeropuertoId}";
+			return "redirect:/aeropuertos";
 		}
 	}
 
