@@ -12,8 +12,11 @@
     </h2>
     <form:form modelAttribute="vuelo" class="form-horizontal" id="add-vuelo-form">
         <div class="form-group has-feedback">
-            <aerolineasAAAFC:inputField label="Fecha de Salida" name="fechaSalida"/>
-            <aerolineasAAAFC:inputField label="Fecha de Llegada" name="fechaLlegada"/>
+           	Fecha de Salida
+			<input type="date" name="fechaSalida">
+			Fecha de Llegada
+			<input type="date" name="fechaLlegada">
+            <%--- <aerolineasAAAFC:inputField label="Fecha de Llegada" name="fechaLlegada"/>--%>
             <aerolineasAAAFC:inputField label="Coste del Vuelo" name="coste"/>
         </div>
         <div class="form-group">

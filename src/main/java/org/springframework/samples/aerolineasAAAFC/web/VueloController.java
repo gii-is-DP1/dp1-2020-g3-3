@@ -68,7 +68,7 @@ public class VueloController {
 				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 			}
-			return "redirect:/vuelos/" + vuelo.getId();
+			return "redirect:/vuelos";
 		}
 	}
 	

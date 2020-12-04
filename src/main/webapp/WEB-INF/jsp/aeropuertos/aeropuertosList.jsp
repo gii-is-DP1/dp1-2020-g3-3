@@ -13,7 +13,7 @@
 	<table id="tablaAeropuertos" class="table table-striped">
 		<thead>
 			<tr>
-				<th>ID Aeropuertos</th>
+			<th></th>
 				<th>Nombre</th>
 				<th>Localizacion</th>
 				<th>codigoIATA</th>
@@ -37,11 +37,18 @@
 					<td><c:out value="${aeropuerto.codigoIATA}" /></td>
 					<td><c:out value="${aeropuerto.telefono}" /></td>
 				<tr>
-					<td><a href="<spring:url value="/aeropuertos/${aeropuerto.id}/edit" htmlEscape="true" />">Editar</a>
+				<td>
+				<a href="<spring:url value="/aeropuertos/${aeropuerto.id}/edit" htmlEscape="true" />">Editar</a>
+				</td>
+				<td>
+				<a href="<spring:url value="/aeropuertos/${aeropuerto.id}/delete" htmlEscape="true" />">Eliminar</a>
+				</td>
 				</tr>
 				
 			</c:forEach>
 		</tbody>
 
 	</table>
+	<a href="<spring:url value="/aeropuertos/new" htmlEscape="true" />">Nuevo</a>
+				
 </aerolineasAAAFC:layout>
