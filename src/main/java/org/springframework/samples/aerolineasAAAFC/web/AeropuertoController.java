@@ -1,7 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoErroneoException;
-import org.springframework.samples.petclinic.model.Vets;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +34,9 @@ public class AeropuertoController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
+	
+
+	
 	
 	@GetMapping(value = { "/aeropuertos" })
 	public String showAeropuertosList(Map<String, Object> model) {
@@ -66,8 +67,9 @@ public class AeropuertoController {
 				 result.rejectValue("telefono", "invalid", "invalid phone number");
 				 return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
 			}
-			
-			return "redirect:/aeropuertos";
+
+			return "redirect:/aeropuertos" ;
+
 		}
 	}
 	
@@ -97,6 +99,11 @@ public class AeropuertoController {
 		
 			return "redirect:/aeropuertos";
 		}
+	}
+	@GetMapping(value = "/aeropuertos/{aeropuertoId}/delete")
+	public String deleteAeropuerto(@PathVariable("aeropuertoId") int aeropuertoId) {
+		this.aeropuertoService.eliminarAeropuerto(aeropuertoId);
+		return "redirect:/aeropuertos";
 	}
 
 }

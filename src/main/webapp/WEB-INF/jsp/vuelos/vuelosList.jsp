@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <!-- Pagina en la que se mostraran los vuelos y se permitira acceder a modificarlos -->
 
@@ -30,13 +31,13 @@
                 </td>--%>
                 <td><c:out value="${vuelo.fechaSalida}"/></td>
                 <%---<td><c:out value="${vuelo.horaSalida}"/></td>--%>
-                <td><c:out value="${vuelo.fechaLlegada}"/></td>
+                <td> <petclinic:localDate date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd"/></td>
                 <td><c:out value="${vuelo.coste}"/></td>
                 <tr>
 					<td><a href="<spring:url value="/vuelos/${vuelo.id}/edit" htmlEscape="true" />">Editar</a>
 				</tr>
-           </tr>
         </c:forEach>
         </tbody>
     </table>
+    <a href="<spring:url value="/vuelos/new" htmlEscape="true" />">Nuevo</a>
 </aerolineasAAAFC:layout>
