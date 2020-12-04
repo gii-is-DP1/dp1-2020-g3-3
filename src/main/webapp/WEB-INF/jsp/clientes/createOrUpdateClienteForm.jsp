@@ -12,14 +12,14 @@
     </h2>
     <form:form modelAttribute="cliente" class="form-horizontal" id="add-cliente-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Nombre" name="nombre"/>
-            <petclinic:inputField label="Apellidos" name="apellidos"/>
-            <petclinic:inputField label="NIF" name="nif"/>
-            <petclinic:inputField label="Direccion de Facturacion" name="direccionFacturacion"/>
-            <petclinic:inputField label="IBAN" name="iban"/>
-            <petclinic:inputField label="Fecha de Nacimiento" name="fechaNacimiento"/>
-            <petclinic:inputField label="Username" name="user.username"/>
-            <petclinic:inputField label="Password" name="user.password"/>
+            <petclinic:inputField label="Nombre" name="nombre" type="text"/>
+            <petclinic:inputField label="Apellidos" name="apellidos" type="text"/>
+            <petclinic:inputField label="NIF" name="nif" type="text"/>
+            <petclinic:inputField label="Direccion de Facturacion" name="direccionFacturacion" type="text"/>
+            <petclinic:inputField label="IBAN" name="iban" type="text"/>
+            <petclinic:inputField label="Fecha de Nacimiento" name="fechaNacimiento" type="date"/>
+            <petclinic:inputField label="Username" name="user.username" type="text"/>
+            <petclinic:inputField label="Password" name="user.password" type="password"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

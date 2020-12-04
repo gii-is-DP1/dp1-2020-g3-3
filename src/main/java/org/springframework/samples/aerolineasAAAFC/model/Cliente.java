@@ -54,7 +54,7 @@ public class Cliente extends BaseEntity{
 
 	@Column(name = "fecha_nacimiento")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaNacimiento;
 
 

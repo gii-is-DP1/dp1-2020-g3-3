@@ -67,8 +67,9 @@ public class AeropuertoController {
 				 result.rejectValue("telefono", "invalid", "invalid phone number");
 				 return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
 			}
-			
+
 			return "redirect:/aeropuertos" ;
+
 		}
 	}
 	
