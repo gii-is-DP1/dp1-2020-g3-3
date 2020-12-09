@@ -41,19 +41,23 @@ public class ClienteService {
 		}
 	}
 	
+	@Transactional(readOnly = true)
 	public Cliente findClienteById(Integer id){
 		return clienteRepository.findById(id).get();
 	}
 	
+	@Transactional(readOnly = true)
 	public Cliente findClienteByNif(String nif) {
 		return clienteRepository.findByNif(nif);
 	}
 	
+	@Transactional(readOnly = true)
 	public Collection<Cliente> findClientes(){
 		return StreamSupport.stream(clienteRepository.findAll().spliterator(), false)
 			    .collect(Collectors.toList());
 	}
 	
+	@Transactional
 	public void deleteClienteById(int id) throws DataAccessException{
 		clienteRepository.deleteById(id);
 	}
