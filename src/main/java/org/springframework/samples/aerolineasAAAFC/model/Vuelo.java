@@ -16,6 +16,8 @@ import javax.validation.constraints.Positive;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -34,12 +36,12 @@ public class Vuelo extends BaseEntity{
 	
 	@Column(name = "fecha_salida")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDate  fechaSalida;
 
 	@Column(name = "fecha_llegada")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDate  fechaLlegada;
 	
 	@NotNull
@@ -72,26 +74,5 @@ public class Vuelo extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	private Set<Avion> aviones;
 	
-	
-	
-	
-	//
-	
-	/*
-	public String getCodigoIATAOrigen() {
-		return this.getAeropuertoOrigen().getCodigoIATA();
-	}
-	
-	public String getCodigoIATADestino() {
-		return this.getAeropuertoDestino().getCodigoIATA();
-	}
-
-	public Set<Billete> getBilletes() {
-		return this.billetes;
-	}
-	public void addBillete(Billete billete) {
-		this.billetes.add(billete);
-	}
-	*/
 }
 
