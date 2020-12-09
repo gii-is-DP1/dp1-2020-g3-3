@@ -2,9 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="clientes">
+<aerolineasAAAFC:layout pageName="clientes">
 
     <h2>Información del Cliente</h2>
 
@@ -29,7 +29,7 @@
         
         <tr>
             <th>Fecha de Nacimiento</th>
-            <td><petclinic:localDate date="${cliente.fechaNacimiento}" pattern="yyyy-MM-dd"/></td>
+            <td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="yyyy-MM-dd"/></td>
         </tr>
     </table>
 
@@ -66,4 +66,4 @@
     </table> 
     --%>
 
-</petclinic:layout>
+</aerolineasAAAFC:layout>
