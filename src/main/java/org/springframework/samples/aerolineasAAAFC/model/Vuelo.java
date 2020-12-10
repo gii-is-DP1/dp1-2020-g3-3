@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,13 +37,13 @@ public class Vuelo extends BaseEntity{
 	
 	@Column(name = "fecha_salida")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	private LocalDate  fechaSalida;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime  fechaSalida;
 
 	@Column(name = "fecha_llegada")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	private LocalDate  fechaLlegada;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime  fechaLlegada;
 	
 	@NotNull
 	@Positive

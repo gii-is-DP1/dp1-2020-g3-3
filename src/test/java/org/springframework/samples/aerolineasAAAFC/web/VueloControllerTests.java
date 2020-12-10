@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -52,8 +53,8 @@ public class VueloControllerTests {
 		
 		vuelol = new Vuelo();
 		vuelol.setId(TEST_VUELO_ID);
-		vuelol.setFechaSalida(LocalDate.of(2020, Month.APRIL, 10));
-		vuelol.setFechaLlegada(LocalDate.of(2020, Month.APRIL, 11));
+		vuelol.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 10, 12, 23));
+		vuelol.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 11, 12, 23));
 		vuelol.setCoste(100.0);
 		vuelol.setAeropuertoOrigen(aeropuertoService.findAeropuertoById(1));
 		vuelol.setAeropuertoDestino(aeropuertoService.findAeropuertoById(2));

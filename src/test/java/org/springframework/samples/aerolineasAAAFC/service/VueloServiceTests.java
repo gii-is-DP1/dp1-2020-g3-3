@@ -3,6 +3,7 @@ package org.springframework.samples.aerolineasAAAFC.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -89,8 +90,8 @@ public class VueloServiceTests {
 		int found = vuelos.size();
 		
 		Vuelo vuelo = new Vuelo();
-		vuelo.setFechaSalida(LocalDate.of(2020, Month.DECEMBER, 1));
-		vuelo.setFechaLlegada(LocalDate.of(2020, Month.DECEMBER, 2));
+		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
+		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 2, 15, 23));
 		vuelo.setCoste(42.0);
 		
 		Aeropuerto aeroOri = new Aeropuerto();
@@ -136,8 +137,8 @@ public class VueloServiceTests {
 		int found = vuelos.size();
 		
 		Vuelo vuelo = new Vuelo();
-		vuelo.setFechaSalida(LocalDate.of(2020, Month.DECEMBER, 1));
-		vuelo.setFechaLlegada(LocalDate.of(2020, Month.NOVEMBER, 30));
+		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
+		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 2, 12, 23));
 		vuelo.setCoste(42.0);
 		
 		Aeropuerto aeroOri = new Aeropuerto();
@@ -174,11 +175,11 @@ public class VueloServiceTests {
 	void shouldUpdateHorasVuelo() {
 		Vuelo vuelo = vueloService.findVueloById(1);
 		
-		vuelo.setFechaSalida(LocalDate.of(2020, Month.FEBRUARY, 12));
-		vuelo.setFechaLlegada(LocalDate.of(2020, Month.FEBRUARY, 13));
+		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
+		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 2, 12, 23));
 		
-		assertThat(vuelo.getFechaSalida()).isEqualTo(LocalDate.of(2020, Month.FEBRUARY, 12));
-		assertThat(vuelo.getFechaLlegada()).isEqualTo(LocalDate.of(2020, Month.FEBRUARY, 13));
+		assertThat(vuelo.getFechaSalida()).isEqualTo(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
+		assertThat(vuelo.getFechaLlegada()).isEqualTo(LocalDateTime.of(2020, Month.DECEMBER, 2, 12, 23));
 	}
 	
 	//TEST DE BORRADO

@@ -28,10 +28,17 @@
                         <spring:param name="vueloId" value="${vuelo.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(vueloUrl)}"><c:out value="${avion.id}"/></a>
-                </td>--%>
-                <td><c:out value="${vuelo.fechaSalida}"/></td>
-                <%---<td><c:out value="${vuelo.horaSalida}"/></td>--%>
-                <td> <petclinic:localDate date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd"/></td>
+                </td>
+                <td><aerolineasAAAFC:inputField name="fechaSalida" date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd'T'HH:mm"/></td>
+                <td><c:out value="${vuelo.fechaSalida}"/>
+                <td><c:out value="${vuelo.fechaLlegada}"/>
+                <td><aerolineasAAAFC:localDate  date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd hh:mm"/></td>
+                <td><aerolineasAAAFC:localDate  date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd hh:mm"/></td>
+				--%>
+          
+               <td><c:out value="${vuelo.fechaSalida}"/>
+                <td><c:out value="${vuelo.fechaLlegada}"/>
+
                 <td><c:out value="${vuelo.coste}"/></td>
                 <tr>
 					<td><a href="<spring:url value="/vuelos/${vuelo.id}/edit" htmlEscape="true" />">Editar</a>
