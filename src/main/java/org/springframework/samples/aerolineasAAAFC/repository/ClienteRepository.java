@@ -8,7 +8,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 public interface ClienteRepository extends CrudRepository<Cliente,Integer>{
 
 	
-	@Query("SELECT cliente FROM Cliente cliente WHERE cliente.nif LIKE :nif")
+	@Query("SELECT cliente FROM Cliente cliente WHERE cliente.nif =:nif")
 	public Cliente findByNif(@Param("nif") String nif);
 	
 	

@@ -31,9 +31,11 @@ public class ClienteService {
 	
 	@Transactional
 	public void saveCliente(Cliente cliente) throws DataAccessException, NifDuplicadoException{
-		Cliente aux = clienteRepository.findByNif(cliente.getNif());
-		if(aux!=null) {
-			throw new NifDuplicadoException();
+		Cliente cliente2 = clienteRepository.findByNif(cliente.getNif());
+		
+		if(cliente2 != null) {
+			Integer idAux = clienteRepository.findByNif(cliente.getNif()).getId();
+			if(!idAux.equals(cliente.getId())) throw new NifDuplicadoException();
 		}else {
 			clienteRepository.save(cliente);
 			userService.saveUser(cliente.getUser());
