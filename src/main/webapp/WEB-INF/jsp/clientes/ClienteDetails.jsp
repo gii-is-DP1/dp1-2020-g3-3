@@ -29,7 +29,7 @@
         
         <tr>
             <th>Fecha de Nacimiento</th>
-            <td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="yyyy-MM-dd"/></td>
+            <td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="dd/MM/yyyy"/></td>
         </tr>
     </table>
 
@@ -39,14 +39,13 @@
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Cliente</a>
 
 
-   <%-- <br/>
     <br/>
     <br/>
     <h2>Billetes</h2>
 
     <table class="table table-striped">
         <c:forEach var="billete" items="${cliente.billetes}">
-
+        
             <tr>
                 <td valign="top">
                     <dl class="dl-horizontal">
@@ -64,6 +63,6 @@
 
         </c:forEach>
     </table> 
-    --%>
+
 
 </aerolineasAAAFC:layout>
