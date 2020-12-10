@@ -15,14 +15,19 @@
 		id="add-vuelo-form">
 		<div class="form-group has-feedback">
 			<aerolineasAAAFC:inputField label="Fecha de Salida"
-				name="fechaSalida" type="datetime-local" />
+				name="fechaSalida" type="datetime" />
+				 
 			<aerolineasAAAFC:inputField label="Fecha de Llegada"
-				name="fechaLlegada" type="datetime-local" />
+				name="fechaLlegada" type="datetime" />
+	<%--
 			<aerolineasAAAFC:inputField label="Aeropuerto Salida"
 				name="aeropuertoOrigen" type="number" />
+				
 			<aerolineasAAAFC:inputField label="Aeropuerto Llegada"
 				name="aeropuertoDestino" type="number" />	
+	 --%>
 			<aerolineasAAAFC:inputField label="Coste" name="coste" />
+			
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">

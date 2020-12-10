@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -18,13 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class VueloService {
-	 
+	@Autowired
 	private VueloRepository vueloRepository;
 	 
 	@Transactional
 	public void saveVuelo(Vuelo vuelo) throws DataAccessException, HorasImposiblesException{
-		LocalDate salida = vuelo.getFechaSalida();
-		LocalDate llegada = vuelo.getFechaLlegada();
+		LocalDateTime salida = vuelo.getFechaSalida();
+		LocalDateTime llegada = vuelo.getFechaLlegada();
 		if(salida.isAfter(llegada)) {
 			throw new HorasImposiblesException();
 		}else {
