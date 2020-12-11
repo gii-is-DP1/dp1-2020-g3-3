@@ -37,12 +37,12 @@ public class Vuelo extends BaseEntity{
 	
 	@Column(name = "fecha_salida")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime  fechaSalida;
 
 	@Column(name = "fecha_llegada")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime  fechaLlegada;
 	
 	@NotNull
@@ -60,14 +60,12 @@ public class Vuelo extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	private Set<PersonalOficina> personalOficina;
 	
-	// Relacion con aeropuerto: ¿dos ManyToOne? o se hace algo diferente
+	
 	@ManyToOne(optional=false)
-//	@UniqueElements
 	@EqualsAndHashCode.Exclude
 	private Aeropuerto aeropuertoOrigen;
 	
 	@ManyToOne(optional=false)
-//	@UniqueElements
 	@EqualsAndHashCode.Exclude
 	private Aeropuerto aeropuertoDestino;
 	

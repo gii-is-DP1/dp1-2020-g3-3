@@ -52,5 +52,5 @@ public class Aeropuerto extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	private Set<Vuelo> vuelosLlegada;
 	
-
+	
 }

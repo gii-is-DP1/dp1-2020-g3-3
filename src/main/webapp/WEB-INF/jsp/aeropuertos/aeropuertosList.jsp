@@ -26,11 +26,6 @@
 			<c:forEach items="${aeropuertos}" var="aeropuerto">
 				<tr>
 					<td>
-						<%--- <spring:url value="/aeropuerto/{aeropuertoId}" var="aeropuertoURL">
-                        <spring:param name="aeropuertoId" value="${aeropuerto.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(aeropuertoUrl)}">--%> 
-                   <%-- <c:out value="${aeropuerto.id}" />--%>
 					</td>
 					<td><c:out value="${aeropuerto.nombre}" /></td>
 					<td><c:out value="${aeropuerto.localizacion}" /></td>

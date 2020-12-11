@@ -16,6 +16,8 @@
         <tr>
             <th>Fecha de salida</th>
             <th>Fecha de llegada</th>
+            <th>Aeropuerto de Salida</th>
+            <th>Aeropuerto de Llegada</th>
             <th>Coste del vuelo</th>
            
         </tr>
@@ -35,10 +37,12 @@
                 <td><aerolineasAAAFC:localDate  date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd hh:mm"/></td>
                 <td><aerolineasAAAFC:localDate  date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd hh:mm"/></td>
 				--%>
-          
-               <td><c:out value="${vuelo.fechaSalida}"/>
-                <td><c:out value="${vuelo.fechaLlegada}"/>
-
+          		
+          		
+				<td><c:out value="${vuelo.fechaLlegada.toString().replace('T',' ')}"/></td>
+                <td><c:out value="${vuelo.fechaLlegada.toString().replace('T',' ')}"/></td>
+				<td><c:out value="${vuelo.aeropuertoOrigen.nombre}"/></td>
+				<td><c:out value="${vuelo.aeropuertoDestino.nombre}"/></td>
                 <td><c:out value="${vuelo.coste}"/></td>
                 <tr>
 					<td><a href="<spring:url value="/vuelos/${vuelo.id}/edit" htmlEscape="true" />">Editar</a>
