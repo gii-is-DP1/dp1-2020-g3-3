@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
+import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.stereotype.Controller;
@@ -29,10 +30,13 @@ public class VueloController {
 	private static final String VIEWS_VUELO_CREATE_OR_UPDATE_FORM = "vuelos/createOrUpdateVueloForm";
 	
 	private final VueloService vueloService;
+	private final AeropuertoService aeropuertoService;
+	
 	
 	@Autowired
-	public VueloController(VueloService vueloService) {
+	public VueloController(VueloService vueloService,AeropuertoService aeropuertoService) {
 		this.vueloService = vueloService;
+		this.aeropuertoService=aeropuertoService;
 	}
 	
 	@InitBinder
@@ -53,6 +57,9 @@ public class VueloController {
 	public String initCreationVueloForm(Map<String, Object> model) {
 		Vuelo vuelo = new Vuelo();
 		model.put("vuelo", vuelo);
+		List<Aeropuerto> aeropuertos = new ArrayList<>();
+		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
+		model.put("aeropuertos", aeropuertos);
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
 	
