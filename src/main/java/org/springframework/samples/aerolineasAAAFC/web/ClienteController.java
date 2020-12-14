@@ -1,6 +1,5 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
-import java.util.Collection;
 import java.util.Map;
 import javax.validation.Valid;
 
@@ -13,17 +12,17 @@ import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import lombok.extern.java.Log;
 
 
 @Controller
@@ -34,7 +33,7 @@ public class ClienteController {
 	private final ClienteService clienteService;
 	
 	@Autowired
-	public ClienteController(ClienteService clienteService,  UserService userService, AuthoritiesService authoritiesService) {
+	public ClienteController(ClienteService clienteService, UserService userService, AuthoritiesService authoritiesService) {
 		this.clienteService = clienteService;
 	}
 	
@@ -63,7 +62,7 @@ public class ClienteController {
 		else {
 			try {
 				this.clienteService.saveCliente(cliente);
-			} catch (NifDuplicadoException e) {
+			} catch (NifDuplicadoException ex) {
 				 result.rejectValue("nif", "duplicate", "already exists");
 				 return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 			}
@@ -124,7 +123,6 @@ public class ClienteController {
 			result.rejectValue("nif", "notFound", "nif no encontrado");
 			return "clientes/findClientes";
 		} else {
-			Logger.getLogger(ClienteController.class.getName()).log(Level.INFO, "Cliente: " + cliente);
 			return "redirect:/clientes/" + resultado.getId();
 		}
 		
