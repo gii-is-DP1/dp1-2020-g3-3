@@ -29,13 +29,10 @@
         
         <tr>
             <th>Fecha de Nacimiento</th>
-            <td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="dd/MM/yyyy"/></td>
+            <td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="yyyy-MM-dd"/></td>
         </tr>
     </table>
 
-    <spring:url value="{clienteId}/edit" var="editUrl">
-        <spring:param name="clienteId" value="${cliente.id}"/>
-    </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Cliente</a>
 
 
@@ -54,7 +51,7 @@
                         <dt>Asiento</dt>
                         <dd><c:out value="${billete.asiento}"/></dd>
                         <dt>Fecha de reserva</dt>
-                        <dd><petclinic:localDate date="${billete.fechaReserva}" pattern="yyyy-MM-dd"/></dd>
+                        <dd><aerolineasAAAFC:localDate date="${billete.fechaReserva}" pattern="yyyy-MM-dd"/></dd>
                         <dt>Clase</dt>
                         <dd><c:out value="${billete.clase}"/></dd>
                     </dl>
