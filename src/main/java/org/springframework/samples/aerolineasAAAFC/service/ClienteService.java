@@ -29,17 +29,21 @@ public class ClienteService {
 		this.clienteRepository = clienteRepository;
 	}
 	
-	@Transactional(rollbackFor = NifDuplicadoException.class)
+	@Transactional
 	public void saveCliente(Cliente cliente) throws DataAccessException, NifDuplicadoException{
+		
 		Cliente cliente2 = clienteRepository.findByNif(cliente.getNif());
 		
 		if(cliente2 != null) {
-			Integer idAux = clienteRepository.findByNif(cliente.getNif()).getId();
+			Integer idAux = cliente2.getId();
 			if(!idAux.equals(cliente.getId())) throw new NifDuplicadoException();
+			
 		}else {
+			
 			clienteRepository.save(cliente);
 			userService.saveUser(cliente.getUser());
 			authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "cliente");
+			
 		}
 	}
 	

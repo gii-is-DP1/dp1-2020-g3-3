@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 
@@ -7,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
@@ -48,21 +51,21 @@ public class ClienteController {
 	 */
 	
 	@GetMapping(value = "/clientes/new")
-	public String initCreationForm(Map<String, Object> model) {
+	public String initCreationClienteForm(Map<String, Object> model) {
 		Cliente cliente = new Cliente();
 		model.put("cliente", cliente);
 		return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/clientes/new")
-	public String processCreationForm(@Valid Cliente cliente, BindingResult result) {
+	public String processCreationClienteForm(@Valid Cliente cliente, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			try {
 				this.clienteService.saveCliente(cliente);
-			} catch (NifDuplicadoException ex) {
+			} catch (NifDuplicadoException e) {
 				 result.rejectValue("nif", "duplicate", "already exists");
 				 return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 			}
@@ -72,7 +75,7 @@ public class ClienteController {
 	}
 	
 	/*
-	 * MODIFICACIÓN DE UN CLIENTE
+	 * MODIFICACIÓN CLIENTE
 	 */
 	
 	@GetMapping(value = "/clientes/{clienteId}/edit")
@@ -83,7 +86,8 @@ public class ClienteController {
 	}
 	
 	@PostMapping(value = "/clientes/{clienteId}/edit")
-	public String processUpdateClienteForm(@Valid Cliente cliente, BindingResult result, @PathVariable("clienteId") int clienteId) {
+	public String processUpdateClienteForm(@Valid Cliente cliente, BindingResult result, 
+			@PathVariable("clienteId") int clienteId) {
 		if(result.hasErrors()) {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}
@@ -104,14 +108,22 @@ public class ClienteController {
 	 * BÚSQUEDA CLIENTE/S
 	 */
 	
+	@GetMapping(value =  "/clientesList" )
+	public String showClientesList(Map<String, Object> model) {
+		List<Cliente> clientes = new ArrayList<>();
+		this.clienteService.findClientes().forEach(x->clientes.add(x));
+		model.put("clientes", clientes);
+		return "clientes/clientesList";
+	}
+	
 	@GetMapping(value = "/clientes/find")
-	public String initFindForm(Map<String, Object> model) {
+	public String initFindClienteForm(Map<String, Object> model) {
 		model.put("cliente", new Cliente());
 		return "clientes/findClientes";
 	}
 
-	@GetMapping(value = "/clientes")
-	public String processFindForm(Cliente cliente, BindingResult result, Map<String, Object> model) {
+	@GetMapping(value = "/clientes/")
+	public String processFindClienteForm(Cliente cliente, BindingResult result, Map<String, Object> model) {
 
 		if (cliente.getNif() == null) {
 			cliente.setNif(""); 
@@ -134,5 +146,16 @@ public class ClienteController {
 		mav.addObject(this.clienteService.findClienteById(clienteId));
 		return mav;
 	}
+	
+	/*
+	 *  ELIMINAR CLIENTE
+	 */
+
+	@GetMapping(value = "/clientes/{clienteId}/delete")
+	public String deleteCliente(@PathVariable("clienteId") int clienteId) {
+		this.clienteService.deleteClienteById(clienteId);
+		return "redirect:/clientesList";
+	}
+
 
 }

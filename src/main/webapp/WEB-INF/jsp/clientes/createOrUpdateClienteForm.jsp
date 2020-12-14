@@ -17,7 +17,7 @@
 			<aerolineasAAAFC:inputField label="Nombre" name="nombre" />
 			<aerolineasAAAFC:inputField label="Apellidos" name="apellidos" />
 			<aerolineasAAAFC:inputField label="NIF" name="nif" />
-			<aerolineasAAAFC:inputField label="Direccion de Facturacion" name="direccionFacturacion" />
+			<aerolineasAAAFC:inputField label="Direccion de Facturación" name="direccionFacturacion" />
 			<aerolineasAAAFC:inputField label="IBAN" name="iban" />
 			<aerolineasAAAFC:inputField label="Fecha de Nacimiento" name="fechaNacimiento" type="date" />
 			<aerolineasAAAFC:inputField label="Username" name="user.username" />
