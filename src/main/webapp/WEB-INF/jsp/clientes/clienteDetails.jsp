@@ -11,7 +11,7 @@
 
     <table class="table table-striped">
         <tr>
-            <th>Nombre</th>
+            <th>Nombre y apellidos</th>
             <td><b><c:out value="${cliente.nombre} ${cliente.apellidos}"/></b></td>
         </tr>
         <tr>
@@ -29,10 +29,18 @@
         
         <tr>
             <th>Fecha de Nacimiento</th>
-            <td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="yyyy-MM-dd"/></td>
+            <td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="dd-MM-yyy"/></td>
+        </tr>
+        
+        <tr>
+            <th>Usuario</th>
+            <td><c:out value="${cliente.user.username}"/></td>
         </tr>
     </table>
 
+  	<spring:url value="{clienteId}/edit" var="editUrl">
+        <spring:param name="clienteId" value="${cliente.id}"/>
+    </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Cliente</a>
 
 
