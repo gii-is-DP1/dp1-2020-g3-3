@@ -9,9 +9,10 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.jupiter.api.Assertions;
 
-//import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,14 @@ import org.springframework.transaction.annotation.Transactional;
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class VueloServiceTests {
 	
+	
+	
 	@Autowired
 	protected VueloService vueloService;
 	
 	@Autowired
 	protected AeropuertoService aeroService;
+	
 	
 	//TEST DE CONSULTA
 	@Test
@@ -131,6 +135,39 @@ public class VueloServiceTests {
 	}
 	
 	@Test
+	@Transactional(rollbackFor={ConstraintViolationException.class})
+	public void shouldntInsertVueloAeropuertoIdenticos() {
+		Collection<Vuelo> vuelos = this.vueloService.findVuelos();
+		int found = vuelos.size();
+		
+		Vuelo vuelo = new Vuelo();
+		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
+		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 2, 15, 23));
+		vuelo.setCoste(42.0);
+		
+		Aeropuerto aeroOri = new Aeropuerto();
+		aeroOri.setNombre("Aeropuerto Humberto Delgado");
+		aeroOri.setLocalizacion("Lisboa, Portugal");
+		aeroOri.setCodigoIATA("LIS");
+		aeroOri.setTelefono("+351218413500");
+		try {
+			this.aeroService.saveAeropuerto(aeroOri);
+		} catch(TelefonoErroneoException ex) {
+			Logger.getLogger(AeropuertoServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		vuelo.setAeropuertoOrigen(aeroOri);
+		
+		
+		vuelo.setAeropuertoDestino(aeroOri);
+		
+		Assertions.assertThrows(ConstraintViolationException.class, ()->{ this.vueloService.saveVuelo(vuelo); });
+		
+		
+//		vuelos = this.vueloService.findVuelos();
+//		assertThat(vuelos.size()).isEqualTo(found);
+	}
+	
+	@Test
 	@Transactional
 	public void shouldNotInsertVueloHorasInvalidas() {
 		Collection<Vuelo> vuelos = this.vueloService.findVuelos();
@@ -172,6 +209,7 @@ public class VueloServiceTests {
 	
 	//TEST DE ACTUALIZACIÓN
 	@Test
+	@Transactional
 	void shouldUpdateHorasVuelo() {
 		Vuelo vuelo = vueloService.findVueloById(1);
 		
