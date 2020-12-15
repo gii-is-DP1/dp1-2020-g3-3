@@ -25,18 +25,6 @@
         <tbody>
         <c:forEach items="${vuelos}" var="vuelo">
             <tr>
-              <%---    <td>
-                   <spring:url value="/vuelo/{vueloId}" var="vueloURL">
-                        <spring:param name="vueloId" value="${vuelo.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(vueloUrl)}"><c:out value="${avion.id}"/></a>
-                </td>
-                <td><aerolineasAAAFC:inputField name="fechaSalida" date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd'T'HH:mm"/></td>
-                <td><c:out value="${vuelo.fechaSalida}"/>
-                <td><c:out value="${vuelo.fechaLlegada}"/>
-                <td><aerolineasAAAFC:localDate  date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd hh:mm"/></td>
-                <td><aerolineasAAAFC:localDate  date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd hh:mm"/></td>
-				--%>
           		
           		
 				<td><c:out value="${vuelo.fechaLlegada.toString().replace('T',' ')}"/></td>

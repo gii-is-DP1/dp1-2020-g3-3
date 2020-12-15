@@ -1,6 +1,5 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -10,14 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.samples.aerolineasAAAFC.service.businessrules.AeropuertoConstraint;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,11 +22,12 @@ import lombok.EqualsAndHashCode;
 * Entidad simple que representa un vuelo
 */
 
-
+@AeropuertoConstraint(value={"aeropuertoOrigen","aeropuertoDestino"})
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "vuelos")
+
 public class Vuelo extends BaseEntity{
 	
 	// Atributos:
@@ -63,6 +60,7 @@ public class Vuelo extends BaseEntity{
 	
 	@ManyToOne(optional=false)
 	@EqualsAndHashCode.Exclude
+	
 	private Aeropuerto aeropuertoOrigen;
 	
 	@ManyToOne(optional=false)
@@ -72,6 +70,7 @@ public class Vuelo extends BaseEntity{
 	@ManyToMany(cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private Set<Avion> aviones;
+
 	
 }
 
