@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,8 +21,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
+import org.springframework.samples.aerolineasAAAFC.model.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.User;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
@@ -37,35 +43,55 @@ public class ClienteServiceTests {
 	//Tests Consultar
 
 	@Test
-	void getNifClienteSuccessful() {
+	void getClienteSuccessful() {
 		Cliente cliente = clienteService.findClienteById(1);
-		assertThat(cliente.getNif())
-		.isNotEmpty()
-		.containsPattern("^\\d{8}[a-zA-Z]$");
-	}
-
-	@Test
-	void getIbanClienteSuccessful() {
-		Cliente cliente = clienteService.findClienteById(1);
+		//NOMBRE
+		assertThat(cliente.getNombre())
+		.isNotEmpty();
+		//APELLIDOS
+		assertThat(cliente.getApellidos())
+		.isNotEmpty();
+		//IBAN
 		assertThat(cliente.getIban())
 		.isNotEmpty()
 		.containsPattern("^ES\\s\\d{22}$");
+		//NIF
+		assertThat(cliente.getNif())
+		.isNotEmpty()
+		.containsPattern("^\\d{8}[a-zA-Z]$");
+		//FECHA DE NACIMIENTO
+		assertThat(cliente.getFechaNacimiento())
+		.isBefore(LocalDate.now().minusYears(18));
+		//EMAIL
+		assertThat(cliente.getEmail())
+		.isNotEmpty();
+		//BILLETES
+		assertThat(cliente.getBilletes())
+		.isNotEmpty();
 	}
 
 	@Test
-	void getfechaNacimientoClienteSuccessful() {
+	void shouldAddBillete() {
+		Billete billete = new Billete();
 		Cliente cliente = clienteService.findClienteById(1);
-		String now = LocalDate.now().toString();
-		assertThat(cliente.getFechaNacimiento())
-		.isBefore(now)
-		.hasToString("1995-03-08")
-		.isBefore(LocalDate.now().minusYears(18));
+		int found = cliente.getBilletes().size();
+		
+		billete.setId(2);
+		billete.setCoste(80);
+		billete.setAsiento("F5");
+		billete.setFechaReserva(LocalDate.of(2020, 04, 06));
+		billete.setClase(Clase.ECONOMICA);
+		cliente.getBilletes().add(billete);
+		
+		assertThat(cliente.getBilletes().size())
+		.isEqualTo(found+1);
+
 	}
 	
 	@Test
 	void shouldGetClienteByNif() {
 		Cliente cliente = clienteService.findClienteByNif("01446551N");
-		assertThat(cliente.getId()).isNotNull();
+		assertThat(cliente.getId());
 	}
 
 	//Tests Añadir
@@ -84,18 +110,21 @@ public class ClienteServiceTests {
 		cliente.setIban("ES 6621000418401234567893");
 		LocalDate fecha = LocalDate.parse("1997-06-03", DateTimeFormatter.ISO_DATE);
 		cliente.setFechaNacimiento(fecha);
-		
+		cliente.setEmail("juanjeferrero@outlook.com");
+
 		User user = new User();
 		user.setUsername("28976897W");
 		user.setPassword("*Fly_High14&");
 		user.setEnabled(true);
 		cliente.setUser(user);                
 
-		try {
+		
+//		try {
 			this.clienteService.saveCliente(cliente);
-		} catch (NifDuplicadoException ex) {
-			Logger.getLogger(ClienteServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-		}
+//		} catch (NifDuplicadoException ex) {
+//			Logger.getLogger(ClienteServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+//		}
+		
 
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
@@ -106,8 +135,6 @@ public class ClienteServiceTests {
 	@Test
 	@Transactional
 	public void shouldNotInsertClienteRepetido(){
-		Collection<Cliente> clientes = this.clienteService.findClientes();
-		int found = clientes.size();
 
 		Cliente cliente = new Cliente();
 		cliente.setNombre("María");
@@ -116,18 +143,12 @@ public class ClienteServiceTests {
 		cliente.setDireccionFacturacion("C/Enladrillada,2 1ºB Sevilla");
 		cliente.setIban("ES 7771056418401234567893");
 		LocalDate fecha = LocalDate.parse("1995-03-08", DateTimeFormatter.ISO_DATE);
-		cliente.setFechaNacimiento(fecha);
+		cliente.setFechaNacimiento(fecha);     
+		cliente.setEmail("marisotoram@hotmail.com");
+		
+		
+		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
 
-		User user = new User();
-		user.setUsername("01446551Z");
-		user.setPassword("*Fly_High14&");
-		user.setEnabled(true);
-		cliente.setUser(user);                    
-
-
-		Assertions.assertThrows(NifDuplicadoException.class, ()->{ this.clienteService.saveCliente(cliente); });
-		clientes = this.clienteService.findClientes();
-		assertThat(clientes.size()).isEqualTo(found);
 	}
 
 	//Tests Actualizar
@@ -142,7 +163,7 @@ public class ClienteServiceTests {
 		.isNotEmpty()
 		.isEqualTo("Calle Almira, 17 3ºC Segovia");
 	}
-
+	
 	//Tests Eliminar
 
 	@Test
@@ -150,9 +171,9 @@ public class ClienteServiceTests {
 	public void shouldDeleteClienteById() {
 		Collection<Cliente> clientes = this.clienteService.findClientes();
 		int found = clientes.size();
-		
+
 		clienteService.deleteClienteById(1);
-		
+
 		clientes = this.clienteService.findClientes();
 		assertThat(clientes.size()).isEqualTo(found - 1);
 	}
