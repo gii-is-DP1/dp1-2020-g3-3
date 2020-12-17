@@ -64,11 +64,12 @@ public class AvionController {
 	public String initUpdateAvionForm(@PathVariable("avionId") int avionId, Model model) {
 		Avion avion = this.avionService.findAvionById(avionId);
 		model.addAttribute(avion);
+		
 		return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/aviones/{avionId}/edit")
-	public String processUpdateAvionForm(@Valid Avion avion, BindingResult result, @PathVariable("avionId") int avionId) {
+	public String processUpdateAvionForm(@Valid Avion avion, BindingResult result, @PathVariable("avionId") int avionId,Model model) {
 		if(result.hasErrors()) {
 			return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
 		}

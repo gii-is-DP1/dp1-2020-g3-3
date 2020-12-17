@@ -72,7 +72,7 @@ public class ClienteServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldInsertCliente(){
+	public void shouldInsertCliente() throws NifDuplicadoException{
 		Collection<Cliente> clientes = this.clienteService.findClientes();
 		int found = clientes.size();
 
@@ -91,11 +91,7 @@ public class ClienteServiceTests {
 		user.setEnabled(true);
 		cliente.setUser(user);                
 
-		try {
-			this.clienteService.saveCliente(cliente);
-		} catch (NifDuplicadoException ex) {
-			Logger.getLogger(ClienteServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		this.clienteService.saveCliente(cliente);
 
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
