@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -60,16 +61,16 @@ public class Vuelo extends BaseEntity{
 	
 	@ManyToOne(optional=false)
 	@EqualsAndHashCode.Exclude
-	
 	private Aeropuerto aeropuertoOrigen;
 	
 	@ManyToOne(optional=false)
 	@EqualsAndHashCode.Exclude
 	private Aeropuerto aeropuertoDestino;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToOne(optional=false)
 	@EqualsAndHashCode.Exclude
-	private Set<Avion> aviones;
+	@JoinColumn(name = "avion_id")
+	private Avion avion;
 
 	
 }

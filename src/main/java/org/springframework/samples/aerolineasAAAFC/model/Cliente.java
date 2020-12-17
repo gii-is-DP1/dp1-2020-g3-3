@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -27,26 +28,31 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "clientes")
-public class Cliente extends BaseEntity{
+public class Cliente extends /*BaseEntity*/Person{
 
-	// Atributos
-	@Column(name = "nombre")
+//	//Atributos
+//	@Column(name = "nombre")
+//	@NotEmpty
+//	protected String nombre;
+//	
+//	@Column(name = "apellidos")
+//	@NotEmpty
+//	protected String apellidos;
+//	
+//	@Column(name = "nif", unique = true)
+//	@NotEmpty
+//	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
+//	protected String nif;
+//	
+//	@Column(name = "iban")
+//	@NotEmpty
+//	@Pattern(regexp="^ES\\s\\d{22}$")
+//	protected String iban;
+//	
+	@Column(name = "email")
+	@Email
 	@NotEmpty
-	protected String nombre;
-	
-	@Column(name = "apellidos")
-	@NotEmpty
-	protected String apellidos;
-	
-	@Column(name = "nif")
-	@NotEmpty
-	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-	protected String nif;
-	
-	@Column(name = "iban")
-	@NotEmpty
-	@Pattern(regexp="^ES\\s\\d{22}$")
-	protected String iban;
+	private String email;
 	
 	@Column(name = "direccion_facturacion")
 	@NotEmpty
@@ -62,9 +68,9 @@ public class Cliente extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	private Set<Billete> billetes;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username")
-	@EqualsAndHashCode.Exclude
-	private User user;
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "username", referencedColumnName = "username")
+//	@EqualsAndHashCode.Exclude
+//	private User user;
 	
 }

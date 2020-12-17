@@ -28,25 +28,25 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "personal_control")
-public class PersonalControl extends BaseEntity{
+public class PersonalControl extends Person{
 
 	// Atributos
 	
-	@Column(name = "nombre")
-	@NotEmpty
-	protected String nombre;
-	
-	@Column(name = "apellidos")
-	@NotEmpty
-	protected String apellidos;
-	
-	@NotEmpty
-	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-	protected String nif;
-	
-	@NotEmpty
-	@Pattern(regexp="^ES\\s\\d{22}$")
-	protected String iban;
+//	@Column(name = "nombre")
+//	@NotEmpty
+//	protected String nombre;
+//	
+//	@Column(name = "apellidos")
+//	@NotEmpty
+//	protected String apellidos;
+//	
+//	@NotEmpty
+//	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
+//	protected String nif;
+//	
+//	@NotEmpty
+//	@Pattern(regexp="^ES\\s\\d{22}$")
+//	protected String iban;
 	
 	@Column(name = "rol")
 	@NotEmpty
@@ -63,10 +63,10 @@ public class PersonalControl extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	private Set<Avion> aviones;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username")
-	@EqualsAndHashCode.Exclude
-	private User user;
+//	@OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "username", referencedColumnName = "username")
+//	@EqualsAndHashCode.Exclude
+//	private User user;
 
 	
 }

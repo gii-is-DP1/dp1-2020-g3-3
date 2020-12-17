@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
@@ -65,7 +66,7 @@ public class ClienteController {
 		else {
 			try {
 				this.clienteService.saveCliente(cliente);
-			} catch (NifDuplicadoException e) {
+			} catch (DataIntegrityViolationException e) {
 				 result.rejectValue("nif", "duplicate", "already exists");
 				 return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 			}
@@ -93,9 +94,9 @@ public class ClienteController {
 		}
 		else {
 			cliente.setId(clienteId);
-			try {
+		try {
 				this.clienteService.saveCliente(cliente);
-			} catch (NifDuplicadoException e) {
+		} catch (DataIntegrityViolationException e) {
 				 result.rejectValue("nif", "duplicate", "already exists");
 				 return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 			}
@@ -122,7 +123,7 @@ public class ClienteController {
 		return "clientes/findClientes";
 	}
 
-	@GetMapping(value = "/clientes/")
+	@GetMapping(value = "/clientes")
 	public String processFindClienteForm(Cliente cliente, BindingResult result, Map<String, Object> model) {
 
 		if (cliente.getNif() == null) {

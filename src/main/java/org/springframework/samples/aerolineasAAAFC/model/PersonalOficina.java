@@ -27,35 +27,35 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "personal_oficina")
-public class PersonalOficina extends BaseEntity{
+public class PersonalOficina extends Person{
 
 	// Atributos
 	
-	@Column(name = "nombre")
-	@NotEmpty
-	protected String nombre;
-	
-	@Column(name = "apellidos")
-	@NotEmpty
-	protected String apellidos;
-	
-	@NotEmpty
-	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-	protected String nif;
-	
-	@NotEmpty
-	@Pattern(regexp="^ES\\s\\d{22}$")
-	protected String iban;
+//	@Column(name = "nombre")
+//	@NotEmpty
+//	protected String nombre;
+//	
+//	@Column(name = "apellidos")
+//	@NotEmpty
+//	protected String apellidos;
+//	
+//	@NotEmpty
+//	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
+//	protected String nif;
+//	
+//	@NotEmpty
+//	@Pattern(regexp="^ES\\s\\d{22}$")
+//	protected String iban;
 	
 	@Column(name = "salario")
 	@Min(value = 1000)
 	private Double Salario;
 	
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username")
-	@EqualsAndHashCode.Exclude
-	private User user;
+//	@OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "username", referencedColumnName = "username")
+//	@EqualsAndHashCode.Exclude
+//	private User user;
 
 	// Relaciones de tabla:
 	
