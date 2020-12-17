@@ -100,18 +100,18 @@ public class AvionControllerTests {
 				.param("plazasEconomica", "60")
 				.param("plazasEjecutiva", "12")
 				.param("plazasPrimera", "5"))
-				.andExpect(view().name("/aviones/{avionId}/edit"));
+				.andExpect(view().name("aviones/{avionId}"));
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateAvionFormHasErrors() throws Exception {
-		mockMvc.perform((post("/aviones/{avionId}/edit", TEST_AVION_ID)
+		mockMvc.perform(post("/aviones/{avionId}/edit", TEST_AVION_ID)
 				.with(csrf())
 				.param("fechaRevision","2020/12/28")
 				.param("disponibilidad", "")
-				.param("plazasEjecutiva", "12")))
-				.andExpect(model().attributeHasNoErrors("avion"))
+				.param("plazasEjecutiva", "12"))
+				.andExpect(model().attributeHasErrors("avion"))
 				.andExpect(view().name("/aviones/{avionId}"));
 	}
 

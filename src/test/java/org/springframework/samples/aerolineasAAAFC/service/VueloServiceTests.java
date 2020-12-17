@@ -41,7 +41,6 @@ public class VueloServiceTests {
 	@Test
 	void getFechaSalidaVueloSuccessful() {
 		Vuelo vuelo = vueloService.findVueloById(1);
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
 		
 		assertThat(vuelo.getFechaSalida())
 		.isBefore(vuelo.getFechaLlegada());
@@ -162,6 +161,7 @@ public class VueloServiceTests {
 		
 		Assertions.assertThrows(ConstraintViolationException.class, ()->{ this.vueloService.saveVuelo(vuelo); });
 		
+
 		
 //		vuelos = this.vueloService.findVuelos();
 //		assertThat(vuelos.size()).isEqualTo(found);
