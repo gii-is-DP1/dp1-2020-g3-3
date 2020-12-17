@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
@@ -48,13 +49,9 @@ public class UserController {
 			return VIEWS_CLIENTE_CREATE_FORM;
 		}
 		else {
-			//creating cliente, user, and authority
-			try {
-				this.clienteService.saveCliente(cliente);
-			} catch (NifDuplicadoException e) {
-				 result.rejectValue("nif", "duplicate", "already exists");
-				 return VIEWS_CLIENTE_CREATE_FORM;
-			}
+			
+			this.clienteService.saveCliente(cliente);
+		
 			return "redirect:/";
 		}
 	}

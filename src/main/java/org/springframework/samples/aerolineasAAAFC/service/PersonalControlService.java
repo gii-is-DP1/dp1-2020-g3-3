@@ -2,6 +2,7 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
@@ -38,17 +39,15 @@ public class PersonalControlService {
 	}
 	
 	@Transactional
-	public void savePersonalControl(PersonalControl pControl) throws DataAccessException, NifDuplicadoException, IbanDuplicadoException{
-		PersonalControl pNif = pControlRepository.findByNif(pControl.getNif());
+	public void savePersonalControl(PersonalControl pControl) throws DataAccessException, DataIntegrityViolationException, IbanDuplicadoException{
 		PersonalControl pIban = pControlRepository.findByIban(pControl.getIban());
-		if(pNif != null) {
-			throw new NifDuplicadoException();
-		}else if(pIban != null){
+		
+		if(pIban != null && !pIban.getId().equals(pControl.getId())){
 			throw new IbanDuplicadoException();
 		}else {
 			pControlRepository.save(pControl);
 			userService.saveUser(pControl.getUser());
-			authoritiesService.saveAuthorities(pControl.getUser().getUsername(), "personal");
+			authoritiesService.saveAuthorities(pControl.getUser().getUsername(), "personalControl");
 		}
 	}
 	

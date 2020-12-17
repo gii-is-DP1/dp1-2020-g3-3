@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -16,11 +18,30 @@
 		<div class="form-group has-feedback">
 			<aerolineasAAAFC:inputField label="Nombre" name="nombre" />
 			<aerolineasAAAFC:inputField label="Apellidos" name="apellidos" />
-			<aerolineasAAAFC:inputField label="NIF" name="nif" />
-			<aerolineasAAAFC:inputField label="Direccion de Facturación" name="direccionFacturacion" />
+			
+			<c:choose>
+				<c:when test="${cliente['new']}">
+					<aerolineasAAAFC:inputField label="NIF" name="nif" />
+				</c:when>
+				<c:otherwise>
+					<aerolineasAAAFC:inputField label="NIF" name= "nif"  readOnly="true"/>
+				</c:otherwise>
+			</c:choose>	
+			
+			<aerolineasAAAFC:inputField label="Direccion de FacturaciÃ³n" name="direccionFacturacion" />
 			<aerolineasAAAFC:inputField label="IBAN" name="iban" />
-			<aerolineasAAAFC:inputField label="Fecha de Nacimiento" name="fechaNacimiento" type="date" />
-			<aerolineasAAAFC:inputField label="Username" name="user.username" />
+			<aerolineasAAAFC:inputField label="Fecha de Nacimiento" name="fechaNacimiento" type="date"/>
+			<aerolineasAAAFC:inputField label="Email" name="email" />
+			
+			<c:choose>
+				<c:when test="${cliente['new']}">
+					<aerolineasAAAFC:inputField label="Username" name="user.username" />
+				</c:when>
+				<c:otherwise>
+					<aerolineasAAAFC:inputField label="Username" name="user.username" readOnly="true"/>
+				</c:otherwise>
+			</c:choose>	
+			
 			<aerolineasAAAFC:inputField label="Password" name="user.password" type="password" />
 		</div>
 		<div class="form-group">

@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
@@ -54,7 +55,7 @@ public class AzafatoController {
 		else {
 			try {
 				this.azafatoService.saveAzafato(azafato);
-			} catch (NifDuplicadoException e) {
+			} catch (DataIntegrityViolationException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
 				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			} catch (IbanDuplicadoException e) {
@@ -88,7 +89,7 @@ public class AzafatoController {
 			azafato.setId(azafatoId);
 			try {
 				this.azafatoService.saveAzafato(azafato);
-			} catch (NifDuplicadoException e) {
+			} catch (DataIntegrityViolationException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
 				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			} catch (IbanDuplicadoException e) {

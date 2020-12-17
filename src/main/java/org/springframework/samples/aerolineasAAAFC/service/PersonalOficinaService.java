@@ -2,6 +2,7 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository;
@@ -35,17 +36,15 @@ public class PersonalOficinaService {
 	}
 	
 	@Transactional
-	public void savePersonalOficina(PersonalOficina pOficina) throws DataAccessException, NifDuplicadoException, IbanDuplicadoException{
-		PersonalOficina pNif = pOficinaRepository.findByNif(pOficina.getNif());
+	public void savePersonalOficina(PersonalOficina pOficina) throws DataAccessException, DataIntegrityViolationException, IbanDuplicadoException{
 		PersonalOficina pIban = pOficinaRepository.findByIban(pOficina.getIban());
-		if(pNif != null) {
-			throw new NifDuplicadoException();
-		}else if(pIban != null){
+		
+		if(pIban != null && !pIban.getId().equals(pOficina.getId())){
 			throw new IbanDuplicadoException();
 		}else {
 			pOficinaRepository.save(pOficina);
 			userService.saveUser(pOficina.getUser());
-			authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personal");
+			authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
 		}
 	}
 	

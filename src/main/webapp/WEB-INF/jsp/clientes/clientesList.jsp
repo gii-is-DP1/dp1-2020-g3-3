@@ -19,6 +19,7 @@
 				<th>Dirección de Facturación</th>
 				<th>IBAN</th>
 				<th>Fecha de Nacimiento</th>
+				<th>Email</th>
 				<th>Usuario</th>
 				<th>Contraseña</th>
 				<th>Opciones</th>
@@ -36,6 +37,7 @@
 					<td><c:out value="${cliente.direccionFacturacion}"/></td>
 					<td><c:out value="${cliente.iban}"/></td>
 					<td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="dd-MM-yyy"/></td>
+					<td><c:out value="${cliente.email}"/></td>
 					<td><c:out value="${cliente.user.username}"/></td>
 					<td><c:out value="${cliente.user.password}"/></td>
 					<td>

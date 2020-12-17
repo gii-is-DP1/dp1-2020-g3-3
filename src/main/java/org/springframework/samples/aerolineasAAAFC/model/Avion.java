@@ -4,9 +4,11 @@ package org.springframework.samples.aerolineasAAAFC.model;
 import java.time.LocalDate;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -68,7 +70,8 @@ public class Avion extends BaseEntity{
 	
 	// Relaciones de tablas:
 	
-	@ManyToMany(mappedBy="aviones")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="avion") 
+	@EqualsAndHashCode.Exclude
 	private Set<Vuelo> vuelos;
 	
 	@ManyToMany(mappedBy="aviones")

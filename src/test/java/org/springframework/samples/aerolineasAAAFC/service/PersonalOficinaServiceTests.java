@@ -33,7 +33,7 @@ public class PersonalOficinaServiceTests {
 	void getIbanPersonalSuccessful() {
 		PersonalOficina personal=personalOficinaService.findPersonalOficinaById(1);
 		assertThat(personal.getIban()).isNotEmpty();
-		assertThat(personal.getIban()).containsPattern("^ES\\d{22}$");
+		assertThat(personal.getIban()).containsPattern("^ES\\s\\d{22}$");
 	}
 
 	@Test

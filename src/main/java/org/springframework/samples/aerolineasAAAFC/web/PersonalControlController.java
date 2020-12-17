@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
@@ -54,7 +55,7 @@ public class PersonalControlController {
 		else {
 			try {
 				this.pControlService.savePersonalControl(pControl);
-			} catch (NifDuplicadoException e) {
+			} catch (DataIntegrityViolationException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
 				e.printStackTrace();
 			} catch (IbanDuplicadoException e) {
@@ -85,7 +86,7 @@ public class PersonalControlController {
 			pControl.setId(pControlId);
 			try {
 				this.pControlService.savePersonalControl(pControl);
-			} catch (NifDuplicadoException e) {
+			} catch (DataIntegrityViolationException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
 				return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 			} catch (IbanDuplicadoException e) {

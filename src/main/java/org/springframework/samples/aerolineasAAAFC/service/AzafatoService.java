@@ -6,6 +6,7 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.repository.AzafatoRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
@@ -45,13 +46,11 @@ public class AzafatoService {
 
 	@Transactional
 	public void saveAzafato(Azafato azafato) throws DataAccessException, IbanDuplicadoException, 
-	NifDuplicadoException, IdiomasNoSuficientesException{ 
+	DataIntegrityViolationException, IdiomasNoSuficientesException{ 
 		
-		Azafato aNif = azafatoRepository.findByNif(azafato.getNif());  //Busca en BDs si hay atributos duplicados
 		Azafato aIban = azafatoRepository.findByIban(azafato.getIban());
-		if(aNif != null) {
-			throw new NifDuplicadoException();
-		}else if(aIban != null){
+		
+		if(aIban != null && ! aIban.getId().equals(azafato.getId())){
 			throw new IbanDuplicadoException();
 		}else if(azafato.getIdiomas().size() < 2){
 			throw new IdiomasNoSuficientesException("Parece que no ha introducido 2 o más idiomas para este empleado");

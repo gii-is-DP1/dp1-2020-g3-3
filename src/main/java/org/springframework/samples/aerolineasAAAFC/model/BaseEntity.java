@@ -5,6 +5,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.springframework.data.annotation.Version;
+
 /**
  * Clase usada para todas aquellas que necesiten un ID
  */
@@ -14,6 +16,9 @@ public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
+	
+//	@Version
+//	private Integer version;
 
 	public Integer getId() {
 		return id;

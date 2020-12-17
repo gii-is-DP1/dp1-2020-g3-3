@@ -33,6 +33,11 @@
         </tr>
         
         <tr>
+            <th>Email</th>
+            <td><c:out value="${cliente.email}"/></td>
+        </tr>
+        
+        <tr>
             <th>Usuario</th>
             <td><c:out value="${cliente.user.username}"/></td>
         </tr>
