@@ -74,11 +74,11 @@ public class AzafatoControllerTests {
 
 		Idioma lng = new Idioma();
 		lng.setIdioma("Francés");
-    Idioma lng2 = new Idioma();
+		Idioma lng2 = new Idioma();
 		lng.setIdioma("Castellano");
 		Set<Idioma> lngs = new HashSet<Idioma>();
 		lngs.add(lng);
-    lngs.add(lng2);
+		lngs.add(lng2);
 		Martina.setIdiomas(lngs);
 
 		Martina.setSalario(1200.);
@@ -121,7 +121,7 @@ public class AzafatoControllerTests {
 				.param("salario", "nosalario"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("azafato"))
-		.andExpect(view().name("redirect:/azafatos/azafatoId"));
+		.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
 	}
 
 
@@ -138,7 +138,6 @@ public class AzafatoControllerTests {
 				.param("nif", "58961253K")
 				.param("iban", "ES 1563382454044322567800")
 				.param("salario", "1600"))
-		.andExpect(status().isOk())
 		.andExpect(view().name("redirect:/azafatos/{azafatoId}"));
 	}
 

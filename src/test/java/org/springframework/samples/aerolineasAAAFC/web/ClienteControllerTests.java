@@ -22,6 +22,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteServiceTests;
@@ -58,6 +59,8 @@ public class ClienteControllerTests {
 
 	private Cliente dolores;
 
+	private User doloresUser;
+
 	@BeforeEach
 	void setup() {
 
@@ -70,11 +73,18 @@ public class ClienteControllerTests {
 		dolores.setIban("ES 4422000418403334567812");
 		dolores.setFechaNacimiento(LocalDate.of(1989, 12, 03));
 
+		doloresUser = new User();
+		doloresUser.setEnabled(true);
+		doloresUser.setUsername("29565800A");
+		doloresUser.setPassword("EEEEE");
+		dolores.setUser(doloresUser);
+
+
 		given(this.clienteService.findClienteById(TEST_CLIENTE_ID)).willReturn(dolores);
 	}
 
 	//TESTS CREACIÓN
-	
+
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
@@ -90,7 +100,10 @@ public class ClienteControllerTests {
 				.param("nif", "28976897W")
 				.param("direccionFacturacion", "Calle Carbón, 35 4ºB Sevilla")
 				.param("iban", "ES 6621000418401234567893")
-				.param("fechaNacimiento", "1997/06/03"))
+				.param("fechaNacimiento", "1995-03-08")
+				.param("email", "juanjeferrero@outlook.com")
+				.param("user.username", "28976897W")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(status().is3xxRedirection());
 	}
 
@@ -111,7 +124,7 @@ public class ClienteControllerTests {
 	}
 
 	//TESTS BÚSQUEDA
-	
+
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitFindForm() throws Exception {
@@ -124,7 +137,7 @@ public class ClienteControllerTests {
 	void testProcessFindFormByNif() throws Exception {
 		given(this.clienteService.findClienteByNif(dolores.getNif())).willReturn(dolores);
 		Logger.getLogger(ClienteControllerTests.class.getName()).log(Level.INFO, "Dolores: " + dolores);
-		
+
 		mockMvc.perform(get("/clientes").param("nif", "29565800A")).andExpect(status().is3xxRedirection())
 		.andExpect(view().name("redirect:/clientes/" + TEST_CLIENTE_ID));
 	}
@@ -137,9 +150,9 @@ public class ClienteControllerTests {
 		.andExpect(model().attributeHasFieldErrorCode("cliente", "nif", "notFound"))
 		.andExpect(view().name("clientes/findClientes"));
 	}
-	
+
 	//TESTS ACTUALIZACIÓN
-	
+
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateClienteSuccess() throws Exception {
@@ -150,10 +163,11 @@ public class ClienteControllerTests {
 				.param("nif", "29565800A")
 				.param("direccionFacturacion", "Calle Parera, 23 1ºD - 41011 Sevilla")
 				.param("iban", "ES 6621000418401234567893")
-				.param("fechaNacimiento", "1997/06/03"))
+				.param("fechaNacimiento", "1997-06-03")
+				.param("email", "juanjeferrero@outlook.com"))
 		.andExpect(view().name("redirect:/clientes/{clienteId}"));
 	}
-	
+
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateClienteError() throws Exception {
