@@ -69,7 +69,8 @@ public class AvionController {
 	}
 	
 	@PostMapping(value = "/aviones/{avionId}/edit")
-	public String processUpdateAvionForm(@Valid Avion avion, BindingResult result, @PathVariable("avionId") int avionId,Model model) {
+	public String processUpdateAvionForm(@Valid Avion avion, BindingResult result, 
+			@PathVariable("avionId") int avionId) {
 		if(result.hasErrors()) {
 			return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
 		}
@@ -77,7 +78,7 @@ public class AvionController {
 			avion.setId(avionId);
 			this.avionService.saveAvion(avion);
 			
-			return "redirect:/aviones/{avionId}";
+			return "redirect:aviones/"+avionId;
 		}
 	}
 	

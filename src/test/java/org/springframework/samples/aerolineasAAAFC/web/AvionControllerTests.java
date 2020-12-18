@@ -4,7 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
+import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.hasProperty;
@@ -39,6 +41,12 @@ public class AvionControllerTests {
 	@MockBean
 	private AvionService avionService;
 
+	@MockBean
+	private UserService userService;
+	
+	@MockBean
+	private AuthoritiesService authoritiesService; 
+	
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -96,11 +104,11 @@ public class AvionControllerTests {
 				.param("horasAcumuladas", "0")
 				.param("fechaFabricacion","2015/12/28")
 				.param("fechaRevision","2020/12/28")
-				.param("disponibilidad", "true")
+				.param("disponibilidad", "TRUE")
 				.param("plazasEconomica", "60")
 				.param("plazasEjecutiva", "12")
 				.param("plazasPrimera", "5"))
-				.andExpect(view().name("aviones/{avionId}"));
+				.andExpect(view().name("redirect:aviones/{avionId}"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -111,6 +119,7 @@ public class AvionControllerTests {
 				.param("fechaRevision","2020/12/28")
 				.param("disponibilidad", "")
 				.param("plazasEjecutiva", "12"))
+				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("avion"))
 				.andExpect(view().name("/aviones/{avionId}"));
 	}
