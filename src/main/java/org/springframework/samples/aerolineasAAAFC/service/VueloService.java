@@ -27,7 +27,7 @@ public class VueloService {
 		LocalDateTime salida = vuelo.getFechaSalida();
 		LocalDateTime llegada = vuelo.getFechaLlegada();
 		if(salida.isAfter(llegada)) {
-			throw new HorasImposiblesException();
+			throw new HorasImposiblesException("Horas de vuelo imposibles");
 		}else {
 			vueloRepository.save(vuelo); 
 		}

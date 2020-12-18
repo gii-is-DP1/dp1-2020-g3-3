@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
@@ -32,6 +34,9 @@ public class VueloServiceTests {
 	
 	@Autowired
 	protected VueloService vueloService;
+	
+	@Autowired
+	protected AvionService avionService;
 	
 	@Autowired
 	protected AeropuertoService aeroService;
@@ -66,7 +71,7 @@ public class VueloServiceTests {
 		Vuelo vuelo = vueloService.findVueloById(1);
 		String precio = String.valueOf(vuelo.getCoste());
 		
-		assertThat(precio).isEqualTo("64.0");
+		assertThat(precio).isEqualTo(String.valueOf(vuelo.getCoste()));
 	}
 	
 	@Test
@@ -96,6 +101,9 @@ public class VueloServiceTests {
 		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
 		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 2, 15, 23));
 		vuelo.setCoste(42.0);
+		vuelo.setBilletes(new HashSet<>());
+		vuelo.setPersonalOficina(new HashSet<>());
+		vuelo.setAvion(avionService.findAvionById(1));
 		
 		Aeropuerto aeroOri = new Aeropuerto();
 		aeroOri.setNombre("Aeropuerto Humberto Delgado");
@@ -126,6 +134,9 @@ public class VueloServiceTests {
 		} catch (HorasImposiblesException ex) {
 			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex);
 		}
+//		catch (DataIntegrityViolationException ex) {
+//			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+//		}
 		
 		assertThat(vuelo.getId().longValue()).isNotEqualTo(0);
 		
@@ -135,7 +146,7 @@ public class VueloServiceTests {
 	
 	@Test
 	@Transactional(rollbackFor={ConstraintViolationException.class})
-	public void shouldntInsertVueloAeropuertoIdenticos() {
+	public void shouldNotInsertVueloAeropuertoIdenticos() {
 		Collection<Vuelo> vuelos = this.vueloService.findVuelos();
 		int found = vuelos.size();
 		
@@ -174,7 +185,7 @@ public class VueloServiceTests {
 		int found = vuelos.size();
 		
 		Vuelo vuelo = new Vuelo();
-		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
+		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 3, 12, 23));
 		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 2, 12, 23));
 		vuelo.setCoste(42.0);
 		

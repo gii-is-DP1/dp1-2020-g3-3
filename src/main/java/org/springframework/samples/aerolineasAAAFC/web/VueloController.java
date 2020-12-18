@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,15 @@ import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
+import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -44,8 +48,18 @@ public class VueloController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
+	
+	@ModelAttribute("vuelo")
+	public Vuelo loadVuelo( @PathVariable("vueloId") int vueloId) {
+		Vuelo vuelo=vueloService.findVueloById(vueloId);
+//		vuelo.setId(vueloId);
+		return vuelo;
+		
+	}
+	
+	
 	@GetMapping(value = { "/vuelos" })
-	public String showVuelosList(Map<String, Object> model) {
+	public String showVuelosList(@PathVariable("vueloId") int vueloId,Map<String, Object> model) {
 		List<Vuelo> vuelos = new ArrayList<>();
 		this.vueloService.findVuelos().forEach(x->vuelos.add(x));
 		model.put("vuelos", vuelos);
@@ -54,9 +68,9 @@ public class VueloController {
 	
 	
 	@GetMapping(value = "/vuelos/new") 
-	public String initCreationVueloForm(Map<String, Object> model) {
-		Vuelo vuelo = new Vuelo();
-		model.put("vuelo", vuelo);
+	public String initCreationVueloForm(@PathVariable("vueloId") int vueloId,Map<String, Object> model) {
+//		Vuelo vuelo = new Vuelo();
+//		model.put("vuelo", vuelo);
 		List<Aeropuerto> aeropuertos = new ArrayList<>();
 		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
 		model.put("aeropuertos", aeropuertos);
@@ -74,6 +88,11 @@ public class VueloController {
 			} catch (HorasImposiblesException e) {
 				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
+			} 
+			catch (ConstraintViolationException e) {
+				result.rejectValue("aeropuerto", "invalid", "El aeropuerto de salida y destino deben ser distintos");
+				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
+				
 			}
 			return "redirect:/vuelos";
 		}
@@ -89,7 +108,7 @@ public class VueloController {
 	}
 	
 	@PostMapping(value = "/vuelos/{vueloId}/edit")
-	public String processUpdateVueloForm(@Valid Vuelo vuelo, BindingResult result, @PathVariable("vueloId") int vueloId) {
+	public String processUpdateVueloForm(@Valid @ModelAttribute("vuelo") Vuelo vuelo, BindingResult result, @PathVariable("vueloId") int vueloId) {
 		if(result.hasErrors()) {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 		}
