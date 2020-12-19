@@ -22,6 +22,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
+import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -32,13 +33,16 @@ excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classe
 excludeAutoConfiguration= SecurityConfiguration.class)
 public class VueloControllerTests {
 	
-	private static final int TEST_VUELO_ID = 3;
+	private static final int TEST_VUELO_ID = 1;
 	
 	@Autowired
 	private VueloController vueloController;
 	
 	@MockBean
 	private VueloService vueloService;
+	
+	@MockBean
+	private UserService userService;
 	
 	@MockBean
 	private AeropuertoService aeropuertoService;

@@ -43,7 +43,7 @@ public class PersonalOficinaController {
 	@GetMapping(value = "/oficinistas/new")
 	public String initCreationPersonalOficinaForm(Map<String, Object> model) {
 		PersonalOficina pOficina = new PersonalOficina();
-		model.put("personalOficina", pOficina);
+		model.put("pOficina", pOficina);
 		return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 	}
 	
@@ -63,7 +63,7 @@ public class PersonalOficinaController {
 				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			}
 			
-			return "redirect:/oficinistas/" + pOficina.getId();
+			return "redirect:/oficinistas/"+pOficina.getId() ;
 		}
 	}
 	
