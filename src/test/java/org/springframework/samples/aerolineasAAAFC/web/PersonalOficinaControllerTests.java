@@ -78,7 +78,8 @@ public class PersonalOficinaControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/oficinistas/new")).andExpect(status().isOk()).andExpect(model().attributeExists("personalOficina"))
+		mockMvc.perform(get("/oficinistas/new")).andExpect(status().isOk())
+		.andExpect(model().attributeExists("pOficina"))
 		.andExpect(view().name("oficinistas/createOrUpdatePersonalOficinaForm"));
 	}
 
@@ -93,7 +94,8 @@ public class PersonalOficinaControllerTests {
 				.param("nif", "29763330H")
 				.param("iban", "ES 4433300418403322567812")
 				.param("salario", "1432."))
-		.andExpect(status().isOk());
+//		.andExpect(status().isOk())
+		.andExpect(view().name("redirect:/oficinistas/{pOficinaId}"));
 	}
 
 
@@ -106,8 +108,8 @@ public class PersonalOficinaControllerTests {
 				.with(csrf())
 				.param("salario", "London"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("pOficina"))//Ni idean de como se llama el resultado
-		//.andExpect(model().attributeHasFieldErrors("oficinista", "salario"))
+		.andExpect(model().attributeHasErrors("pOficina"))
+		.andExpect(model().attributeHasFieldErrors("oficinista", "salario"))
 		.andExpect(view().name("redirect:/oficinistas/"));
 	}
 
@@ -125,7 +127,7 @@ public class PersonalOficinaControllerTests {
 				.param("nif", "29763330X")
 				.param("iban", "ES 4433300418454322567812")
 				.param("salario", "4312"))
-		.andExpect(status().isOk())
+//		.andExpect(status().isOk())
 		.andExpect(view().name("redirect:/oficinistas/{pOficinaId}"));
 	}
 
@@ -140,7 +142,7 @@ public class PersonalOficinaControllerTests {
 				.param("iban", "nosoyuniban")
 				.param("salario", "soyunString"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("pOficina"))//No se como se llama el resultado
+		.andExpect(model().attributeHasErrors("pOficina"))
 		.andExpect(model().attributeHasFieldErrors("pOficina", "nif"))
 		.andExpect(model().attributeHasFieldErrors("pOficina", "iban"))
 		.andExpect(model().attributeHasFieldErrors("pOficina", "salario"))
