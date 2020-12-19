@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -84,6 +85,8 @@ public class PersonalControlController {
 		}
 		else {
 			pControl.setId(pControlId);
+			PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
+			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","username");
 			try {
 				this.pControlService.savePersonalControl(pControl);
 			} catch (DataIntegrityViolationException e) {

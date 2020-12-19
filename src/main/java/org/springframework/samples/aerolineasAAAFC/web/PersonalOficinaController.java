@@ -4,9 +4,11 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
@@ -84,6 +86,8 @@ public class PersonalOficinaController {
 		}
 		else {
 			pOficina.setId(pOficinaId);
+			PersonalOficina pOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
+			BeanUtils.copyProperties(pOficina, pOficinaToUpdate, "id","nif","username");
 			try {
 				this.pOficinaService.savePersonalOficina(pOficina);
 			} catch (DataIntegrityViolationException e) {
