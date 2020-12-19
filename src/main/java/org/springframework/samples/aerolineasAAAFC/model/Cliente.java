@@ -28,27 +28,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "clientes")
-public class Cliente extends /*BaseEntity*/Person{
+public class Cliente extends Person{
 
-//	//Atributos
-//	@Column(name = "nombre")
-//	@NotEmpty
-//	protected String nombre;
-//	
-//	@Column(name = "apellidos")
-//	@NotEmpty
-//	protected String apellidos;
-//	
-//	@Column(name = "nif", unique = true)
-//	@NotEmpty
-//	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-//	protected String nif;
-//	
-//	@Column(name = "iban")
-//	@NotEmpty
-//	@Pattern(regexp="^ES\\s\\d{22}$")
-//	protected String iban;
-//	
+	//Atributos
+
 	@Column(name = "email")
 	@Email
 	@NotEmpty
@@ -63,14 +46,10 @@ public class Cliente extends /*BaseEntity*/Person{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaNacimiento;
 
+	// Relaciones de tabla
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
 	@EqualsAndHashCode.Exclude
 	private Set<Billete> billetes;
-	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "username", referencedColumnName = "username")
-//	@EqualsAndHashCode.Exclude
-//	private User user;
 	
 }

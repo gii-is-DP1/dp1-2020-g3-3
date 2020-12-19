@@ -2,7 +2,7 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -40,7 +40,7 @@ public class PersonalControlServiceTests {
 	void getIbanPersonalSuccessful() {
 		PersonalControl personal=personalControlService.findPersonalControlById(1);
 		assertThat(personal.getIban()).isNotEmpty();
-		assertThat(personal.getIban()).containsPattern("^ES\\d{22}$");
+		assertThat(personal.getIban()).containsPattern("^ES\\s\\d{22}$");
 	}
 
 //	@Test --- ROL

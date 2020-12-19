@@ -14,10 +14,14 @@
 		<thead>
 			<tr>
 			<th></th>
-				<th>Nombre</th>
-				<th>Localizacion</th>
-				<th>codigoIATA</th>
-				<th>Telefono</th>
+				<th>Nombre y Apellidos</th>
+				<th>NIF</th>
+				<th>IBAN</th>
+				<th>Idiomas</th>
+				<th>Salario</th>
+				<th>Usuario</th>
+				<th>Contraseña</th>
+				<th>Opciones</th>
 
 			</tr>
 		</thead>
@@ -27,17 +31,20 @@
 				<tr>
 					<td>
 					</td>
-					<td><c:out value="${azafato.nombre}" /></td>
-					<td><c:out value="${azafato.localizacion}" /></td>
-					<td><c:out value="${azafato.codigoIATA}" /></td>
-					<td><c:out value="${azafato.telefono}" /></td>
-				<tr>
-				<td>
-				<a href="<spring:url value="/azafatos/${azafato.id}/edit" htmlEscape="true" />">Editar</a>
-				</td>
-				<td>
-				<a href="<spring:url value="/azafatos/${azafato.id}/delete" htmlEscape="true" />">Eliminar</a>
-				</td>
+					<td><c:out value="${azafato.nombre} ${azafato.apellidos}"/></td>
+					<td><c:out value="${azafato.nif}" /></td>
+					<td><c:out value="${azafato.iban}" /></td>
+					<td><c:forEach items="${azafato.idiomas}" var="idioma">
+							<c:out value="${idioma.idioma}, "/>
+						</c:forEach>
+					</td>
+					<td><c:out value="${azafato.salario}" /></td>
+					<td><c:out value="${azafato.user.username}"/></td>
+					<td><c:out value="${azafato.user.password}"/></td>
+					<td>
+						<a href="<spring:url value="/azafatos/${azafato.id}/edit" htmlEscape="true" />">Editar</a>
+						<a href="<spring:url value="/azafatos/${azafato.id}/delete" htmlEscape="true" />">Eliminar</a>
+					</td>
 				</tr>
 				
 			</c:forEach>
