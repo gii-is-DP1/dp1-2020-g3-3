@@ -11,9 +11,12 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import org.springframework.samples.aerolineasAAAFC.service.businessrules.UsuarioConstraint;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@UsuarioConstraint(value= {"nif","user"})
 @Data
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass

@@ -7,7 +7,7 @@
               description="Label appears in red color if input is considered as invalid after submission" %>
 <%@ attribute name="names" required="true" rtexprvalue="true" type="java.util.List"
               description="Names in the list" %>
-<%@ attribute name="size" required="true" rtexprvalue="true"
+<%@ attribute name="size" required="false" rtexprvalue="true"
               description="Size of Select" %>
 
 <spring:bind path="${name}">

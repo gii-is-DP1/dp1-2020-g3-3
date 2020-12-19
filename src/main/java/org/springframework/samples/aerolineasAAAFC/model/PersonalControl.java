@@ -32,22 +32,6 @@ public class PersonalControl extends Person{
 
 	// Atributos
 	
-//	@Column(name = "nombre")
-//	@NotEmpty
-//	protected String nombre;
-//	
-//	@Column(name = "apellidos")
-//	@NotEmpty
-//	protected String apellidos;
-//	
-//	@NotEmpty
-//	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-//	protected String nif;
-//	
-//	@NotEmpty
-//	@Pattern(regexp="^ES\\s\\d{22}$")
-//	protected String iban;
-	
 	@Column(name = "rol")
 	@NotEmpty
 	@Enumerated(EnumType.ORDINAL)
@@ -62,11 +46,5 @@ public class PersonalControl extends Person{
 	@ManyToMany(cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private Set<Avion> aviones;
-	
-//	@OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "username", referencedColumnName = "username")
-//	@EqualsAndHashCode.Exclude
-//	private User user;
 
-	
 }

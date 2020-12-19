@@ -104,18 +104,21 @@ INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacim
 VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 - 41011 Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','29565800A'); 
 
 --Idiomas
-INSERT INTO idiomas VALUES (1, 'Español');
-INSERT INTO idiomas VALUES (2, 'Inglés');
-INSERT INTO idiomas VALUES (3, 'Francés');
-INSERT INTO idiomas VALUES (4, 'Alemán');
-INSERT INTO idiomas VALUES (5, 'Japonés');
-INSERT INTO idiomas VALUES (6, 'Chino');
-INSERT INTO idiomas VALUES (7, 'Ruso');
-INSERT INTO idiomas VALUES (8, 'Polaco');
+INSERT INTO idiomas(idioma) VALUES ('Español');
+INSERT INTO idiomas(idioma) VALUES ('Inglés');
+INSERT INTO idiomas(idioma) VALUES ('Francés');
+INSERT INTO idiomas(idioma) VALUES ('Alemán');
+INSERT INTO idiomas(idioma) VALUES ('Japonés');
+INSERT INTO idiomas(idioma) VALUES ('Chino');
+INSERT INTO idiomas(idioma) VALUES ('Ruso');
+INSERT INTO idiomas(idioma) VALUES ('Polaco');
 
 INSERT INTO idiomas_azafato VALUES (1, 1);
 INSERT INTO idiomas_azafato VALUES (1, 2);
 INSERT INTO idiomas_azafato VALUES (1, 3);
+INSERT INTO idiomas_azafato VALUES (2, 4);
+INSERT INTO idiomas_azafato VALUES (2, 5);
+INSERT INTO idiomas_azafato VALUES (2, 6);
 
 --Billetes
 INSERT INTO billetes(coste,asiento,fecha_reserva,clase,cliente_id)
