@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
@@ -94,6 +95,8 @@ public class ClienteController {
 		}
 		else {
 			cliente.setId(clienteId);
+			Cliente clienteToUpdate = this.clienteService.findClienteById(clienteId);
+			BeanUtils.copyProperties(cliente, clienteToUpdate, "id","nif","username");    
 		try {
 				this.clienteService.saveCliente(cliente);
 		} catch (DataIntegrityViolationException e) {

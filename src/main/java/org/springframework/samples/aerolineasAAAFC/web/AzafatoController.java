@@ -4,9 +4,11 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
@@ -87,6 +89,8 @@ public class AzafatoController {
 		}
 		else {
 			azafato.setId(azafatoId);
+			Azafato azafatoToUpdate = this.azafatoService.findAzafatoById(azafatoId);
+			BeanUtils.copyProperties(azafato, azafatoToUpdate, "id","nif","username");  
 			try {
 				this.azafatoService.saveAzafato(azafato);
 			} catch (DataIntegrityViolationException e) {
