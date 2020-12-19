@@ -22,6 +22,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
+import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
@@ -56,18 +57,24 @@ public class PersonalOficinaControllerTests {
 
 	private PersonalOficina carlos;
 
-
+	private User carlosUser;
 
 	@BeforeEach
 	void setup() {
 
 		carlos = new PersonalOficina();
 		carlos.setId(TEST_PERSONALOFICINA_ID);
-		carlos.setApellidos("Santana");
 		carlos.setNombre("Carlos");
-		carlos.setIban("ES 4422000418403334567812");
-		carlos.setNif("29765800A");
+		carlos.setApellidos("Santana Hidalgo");
+		carlos.setNif("70292959Z");
+		carlos.setIban("ES 1804875866011781392136");
 		carlos.setSalario(1000.);
+		
+		carlosUser = new User();
+		carlosUser.setEnabled(true);
+		carlosUser.setUsername("70292959Z");
+		carlosUser.setPassword("CaSanHi70");
+		carlos.setUser(carlosUser);
 
 		given(this.personalOficinaService.findPersonalOficinaById(TEST_PERSONALOFICINA_ID)).willReturn(carlos);
 	}
@@ -78,7 +85,8 @@ public class PersonalOficinaControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/oficinistas/new")).andExpect(status().isOk())
+		mockMvc.perform(get("/oficinistas/new"))
+		.andExpect(status().isOk())
 		.andExpect(model().attributeExists("pOficina"))
 		.andExpect(view().name("oficinistas/createOrUpdatePersonalOficinaForm"));
 	}
@@ -94,8 +102,7 @@ public class PersonalOficinaControllerTests {
 				.param("nif", "29763330H")
 				.param("iban", "ES 4433300418403322567812")
 				.param("salario", "1432."))
-//		.andExpect(status().isOk())
-		.andExpect(view().name("redirect:/oficinistas/{pOficinaId}"));
+		.andExpect(status().is3xxRedirection());
 	}
 
 
@@ -103,14 +110,16 @@ public class PersonalOficinaControllerTests {
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/oficinistas/new")
+				.with(csrf())
 				.param("nombre", "Kenneth")
 				.param("apellidos", "Downing Jr")
-				.with(csrf())
+				.param("nif", "29763330H")
+				.param("iban", "ES 4433300418403322567812")
 				.param("salario", "London"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("pOficina"))
-		.andExpect(model().attributeHasFieldErrors("oficinista", "salario"))
-		.andExpect(view().name("redirect:/oficinistas/"));
+		.andExpect(model().attributeHasErrors("personalOficina"))
+		.andExpect(model().attributeHasFieldErrors("personalOficina", "salario"))
+		.andExpect(view().name("oficinistas/createOrUpdatePersonalOficinaForm"));
 	}
 
 
@@ -142,10 +151,10 @@ public class PersonalOficinaControllerTests {
 				.param("iban", "nosoyuniban")
 				.param("salario", "soyunString"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("pOficina"))
-		.andExpect(model().attributeHasFieldErrors("pOficina", "nif"))
-		.andExpect(model().attributeHasFieldErrors("pOficina", "iban"))
-		.andExpect(model().attributeHasFieldErrors("pOficina", "salario"))
+		.andExpect(model().attributeHasErrors("personalOficina"))
+		.andExpect(model().attributeHasFieldErrors("personalOficina", "nif"))
+		.andExpect(model().attributeHasFieldErrors("personalOficina", "iban"))
+		.andExpect(model().attributeHasFieldErrors("personalOficina", "salario"))
 		.andExpect(view().name("oficinistas/createOrUpdatePersonalOficinaForm"));
 	}
 

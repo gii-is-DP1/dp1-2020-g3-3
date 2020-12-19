@@ -59,13 +59,13 @@ public class PersonalOficinaController {
 				this.pOficinaService.savePersonalOficina(pOficina);
 			} catch (DataIntegrityViolationException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
-				e.printStackTrace();
+				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			} catch (IbanDuplicadoException e) {
 				result.rejectValue("iban", "duplicate", "already exists");
 				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			}
 			
-			return "redirect:/oficinistas/"+pOficina.getId() ;
+			return "redirect:/oficinistas/" + pOficina.getId() ;
 		}
 	}
 	
