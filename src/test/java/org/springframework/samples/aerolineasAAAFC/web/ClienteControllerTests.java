@@ -88,14 +88,18 @@ public class ClienteControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/clientes/new")).andExpect(status().isOk()).andExpect(model().attributeExists("cliente"))
+		mockMvc.perform(get("/clientes/new"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("cliente"))
 		.andExpect(view().name("clientes/createOrUpdateClienteForm"));
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/clientes/new").param("nombre", "Juan Jesús").param("apellidos", "Ferrero Gutiérrez")
+		mockMvc.perform(post("/clientes/new")
+				.param("nombre", "Juan Jesús")
+				.param("apellidos", "Ferrero Gutiérrez")
 				.with(csrf())
 				.param("nif", "28976897W")
 				.param("direccionFacturacion", "Calle Carbón, 35 4ºB Sevilla")
@@ -114,12 +118,11 @@ public class ClienteControllerTests {
 				.with(csrf())
 				.param("nombre", "Juan Jesús")
 				.param("apellidos", "Ferrero Gutiérrez")
-				.param("nif", "28976897W")
+				.param("nif", "")
 				.param("iban", "ES 6621000418401234567893"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("cliente"))
-		.andExpect(model().attributeHasFieldErrors("cliente", "direccionFacturacion"))
-		.andExpect(model().attributeHasFieldErrors("cliente", "fechaNacimiento"))
+		.andExpect(model().attributeHasFieldErrors("cliente", "nif"))
 		.andExpect(view().name("clientes/createOrUpdateClienteForm"));
 	}
 
