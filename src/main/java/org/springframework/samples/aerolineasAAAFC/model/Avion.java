@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,6 +45,7 @@ public class Avion extends BaseEntity{
 	private Integer pesoMaximoEquipaje;
 	
 	@Column(name = "horas_acumuladas")
+	@PositiveOrZero
 	private Integer horasAcumuladas;
 	
 	@Column(name = "fecha_fabricacion")
