@@ -5,31 +5,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.validation.ConstraintViolationException;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
-import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
-import org.springframework.samples.aerolineasAAAFC.model.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.User;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -113,7 +102,7 @@ public class ClienteServiceTests {
 		cliente.setEmail("juanjeferrero@outlook.com");
 
 		User user = new User();
-		user.setUsername("28976897W");
+		user.setUsername("juanjiniero");
 		user.setPassword("*Fly_High14&");
 		user.setEnabled(true);
 		cliente.setUser(user);                
@@ -141,13 +130,13 @@ public class ClienteServiceTests {
 		cliente.setEmail("marisotoram@hotmail.com");
 		
 		User user = new User();
-		user.setUsername("01446551N");
+		user.setUsername("marSoRa");
 		user.setPassword("*Fly_Low14&");
 		user.setEnabled(true);
 		cliente.setUser(user);
 		
 		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
-
+		
 	}
 
 	//Tests Actualizar
