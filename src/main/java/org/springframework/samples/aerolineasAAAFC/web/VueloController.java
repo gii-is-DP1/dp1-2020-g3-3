@@ -15,6 +15,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
@@ -42,17 +43,17 @@ public class VueloController {
 	private final AeropuertoService aeropuertoService;
 	private final AvionService avionService;
 	private final BilleteService billeteService;
-	private final PersonalOficinaService personalOService;
+	private final PersonalOficinaService pOficinaService;
 	
 	
 	@Autowired
 	public VueloController(VueloService vueloService,AeropuertoService aeropuertoService,
-			AvionService avionService,BilleteService billeteService,PersonalOficinaService personalOService) {
+			AvionService avionService,BilleteService billeteService,PersonalOficinaService pOficinaService) {
 		this.vueloService = vueloService;
 		this.aeropuertoService=aeropuertoService;
 		this.avionService= avionService;
 		this.billeteService=billeteService;
-		this.personalOService=personalOService;
+		this.pOficinaService=pOficinaService;
 	}
 	
 	@InitBinder
@@ -84,7 +85,12 @@ public class VueloController {
 		model.put("aviones", aviones);
 		
 		Integer billetes=0;
+		this.vueloService.findVueloById(vuelo.getId()).getBilletes().size();
 		model.put("billetes", billetes);
+		
+		List<PersonalOficina> pOficina = new ArrayList<>();
+		this.vueloService.findVueloById(vuelo.getId()).getPersonalOficina().forEach(x->pOficina.add(x));
+		model.put("pOficina", pOficina);
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
@@ -96,23 +102,6 @@ public class VueloController {
 		}
 		else {
 			try {
-				String asiento="A";
-				for(int i=0;i<vuelo.getBilletes().size();i++) 
-				{
-					Billete billete=new Billete();
-					billete.setAsiento(asiento+String.valueOf(i));
-					billete.setFechaReserva(LocalDate.now());
-					billete.setClase(Clase.ECONOMICA);
-					try {
-						this.billeteService.saveBillete(billete);
-					} catch (DataAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (TooManyItemsBilleteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
 				this.vueloService.saveVuelo(vuelo);
 			} catch (HorasImposiblesException e) {
 				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
@@ -144,9 +133,13 @@ public class VueloController {
 		this.avionService.findAviones().forEach(x->aviones.add(x));
 		model.addAttribute("aviones",aviones);
 		
-		Integer billetes=0;
-		this.vueloService.findVueloById(vuelo.getId()).getBilletes().size();
-		model.addAttribute("billetes", billetes);
+		List<PersonalOficina> pOficina = new ArrayList<>();
+		this.vueloService.findVueloById(vuelo.getId()).getPersonalOficina().forEach(x->pOficina.add(x));
+		model.addAttribute("pOficina", pOficina);
+		
+		List<PersonalOficina> todoPersonal = new ArrayList<>();
+		this.pOficinaService.findPersonal().forEach(x->todoPersonal.add(x));
+		model.addAttribute("todoPersonal",todoPersonal);
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}

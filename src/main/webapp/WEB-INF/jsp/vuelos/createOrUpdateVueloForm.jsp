@@ -25,33 +25,38 @@
 			<aerolineasAAAFC:inputField label="Fecha de Llegada"
 				name="fechaLlegada" type="datetime-local" />
 
-			<label >Aeropuerto de Salida</label>
-			<br/>
-			<select name="aeropuertoOrigen.id">
+			<label>Aeropuerto de Salida</label> <br /> <select
+				name="aeropuertoOrigen.id">
 				<c:forEach items="${aeropuertos}" var="aeropuerto">
 					<option value="${aeropuerto.id}">${aeropuerto.nombre}</option>
 				</c:forEach>
-			</select>
-			<br/>
-			<label >Aeropuerto de Llegada</label>
-			<br/>
-			<select  name="aeropuertoDestino.id">
+			</select> <br /> <label>Aeropuerto de Llegada</label> <br /> <select
+				name="aeropuertoDestino.id">
 				<c:forEach items="${aeropuertos}" var="aeropuerto">
 					<option value="${aeropuerto.id}">${aeropuerto.nombre}</option>
 				</c:forEach>
-			</select>
-			
-			<br/>
-			<label >Avion asignado</label>
-			<br/>
-			<select  name="avion.id">
+			</select> <br /> <label>Avion asignado</label> <br /> <select name="avion.id">
 				<c:forEach items="${aviones}" var="avion">
 					<option value="${avion.id}">${avion.tipoAvion}</option>
 				</c:forEach>
+			</select> 
+			<br/> 
+			
+			
+			<label>Personal asignado</label> 
+			<br/> 
+			<select	name="pOficina.id" multiple="multiple">
+				<%PersonalOficina select= %>"${pOficina}" 
+				<c:set item="${pOficina}" var="select"/>
+				<c:forEach items="${todoPersonal}" var="personal">
+					<% for(int i=0 ; i<.size();i++) %>
+				</c:forEach> 
 			</select>
-			
+
+
+
 			<aerolineasAAAFC:inputField label="Coste" name="coste" />
-			
+
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">

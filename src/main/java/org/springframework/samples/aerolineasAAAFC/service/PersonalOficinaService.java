@@ -1,10 +1,15 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
@@ -52,4 +57,11 @@ public class PersonalOficinaService {
 	public PersonalOficina findPersonalOficinaById(int id) throws DataAccessException{
 		return pOficinaRepository.findById(id).get();
 	}
+	
+	@Transactional
+	public Collection<PersonalOficina> findPersonal(){
+		return StreamSupport.stream(pOficinaRepository.findAll().spliterator(), false)
+				.collect(Collectors.toList());
+	}
+	
 }
