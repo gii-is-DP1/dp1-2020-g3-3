@@ -119,10 +119,16 @@ public class ClienteControllerTests {
 				.param("nombre", "Juan Jesús")
 				.param("apellidos", "Ferrero Gutiérrez")
 				.param("nif", "")
-				.param("iban", "ES 6621000418401234567893"))
+				.param("direccionFacturacion", "Calle Carbón, 35 4ºB Sevilla")
+				.param("iban", "ES 6621000418401234567893")
+				.param("fechaNacimiento", "2013-03-08")
+				.param("email", "juanjeferrero@outlook.com")
+				.param("user.username", "28976897W")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("cliente"))
 		.andExpect(model().attributeHasFieldErrors("cliente", "nif"))
+		.andExpect(model().attributeHasFieldErrors("cliente", "fechaNacimiento"))
 		.andExpect(view().name("clientes/createOrUpdateClienteForm"));
 	}
 
@@ -163,11 +169,13 @@ public class ClienteControllerTests {
 				.with(csrf())
 				.param("nombre", "Dolores")
 				.param("apellidos", "Ramos Ceballos")
-				.param("nif", "29565800A")
+				.param("nif", "86437755Y")
 				.param("direccionFacturacion", "Calle Parera, 23 1ºD - 41011 Sevilla")
 				.param("iban", "ES 6621000418401234567893")
 				.param("fechaNacimiento", "1997-06-03")
-				.param("email", "juanjeferrero@outlook.com"))
+				.param("email", "juanjeferrero@outlook.com")
+				.param("user.username", "86437755Y")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(view().name("redirect:/clientes/{clienteId}"));
 	}
 
@@ -176,8 +184,15 @@ public class ClienteControllerTests {
 	void testProcessUpdateClienteError() throws Exception {
 		mockMvc.perform(post("/clientes/{clienteId}/edit",TEST_CLIENTE_ID)
 				.with(csrf())
+				.param("nombre", "Dolores")
+				.param("apellidos", "Ramos Ceballos")
+				.param("nif", "29565800A")
 				.param("direccionFacturacion", "")
-				.param("iban", "ES 662100018401234567893"))
+				.param("iban", "")
+				.param("fechaNacimiento", "1997-06-03")
+				.param("email", "juanjeferrero@outlook.com")
+				.param("user.username", "29565800A")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("cliente"))
 		.andExpect(model().attributeHasFieldErrors("cliente", "direccionFacturacion"))

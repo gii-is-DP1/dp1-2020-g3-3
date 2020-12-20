@@ -4,11 +4,11 @@ INSERT INTO users(username,password,enabled) VALUES ('admin','4dm1n',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'admin','admin');
 
 --Clientes
-INSERT INTO users(username,password,enabled) VALUES ('01446551N','Fly_High14&',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (2,'01446551N','cliente');
+INSERT INTO users(username,password,enabled) VALUES ('marSoRa','Fly_High14&',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (2,'marSoRa','cliente');
 
-INSERT INTO users(username,password,enabled) VALUES ('29565800A','Fly_Low14&',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (3,'29565800A','cliente');
+INSERT INTO users(username,password,enabled) VALUES ('dolRamCe','Fly_Low14&',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (3,'dolRamCe','cliente');
 
 --Personal Control
 INSERT INTO users(username,password,enabled) VALUES ('48736253T','P1234%adsa',TRUE);
@@ -68,13 +68,13 @@ VALUES ('Airbus A330', 335 , 2, 300, '2015-01-20', true, '2020-03-10', 250, 75, 
 
 --Vuelos
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('2020-12-11 10:40','dd-MM-yyyy hh:mm'),parsedatetime('2020-12-12 10:40','dd-MM-yyyy hh:mm'),30000,1,2,1);
+VALUES (parsedatetime('2020-12-11 10:40','dd-MM-yyyy hh:mm'),parsedatetime('2020-12-11 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('2015-01-20 8:30','dd-MM-yyyy hh:mm'),parsedatetime('2015-01-20 10:40','dd-MM-yyyy hh:mm'),10000,2,3,2);
+VALUES (parsedatetime('2015-01-20 8:30','dd-MM-yyyy hh:mm'),parsedatetime('2015-01-20 10:55','dd-MM-yyyy hh:mm'),10000,2,3,2);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('2018-01-17 23:30','dd-MM-yyyy hh:mm'),parsedatetime('2018-01-18 17:05','dd-MM-yyyy hh:mm'),25000,6,5,3);
+VALUES (parsedatetime('2018-01-17 23:30','dd-MM-yyyy hh:mm'),parsedatetime('2018-01-18 13:40','dd-MM-yyyy hh:mm'),25000,6,5,3);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('2019-06-03 7:10','dd-MM-yyyy hh:mm'),parsedatetime('2019-06-03 10:15','dd-MM-yyyy hh:mm'),30000,6,7,4);
+VALUES (parsedatetime('2019-06-03 7:10','dd-MM-yyyy hh:mm'),parsedatetime('2019-06-03 13:20','dd-MM-yyyy hh:mm'),30000,6,7,4);
 
 
 --PersonalControl
@@ -99,9 +99,9 @@ VALUES ('Sergio','Ferreo Quintán','39658948W','ES 4820381461196657997548',1800,
 
 --Clientes
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username)
-VALUES ('María', 'Soto Ramírez', '01446551N', 'C/Enladrillada,2 1ºB Sevilla', 'ES 7771056418401234567893', '1995-03-08','marisotoram@hotmail.com','01446551N');
+VALUES ('María', 'Soto Ramírez', '01446551N', 'C/Enladrillada,2 1ºB Sevilla', 'ES 7771056418401234567893', '1995-03-08','marisotoram@hotmail.com','marSoRa');
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username)
-VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 - 41011 Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','29565800A'); 
+VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 - 41011 Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','dolRamCe'); 
 
 --Idiomas
 INSERT INTO idiomas(idioma) VALUES ('Español');
