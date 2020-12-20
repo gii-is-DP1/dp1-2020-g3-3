@@ -31,35 +31,14 @@ public class PersonalOficina extends Person{
 
 	// Atributos
 	
-//	@Column(name = "nombre")
-//	@NotEmpty
-//	protected String nombre;
-//	
-//	@Column(name = "apellidos")
-//	@NotEmpty
-//	protected String apellidos;
-//	
-//	@NotEmpty
-//	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-//	protected String nif;
-//	
-//	@NotEmpty
-//	@Pattern(regexp="^ES\\s\\d{22}$")
-//	protected String iban;
-	
 	@Column(name = "salario")
 	@Min(value = 1000)
 	private Double Salario;
-	
-	
-//	@OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "username", referencedColumnName = "username")
-//	@EqualsAndHashCode.Exclude
-//	private User user;
 
 	// Relaciones de tabla:
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private Collection<Vuelo> vuelos;
+	
 }

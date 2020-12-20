@@ -9,15 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-
-import org.springframework.data.annotation.Id;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -32,21 +26,6 @@ import lombok.EqualsAndHashCode;
 public class Azafato extends Person{
 
 	// Atributos
-//	@Column(name = "nombre")
-//	@NotEmpty
-//	protected String nombre;
-//	
-//	@Column(name = "apellidos")
-//	@NotEmpty
-//	protected String apellidos;
-//	
-//	@NotEmpty
-//	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
-//	protected String nif;
-//	
-//	@NotEmpty
-//	@Pattern(regexp="^ES\\s\\d{22}$")
-//	protected String iban;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "idiomas_azafato", 
@@ -64,11 +43,6 @@ public class Azafato extends Person{
 	@ManyToMany(cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude 
 	private Set<Avion> aviones;
-
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "username", referencedColumnName = "username")
-//	@EqualsAndHashCode.Exclude 
-//	private User user;
 	
 	public String toString() {
 		

@@ -118,15 +118,7 @@ public class ClienteServiceTests {
 		user.setEnabled(true);
 		cliente.setUser(user);                
 
-
-		
-//		try {
-			this.clienteService.saveCliente(cliente);
-//		} catch (NifDuplicadoException ex) {
-//			Logger.getLogger(ClienteServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-//		}
-		
-
+		this.clienteService.saveCliente(cliente);
 
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
@@ -148,6 +140,11 @@ public class ClienteServiceTests {
 		cliente.setFechaNacimiento(fecha);     
 		cliente.setEmail("marisotoram@hotmail.com");
 		
+		User user = new User();
+		user.setUsername("01446551N");
+		user.setPassword("*Fly_Low14&");
+		user.setEnabled(true);
+		cliente.setUser(user);
 		
 		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
 

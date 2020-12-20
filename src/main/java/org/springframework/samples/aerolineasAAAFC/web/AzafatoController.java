@@ -1,16 +1,18 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -87,6 +89,8 @@ public class AzafatoController {
 		}
 		else {
 			azafato.setId(azafatoId);
+			Azafato azafatoToUpdate = this.azafatoService.findAzafatoById(azafatoId);
+			BeanUtils.copyProperties(azafato, azafatoToUpdate, "id","nif","username");  
 			try {
 				this.azafatoService.saveAzafato(azafato);
 			} catch (DataIntegrityViolationException e) {
@@ -102,5 +106,13 @@ public class AzafatoController {
 			
 			return "redirect:/azafatos/{azafatoId}";
 		}
+	}
+	
+	@GetMapping(value =  "/azafatosList" )
+	public String showAzafatosList(Map<String, Object> model) {
+		List<Azafato> azafatos = new ArrayList<>();
+		this.azafatoService.findAzafatos().forEach(x->azafatos.add(x));
+		model.put("azafatos", azafatos);
+		return "azafatos/azafatosList";
 	}
 }

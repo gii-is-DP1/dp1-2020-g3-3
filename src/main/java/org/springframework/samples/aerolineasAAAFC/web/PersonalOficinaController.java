@@ -4,9 +4,11 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
@@ -43,7 +45,7 @@ public class PersonalOficinaController {
 	@GetMapping(value = "/oficinistas/new")
 	public String initCreationPersonalOficinaForm(Map<String, Object> model) {
 		PersonalOficina pOficina = new PersonalOficina();
-		model.put("personalOficina", pOficina);
+		model.put("pOficina", pOficina);
 		return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 	}
 	
@@ -57,13 +59,13 @@ public class PersonalOficinaController {
 				this.pOficinaService.savePersonalOficina(pOficina);
 			} catch (DataIntegrityViolationException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
-				e.printStackTrace();
+				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			} catch (IbanDuplicadoException e) {
 				result.rejectValue("iban", "duplicate", "already exists");
 				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			}
 			
-			return "redirect:/oficinistas/" + pOficina.getId();
+			return "redirect:/oficinistas/" + pOficina.getId() ;
 		}
 	}
 	
@@ -84,6 +86,8 @@ public class PersonalOficinaController {
 		}
 		else {
 			pOficina.setId(pOficinaId);
+			PersonalOficina pOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
+			BeanUtils.copyProperties(pOficina, pOficinaToUpdate, "id","nif","username");
 			try {
 				this.pOficinaService.savePersonalOficina(pOficina);
 			} catch (DataIntegrityViolationException e) {
