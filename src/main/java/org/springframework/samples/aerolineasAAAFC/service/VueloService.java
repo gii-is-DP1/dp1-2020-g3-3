@@ -21,6 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class VueloService {
 	@Autowired
 	private VueloRepository vueloRepository;
+	
+
+
 	 
 	@Transactional
 	public void saveVuelo(Vuelo vuelo) throws DataAccessException, HorasImposiblesException{
