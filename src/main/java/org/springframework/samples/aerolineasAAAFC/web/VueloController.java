@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,26 +10,29 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
+import org.springframework.samples.aerolineasAAAFC.service.AvionService;
+import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.Visit;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-/**
- * @author Antonio Javier Sanchez Soria
- */
+
 
 @Controller
 public class VueloController {
@@ -35,12 +40,19 @@ public class VueloController {
 	
 	private final VueloService vueloService;
 	private final AeropuertoService aeropuertoService;
+	private final AvionService avionService;
+	private final BilleteService billeteService;
+	private final PersonalOficinaService personalOService;
 	
 	
 	@Autowired
-	public VueloController(VueloService vueloService,AeropuertoService aeropuertoService) {
+	public VueloController(VueloService vueloService,AeropuertoService aeropuertoService,
+			AvionService avionService,BilleteService billeteService,PersonalOficinaService personalOService) {
 		this.vueloService = vueloService;
 		this.aeropuertoService=aeropuertoService;
+		this.avionService= avionService;
+		this.billeteService=billeteService;
+		this.personalOService=personalOService;
 	}
 	
 	@InitBinder
@@ -62,9 +74,18 @@ public class VueloController {
 	public String initCreationVueloForm(Map<String, Object> model) {
 		Vuelo vuelo = new Vuelo();
 		model.put("vuelo",vuelo);
+		
 		List<Aeropuerto> aeropuertos = new ArrayList<>();
 		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
 		model.put("aeropuertos",aeropuertos);
+		
+		List<Avion> aviones = new ArrayList<>();
+		this.avionService.findAviones().forEach(x->aviones.add(x));
+		model.put("aviones", aviones);
+		
+		Integer billetes=0;
+		model.put("billetes", billetes);
+		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
 	
@@ -75,6 +96,23 @@ public class VueloController {
 		}
 		else {
 			try {
+				String asiento="A";
+				for(int i=0;i<vuelo.getBilletes().size();i++) 
+				{
+					Billete billete=new Billete();
+					billete.setAsiento(asiento+String.valueOf(i));
+					billete.setFechaReserva(LocalDate.now());
+					billete.setClase(Clase.ECONOMICA);
+					try {
+						this.billeteService.saveBillete(billete);
+					} catch (DataAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (TooManyItemsBilleteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				this.vueloService.saveVuelo(vuelo);
 			} catch (HorasImposiblesException e) {
 				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
@@ -93,8 +131,23 @@ public class VueloController {
 	
 	@GetMapping(value = "/vuelos/{vueloId}/edit")
 	public String initUpdateVueloForm(@PathVariable("vueloId") int vueloId, Model model) {
+		
+		List<Aeropuerto> aeropuertos = new ArrayList<>();
+		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
+		model.addAttribute("aeropuertos", aeropuertos);
+		
+		
 		Vuelo vuelo = this.vueloService.findVueloById(vueloId);
-		model.addAttribute(vuelo);
+		model.addAttribute("vuelo",vuelo);
+		
+		List<Avion> aviones = new ArrayList<>();
+		this.avionService.findAviones().forEach(x->aviones.add(x));
+		model.addAttribute("aviones",aviones);
+		
+		Integer billetes=0;
+		this.vueloService.findVueloById(vuelo.getId()).getBilletes().size();
+		model.addAttribute("billetes", billetes);
+		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
 	
@@ -122,7 +175,7 @@ public class VueloController {
 	}
 	
 	@GetMapping(value = { "/vuelos" })
-	public String showVuelosList(@PathVariable("vueloId") int vueloId,Map<String, Object> model) {
+	public String showVuelosList(Map<String, Object> model) {
 		List<Vuelo> vuelos = new ArrayList<>();
 		this.vueloService.findVuelos().forEach(x->vuelos.add(x));
 		model.put("vuelos", vuelos);

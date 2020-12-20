@@ -41,8 +41,17 @@
 				</c:forEach>
 			</select>
 			
+			<br/>
+			<label >Avion asignado</label>
+			<br/>
+			<select  name="avion.id">
+				<c:forEach items="${aviones}" var="avion">
+					<option value="${avion.id}">${avion.tipoAvion}</option>
+				</c:forEach>
+			</select>
+			
 			<aerolineasAAAFC:inputField label="Coste" name="coste" />
-
+			
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
