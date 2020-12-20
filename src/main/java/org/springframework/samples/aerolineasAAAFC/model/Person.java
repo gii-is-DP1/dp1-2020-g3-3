@@ -11,12 +11,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import org.springframework.samples.aerolineasAAAFC.service.businessrules.UsuarioConstraint;
+import org.springframework.samples.aerolineasAAAFC.service.businessrules.NifConstraint;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@UsuarioConstraint(value= {"nif","user"})
 @Data
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
@@ -32,7 +31,7 @@ public class Person extends BaseEntity{
 	
 	@Column(name = "nif", unique = true)
 	@NotEmpty
-	@Pattern(regexp="^\\d{8}[a-zA-Z]$")
+	@NifConstraint
 	protected String nif;
 	
 	@NotEmpty

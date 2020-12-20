@@ -38,10 +38,9 @@ public class PersonalOficinaControllerTests {
 
 
 
-	private static final int TEST_PERSONALOFICINA_ID = 2;
+	private static final int TEST_PERSONALOFICINA_ID = 1;
 
-	@Autowired
-	private PersonalOficinaController personalOficinaController;
+
 
 	@MockBean
 	private PersonalOficinaService personalOficinaService;
@@ -102,7 +101,8 @@ public class PersonalOficinaControllerTests {
 				.param("nif", "29763330H")
 				.param("iban", "ES 4433300418403322567812")
 				.param("salario", "1432."))
-		.andExpect(status().is3xxRedirection());
+		.andExpect(status().isOk());
+//		.andExpect(status().is3xxRedirection());
 	}
 
 
@@ -136,7 +136,6 @@ public class PersonalOficinaControllerTests {
 				.param("nif", "29763330X")
 				.param("iban", "ES 4433300418454322567812")
 				.param("salario", "4312"))
-//		.andExpect(status().isOk())
 		.andExpect(view().name("redirect:/oficinistas/{pOficinaId}"));
 	}
 
@@ -151,7 +150,7 @@ public class PersonalOficinaControllerTests {
 				.param("iban", "nosoyuniban")
 				.param("salario", "soyunString"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("personalOficina"))
+		.andExpect(model().attributeHasErrors("pOficina"))
 		.andExpect(model().attributeHasFieldErrors("personalOficina", "nif"))
 		.andExpect(model().attributeHasFieldErrors("personalOficina", "iban"))
 		.andExpect(model().attributeHasFieldErrors("personalOficina", "salario"))

@@ -1,8 +1,13 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.BilleteRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.MenuPriceException;
@@ -63,5 +68,7 @@ public class BilleteService {
 	public Billete findBilleteById(int id) throws DataAccessException {
 		return billeteRepository.findById(id).get();
 	}
+	
+	
 
 }

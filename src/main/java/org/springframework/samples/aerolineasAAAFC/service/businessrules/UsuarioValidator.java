@@ -18,7 +18,6 @@ public class UsuarioValidator implements ConstraintValidator<UsuarioConstraint, 
 	public void initialize(final UsuarioConstraint constraintAnnotation) {
 		firstAttribute  = constraintAnnotation.value()[0];
 		secondAttribute  = constraintAnnotation.value()[1];
-
 	}
 
 	@SuppressWarnings("restriction")
@@ -27,14 +26,9 @@ public class UsuarioValidator implements ConstraintValidator<UsuarioConstraint, 
 		try {
 
 			String nif = (String) Introspector.elementFromComplex(value, firstAttribute);
+			User usuario =  (User) Introspector.elementFromComplex(value,secondAttribute);
 
-			User usuario =  (User) Introspector.elementFromComplex(value, secondAttribute);
-
-			boolean res = true;
-
-			if(!nif.equals(usuario.getUsername())) res=false;
-
-			return res;
+			return nif.equals(usuario.getUsername());
 
 		}catch(final Exception e) {
 			throw new IllegalArgumentException(e);
