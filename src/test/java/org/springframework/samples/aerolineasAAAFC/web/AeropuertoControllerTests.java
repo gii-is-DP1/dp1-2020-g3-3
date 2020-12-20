@@ -98,7 +98,7 @@ public class AeropuertoControllerTests {
 				.param("localizacion", "Barcelona, Cataluña")
 				.param("codigoIATA", "BCN")
 				.param("telefono", "+34913211000"))
-		.andExpect(view().name("redirect:/aeropuertos/{aeropuertoId}"));
+		.andExpect(view().name("redirect:/aeropuertos"));
 	}
 	
 	@WithMockUser(value = "spring")
