@@ -13,7 +13,7 @@ public class UsuarioValidator implements ConstraintValidator<UsuarioConstraint, 
 
 	private String firstAttribute ;
 	private String secondAttribute ;
-	
+
 	@Override
 	public void initialize(final UsuarioConstraint constraintAnnotation) {
 		firstAttribute  = constraintAnnotation.value()[0];

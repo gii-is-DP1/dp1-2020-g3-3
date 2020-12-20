@@ -69,8 +69,6 @@ public class VueloController {
 //		
 //	}
 	
-	
-	
 	@GetMapping(value = "/vuelos/new") 
 	public String initCreationVueloForm(Map<String, Object> model) {
 		Vuelo vuelo = new Vuelo();
