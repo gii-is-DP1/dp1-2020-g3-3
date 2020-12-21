@@ -131,6 +131,10 @@ body {
 }
 /***************************************/
 
+.btn-default {
+	border-color: #c0c0c0 !important;
+}
+
 @media screen and (max-width: 500px) {
   .main_header a {
     float: none;
@@ -140,6 +144,10 @@ body {
   
   .header-right {
     float: none;
+  }
+  
+  .header-left{
+  	float: none;
   }
 }
 
