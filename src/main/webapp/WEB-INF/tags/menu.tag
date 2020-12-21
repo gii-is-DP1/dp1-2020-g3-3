@@ -26,8 +26,28 @@
 					<img class="imagen" alt="AAAFC logo" src="${logo}" width="55"
 					height="16.5">
 			</span></a>
-			<div class="header-right">
+
+			<div class="header-left">
 				<a href="#">Cosa1</a> <a href="#">Cosa2</a> <a href="#">Cosa3</a>
+			</div>
+
+			<div class="header-right">
+				<sec:authorize access="!isAuthenticated()">
+					<a href="<c:url value="/login" />">Entra</a>
+					<a href="<c:url value="/users/new" />">Regístrate</a>
+				</sec:authorize>
+
+				<sec:authorize access="isAuthenticated()">
+					<a href="urlParaPerfilDeUsuario"> <span
+						class="glyphicon glyphicon-user"></span>  <sec:authentication
+							property="name" />
+					</a>
+
+					<a href="<c:url value="/logout" />"> <span
+						class="glyphicon glyphicon-off"></span> Cerrar sesión
+					</a>
+				</sec:authorize>
+
 			</div>
 
 		</div>
