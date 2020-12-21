@@ -73,9 +73,58 @@ public class AvionControllerTests {
 		apache.setTipoAvion("AIRBUS");
 		apache.setVuelos(new HashSet<>());
 		given(this.avionService.findAvionById(TEST_AVION_ID)).willReturn(apache);
-
-
 	}
+	
+	// TEST DE INSERCIÓN
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitCreationForm() throws Exception{
+		mockMvc.perform(get("/aviones/new"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("avion"))
+		.andExpect(view().name("aviones/createOrUpdateAvionForm"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessCreationFormSuccess() throws Exception{
+		mockMvc.perform(post("/aviones/new")
+				.with(csrf())
+				.param("tipoAvion", "Airbus 420")
+				.param("capacidadPasajero", "200")
+				.param("pesoMaximoEquipaje", "25")
+				.param("horasAcumuladas", "1000")
+				.param("fechaFabricacion", "2018/09/10")
+				.param("Disponibilidad", "true")
+				.param("fechaRevision", "2020/07/10")
+				.param("plazasEconomica", "140")
+				.param("plazasEjecutiva", "40")
+				.param("plazasPrimera", "20"))
+		.andExpect(status().is3xxRedirection());
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessCreationFormHasErrors() throws Exception{
+		mockMvc.perform(post("/aviones/new")
+				.with(csrf())
+				.param("tipoAvion", "Airbus 420")
+				.param("capacidadPasajero", "200")
+				.param("pesoMaximoEquipaje", "89302")
+				.param("horasAcumuladas", "1000")
+				.param("fechaFabricacion", "2018/09/10")
+				.param("Disponibilidad", "true")
+				.param("fechaRevision", "2020/07/10")
+				.param("plazasEconomica", "140")
+				.param("plazasEjecutiva", "40")
+				.param("plazasPrimera", "20"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeHasErrors("avion"))
+		.andExpect(model().attributeHasFieldErrors("avion", "pesoMaximoEquipaje"))
+		.andExpect(view().name("aviones/createOrUpdateAvionForm"));
+	}
+	
+	// TEST DE ACTUALIZACIÓN
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitUpdateAvionForm() throws Exception {
@@ -104,11 +153,11 @@ public class AvionControllerTests {
 				.param("horasAcumuladas", "0")
 				.param("fechaFabricacion","2015/12/28")
 				.param("fechaRevision","2020/12/28")
-				.param("disponibilidad", "TRUE")
+				.param("disponibilidad", "true")
 				.param("plazasEconomica", "60")
 				.param("plazasEjecutiva", "12")
 				.param("plazasPrimera", "5"))
-				.andExpect(view().name("redirect:aviones/{avionId}"));
+			.andExpect(view().name("redirect:/aviones/{avionId}"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -121,7 +170,7 @@ public class AvionControllerTests {
 				.param("plazasEjecutiva", "12"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("avion"))
-				.andExpect(view().name("/aviones/{avionId}"));
+				.andExpect(view().name("aviones/createOrUpdateAvionForm"));
 	}
 
 

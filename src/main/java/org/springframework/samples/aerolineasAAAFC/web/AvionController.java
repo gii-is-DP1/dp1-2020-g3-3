@@ -78,7 +78,7 @@ public class AvionController {
 			avion.setId(avionId);
 			this.avionService.saveAvion(avion);
 			
-			return "redirect:aviones/"+avionId;
+			return "redirect:/aviones/{avionId}";
 		}
 	}
 	
