@@ -16,7 +16,6 @@ import org.springframework.samples.aerolineasAAAFC.service.businessrules.NifCons
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
