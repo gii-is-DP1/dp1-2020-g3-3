@@ -54,7 +54,7 @@ public class Avion extends BaseEntity{
 	private LocalDate fechaFabricacion;
 	
 	@Column(name = "disponibilidad")
-	@NotEmpty
+	@NotNull
 	private Boolean disponibilidad;
 	
 	@Column(name = "fecha_revision")
