@@ -17,8 +17,6 @@ public class AvionService {
 	
 	private AvionRepository avionRepository;
 	
-	// Duda: ¿hay que meter en nuestros servicios 
-	//       el UserService y el AuthoritiesService? Solo en aquellos donde tenga relacionado la entidad user, como cliente o azafato
 	@Autowired
 	public AvionService(AvionRepository avionRepository) {
 		this.avionRepository = avionRepository;
@@ -38,5 +36,10 @@ public class AvionService {
 	public Collection<Avion> findAviones(){
 		return StreamSupport.stream(avionRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
+	}
+	
+	@Transactional
+	public void eliminarAvion(int id) throws DataAccessException{
+		avionRepository.deleteById(id);
 	}
 }
