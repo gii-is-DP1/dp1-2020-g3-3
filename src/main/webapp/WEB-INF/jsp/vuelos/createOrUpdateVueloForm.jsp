@@ -1,3 +1,4 @@
+<%@page import="org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository"%>
 <%@ page session="false" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -8,7 +9,15 @@
 <%@ page
 	import="org.springframework.samples.aerolineasAAAFC.service.AeropuertoService"%>
 <%@ page
+	import="org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository"%>	
+<%@ page
 	import="org.springframework.samples.aerolineasAAAFC.model.Aeropuerto"%>
+<%@ page
+	import="org.springframework.samples.aerolineasAAAFC.model.PersonalOficina"%>
+<%@ page
+	import="java.util.List"%>
+<%@ page
+	import="java.util.Arrays"%>
 <%@ page import="java.util.Iterator"%>
 
 <aerolineasAAAFC:layout pageName="vuelos">
@@ -25,7 +34,8 @@
 			<aerolineasAAAFC:inputField label="Fecha de Llegada"
 				name="fechaLlegada" type="datetime-local" />
 
-			<label>Aeropuerto de Salida</label> <br /> <select
+			<label>Aeropuerto de Salida</label> <br /> 
+			<select
 				name="aeropuertoOrigen.id">
 				<c:forEach items="${aeropuertos}" var="aeropuerto">
 					<option value="${aeropuerto.id}">${aeropuerto.nombre}</option>
@@ -45,15 +55,25 @@
 			
 			<label>Personal asignado</label> 
 			<br/> 
-			<select	name="pOficina.id" multiple="multiple">
-				<%PersonalOficina select= %>"${pOficina}" 
-				<c:set item="${pOficina}" var="select"/>
-				<c:forEach items="${todoPersonal}" var="personal">
-					<% for(int i=0 ; i<.size();i++) %>
-				</c:forEach> 
+			<select	name="pOficina.id" size="3" multiple="multiple">
+				<c:forEach items="${todoPersonal}" var="persona">
+					<c:set var="is" value="false"/>	
+					
+					<c:forEach items="${pOficina}" var="actual">
+						<c:if test = "${persona.id eq actual.id}">
+							<c:set var="is" value="true"/>	
+						</c:if>			
+					</c:forEach>
+					<option value="${persona.id}" >${persona.nombre}<c:if test="${is eq true}">selected</c:if></option>	
+				</c:forEach>
 			</select>
-
-
+			
+			<%-- 
+			<select	name="pOficina.id" multiple="multiple">
+			<c:forEach items="${todoPersonal}" var="persona">
+					<option value="${persona.id}">${persona.nombre}</option>
+			</c:forEach>
+			</select>--%>
 
 			<aerolineasAAAFC:inputField label="Coste" name="coste" />
 
