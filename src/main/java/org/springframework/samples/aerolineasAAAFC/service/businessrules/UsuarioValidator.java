@@ -5,34 +5,27 @@ package org.springframework.samples.aerolineasAAAFC.service.businessrules;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.samples.aerolineasAAAFC.model.Person;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 
 import com.sun.jmx.mbeanserver.Introspector;
 
-public class UsuarioValidator implements ConstraintValidator<UsuarioConstraint, Object>{
+public class UsuarioValidator implements ConstraintValidator<UsuarioConstraint, Person>{
 
-	private String firstAttribute ;
-	private String secondAttribute ;
 
 	@Override
-	public void initialize(final UsuarioConstraint constraintAnnotation) {
-		firstAttribute  = constraintAnnotation.value()[0];
-		secondAttribute  = constraintAnnotation.value()[1];
+	public void initialize(UsuarioConstraint constraintAnnotation) {
 	}
 
-	@SuppressWarnings("restriction")
 	@Override
-	public boolean isValid(final Object value, ConstraintValidatorContext context) {
-		try {
+	public boolean isValid(Person value, ConstraintValidatorContext context) {
 
-			String nif = (String) Introspector.elementFromComplex(value, firstAttribute);
-			User usuario =  (User) Introspector.elementFromComplex(value,secondAttribute);
 
-			return nif.equals(usuario.getUsername());
+		String nif = value.getNif();
+		String usuario =  value.getUser().getUsername();
 
-		}catch(final Exception e) {
-			throw new IllegalArgumentException(e);
-		}
+		return nif.equals(usuario);
+
 
 	}
 

@@ -65,7 +65,7 @@ public class ClienteController {
 			} catch (DataIntegrityViolationException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
 				return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
-			}
+			} 
 
 			return "redirect:/clientes/" + cliente.getId();
 		}
