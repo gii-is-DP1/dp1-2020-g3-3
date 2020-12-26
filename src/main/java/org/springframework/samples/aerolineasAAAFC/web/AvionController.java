@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -82,6 +84,14 @@ public class AvionController {
 		}
 	}
 	
+	@GetMapping(value = "/aviones")
+	public String showAvionesList(Map<String, Object> model) {
+		List<Avion> aviones = new ArrayList<Avion>();
+		aviones.addAll(this.avionService.findAviones());
+		model.put("aviones", aviones);
+		
+		return "aviones/avionesList";
+	}
 	
 	@GetMapping("/aviones/{avionId}")
 	public ModelAndView showAvion(@PathVariable("avionId") int avionId) {

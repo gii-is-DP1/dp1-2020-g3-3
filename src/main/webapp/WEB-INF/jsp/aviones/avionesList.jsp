@@ -29,7 +29,7 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${selections}" var="avion">
+        <c:forEach items="${aviones}" var="avion">
             <tr>
                 <td>
                     <spring:url value="/aviones/{avionId}" var="avionUrl">
@@ -47,11 +47,14 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
                     <c:out value="${avion.pesoMaximoEquipaje}"/>
                 </td>
                 <td>
+                    <c:out value="${avion.horasAcumuladas}"/>
+                </td>
+                <td>
                     <c:out value="${avion.fechaFabricacion}"/>
                 </td>
                 <td>
                     <c:choose>
-    					<c:when test="${avion.disponibilidad==True}">
+    					<c:when test="${avion.disponibilidad==true}">
         					Sí 
         					<br />
     					</c:when>    
@@ -74,10 +77,10 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
                     <c:out value="${avion.plazasPrimera}"/>
                 </td>
                 <td>
-                	<spring:url value="{avionId}/edit" var="avionUrl">
+                	<spring:url value="/aviones/{avionId}/edit" var="avionUrl">
         			<spring:param name="avionId" value="${avion.id}"/>
     				</spring:url>
-    				<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar avión</a>
+    				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Editar avión</a>
                 </td>     
             </tr>
         </c:forEach>
