@@ -109,15 +109,15 @@ public class AvionServiceTests {
 		assertThat(avion.getCapacidadPasajero()).isEqualTo(100);
 	}
 
-	@Test
-	@Transactional
-	void updateAzafatosAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		Set<Azafato> azafatos=new HashSet<>();
-		//azafatos.add(e);
-		avion.setAzafatos(azafatos);
-		assertThat(avion.getAzafatos()).isEqualTo(azafatos);
-	}
+//	@Test
+//	@Transactional
+//	void updateAzafatosAvionSuccessful() {
+//		Avion avion=avionService.findAvionById(1);
+//		Set<Azafato> azafatos=new HashSet<>();
+//		//azafatos.add(e);
+//		avion.setAzafatos(azafatos);
+//		assertThat(avion.getAzafatos()).isEqualTo(azafatos);
+//	}
 
 	@Test
 	@Transactional
@@ -154,15 +154,15 @@ public class AvionServiceTests {
 		assertThat(avion.getHorasAcumuladas()).isEqualTo(140);
 	}
 	
-	@Test
-	@Transactional
-	void updatePersonalControlAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		Set<PersonalControl> personal= new HashSet<>();
-		//personal.add();
-		avion.setPersonalControl(personal);
-		assertThat(avion.getPersonalControl()).isEqualTo(personal);
-	}
+//	@Test
+//	@Transactional
+//	void updatePersonalControlAvionSuccessful() {
+//		Avion avion=avionService.findAvionById(1);
+//		Set<PersonalControl> personal= new HashSet<>();
+//		//personal.add();
+//		avion.setPersonalControl(personal);
+//		assertThat(avion.getPersonalControl()).isEqualTo(personal);
+//	}
 
 	@Test
 	@Transactional
@@ -205,17 +205,17 @@ public class AvionServiceTests {
 		Collection<Avion> aviones = this.avionService.findAviones();
 		int found = aviones.size();
 		
-		Azafato aza = this.azafatoService.findAzafatoById(1);
-		Set<Azafato> azas = new HashSet<Azafato>();
-		azas.add(aza);
+//		Azafato aza = this.azafatoService.findAzafatoById(1);
+//		Set<Azafato> azas = new HashSet<Azafato>();
+//		azas.add(aza);
 		
 		Vuelo vue = this.vueloService.findVueloById(1);
 		Set<Vuelo> vues = new HashSet<Vuelo>();
 		vues.add(vue);
 		
-		PersonalControl pCon = this.pControlService.findPersonalControlById(1);
-		Set<PersonalControl> pCons = new HashSet<PersonalControl>();
-		pCons.add(pCon);
+//		PersonalControl pCon = this.pControlService.findPersonalControlById(1);
+//		Set<PersonalControl> pCons = new HashSet<PersonalControl>();
+//		pCons.add(pCon);
 		
 		
 		Avion avi = new Avion();
@@ -230,9 +230,9 @@ public class AvionServiceTests {
 		avi.setPlazasEjecutiva(40);
 		avi.setPlazasPrimera(20);
 		
-		avi.setAzafatos(azas);
+//		avi.setAzafatos(azas);
 		avi.setVuelos(vues);
-		avi.setPersonalControl(pCons);
+//		avi.setPersonalControl(pCons);
 		
 		// Por ahora no hay restricciones que puedan saltar por insercion de datos
 		this.avionService.saveAvion(avi);

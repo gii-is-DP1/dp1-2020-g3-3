@@ -57,7 +57,7 @@ public class AvionControllerTests {
 	void setup() {
 		apache =new Avion();
 		apache.setId(TEST_AVION_ID);
-		apache.setAzafatos(new HashSet<>());
+//		apache.setAzafatos(new HashSet<>());
 		apache.setCapacidadPasajero(100);
 		
 		apache.setDisponibilidad(false);
@@ -65,7 +65,7 @@ public class AvionControllerTests {
 		apache.setFechaFabricacion(LocalDate.of(2015, 12, 8));
 	
 		apache.setHorasAcumuladas(12);
-		apache.setPersonalControl(new HashSet<>());
+//		apache.setPersonalControl(new HashSet<>());
 		apache.setPesoMaximoEquipaje(21);
 		apache.setPlazasEconomica(3);
 		apache.setPlazasEjecutiva(3);

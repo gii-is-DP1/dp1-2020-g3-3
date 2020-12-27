@@ -80,7 +80,7 @@ edición y borrado en una vista u otra -->
     <br/>
     <br/>
     <br/>
-    <h2>Vuelos y personal</h2>
+    <h2>Vuelos asociados</h2>
 <!--
     <table class="table table-striped">
         <c:forEach var="pet" items="${owner.pets}">

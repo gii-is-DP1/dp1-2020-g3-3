@@ -48,7 +48,7 @@ public class Azafato extends Person{
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude 
-	private Set<Avion> aviones;
+	private Set<Vuelo> vuelos;
 	
 	public String toString() {
 		

@@ -3,7 +3,6 @@ package org.springframework.samples.aerolineasAAAFC.model;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -71,6 +70,14 @@ public class Vuelo extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	@JoinColumn(name = "avion_id")
 	private Avion avion;
+	
+	@ManyToMany(mappedBy="vuelos")
+	@EqualsAndHashCode.Exclude
+	private Set<Azafato> azafatos;
+	
+	@ManyToMany(mappedBy="vuelos")
+	@EqualsAndHashCode.Exclude
+	private Set<PersonalControl> personalControl;
 
 	
 }
