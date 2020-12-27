@@ -64,7 +64,7 @@ public class PersonalControlController {
 				return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 			}
 			
-			return "redirect:/oficinistas/" + pControl.getId();
+			return "redirect:/controladores/" + pControl.getId();
 		}
 	}
 	
