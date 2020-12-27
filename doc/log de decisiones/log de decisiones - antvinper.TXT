@@ -1,0 +1,3 @@
+1. Cambio en relaciones de la tripulación de un vuelo:
+	Las clases PersonalControl y Azafato pasan a estar relacionados con Vuelo en lugar de Avión.
+	Esto nos facilita el uso de las clases y proporciona una mayor coherencia a nuestro modelo de clases.
