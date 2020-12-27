@@ -16,15 +16,10 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
         <tr>
             <th>ID Avión</th>
             <th>Tipo de avión</th>
-            <th>Capacidad de pasajeros</th>
-            <th>Peso máximo de equipaje</th>
             <th>Horas de vuelo acumuladas</th>
             <th>Fecha de fabricación</th>
-            <th>Disponibilidad</th>
             <th>Última revisión</th>
-            <th>Plazas clase económica</th>
-            <th>Plazas clase ejecutiva</th>
-            <th>Plazas primera clase</th>
+            <th>Disponibilidad</th>
             <th> </th>
         </tr>
         </thead>
@@ -41,16 +36,13 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
                     <c:out value="${avion.tipoAvion}"/>
                 </td>
                 <td>
-                    <c:out value="${avion.capacidadPasajero}"/>
-                </td>
-                <td>
-                    <c:out value="${avion.pesoMaximoEquipaje}"/>
-                </td>
-                <td>
                     <c:out value="${avion.horasAcumuladas}"/>
                 </td>
                 <td>
                     <c:out value="${avion.fechaFabricacion}"/>
+                </td>
+                <td>
+                    <c:out value="${avion.fechaRevision}"/>
                 </td>
                 <td>
                     <c:choose>
@@ -63,18 +55,6 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
         					<br />
     					</c:otherwise>
 					</c:choose>
-                </td>
-                <td>
-                    <c:out value="${avion.fechaRevision}"/>
-                </td>
-                <td>
-                    <c:out value="${avion.plazasEconomica}"/>
-                </td>
-                <td>
-                    <c:out value="${avion.plazasEjecutiva}"/>
-                </td>
-                <td>
-                    <c:out value="${avion.plazasPrimera}"/>
                 </td>
                 <td>
                 	<spring:url value="/aviones/{avionId}/edit" var="avionUrl">
