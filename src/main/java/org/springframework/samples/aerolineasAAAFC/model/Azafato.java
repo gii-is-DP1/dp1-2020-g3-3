@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -26,6 +27,11 @@ import lombok.EqualsAndHashCode;
 public class Azafato extends Person{
 
 	// Atributos
+//	@ManyToOne
+//	@JoinColumn(name = "type_id")
+//	@JsonSerialize(using = PetTypeSerializer.class)
+//	@JsonDeserialize(using = PetTypeDeserializer.class)
+//	private Set<IdiomaType> idiomas;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "idiomas_azafato", 
