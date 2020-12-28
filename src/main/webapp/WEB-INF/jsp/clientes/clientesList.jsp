@@ -41,7 +41,8 @@
 					<td><c:out value="${cliente.user.username}"/></td>
 					<td><c:out value="${cliente.user.password}"/></td>
 					<td>
-						<a href="<spring:url value="/clientes/${cliente.id}/delete" htmlEscape="true"/>">Eliminar</a>
+						<a href="<spring:url value="/clientes/${cliente.id}/edit" htmlEscape="true" />">Editar cliente</a>
+						<a href="<spring:url value="/clientes/${cliente.id}/delete" htmlEscape="true"/>">Eliminar cliente</a>
 					</td>
 				
 				</tr>

@@ -42,8 +42,8 @@
 					<td><c:out value="${azafato.user.username}"/></td>
 					<td><c:out value="${azafato.user.password}"/></td>
 					<td>
-						<a href="<spring:url value="/azafatos/${azafato.id}/edit" htmlEscape="true" />">Editar</a>
-						<a href="<spring:url value="/azafatos/${azafato.id}/delete" htmlEscape="true" />">Eliminar</a>
+						<a href="<spring:url value="/azafatos/${azafato.id}/edit" htmlEscape="true" />">Editar azafato</a>
+						<a href="<spring:url value="/azafatos/${azafato.id}/delete" htmlEscape="true" />">Eliminar azafato</a>
 					</td>
 				</tr>
 				

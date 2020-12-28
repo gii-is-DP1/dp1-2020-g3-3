@@ -33,10 +33,10 @@
 					<td><c:out value="${aeropuerto.telefono}" /></td>
 				<tr>
 				<td>
-				<a href="<spring:url value="/aeropuertos/${aeropuerto.id}/edit" htmlEscape="true" />">Editar</a>
+				<a href="<spring:url value="/aeropuertos/${aeropuerto.id}/edit" htmlEscape="true" />">Editar aeropuerto</a>
 				</td>
 				<td>
-				<a href="<spring:url value="/aeropuertos/${aeropuerto.id}/delete" htmlEscape="true" />">Eliminar</a>
+				<a href="<spring:url value="/aeropuertos/${aeropuerto.id}/delete" htmlEscape="true" />">Eliminar aeropuerto</a>
 				</td>
 				</tr>
 				
@@ -44,6 +44,6 @@
 		</tbody>
 
 	</table>
-	<a href="<spring:url value="/aeropuertos/new" htmlEscape="true" />">Nuevo</a>
+	<a href="<spring:url value="/aeropuertos/new" htmlEscape="true" />">Nuevo aeropuerto</a>
 				
 </aerolineasAAAFC:layout>
