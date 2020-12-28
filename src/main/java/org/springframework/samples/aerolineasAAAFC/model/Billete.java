@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -35,10 +36,7 @@ public class Billete extends BaseEntity{
 	@Positive
 	private double coste;
 
-	@Column(name = "asiento")
-	@NotEmpty
-	@Pattern(regexp="^[A-I]\\d{2}$")
-	private String asiento;
+
 	
 	@Column(name = "fecha_reserva")
 	//@NotEmpty
@@ -66,8 +64,13 @@ public class Billete extends BaseEntity{
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Vuelo vuelos;
+	@OneToOne(optional=true) 
+	@JoinColumn(name = "asiento_id")
+	@NotEmpty
+	private Asiento asiento;
+	
+	@ManyToOne
+	private Vuelo vuelo;
 	
 	public String toString() {
 		
