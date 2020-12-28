@@ -8,12 +8,12 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 
-<aerolineasAAAFC:layout pageName="clientes">
+<aerolineasAAAFC:layout pageName="controladores">
 
-    <h2>Find Clientes</h2>
+    <h2>Find Controladores</h2>
 
     
-    <form:form modelAttribute="cliente" action="/clientes" method="get" class="form-horizontal"
+    <form:form modelAttribute="controlador" action="/controladores" method="get" class="form-horizontal"
                id="search-owner-form">
         <div class="form-group">
             <div class="control-group" id="nif">
@@ -26,7 +26,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Encontrar Cliente</button>
+                <button type="submit" class="btn btn-default">Buscar Controlador</button>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
 
     <br/> 
     <sec:authorize access="hasAuthority('admin')">
-		<a class="btn btn-default" href='<spring:url value="/clientes/new" htmlEscape="true"/>'>AÃ±adir Cliente</a>
+		<a class="btn btn-default" href='<spring:url value="/controladores/new" htmlEscape="true"/>'>Añadir Controlador</a>
 	</sec:authorize>
 	
 </aerolineasAAAFC:layout>

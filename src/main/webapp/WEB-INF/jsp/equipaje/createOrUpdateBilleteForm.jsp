@@ -6,25 +6,25 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
-<aerolineasAAAFC:layout pageName="billetes">
+<aerolineasAAAFC:layout pageName="equipajes">
     <h2>
-        <c:if test="${billete['new']}">Nuevo </c:if> Billete
+        <c:if test="${equipaje['new']}">Nuevo </c:if> equipaje
     </h2>
-    <form:form modelAttribute="billete" class="form-horizontal" id="add-billete-form">
+    <form:form modelAttribute="equipaje" class="form-horizontal" id="add-equipaje-form">
         <div class="form-group has-feedback">
-            <aerolineasAAAFC:inputField label="Precio de venta" name="coste"/>
-            <aerolineasAAAFC:inputField label="Asiento" name="asiento"/>
-            <aerolineasAAAFC:inputField label="Fecha de reserva" type="date" name="fechaReserva"/>
-            <aerolineasAAAFC:inputField label="Tipo de clase" name="clase"/>
+            <aerolineasAAAFC:inputField label="Número de billete" name="billete"/>
+            <aerolineasAAAFC:inputField label="Dimensiones" name="dimensiones"/>
+            <aerolineasAAAFC:inputField label="Peso" name="peso"/>
+            <aerolineasAAAFC:inputField label="Precio" name="precio"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
-                    <c:when test="${billete['new']}">
-                        <button class="btn btn-default" type="submit">Añadir billete</button>
+                    <c:when test="${equipaje['new']}">
+                        <button class="btn btn-default" type="submit">Añadir equipaje</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Actualizar billete</button>
+                        <button class="btn btn-default" type="submit">Actualizar equipaje</button>
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -33,10 +33,10 @@
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>
 					<c:when test="${cliente['new']}">
-						<button class="btn btn-default" type="submit">Add Cliente</button>
+						<button class="btn btn-default" type="submit">Añadir Cliente</button>
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-default" type="submit">Update Cliente</button>
+						<button class="btn btn-default" type="submit">Actualizar Cliente</button>
 					</c:otherwise>
 				</c:choose>
 			</div>

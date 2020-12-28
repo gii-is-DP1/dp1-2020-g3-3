@@ -7,11 +7,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.EquipajeService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.BadRequestException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class EquipajeController {
 
 	private static final String VIEWS_BILLETE_CREATE_FORM = "billetes/createOrUpdateBilleteForm";
+	private static final String VIEWS_BILLETE_CREATE_OR_UPDATE_FORM = "billetes/createOrUpdateBilleteForm";
 
 	private final BilleteService billeteService;
 	private final EquipajeService equipajeService;
@@ -38,6 +41,8 @@ public class EquipajeController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
+	
+	//Alta de un equipaje:
 
 	@GetMapping(value = "/equipajes/new")
 	public String initCreationForm(Map<String, Object> model) {
@@ -60,6 +65,9 @@ public class EquipajeController {
 			return "redirect:/";
 		}
 	}
+
+	
+	
 
 //	@DeleteMapping("/equipajes/{id}")
 //	public void delete(@PathVariable("id") int id) throws BadRequestException {
