@@ -55,6 +55,15 @@ public class ClienteService {
 				.collect(Collectors.toList());
 	}
 
+	@Transactional(readOnly = true)
+	public Collection<Cliente> findClientesPorNombre(String nombre,String apellidos){
+		return StreamSupport.stream(clienteRepository.findAll().spliterator(), false)
+				.filter(x->x.getNombre().equals(nombre))
+				.filter(x->x.getApellidos().equals(apellidos))
+				.collect(Collectors.toList());
+	}
+	
+	
 	@Transactional
 	public void deleteClienteById(int id) throws DataAccessException{
 		clienteRepository.deleteById(id);

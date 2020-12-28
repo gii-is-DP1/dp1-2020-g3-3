@@ -67,7 +67,7 @@
 					<option value="${persona.id}" >${persona.nombre}<c:if test="${is eq true}">selected</c:if></option>	
 				</c:forEach>
 			</select>
-			
+				
 			<%-- 
 			<select	name="pOficina.id" multiple="multiple">
 			<c:forEach items="${todoPersonal}" var="persona">

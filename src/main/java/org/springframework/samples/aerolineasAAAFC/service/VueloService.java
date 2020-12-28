@@ -2,12 +2,15 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
@@ -53,6 +56,16 @@ public class VueloService {
 		return StreamSupport.stream(vueloRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
 	}
+	
+
+	
+	@Transactional
+	public List<Cliente> findClientesPorVuelo(Vuelo vuelo){
+		List<Cliente> res=new ArrayList<>();
+		 vuelo.getBilletes().forEach(x->res.add(x.getCliente()));
+		return res;
+	}
+	
 	 /*
 	 @Transactional(readOnly = true)
 		public Optional<Vuelo> findVueloById(int id) throws DataAccessException {
