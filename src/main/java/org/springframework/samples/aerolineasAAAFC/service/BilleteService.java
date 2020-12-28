@@ -1,5 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -7,8 +8,10 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.BilleteRepository;
+import org.springframework.samples.aerolineasAAAFC.repository.ClienteRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.MenuPriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
@@ -64,6 +67,22 @@ public class BilleteService {
 
 	}
 
+	@Transactional
+	public Collection<Billete> findBilletesPorFecha(LocalDate fecha){
+		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
+				.filter(x->x.getFechaReserva().equals(fecha))
+				.collect(Collectors.toList());
+	}
+	
+	@Transactional
+	public Collection<Billete> findBilletesPorCliente(Cliente cliente){
+		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
+				.filter(x->x.getCliente().equals(cliente))
+				.collect(Collectors.toList());
+	}
+	
+	
+	
 	@Transactional(readOnly = true)
 	public Billete findBilleteById(int id) throws DataAccessException {
 		return billeteRepository.findById(id).get();

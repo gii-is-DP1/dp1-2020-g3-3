@@ -66,8 +66,8 @@ public class Billete extends BaseEntity{
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Set<Vuelo> vuelos;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Vuelo vuelos;
 	
 	public String toString() {
 		
