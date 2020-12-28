@@ -67,7 +67,7 @@ public class ClienteServiceTests {
 		
 		billete.setId(2);
 		billete.setCoste(80);
-		billete.setAsiento("F5");
+//		billete.setAsiento("F5");
 		billete.setFechaReserva(LocalDate.of(2020, 04, 06));
 		billete.setClase(Clase.ECONOMICA);
 		cliente.getBilletes().add(billete);

@@ -74,4 +74,5 @@ public class Avion extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	private Set<Vuelo> vuelos;
 	
+
 }
