@@ -70,7 +70,7 @@ public class BilleteControllerTests {
 
 		billetazo = new Billete();
 		billetazo.setId(TEST_BILLETE_ID);
-		billetazo.setAsiento("A34");
+//		billetazo.setAsiento("A34");
 		billetazo.setClase(Clase.ECONOMICA);
 		//billetazo.setCliente(cliente);
 		billetazo.setCoste(123.56);
@@ -106,7 +106,7 @@ public class BilleteControllerTests {
 	void testProcessCreationFormSuccess() throws Exception {
 		mockMvc.perform(post("/billetes/new")
 				.param("coste", "12.54")
-				.param("asiento", "B72")
+//				.param("asiento", "B72")
 				.with(csrf())
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
@@ -121,7 +121,7 @@ public class BilleteControllerTests {
 		mockMvc.perform (post("/billetes/{billeteId}/edit", TEST_BILLETE_ID)
 				.with(csrf())
 				.param("coste", "5")
-				.param("asiento", "F99")
+//				.param("asiento", "F99")
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
 		//.param("equipajes", equipajes)
@@ -137,7 +137,7 @@ public class BilleteControllerTests {
 		mockMvc.perform (post("/billetes/{billeteId}/edit", TEST_BILLETE_ID)
 				.with(csrf())
 				.param("coste", "DireStraits")
-				.param("asiento", "F99")
+//				.param("asiento", "F99")
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
 		//.param("equipajes", equipajes)
@@ -157,7 +157,7 @@ public class BilleteControllerTests {
 		mockMvc.perform (post("/billetes/new", TEST_BILLETE_ID)
 				.with(csrf())
 				.param("coste", "5")
-				.param("asiento", "F99")
+//				.param("asiento", "F99")
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
 		//.param("equipajes", equipajes)

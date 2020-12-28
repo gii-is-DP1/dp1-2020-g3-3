@@ -47,7 +47,7 @@ public class BilleteServiceTests {
 
 		Clase clase=Clase.ECONOMICA;
 		billete.setClase(clase);
-		billete.setAsiento("A44");
+//		billete.setAsiento("A44");
 
 		billete.setCoste(12);
 		LocalDate reserva=LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE);
