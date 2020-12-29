@@ -2,11 +2,15 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collection;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.stereotype.Service;
 
 
@@ -56,7 +60,16 @@ public class PersonalControlServiceTests {
 		assertThat(personal.getSalario()).isNotNull();
 		assertThat(personal.getSalario()).isGreaterThan(100);
 	}
-
+	
+	@Test
+	void getVuelosByDateSuccessful() {
+		PersonalControl personal = personalControlService.findPersonalControlById(1);
+		Collection<Vuelo> vuelos = personalControlService.findVuelosByDate(personal.getId(), 12, 2020);
+		
+		int found = vuelos.size();
+		
+		assertThat(found).isEqualTo(1);
+	}
 	
 }
 

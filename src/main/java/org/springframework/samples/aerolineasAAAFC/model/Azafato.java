@@ -46,7 +46,10 @@ public class Azafato extends Person{
 
 	// Relaciones de tabla:
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
+	@JoinTable(name = "azafatos_vuelo",
+			   joinColumns = @JoinColumn(name = "azafatos_id"),
+			   inverseJoinColumns = @JoinColumn(name= "vuelos_id"))
 	@EqualsAndHashCode.Exclude 
 	private Set<Vuelo> vuelos;
 	

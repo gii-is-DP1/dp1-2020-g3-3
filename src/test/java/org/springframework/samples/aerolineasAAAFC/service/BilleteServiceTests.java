@@ -53,7 +53,7 @@ public class BilleteServiceTests {
 		LocalDate reserva=LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE);
 		billete.setFechaReserva(reserva);
 
-
+		billete.setVuelos(vuelo);
 		
 		//se comprueba que se añadio correctamente el billete
 

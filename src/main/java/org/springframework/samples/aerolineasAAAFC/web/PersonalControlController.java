@@ -131,7 +131,7 @@ public class PersonalControlController {
 			pControl.setNif(""); 
 		}
 
-		PersonalControl resultado = this.pControlService.findPersonalControlById(pControl.getNif());
+		PersonalControl resultado = this.pControlService.findPersonalControlByNif(pControl.getNif());
 
 		if (resultado == null) {
 			result.rejectValue("nif", "notFound", "nif no encontrado");

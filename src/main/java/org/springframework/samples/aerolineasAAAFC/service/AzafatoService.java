@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.repository.AzafatoRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +50,7 @@ public class AzafatoService {
 		Azafato aIban = azafatoRepository.findByIban(azafato.getIban());
 		
 		if(aIban != null && ! aIban.getId().equals(azafato.getId())){
-			throw new IbanDuplicadoException();
+			throw new IbanDuplicadoException("");
 		}else if(azafato.getIdiomas().size() < 2){
 			throw new IdiomasNoSuficientesException("Parece que no ha introducido 2 o más idiomas para este empleado");
 		}
@@ -72,4 +70,5 @@ public class AzafatoService {
 	public void eliminarAzafato(int id) throws DataAccessException {
 		azafatoRepository.deleteById(id);
 	}
+
 }
