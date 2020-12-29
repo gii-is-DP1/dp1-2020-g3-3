@@ -1,17 +1,16 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
@@ -20,22 +19,25 @@ import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
+import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
+import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 
 
@@ -54,7 +56,8 @@ public class VueloController {
 	
 	@Autowired
 	public VueloController(VueloService vueloService,AeropuertoService aeropuertoService,
-			AvionService avionService,BilleteService billeteService,PersonalOficinaService pOficinaService,  PersonalControlService pControlService, AzafatoService azafatoService) {
+			AvionService avionService,BilleteService billeteService,PersonalOficinaService pOficinaService,
+			PersonalControlService pControlService, AzafatoService azafatoService) {
 		this.vueloService = vueloService;
 		this.aeropuertoService=aeropuertoService;
 		this.avionService= avionService;
@@ -139,6 +142,9 @@ public class VueloController {
 		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
 		model.addAttribute("aeropuertos", aeropuertos);
 		
+//		List<Billete> billetes = new ArrayList<>();
+//		this.billeteService.findBilletes().forEach(x->aeropuertos.add(x));
+//		model.addAttribute("aeropuertos", aeropuertos);
 		
 		Vuelo vuelo = this.vueloService.findVueloById(vueloId);
 		model.addAttribute("vuelo",vuelo);
