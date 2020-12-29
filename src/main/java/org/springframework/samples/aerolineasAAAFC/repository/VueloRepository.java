@@ -1,6 +1,13 @@
 package org.springframework.samples.aerolineasAAAFC.repository;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.util.Collection;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 
 
@@ -24,6 +31,9 @@ public interface VueloRepository extends CrudRepository<Vuelo,Integer> {
 	public Vuelo modificarPrecio(@Param("precio") Double precio, @Param("id") int id);
 	
 	*/
+	
+	@Query("SELECT vuelo FROM Vuelo vuelo WHERE MONTH(vuelo.fechaSalida) = :mes AND YEAR(vuelo.fechaSalida) = :año")
+	public Collection<Vuelo> findVuelosByDate(@Param("mes") int mes, @Param("año") int año);
 }
 
 

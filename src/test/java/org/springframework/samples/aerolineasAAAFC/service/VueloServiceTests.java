@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.Year;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,11 +23,16 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoErroneoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mysql.cj.log.Log;
+
+import lombok.extern.slf4j.Slf4j;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class VueloServiceTests {
@@ -88,6 +95,16 @@ public class VueloServiceTests {
 		String codigoAeroDestino = vuelo.getAeropuertoDestino().getCodigoIATA();
 		
 		assertThat(codigoAeroDestino).isEqualTo("MAD");
+	}
+	
+	
+	@Test
+	void getBilletesSuccessful() {
+		Vuelo vuelo = vueloService.findVueloById(2);
+		Set<Billete> billetes = vuelo.getBilletes();
+		int found = billetes.size();
+		
+		assertThat(found).isEqualTo(2);
 	}
 	
 	//TEST DE INSERCIÓN
@@ -221,7 +238,7 @@ public class VueloServiceTests {
 	//TEST DE ACTUALIZACIÓN
 	@Test
 	@Transactional
-	void shouldUpdateHorasVuelo() {
+	public void shouldUpdateHorasVuelo() {
 		Vuelo vuelo = vueloService.findVueloById(1);
 		
 		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
@@ -242,5 +259,17 @@ public class VueloServiceTests {
 		
 		vuelos = this.vueloService.findVuelos();
 		assertThat(vuelos.size()).isEqualTo(found - 1);
+	}
+	
+	
+	@Test
+	@Transactional
+	public void shouldFindVueloByDate() {
+		
+		Collection<Vuelo> vuelos = this.vueloService.findVuelosByMes(12, 2020);
+		int found = vuelos.size();
+		
+		assertThat(found).isEqualTo(1);
+		
 	}
 }

@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
+
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -19,17 +21,19 @@ import org.springframework.samples.aerolineasAAAFC.service.businessrules.Aeropue
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
 * Entidad simple que representa un vuelo
 */
 
 @AeropuertoConstraint(value={"aeropuertoOrigen","aeropuertoDestino"})
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "vuelos")
-
 public class Vuelo extends BaseEntity{
 	
 	// Atributos:
@@ -80,9 +84,22 @@ public class Vuelo extends BaseEntity{
 	@ManyToMany(mappedBy="vuelos")
 	@EqualsAndHashCode.Exclude
 	private Set<PersonalControl> personalControl;
-
+	
 	@OneToMany(mappedBy="vuelos") 
 	@EqualsAndHashCode.Exclude
 	private Set<Asiento> asientos;
+
+	
+	@PreRemove
+	private void removeVuelosFromEntities() {
+	    for (Azafato a: azafatos) {
+	        a.getVuelos().remove(this);
+	    }	   
+	    for (PersonalControl p: personalControl) {
+	        p.getVuelos().remove(this);
+	    }	
+	}
+
+
 }
 

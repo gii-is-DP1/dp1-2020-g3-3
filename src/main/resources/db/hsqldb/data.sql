@@ -68,28 +68,34 @@ VALUES ('Airbus A330', 335 , 2, 300, '2015-01-20', true, '2020-03-10', 250, 75, 
 
 --Vuelos
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('2020-12-11 10:40','dd-MM-yyyy hh:mm'),parsedatetime('2020-12-11 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
+VALUES (parsedatetime('11-12-2020 10:40','dd-MM-yyyy hh:mm'),parsedatetime('11-12-2020 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('2015-01-20 8:30','dd-MM-yyyy hh:mm'),parsedatetime('2015-01-20 10:55','dd-MM-yyyy hh:mm'),10000,2,3,2);
+VALUES (parsedatetime('20-01-2015 8:30','dd-MM-yyyy hh:mm'),parsedatetime('20-01-2015 10:55','dd-MM-yyyy hh:mm'),10000,2,3,2);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('2018-01-17 23:30','dd-MM-yyyy hh:mm'),parsedatetime('2018-01-18 13:40','dd-MM-yyyy hh:mm'),25000,6,5,3);
+VALUES (parsedatetime('17-01-2018 23:30','dd-MM-yyyy hh:mm'),parsedatetime('18-01-2018 13:40','dd-MM-yyyy hh:mm'),25000,6,5,3);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('2019-06-03 7:10','dd-MM-yyyy hh:mm'),parsedatetime('2019-06-03 13:20','dd-MM-yyyy hh:mm'),30000,6,7,4);
+VALUES (parsedatetime('03-06-2019 7:10','dd-MM-yyyy hh:mm'),parsedatetime('03-06-2019 13:20','dd-MM-yyyy hh:mm'),30000,6,7,4);
 
 
 --PersonalControl
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
-VALUES ('Camila','García Pérez','48736253T','ES 1221089893201234561111',1,5345,'48736253T');
+VALUES ('Camila','García Pérez','48736253T','ES 1221089893201234561111',0,5345,'48736253T');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
-VALUES ('Felipe','Espadas Monteserrín','12355435L','ES 6621000418401234567892',2,3600,'12355435L');
+VALUES ('Felipe','Espadas Monteserrín','12355435L','ES 6621000418401234567892',1,3600,'12355435L');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
-VALUES ('Juan Carlos','Gómez Correa','54425951Q','ES 1200815983982678553411',3,4600,'54425951Q');
+VALUES ('Juan Carlos','Gómez Correa','54425951Q','ES 1200815983982678553411',2,4600,'54425951Q');
 
+INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3), (1, 4), 
+																 (2, 1), (2, 2), (2, 3), (2, 4),
+																 (3, 1), (3, 2), (3, 3), (3, 4);
 --Azafatos
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
 VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R');
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
 VALUES ('Juana', 'Marín Torres', '65519676J', 'ES 4730045887188485547854', 2400, '65519676J');
+
+INSERT INTO azafatos_vuelo(azafatos_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3), (1, 4), 
+														 (2, 1), (2, 2), (2, 3), (2, 4);
 
 --Personal Oficina
 INSERT INTO personal_oficina(nombre,apellidos,nif,iban,salario,username)
@@ -120,11 +126,16 @@ INSERT INTO idiomas_azafato VALUES (2, 4);
 INSERT INTO idiomas_azafato VALUES (2, 5);
 INSERT INTO idiomas_azafato VALUES (2, 6);
 
+--Asientos
+INSERT INTO asientos(nombre,libre,vuelo_id) VALUES
+				   ('F4',true,2),
+				   ('A4',true,2);
+
 --Billetes
-INSERT INTO billetes(coste,asiento,fecha_reserva,clase,cliente_id)
-VALUES (80,'F4','2020-04-06',0,1);
-INSERT INTO billetes(coste,asiento,fecha_reserva,clase,cliente_id)
-VALUES (300,'A4','2020-04-06',2,2);
+INSERT INTO billetes(coste,asiento_id,fecha_reserva,clase,cliente_id, vuelo_id)
+VALUES (80,1,'2020-04-06',0,1,2);
+INSERT INTO billetes(coste,asiento_id,fecha_reserva,clase,cliente_id,vuelo_id)
+VALUES (300,2,'2020-04-06',2,2,2);
 
 
 

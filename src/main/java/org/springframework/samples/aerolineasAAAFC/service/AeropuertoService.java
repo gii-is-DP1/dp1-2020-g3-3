@@ -26,7 +26,7 @@ public class AeropuertoService {
 	public void saveAeropuerto(Aeropuerto aeropuerto) throws DataAccessException, TelefonoErroneoException{
 		String aux = aeropuerto.getTelefono();
 		if(!(aux.matches("^(\\+|\\d)[0-9]{7,16}$"))) {
-			throw new TelefonoErroneoException();
+			throw new TelefonoErroneoException("");
 		} else {
 			aeropuertoRepository.save(aeropuerto);
 		}

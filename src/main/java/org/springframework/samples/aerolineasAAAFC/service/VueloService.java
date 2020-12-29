@@ -2,6 +2,8 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,13 +53,11 @@ public class VueloService {
 		this.vueloRepository = vueloRepository;
 	}
 	 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Vuelo> findVuelos(){
 		return StreamSupport.stream(vueloRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
 	}
-	
-
 	
 	@Transactional
 	public List<Cliente> findClientesPorVuelo(Vuelo vuelo){
@@ -65,7 +65,12 @@ public class VueloService {
 		 vuelo.getBilletes().forEach(x->res.add(x.getCliente()));
 		return res;
 	}
-	
+
+	@Transactional(readOnly = true)
+	public Collection<Vuelo> findVuelosByMes(int mes, int año){
+		return vueloRepository.findVuelosByDate(mes, año);
+	}
+
 	 /*
 	 @Transactional(readOnly = true)
 		public Optional<Vuelo> findVueloById(int id) throws DataAccessException {

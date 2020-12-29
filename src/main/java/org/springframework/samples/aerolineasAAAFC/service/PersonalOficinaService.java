@@ -45,7 +45,7 @@ public class PersonalOficinaService {
 		PersonalOficina pIban = pOficinaRepository.findByIban(pOficina.getIban());
 		
 		if(pIban != null && !pIban.getId().equals(pOficina.getId())){
-			throw new IbanDuplicadoException();
+			throw new IbanDuplicadoException("");
 		}else {
 			pOficinaRepository.save(pOficina);
 			userService.saveUser(pOficina.getUser());

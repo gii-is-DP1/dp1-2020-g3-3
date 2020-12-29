@@ -7,7 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -38,8 +41,12 @@ public class PersonalControl extends Person{
 	
 	// Relaciones de tabla:
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
+	@JoinTable(name = "control_vuelo",
+	   joinColumns = @JoinColumn(name = "personal_control_id"),
+	   inverseJoinColumns = @JoinColumn(name= "vuelos_id"))
 	@EqualsAndHashCode.Exclude
+	@OrderBy("fechaSalida DESC")
 	private Set<Vuelo> vuelos;
 
 }

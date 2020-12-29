@@ -33,7 +33,7 @@ public class Asiento extends BaseEntity{
 	@ManyToOne(optional=false)
 	@EqualsAndHashCode.Exclude
 	@JoinColumn(name = "vuelo_id")
-	private Vuelo vuelo;
+	private Vuelo vuelos;
 	
 	@OneToOne
 	@EqualsAndHashCode.Exclude

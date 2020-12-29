@@ -12,12 +12,15 @@ import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Entidad simple que representa un aeropuerto
  */
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "aeropuertos")

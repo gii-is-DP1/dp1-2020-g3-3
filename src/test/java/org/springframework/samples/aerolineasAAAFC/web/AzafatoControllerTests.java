@@ -27,6 +27,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Idioma;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
+import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
@@ -62,7 +63,7 @@ public class AzafatoControllerTests {
 
 	private Azafato Martina;
 
-
+	private User martinaUser;
 
 	@BeforeEach
 	void setup() {
@@ -84,6 +85,12 @@ public class AzafatoControllerTests {
 		Martina.setIdiomas(lngs);
 
 		Martina.setSalario(1200.);
+		
+		martinaUser = new User();
+		martinaUser.setEnabled(true);
+		martinaUser.setUsername("89565804G");
+		martinaUser.setPassword("EEEEE");
+		Martina.setUser(martinaUser);
 
 		given(this.azafatoService.findAzafatoById(TEST_AZAFATO_ID)).willReturn(Martina);
 	}
@@ -94,7 +101,9 @@ public class AzafatoControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/azafatos/new")).andExpect(status().isOk()).andExpect(model().attributeExists("azafato"))
+		mockMvc.perform(get("/azafatos/new"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("azafato"))
 		.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
 	}
 
@@ -108,8 +117,11 @@ public class AzafatoControllerTests {
 				.with(csrf())
 				.param("nif", "589614237D")
 				.param("iban", "ES 3332020458401202067812")
-				.param("salario", "1400."))
-		.andExpect(status().isOk());
+				.param("idiomas", "[frances,español]")
+				.param("salario", "1400")
+				.param("user.username", "589614237D")
+				.param("user.password", "AAAAAAA"))
+		.andExpect(status().is3xxRedirection());
 	}
 
 
@@ -117,12 +129,13 @@ public class AzafatoControllerTests {
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/azafatos/new")
-				.param("nombre", "Luis")
-				.param("apellidos", "Soler")
+				.param("nombre", "Gonzalo")
+				.param("apellidos", "Gonzalez")
 				.with(csrf())
 				.param("salario", "nosalario"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("azafato"))
+		.andExpect(model().attributeHasFieldErrors("cliente", "salario"))
 		.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
 	}
 
@@ -137,9 +150,9 @@ public class AzafatoControllerTests {
 				.with(csrf())
 				.param("nombre", "Amelie")
 				.param("apellidos", "Meyer")
-				.param("nif", "58961253K")
-				.param("iban", "ES 1563382454044322567800")
-				.param("salario", "1600"))
+				.param("nif", "89565804G")
+				.param("iban", "ES 3332020448401202067812")
+				.param("salario", "1600."))
 		.andExpect(view().name("redirect:/azafatos/{azafatoId}"));
 	}
 

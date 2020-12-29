@@ -1,6 +1,10 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -10,16 +14,22 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.model.Azafato;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
+import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,16 +48,20 @@ public class VueloController {
 	private final AvionService avionService;
 	private final BilleteService billeteService;
 	private final PersonalOficinaService pOficinaService;
+	private final PersonalControlService pControlService;
+	private final AzafatoService azafatoService;
 	
 	
 	@Autowired
 	public VueloController(VueloService vueloService,AeropuertoService aeropuertoService,
-			AvionService avionService,BilleteService billeteService,PersonalOficinaService pOficinaService) {
+			AvionService avionService,BilleteService billeteService,PersonalOficinaService pOficinaService,  PersonalControlService pControlService, AzafatoService azafatoService) {
 		this.vueloService = vueloService;
 		this.aeropuertoService=aeropuertoService;
 		this.avionService= avionService;
 		this.billeteService=billeteService;
 		this.pOficinaService=pOficinaService;
+		this.pControlService = pControlService;
+		this.azafatoService = azafatoService;
 	}
 	
 	@InitBinder
@@ -83,6 +97,14 @@ public class VueloController {
 		List<PersonalOficina> pOficina = new ArrayList<>();
 		this.vueloService.findVueloById(vuelo.getId()).getPersonalOficina().forEach(x->pOficina.add(x));
 		model.put("pOficina", pOficina);
+		
+		List<PersonalControl> pControl = new ArrayList<>();
+		this.vueloService.findVueloById(vuelo.getId()).getPersonalControl().forEach(x->pControl.add(x));
+		model.put("pControl", pControl);
+		
+		List<Azafato> azafatos = new ArrayList<>();
+		this.vueloService.findVueloById(vuelo.getId()).getAzafatos().forEach(x->azafatos.add(x));
+		model.put("azafatos", azafatos);
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
@@ -133,6 +155,14 @@ public class VueloController {
 		this.pOficinaService.findPersonal().forEach(x->todoPersonal.add(x));
 		model.addAttribute("todoPersonal",todoPersonal);
 		
+		List<PersonalControl> pControl = new ArrayList<>();
+		this.pControlService.findPersonalControl().forEach(x->pControl.add(x));
+		model.addAttribute("todoControl", pControl);
+		
+		List<Azafato> azafatos = new ArrayList<>();
+		this.azafatoService.findAzafatos().forEach(x->azafatos.add(x));
+		model.addAttribute("todoAzafato", azafatos);
+		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
 	
@@ -169,6 +199,11 @@ public class VueloController {
 	
 	
 	
+	@GetMapping(value = { "/vuelos/{mes}-{año}"})
+	public String showVuelosListByDate(Map<String, Object> model, @PathVariable("mes") int mes, @PathVariable("año") int año) {
+		model.put("vuelos", this.vueloService.findVuelosByMes(mes, año));
+		return "vuelos/vuelosListDate";
+	}
 	
 	
 	

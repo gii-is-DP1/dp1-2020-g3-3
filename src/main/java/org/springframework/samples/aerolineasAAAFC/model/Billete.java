@@ -35,8 +35,6 @@ public class Billete extends BaseEntity{
 	@Column(name = "coste")
 	@Positive
 	private double coste;
-
-
 	
 	@Column(name = "fecha_reserva")
 	//@NotEmpty
@@ -68,10 +66,11 @@ public class Billete extends BaseEntity{
 	@JoinColumn(name = "asiento_id")
 	@NotEmpty
 	private Asiento asiento;
-	
-	@ManyToOne
-	private Vuelo vuelo;
-	
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "vuelo_id")
+	private Vuelo vuelos;
+
 	public String toString() {
 		
 		return "Id de billete: " + this.getId()+" Asiento: "+this.getAsiento()+
