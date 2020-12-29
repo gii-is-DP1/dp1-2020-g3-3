@@ -22,10 +22,16 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
+import org.springframework.samples.aerolineasAAAFC.service.AvionService;
+import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
+import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
+import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers=VueloController.class,
@@ -46,6 +52,21 @@ public class VueloControllerTests {
 	
 	@MockBean
 	private AeropuertoService aeropuertoService;
+	
+	@MockBean
+	private AvionService avionService;
+	
+	@MockBean
+	private BilleteService billeteService;
+	
+	@MockBean
+	private PersonalOficinaService personalOficinaService;
+	
+	@MockBean
+	private PersonalControlService personalControlService;
+	
+	@MockBean
+	private AzafatoService azafatoService;
 	
 	@Autowired
 	private MockMvc mockMvc;
