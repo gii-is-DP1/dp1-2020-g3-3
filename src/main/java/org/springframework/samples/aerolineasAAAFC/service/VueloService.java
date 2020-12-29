@@ -39,6 +39,7 @@ public class VueloService {
 			throw new HorasImposiblesException("Horas de vuelo imposibles");
 		}else {
 			vueloRepository.save(vuelo); 
+			
 		}
 	}
 	 
