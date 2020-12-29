@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -8,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PersonalControlController {
@@ -39,7 +43,7 @@ public class PersonalControlController {
 	}
 	
 	/*
-	 * Alta de un nuevo controlador
+	 * ALTA NUEVO CONTROLADOR
 	 */
 	@GetMapping(value = "/controladores/new")
 	public String initCreationPersonalControlForm(Map<String, Object> model) {
@@ -69,7 +73,7 @@ public class PersonalControlController {
 	}
 	
 	/*
-	 *  Update sobre un controlador
+	 *  UPDATE CONTROLADOR
 	 */
 	@GetMapping(value = "/controladores/{pControlId}/edit")
 	public String initUpdatePersonalControlForm(@PathVariable("pControlId") int pControlId, Model model) {
@@ -99,5 +103,59 @@ public class PersonalControlController {
 			
 			return "redirect:/controladores/{pControlId}";
 		}
+	}
+	
+	
+	/*
+	 * BUSCAR CONTROLADOR
+	 */
+
+	@GetMapping(value =  "/personalControlList" )
+	public String showPersonalControlList(Map<String, Object> model) {
+		List<PersonalControl> pControl = new ArrayList<>();
+		this.pControlService.findPersonalControl().forEach(x->pControl.add(x));
+		model.put("pControl", pControl);
+		return "controladores/personalControlList";
+	}
+
+	@GetMapping(value = "/controladores/find")
+	public String initFindPersonalControlForm(Map<String, Object> model) {
+		model.put("pControl", new PersonalControl());
+		return "controladores/findPersonalControl";
+	}
+
+	@GetMapping(value = "/controladores")
+	public String processFindPersonalControlForm(PersonalControl pControl, BindingResult result, Map<String, Object> model) {
+
+		if (pControl.getNif() == null) {
+			pControl.setNif(""); 
+		}
+
+		PersonalControl resultado = this.pControlService.findPersonalControlById(pControl.getNif());
+
+		if (resultado == null) {
+			result.rejectValue("nif", "notFound", "nif no encontrado");
+			return "controladores/findPersonalControl";
+		} else {
+			return "redirect:/controladores/" + resultado.getId();
+		}
+
+	}
+
+	@GetMapping("/controladores/{pControlId}")
+	public ModelAndView showCliente(@PathVariable("pControlId") int pControlId) {
+		ModelAndView mav = new ModelAndView("controladores/controladoresDetails");
+		mav.addObject(this.pControlService.findPersonalControlById(pControlId));
+		return mav;
+	}
+
+	/*
+	 *  ELIMINAR CONTROLADOR
+	 */
+
+	@GetMapping(value = "/controladores/{pControlId}/delete")
+	public String deletePersonalControl(@PathVariable("pControlId") int pControlId) {
+		this.pControlService.deletePersonalControlById(pControlId);
+		return "redirect:/personalControlList";
 	}
 }

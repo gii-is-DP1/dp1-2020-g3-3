@@ -6,7 +6,7 @@ public class IdiomasNoSuficientesException extends Exception{
 	private String message;
 	
 	public IdiomasNoSuficientesException(String message) {
-		this.message = message;
+		this.message = "Lo sentimos pero no son suficientes idiomas para registrar.";
 	}
 	
 	public String toString() {

@@ -1,5 +1,9 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -56,4 +60,14 @@ public class PersonalControlService {
 		return pControlRepository.findById(id).get();
 	}
 	
+	@Transactional
+	public Collection<PersonalControl> findPersonalControl(){
+		return StreamSupport.stream(pControlRepository.findAll().spliterator(), false)
+				.collect(Collectors.toList());
+	}
+	
+
+	public void deletePersonalControlById(int id) throws DataAccessException {
+		pControlRepository.deleteById(id);
+	}
 }

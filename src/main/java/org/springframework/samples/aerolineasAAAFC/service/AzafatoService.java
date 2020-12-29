@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.repository.AzafatoRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
@@ -62,9 +63,13 @@ public class AzafatoService {
 			authoritiesService.saveAuthorities(azafato.getUser().getUsername(), "azafato");
 		}
 	}
-
+	
 	public Collection<Azafato> findAzafatos() {
 		return StreamSupport.stream(azafatoRepository.findAll().spliterator(), false)
 			    .collect(Collectors.toList());
+	}
+	
+	public void eliminarAzafato(int id) throws DataAccessException {
+		azafatoRepository.deleteById(id);
 	}
 }

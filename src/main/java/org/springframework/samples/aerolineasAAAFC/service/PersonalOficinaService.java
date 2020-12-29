@@ -64,4 +64,7 @@ public class PersonalOficinaService {
 				.collect(Collectors.toList());
 	}
 	
+	public void eliminarPersonalOficina(int id) throws DataAccessException {
+		pOficinaRepository.deleteById(id);
+	}
 }

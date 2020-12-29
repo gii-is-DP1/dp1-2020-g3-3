@@ -76,7 +76,7 @@ public class PersonalControlControllerTests {
 	}
 
 
-
+	//Test de inserción
 
 	@WithMockUser(value = "spring")
 	@Test
@@ -117,7 +117,7 @@ public class PersonalControlControllerTests {
 	}
 
 
-
+	//Test de actualización
 
 
 	@WithMockUser(value = "spring")
