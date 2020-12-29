@@ -6,6 +6,7 @@ import java.time.Month;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -58,6 +59,11 @@ public class VueloService {
 	public Collection<Vuelo> findVuelos(){
 		return StreamSupport.stream(vueloRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public Collection<Vuelo> findVuelosOrdered(){
+		return vueloRepository.findAllByOrderByFechaSalidaDesc();
 	}
 	
 	@Transactional

@@ -14,6 +14,7 @@
     <table id="tablaVuelos" class="table table-striped">
         <thead>
         <tr>
+        	<th>ID</th>
             <th width="10%" style="text-align: center;">Fecha de salida</th>
             <th width="10%" style="text-align: center;">Fecha de llegada</th>
             <th width="15%" style="text-align: center;">Aeropuerto de Salida</th>
@@ -27,7 +28,7 @@
         <tbody>
         <c:forEach items="${vuelos}" var="vuelo">
             <tr>
-          		
+          		<td onclick="javascript:location.href='/vuelos/${vuelo.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.id}"/></td>
 				<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyy HH:mm"/></td>
                 <td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm"/></td>
 				<td><c:out value="${vuelo.aeropuertoOrigen.nombre}"/></td>

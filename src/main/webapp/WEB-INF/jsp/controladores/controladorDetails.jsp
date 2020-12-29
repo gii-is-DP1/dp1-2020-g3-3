@@ -12,43 +12,41 @@
     <table class="table table-striped">
         <tr>
             <th>Nombre y apellidos</th>
-            <td><b><c:out value="${controladores.nombre} ${controladores.apellidos}"/></b></td>
+            <td><b><c:out value="${personalControl.nombre} ${personalControl.apellidos}"/></b></td>
         </tr>
         <tr>
             <th>NIF</th>
-            <td><c:out value="${controladores.nif}"/></td>
+            <td><c:out value="${personalControl.nif}"/></td>
         </tr>
         <tr>
             <th>IBAN</th>
-            <td><c:out value="${controladores.iban}"/></td>
+            <td><c:out value="${personalControl.iban}"/></td>
         </tr>
         
        <tr>
             <th>Rol</th>
             <td>
-                <c:choose>
-    				<c:when test="${controladores.rol==true}">
-        				Piloto 
-        				<br />
-    				</c:when>    
-    				<c:otherwise>
-        				Copiloto
-        				Ingeniero de Vuelo 
-        				<br />
-    				</c:otherwise>
-				</c:choose>
+               <c:if test="${personalControl.rol eq 'PILOTO'}">
+                	<c:out value="Piloto"/>
+                </c:if>
+                <c:if test="${personalControl.rol eq 'INGENIERO_DE_VUELO'}">
+                	<c:out value="Ingeniero de vuelo"/>
+                </c:if>
+                <c:if test="${personalControl.rol eq 'COPILOTO'}">
+                	<c:out value="Copiloto"/>
+                </c:if>
             </td>
         </tr>
         
         <tr>
             <th>Salario</th>
-            <td><c:out value="${controladores.salario}"/></td>
+            <td><c:out value="${personalControl.salario}"/></td>
         </tr>
         
     </table>
 
   	<spring:url value="{pControlId}/edit" var="editUrl">
-        <spring:param name="pControlId" value="${controladores.id}"/>
+        <spring:param name="pControlId" value="${personalControl.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Controlador</a>
 

@@ -144,7 +144,7 @@ public class PersonalControlController {
 
 	@GetMapping("/controladores/{pControlId}")
 	public ModelAndView showCliente(@PathVariable("pControlId") int pControlId) {
-		ModelAndView mav = new ModelAndView("controladores/controladoresDetails");
+		ModelAndView mav = new ModelAndView("controladores/controladorDetails");
 		mav.addObject(this.pControlService.findPersonalControlById(pControlId));
 		return mav;
 	}
