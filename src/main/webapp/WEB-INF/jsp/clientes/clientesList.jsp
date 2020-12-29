@@ -32,7 +32,7 @@
 			<c:forEach items="${clientes}" var="cliente">
 				<tr>
 				
-					<td><c:out value="${cliente.nombre} ${cliente.apellidos}"/></td>
+					<td onclick="javascript:location.href='/clientes/${cliente.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${cliente.nombre} ${cliente.apellidos}"/></b></td>
 					<td><c:out value="${cliente.nif}"/></td>
 					<td><c:out value="${cliente.direccionFacturacion}"/></td>
 					<td><c:out value="${cliente.iban}"/></td>

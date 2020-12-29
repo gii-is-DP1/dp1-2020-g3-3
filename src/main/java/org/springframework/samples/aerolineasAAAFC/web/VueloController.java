@@ -3,6 +3,7 @@ package org.springframework.samples.aerolineasAAAFC.web;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.standard.TemporalAccessorParser;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
@@ -36,6 +38,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 
 
@@ -55,11 +61,12 @@ public class VueloController {
 	@Autowired
 	public VueloController(VueloService vueloService,AeropuertoService aeropuertoService,
 			AvionService avionService,BilleteService billeteService,PersonalOficinaService pOficinaService,  PersonalControlService pControlService, AzafatoService azafatoService) {
+		
 		this.vueloService = vueloService;
-		this.aeropuertoService=aeropuertoService;
-		this.avionService= avionService;
-		this.billeteService=billeteService;
-		this.pOficinaService=pOficinaService;
+		this.aeropuertoService = aeropuertoService;
+		this.avionService = avionService;
+		this.billeteService = billeteService;
+		this.pOficinaService = pOficinaService;
 		this.pControlService = pControlService;
 		this.azafatoService = azafatoService;
 	}
@@ -189,23 +196,30 @@ public class VueloController {
 		}
 	}
 	
-	@GetMapping(value = { "/vuelos" })
-	public String showVuelosList(Map<String, Object> model) {
-		List<Vuelo> vuelos = new ArrayList<>();
-		this.vueloService.findVuelos().forEach(x->vuelos.add(x));
-		model.put("vuelos", vuelos);
+	@RequestMapping(value = { "/vuelos" }, method = RequestMethod.GET)
+	public String showVuelosList(Map<String, Object> model,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+
+		if(fecha.isEmpty()) {
+			LocalDate date = LocalDate.now();
+			int mes = date.getMonthValue();
+			int año = date.getYear();
+			model.put("vuelos", this.vueloService.findVuelosByMes(mes, año));
+		}else {
+			fecha += "-01";
+			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			int mes = date.getMonthValue();
+			int año = date.getYear();
+			model.put("vuelos", this.vueloService.findVuelosByMes(mes, año));
+		}
 		return "vuelos/vuelosList";
 	}
 	
-	
-	
-	@GetMapping(value = { "/vuelos/{mes}-{año}"})
-	public String showVuelosListByDate(Map<String, Object> model, @PathVariable("mes") int mes, @PathVariable("año") int año) {
-		model.put("vuelos", this.vueloService.findVuelosByMes(mes, año));
-		return "vuelos/vuelosListDate";
+	@GetMapping("/vuelos/{vueloId}")
+	public ModelAndView showVuelo(@PathVariable("vueloId") int vueloId) {
+		ModelAndView mav = new ModelAndView("vuelos/vueloDetails");
+		mav.addObject(this.vueloService.findVueloById(vueloId));
+		return mav;
 	}
-	
-	
-	
+
 	
 }

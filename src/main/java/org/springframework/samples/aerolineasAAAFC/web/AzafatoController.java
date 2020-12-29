@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AzafatoController {
@@ -114,5 +115,12 @@ public class AzafatoController {
 		this.azafatoService.findAzafatos().forEach(x->azafatos.add(x));
 		model.put("azafatos", azafatos);
 		return "azafatos/azafatosList";
+	}
+	
+	@GetMapping("/azafatos/{azafatoId}")
+	public ModelAndView showCliente(@PathVariable("azafatoId") int azafatoId) {
+		ModelAndView mav = new ModelAndView("azafatos/azafatoDetails");
+		mav.addObject(this.azafatoService.findAzafatoById(azafatoId));
+		return mav;
 	}
 }

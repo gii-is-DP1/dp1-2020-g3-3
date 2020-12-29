@@ -34,8 +34,9 @@
 					<td><c:out value="${azafato.nombre} ${azafato.apellidos}"/></td>
 					<td><c:out value="${azafato.nif}" /></td>
 					<td><c:out value="${azafato.iban}" /></td>
-					<td><c:forEach items="${azafato.idiomas}" var="idioma">
-							<c:out value="${idioma.idioma}, "/>
+					<td><c:forEach items="${azafato.idiomas}" var="idioma" varStatus="loop">
+							<c:out value="${idioma.idioma}"/>
+							<c:if test="${!loop.last}">, </c:if>
 						</c:forEach>
 					</td>
 					<td><c:out value="${azafato.salario}" /></td>

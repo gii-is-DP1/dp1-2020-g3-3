@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +24,10 @@ import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
-import org.springframework.samples.aerolineasAAAFC.service.ClienteServiceTests;
-import org.springframework.samples.aerolineasAAAFC.service.MenuServiceTests;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import com.mysql.cj.log.Log;
 
 @WebMvcTest(controllers=ClienteController.class,
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),

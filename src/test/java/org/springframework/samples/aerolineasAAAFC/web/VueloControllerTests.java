@@ -22,6 +22,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
+import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -43,6 +44,9 @@ public class VueloControllerTests {
 	
 	@MockBean
 	private UserService userService;
+	
+	@MockBean
+	private AvionService avionService;
 	
 	@MockBean
 	private AeropuertoService aeropuertoService;

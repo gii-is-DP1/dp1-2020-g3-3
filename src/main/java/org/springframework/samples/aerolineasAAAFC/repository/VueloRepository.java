@@ -32,8 +32,10 @@ public interface VueloRepository extends CrudRepository<Vuelo,Integer> {
 	
 	*/
 	
-	@Query("SELECT vuelo FROM Vuelo vuelo WHERE MONTH(vuelo.fechaSalida) = :mes AND YEAR(vuelo.fechaSalida) = :año")
+	@Query("SELECT vuelo FROM Vuelo vuelo WHERE MONTH(vuelo.fechaSalida) = :mes AND YEAR(vuelo.fechaSalida) = :año ORDER BY vuelo.fechaSalida DESC")
 	public Collection<Vuelo> findVuelosByDate(@Param("mes") int mes, @Param("año") int año);
+	
+	public Collection<Vuelo> findAllByOrderByFechaSalidaDesc();
 }
 
 
