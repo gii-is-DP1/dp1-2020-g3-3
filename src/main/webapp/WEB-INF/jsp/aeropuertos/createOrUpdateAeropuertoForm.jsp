@@ -16,6 +16,9 @@
             <aerolineasAAAFC:inputField label="Localización" name="localizacion"/>
             <aerolineasAAAFC:inputField label="Código IATA" name="codigoIATA"/>
             <aerolineasAAAFC:inputField label="Teléfono" name="telefono"/>
+            <aerolineasAAAFC:inputField label="Vuelos Salida" name="vuelosSalida"/>
+            <aerolineasAAAFC:inputField label="Vuelos Llegada" name="vuelosLlegada"/>
+            
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

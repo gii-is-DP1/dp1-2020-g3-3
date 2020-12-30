@@ -8,25 +8,25 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 
-<aerolineasAAAFC:layout pageName="clientes">
+<aerolineasAAAFC:layout pageName="aviones">
 
-    <h2>Find Clientes</h2>
+    <h2>Find Aviones</h2>
 
     
-    <form:form modelAttribute="cliente" action="/clientes" method="get" class="form-horizontal"
+    <form:form modelAttribute="avion" action="/aviones" method="get" class="form-horizontal"
                id="search-owner-form">
         <div class="form-group">
             <div class="control-group" id="nif">
-                <label class="col-sm-2 control-label">NIF </label>
+                <label class="col-sm-2 control-label">ID</label>
                 <div class="col-sm-10">
-                    <form:input class="form-control" path="nif" size="9" maxlength="9" minlength="9" type="text"/>
+                    <form:input class="form-control" path="id" size="9" maxlength="9" minlength="9" type="text"/>
                     <span class="help-inline"><form:errors path="*"/></span>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Encontrar Cliente</button>
+                <button type="submit" class="btn btn-default">Encontrar Avión</button>
             </div>
         </div>
 
@@ -34,7 +34,7 @@
 
     <br/> 
     <sec:authorize access="hasAuthority('admin')">
-		<a class="btn btn-default" href='<spring:url value="/clientes/new" htmlEscape="true"/>'>Añadir Cliente</a>
+		<a class="btn btn-default" href='<spring:url value="/aviones/new" htmlEscape="true"/>'>Añadir Avión</a>
 	</sec:authorize>
 	
 </aerolineasAAAFC:layout>

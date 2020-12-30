@@ -15,9 +15,11 @@
 			<tr>
 			<th></th>
 				<th>Nombre</th>
-				<th>Localizacion</th>
-				<th>codigoIATA</th>
-				<th>Telefono</th>
+				<th>Localización</th>
+				<th>códigoIATA</th>
+				<th>Teléfono</th>
+				<th>Vuelos Salida</th>
+				<th>Vuelos Llegada</th>
 
 			</tr>
 		</thead>
@@ -31,6 +33,9 @@
 					<td><c:out value="${aeropuerto.localizacion}" /></td>
 					<td><c:out value="${aeropuerto.codigoIATA}" /></td>
 					<td><c:out value="${aeropuerto.telefono}" /></td>
+					<td><c:out value="${aeropuerto.vuelosSalida}" /></td>
+					<td><c:out value="${aeropuerto.vuelosLlegada}" /></td>
+					
 				<tr>
 				<td>
 				<a href="<spring:url value="/aeropuertos/${aeropuerto.id}/edit" htmlEscape="true" />">Editar aeropuerto</a>
