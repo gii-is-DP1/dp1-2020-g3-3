@@ -77,7 +77,7 @@ public class PersonalControlService {
 	}
 
 	//Una solución para la historia 14
-	public Set<Vuelo> findVuelosByDate(int id, int mes, int año){ 
+	public Collection<Vuelo> findVuelosByDate(int id, int mes, int año){ 
 		PersonalControl personal = pControlRepository.findById(id).get();
 		Set<Vuelo> vuelos = personal.getVuelos();
 		

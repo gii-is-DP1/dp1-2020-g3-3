@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Idioma;
 import org.springframework.samples.aerolineasAAAFC.model.User;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,6 +103,16 @@ public class AzafatoServiceTests {
 		azafatos = this.azafatoService.findAzafatos();
 		assertThat(azafatos.size()).isEqualTo(found);
 
+	}
+	
+	@Test
+	void getVuelosByDateSuccessful() {
+		Azafato personal = azafatoService.findAzafatoById(1);
+		Collection<Vuelo> vuelos = azafatoService.findVuelosByDate(personal.getId(), 12, 2020);
+		
+		int found = vuelos.size();
+		
+		assertThat(found).isEqualTo(1);
 	}
 	
 	
