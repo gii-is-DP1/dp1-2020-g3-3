@@ -1,6 +1,8 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -8,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.AzafatoRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
@@ -69,6 +73,19 @@ public class AzafatoService {
 	
 	public void eliminarAzafato(int id) throws DataAccessException {
 		azafatoRepository.deleteById(id);
+	}
+	
+	public Collection<Vuelo> findVuelosByDate(int id, int mes, int año){ 
+		Azafato azafato = azafatoRepository.findById(id).get();
+		Set<Vuelo> vuelos = azafato.getVuelos();
+		
+		Set<Vuelo> res = new HashSet<Vuelo>();
+		
+		for(Vuelo v: vuelos) {
+			if(v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) res.add(v);
+		}
+		
+		return res;
 	}
 
 }

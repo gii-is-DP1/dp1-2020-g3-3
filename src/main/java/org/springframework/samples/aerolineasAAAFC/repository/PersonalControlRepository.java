@@ -15,9 +15,5 @@ public interface PersonalControlRepository extends CrudRepository<PersonalContro
 	
 	@Query("SELECT DISTINCT personalControl FROM PersonalControl personalControl WHERE personalControl.iban LIKE :iban%")
 	public PersonalControl findByIban(@Param("iban") String iban);
-	
-	
-//	@Query("SELECT personalControl.vuelos FROM PersonalControl personalControl WHERE personalControl.id = :id AND MONTH(vuelos.fechaSalida) = :mes AND YEAR(vuelos.fechaSalida) = :año")
-//	public Collection<Vuelo> findVuelosByDate(@Param("id") int id, @Param("mes") int mes, @Param("año") int año);
 
 }

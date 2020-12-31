@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -158,4 +163,23 @@ public class PersonalControlController {
 		this.pControlService.deletePersonalControlById(pControlId);
 		return "redirect:/personalControlList";
 	}
+	
+	@RequestMapping(value = { "/controladores/{pControlId}/horario" }, method = RequestMethod.GET)
+	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+
+		if(fecha.isEmpty()) {
+			LocalDate date = LocalDate.now();
+			int mes = date.getMonthValue();
+			int año = date.getYear();
+			model.put("vuelos", this.pControlService.findVuelosByDate(pControlId, mes, año));
+		}else {
+			fecha += "-01";
+			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			int mes = date.getMonthValue();
+			int año = date.getYear();
+			model.put("vuelos", this.pControlService.findVuelosByDate(pControlId, mes, año));
+		}
+		return "controladores/horario";
+	}
+	
 }

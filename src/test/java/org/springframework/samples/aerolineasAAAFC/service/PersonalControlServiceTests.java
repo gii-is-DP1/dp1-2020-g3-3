@@ -3,8 +3,6 @@ package org.springframework.samples.aerolineasAAAFC.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
-import java.util.Set;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -63,8 +61,8 @@ public class PersonalControlServiceTests {
 	
 	@Test
 	void getVuelosByDateSuccessful() {
-		PersonalControl personal = personalControlService.findPersonalControlById(1);
-		Collection<Vuelo> vuelos = personalControlService.findVuelosByDate(personal.getId(), 12, 2020);
+
+		Collection<Vuelo> vuelos = personalControlService.findVuelosByDate(1, 12, 2020);
 		
 		int found = vuelos.size();
 		
