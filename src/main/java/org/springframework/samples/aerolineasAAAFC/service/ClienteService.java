@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.ClienteRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Service;
@@ -63,7 +65,13 @@ public class ClienteService {
 				.collect(Collectors.toList());
 	}
 	
-	
+//	@Transactional(readOnly = true)
+//	public Collection<Cliente> findClientesPorVuelo(Vuelo vuelo){
+//		Collection<Cliente> res =new ArrayList<>();
+//		vuelo.getBilletes().forEach(x->res.add(x.getCliente()));
+//		return res;
+//	}
+//	
 	@Transactional
 	public void deleteClienteById(int id) throws DataAccessException{
 		clienteRepository.deleteById(id);

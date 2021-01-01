@@ -56,9 +56,7 @@ public class VueloControllerTests {
 	@MockBean
 	private AeropuertoService aeropuertoService;
 	
-	@MockBean
-	private AvionService avionService;
-	
+
 	@MockBean
 	private BilleteService billeteService;
 	

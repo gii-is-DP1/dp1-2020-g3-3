@@ -11,9 +11,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
+import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,9 +34,12 @@ public class ClienteController {
 
 	private final ClienteService clienteService;
 
+	private final VueloService vueloService;
+	
 	@Autowired
-	public ClienteController(ClienteService clienteService, UserService userService, AuthoritiesService authoritiesService) {
+	public ClienteController(ClienteService clienteService, UserService userService, AuthoritiesService authoritiesService,VueloService vueloService) {
 		this.clienteService = clienteService;
+		this.vueloService=vueloService;
 	}
 
 	@InitBinder
@@ -138,6 +143,14 @@ public class ClienteController {
 
 	}
 
+//	@GetMapping("/clientes/vuelo/{vueloId}")
+//	public String showClientePorVuelo(Map<String, Object> model,@PathVariable("vueloId") int vueloId) {
+//		
+//		Vuelo vuelo=this.vueloService.findVueloById(vueloId);
+//		model.put("clientes",this.clienteService.findClientesPorVuelo(vuelo));
+//		return "redirect:/clientes/vuelo/"+ vueloId ;
+//	}
+	
 	@GetMapping("/clientes/{clienteId}")
 	public ModelAndView showCliente(@PathVariable("clienteId") int clienteId) {
 		ModelAndView mav = new ModelAndView("clientes/clienteDetails");

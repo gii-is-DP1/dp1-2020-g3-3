@@ -77,6 +77,17 @@ public class VueloService {
 	public Collection<Vuelo> findVuelosByMes(int mes, int año){
 		return vueloRepository.findVuelosByDate(mes, año);
 	}
+	
+	@Transactional(readOnly = true)
+	public Collection<Vuelo> findVuelosOfertadosByMes(int mes, int año){
+		
+		Collection<Vuelo> res=new ArrayList<>();
+		if(LocalDate.of(año, mes, 1).isBefore(LocalDate.now()))
+		{
+			res=vueloRepository.findVuelosByDate(mes, año);
+		}
+		return res;
+	}
 
 	 /*
 	 @Transactional(readOnly = true)
