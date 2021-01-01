@@ -3,7 +3,6 @@ package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,18 +26,12 @@ import lombok.EqualsAndHashCode;
 public class Azafato extends Person{
 
 	// Atributos
-//	@ManyToOne
-//	@JoinColumn(name = "type_id")
-//	@JsonSerialize(using = PetTypeSerializer.class)
-//	@JsonDeserialize(using = PetTypeDeserializer.class)
-//	private Set<IdiomaType> idiomas;
-	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "idiomas_azafato", 
 	joinColumns = @JoinColumn(name = "azafato_id"),
-	inverseJoinColumns = @JoinColumn(name = "idioma_id"))
+	inverseJoinColumns = @JoinColumn(name = "idioma_types_id"))
 	@EqualsAndHashCode.Exclude 
-	private Set<Idioma> idiomas;
+	private Set<IdiomaType> idiomas;
 
 	@Column(name = "salario")
 	@Min(value = 1000)

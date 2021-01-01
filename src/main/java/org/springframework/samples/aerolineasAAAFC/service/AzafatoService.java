@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
+import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.AzafatoRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
@@ -86,6 +86,11 @@ public class AzafatoService {
 		}
 		
 		return res;
+	}
+	
+	@Transactional(readOnly = true)
+	public Collection<IdiomaType> findIdiomaTypes() throws DataAccessException {
+		return azafatoRepository.findIdiomaTypes();
 	}
 
 }

@@ -110,14 +110,14 @@ INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacim
 VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 - 41011 Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','dolRamCe'); 
 
 --Idiomas
-INSERT INTO idiomas(idioma) VALUES ('Español');
-INSERT INTO idiomas(idioma) VALUES ('Inglés');
-INSERT INTO idiomas(idioma) VALUES ('Francés');
-INSERT INTO idiomas(idioma) VALUES ('Alemán');
-INSERT INTO idiomas(idioma) VALUES ('Japonés');
-INSERT INTO idiomas(idioma) VALUES ('Chino');
-INSERT INTO idiomas(idioma) VALUES ('Ruso');
-INSERT INTO idiomas(idioma) VALUES ('Polaco');
+INSERT INTO idioma_types(idioma) VALUES ('ES');
+INSERT INTO idioma_types(idioma) VALUES ('EN');
+INSERT INTO idioma_types(idioma) VALUES ('FR');
+INSERT INTO idioma_types(idioma) VALUES ('DE');
+INSERT INTO idioma_types(idioma) VALUES ('JA');
+INSERT INTO idioma_types(idioma) VALUES ('ZH');
+INSERT INTO idioma_types(idioma) VALUES ('RU');
+INSERT INTO idioma_types(idioma) VALUES ('PL');
 
 INSERT INTO idiomas_azafato VALUES (1, 1);
 INSERT INTO idiomas_azafato VALUES (1, 2);
@@ -125,6 +125,14 @@ INSERT INTO idiomas_azafato VALUES (1, 3);
 INSERT INTO idiomas_azafato VALUES (2, 4);
 INSERT INTO idiomas_azafato VALUES (2, 5);
 INSERT INTO idiomas_azafato VALUES (2, 6);
+
+--Idiomas
+INSERT INTO idioma_types(idioma) VALUES ('cat');
+INSERT INTO idioma_types(idioma) VALUES ('dog');
+INSERT INTO idioma_types(idioma) VALUES ('lizard');
+INSERT INTO idioma_types(idioma) VALUES ('snake');
+INSERT INTO idioma_types(idioma) VALUES ('bird');
+INSERT INTO idioma_types(idioma) VALUES ('hamster');
 
 --Asientos
 INSERT INTO asientos(nombre,libre,vuelo_id) VALUES
