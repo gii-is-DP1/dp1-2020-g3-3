@@ -1,17 +1,16 @@
 package org.springframework.samples.aerolineasAAAFC.repository;
 
 import java.util.Collection;
+import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
+import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 
-/**
- * 
- * 
- * */
 public interface AzafatoRepository extends CrudRepository<Azafato, Integer>{
 
 	@Query("SELECT DISTINCT azafato FROM Azafato azafato WHERE azafato.nif LIKE :nif%")
@@ -23,4 +22,6 @@ public interface AzafatoRepository extends CrudRepository<Azafato, Integer>{
 	@Query("SELECT azafato.vuelos FROM Azafato azafato JOIN azafato.vuelos v WHERE MONTH(v.fechaSalida) = :mes AND YEAR(v.fechaSalida) = :año AND azafato.id = :id")
 	public Collection<Vuelo> findVuelosByDate(@Param("id") int id, @Param("mes") int mes, @Param("año") int año);
 
+	@Query("SELECT itype FROM IdiomaType itype ORDER BY itype.idioma")
+	List<IdiomaType> findIdiomaTypes() throws DataAccessException;
 }

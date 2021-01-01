@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
-import org.springframework.samples.aerolineasAAAFC.model.Idioma;
+import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
@@ -83,9 +83,9 @@ public class AzafatoServiceTests {
 		azafato.setNif("23165805A");
 		azafato.setSalario(2340.);
 		
-		Idioma i1 = new Idioma();
-		i1.setIdioma("Castellano");
-		Set<Idioma> idiomas = new HashSet<Idioma>();
+		IdiomaType i1 = new IdiomaType();
+		i1.setIdioma("ES");
+		Set<IdiomaType> idiomas = new HashSet<IdiomaType>();
 		idiomas.add(i1);
 		
 		azafato.setIdiomas(idiomas);
@@ -117,13 +117,4 @@ public class AzafatoServiceTests {
 	
 	
 }
-
-
-
-
-
-
-
-
-
 
