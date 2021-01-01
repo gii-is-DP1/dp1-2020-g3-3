@@ -88,5 +88,14 @@ public class BilleteController {
 			return "redirect:/billetes/{billeteId}";
 		}
 	}
+	
+	
+	@GetMapping(value = "/billetes/billetesDatosList/{billeteId}")
+	public String ShowDatosBillete(@PathVariable("billeteId") int billeteId, Model model) {
+		Billete billete = this.billeteService.findBilleteById(billeteId);
+		model.addAttribute(billete);
+		return "redirect:/billetes/billetesDatosList/{billeteId}";
+	}
+	
 
 }

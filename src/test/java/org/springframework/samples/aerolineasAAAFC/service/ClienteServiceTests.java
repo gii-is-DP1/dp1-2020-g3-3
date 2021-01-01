@@ -18,6 +18,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.User;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -166,4 +167,14 @@ public class ClienteServiceTests {
 		assertThat(clientes.size()).isEqualTo(found - 1);
 	}
 
+//
+//	@Test
+//	@Transactional
+//	public void shouldFindClientesByVuelo() {
+//		
+//		Collection<Cliente> clientes=this.clienteService.findClientesPorVuelo(vuelo);
+//		assertThat(!clientes.isEmpty());
+//	}
+	
+	
 }

@@ -222,6 +222,25 @@ public class VueloController {
 		return "vuelos/vuelosList";
 	}
 	
+	
+	@RequestMapping(value = { "/vuelos/ofertas" }, method = RequestMethod.GET)
+	public String showVuelosOfertadosList(Map<String, Object> model,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+
+		if(fecha.isEmpty()) {
+			LocalDate date = LocalDate.now();
+			int mes = date.getMonthValue();
+			int año = date.getYear();
+			model.put("vuelosOferta", this.vueloService.findVuelosOfertadosByMes(mes, año));
+		}else {
+			fecha += "-01";
+			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			int mes = date.getMonthValue();
+			int año = date.getYear();
+			model.put("vuelosOferta", this.vueloService.findVuelosOfertadosByMes(mes, año));
+		}
+		return "vuelos/vuelosOfertadosList";
+	}
+	
 	@GetMapping("/vuelos/{vueloId}")
 	public ModelAndView showVuelo(@PathVariable("vueloId") int vueloId) {
 		ModelAndView mav = new ModelAndView("vuelos/vueloDetails");
