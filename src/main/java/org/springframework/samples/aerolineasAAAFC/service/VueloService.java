@@ -68,8 +68,10 @@ public class VueloService {
 	
 	@Transactional
 	public List<Cliente> findClientesPorVuelo(Vuelo vuelo){
-		List<Cliente> res=new ArrayList<>();
-		 vuelo.getBilletes().forEach(x->res.add(x.getCliente()));
+		List<Cliente> res =vuelo.getBilletes().stream().
+				filter(x->!x.getCliente().equals(null)).
+				map(x->x.getCliente()).
+				collect(Collectors.toList());
 		return res;
 	}
 
@@ -89,6 +91,9 @@ public class VueloService {
 		return res;
 	}
 
+	
+
+	
 	 /*
 	 @Transactional(readOnly = true)
 		public Optional<Vuelo> findVueloById(int id) throws DataAccessException {

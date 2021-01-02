@@ -143,13 +143,7 @@ public class ClienteController {
 
 	}
 
-//	@GetMapping("/clientes/vuelo/{vueloId}")
-//	public String showClientePorVuelo(Map<String, Object> model,@PathVariable("vueloId") int vueloId) {
-//		
-//		Vuelo vuelo=this.vueloService.findVueloById(vueloId);
-//		model.put("clientes",this.clienteService.findClientesPorVuelo(vuelo));
-//		return "redirect:/clientes/vuelo/"+ vueloId ;
-//	}
+
 	
 	@GetMapping("/clientes/{clienteId}")
 	public ModelAndView showCliente(@PathVariable("clienteId") int clienteId) {
