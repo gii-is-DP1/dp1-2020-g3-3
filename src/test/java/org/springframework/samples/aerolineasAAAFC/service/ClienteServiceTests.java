@@ -165,14 +165,6 @@ public class ClienteServiceTests {
 		assertThat(clientes.size()).isEqualTo(found - 1);
 	}
 
-//
-//	@Test
-//	@Transactional
-//	public void shouldFindClientesByVuelo() {
-//		
-//		Collection<Cliente> clientes=this.clienteService.findClientesPorVuelo(vuelo);
-//		assertThat(!clientes.isEmpty());
-//	}
-	
+
 	
 }

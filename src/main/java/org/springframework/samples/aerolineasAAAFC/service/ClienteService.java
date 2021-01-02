@@ -62,13 +62,7 @@ public class ClienteService {
 				.collect(Collectors.toList());
 	}
 	
-//	@Transactional(readOnly = true)
-//	public Collection<Cliente> findClientesPorVuelo(Vuelo vuelo){
-//		Collection<Cliente> res =new ArrayList<>();
-//		vuelo.getBilletes().forEach(x->res.add(x.getCliente()));
-//		return res;
-//	}
-//	
+
 	@Transactional
 	public void deleteClienteById(int id) throws DataAccessException{
 		clienteRepository.deleteById(id);

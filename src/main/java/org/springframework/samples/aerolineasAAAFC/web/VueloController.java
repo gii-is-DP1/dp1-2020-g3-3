@@ -241,6 +241,17 @@ public class VueloController {
 		return "vuelos/vuelosOfertadosList";
 	}
 	
+	
+	@RequestMapping(value = { "/vuelos/{vueloId}/clientes" }, method = RequestMethod.GET)
+	public String showClientes(Map<String, Object> model,@PathVariable("vueloId") int vueloId) {
+		
+		Vuelo vuelo=this.vueloService.findVueloById(vueloId);
+		model.put("clientes",this.vueloService.findClientesPorVuelo(vuelo));
+		
+		return "vuelos/clientesList";
+	}
+	
+	
 	@GetMapping("/vuelos/{vueloId}")
 	public ModelAndView showVuelo(@PathVariable("vueloId") int vueloId) {
 		ModelAndView mav = new ModelAndView("vuelos/vueloDetails");

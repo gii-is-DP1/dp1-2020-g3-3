@@ -21,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoErroneoException;
@@ -253,6 +254,16 @@ public class VueloServiceTests {
 		vuelos = this.vueloService.findVuelos();
 		assertThat(vuelos.size()).isEqualTo(found - 1);
 	}
+	
+	
+	@Test
+	@Transactional
+	public void shouldFindClientesByVuelo() {
+		Vuelo vuelo=this.vueloService.findVueloById(1);
+		Collection<Cliente> clientes=this.vueloService.findClientesPorVuelo(vuelo);
+		assertThat(!clientes.isEmpty());
+	}
+	
 	
 	
 	@Test
