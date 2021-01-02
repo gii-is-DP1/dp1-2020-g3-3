@@ -87,6 +87,13 @@ public class BilleteService {
 	public Billete findBilleteById(int id) throws DataAccessException {
 		return billeteRepository.findById(id).get();
 	}
+
+	@Transactional
+	public Collection<Billete> findBilleteConCliente() {
+		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
+				.filter(x->!x.getCliente().equals(null))
+				.collect(Collectors.toList());
+	}
 	
 	
 

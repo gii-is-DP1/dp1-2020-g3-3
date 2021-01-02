@@ -1,5 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.util.Collection;
 import java.util.Map;
 import javax.validation.Valid;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class BilleteController {
@@ -90,11 +93,11 @@ public class BilleteController {
 	}
 	
 	
-	@GetMapping(value = "/billetes/billetesDatosList/{billeteId}")
-	public String ShowDatosBillete(@PathVariable("billeteId") int billeteId, Model model) {
-		Billete billete = this.billeteService.findBilleteById(billeteId);
-		model.addAttribute(billete);
-		return "redirect:/billetes/billetesDatosList/{billeteId}";
+	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)
+	public String ShowDatosBillete(Map<String, Object> model) {
+		Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
+		model.put("billetes",billetes);
+		return "billetes/billetesDatosList";
 	}
 	
 
