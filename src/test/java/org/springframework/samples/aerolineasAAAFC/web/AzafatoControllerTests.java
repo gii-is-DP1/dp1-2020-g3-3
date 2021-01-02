@@ -108,7 +108,7 @@ public class AzafatoControllerTests {
 				.with(csrf())
 				.param("nif", "589614237D")
 				.param("iban", "ES 3332020458401202067812")
-				.param("idiomas", "[frances,español]")
+				.param("idiomas", "[FR,ES]")
 				.param("salario", "1400")
 				.param("user.username", "589614237D")
 				.param("user.password", "AAAAAAA"))
