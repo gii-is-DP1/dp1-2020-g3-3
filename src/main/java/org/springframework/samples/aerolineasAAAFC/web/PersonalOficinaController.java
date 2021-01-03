@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -8,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PersonalOficinaController {
@@ -110,5 +114,25 @@ public class PersonalOficinaController {
 			
 			return "redirect:/oficinistas/{pOficinaId}";
 		}
+	}
+	
+	/*
+	 * Vistas de consulta
+	 */
+	
+	@GetMapping(value = "/oficinistas")
+	public String showPersonalOficinaList(Map<String, Object> model) {
+		List<PersonalOficina> oficinistas = new ArrayList<PersonalOficina>();
+		oficinistas.addAll(this.pOficinaService.findPersonal());
+		model.put("oficinistas", oficinistas);
+		
+		return "oficinistas/personalOficinaList";
+	}
+	
+	@GetMapping("/oficinistas/{pOficinaId}")
+	public ModelAndView showAvion(@PathVariable("pOficinaId") int pOficinaId) {
+		ModelAndView mav = new ModelAndView("oficinistas/oficinistaDetails");
+		mav.addObject(this.pOficinaService.findPersonalOficinaById(pOficinaId));
+		return mav;
 	}
 }

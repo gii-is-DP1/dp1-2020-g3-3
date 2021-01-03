@@ -23,34 +23,34 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${selections}" var="oficinista">
+        <c:forEach items="${oficinistas}" var="oficinista">
             <tr>
                 <td>
                     <spring:url value="/oficinistas/{pOficinaId}" var="pOficinaUrl">
-                        <spring:param name="pOficinaId" value="${personalOficina.id}"/>
+                        <spring:param name="pOficinaId" value="${oficinista.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(pOficinaUrl)}"><c:out value="${personalOficina.id}"/></a>
+                    <a href="${fn:escapeXml(pOficinaUrl)}"><c:out value="${oficinista.id}"/></a>
                 </td>
                 <td>
-                    <c:out value="${personalOficina.nombre}"/>
+                    <c:out value="${oficinista.nombre}"/>
                 </td>
                 <td>
-                    <c:out value="${personalOficina.apellidos}"/>
+                    <c:out value="${oficinista.apellidos}"/>
                 </td>
                 <td>
-                    <c:out value="${personalOficina.nif}"/>
+                    <c:out value="${oficinista.nif}"/>
                 </td>
                 <td>
-                    <c:out value="${personalOficina.iban}"/>
+                    <c:out value="${oficinista.iban}"/>
                 </td>
                 <td>
-                    <c:out value="${personalOficina.salario}"/>
+                    <c:out value="${oficinista.salario}"/>
                 </td>
                 <td>
-                	<spring:url value="{pOficinaId}/edit" var="pOficinaUrl">
-        			<spring:param name="pOficinaId" value="${personalOficina.id}"/>
+                	<spring:url value="/oficinistas/{pOficinaId}/edit" var="pOficinaUrl">
+        			<spring:param name="pOficinaId" value="${oficinista.id}"/>
     				</spring:url>
-    				<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar oficinista</a>
+    				<a href="${fn:escapeXml(pOficinaUrl)}" class="btn btn-default">Editar oficinista</a>
                 </td>   
             </tr>
         </c:forEach>

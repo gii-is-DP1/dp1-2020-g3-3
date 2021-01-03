@@ -31,7 +31,7 @@
         
     </table>
 
-  	<spring:url value="{pOficinaId}/edit" var="editUrl">
+  	<spring:url value="/oficinistas/{pOficinaId}/edit" var="editUrl">
         <spring:param name="pOficinaId" value="${personalOficina.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Oficinista</a>
