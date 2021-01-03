@@ -10,7 +10,7 @@
     <h2>
         <c:if test="${personalOficina['new']}">Nuevo </c:if> Oficinista
     </h2>
-    <form:form modelAttribute="oficinista" class="form-horizontal" id="add-oficinista-form">
+    <form:form modelAttribute="personalOficina" class="form-horizontal" id="add-oficinista-form">
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Nombre" name="nombre"/>
             <aerolineasAAAFC:inputField label="Apellidos" name="apellidos"/>
