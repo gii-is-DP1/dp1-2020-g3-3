@@ -70,7 +70,7 @@ public class AzafatoControllerTests {
 		Martina.setApellidos("Perez");
 		Martina.setNombre("Martina");
 		Martina.setIban("ES 01225905418408934560815");
-		Martina.setNif("89565804G");
+		Martina.setNif("11571749N");
 
 		IdiomaType lng = new IdiomaType();
 		lng.setIdioma("FR");
@@ -81,9 +81,14 @@ public class AzafatoControllerTests {
 
 		Martina.setSalario(1200.);
 		
+		Set<IdiomaType> s = new HashSet<IdiomaType>();
+		s.add(lng);
+		s.add(lng2);
+		Martina.setIdiomas(s);
+		
 		martinaUser = new User();
 		martinaUser.setEnabled(true);
-		martinaUser.setUsername("89565804G");
+		martinaUser.setUsername("11571749N");
 		martinaUser.setPassword("EEEEE");
 		Martina.setUser(martinaUser);
 
@@ -135,9 +140,13 @@ public class AzafatoControllerTests {
 		.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
 	}
 
-
-
-
+    @WithMockUser(value = "spring")
+	@Test
+	void testInitUpdateForm() throws Exception {
+		mockMvc.perform(get("/azafatos/{azafatoId}/edit", TEST_AZAFATO_ID))
+				.andExpect(status().isOk()).andExpect(model().attributeExists("azafato"))
+				.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
+	}
 
 	@WithMockUser(value = "spring")
 	@Test
@@ -146,10 +155,14 @@ public class AzafatoControllerTests {
 				.with(csrf())
 				.param("nombre", "Amelie")
 				.param("apellidos", "Meyer")
-				.param("nif", "89565804G")
-				.param("iban", "ES 3332020448401202067812")
-				.param("salario", "1600."))
+				.param("nif", "11571749N")
+				.param("iban", "ES 3332020458401202067812")
+				.param("idiomas", "FR","ES")
+				.param("salario", "1600.")
+				.param("user.username", "11571749N")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(view().name("redirect:/azafatos/{azafatoId}"));
+		
 	}
 
 	@WithMockUser(value = "spring")
@@ -169,16 +182,5 @@ public class AzafatoControllerTests {
 		.andExpect(model().attributeHasFieldErrors("azafato", "salario"))
 		.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
 	}
-
-
-
-
-
-
-
-
-
-
-
 
 }

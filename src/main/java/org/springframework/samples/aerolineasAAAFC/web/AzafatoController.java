@@ -65,7 +65,7 @@ public class AzafatoController {
 	}
 	
 	@PostMapping(value = "/azafatos/new")
-	public String processCreationPersonalOficinaForm(@Valid Azafato azafato, BindingResult result) {
+	public String processCreationAzafatoForm(@Valid Azafato azafato, BindingResult result) {
 		if(result.hasErrors()) {
 			return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 		}
