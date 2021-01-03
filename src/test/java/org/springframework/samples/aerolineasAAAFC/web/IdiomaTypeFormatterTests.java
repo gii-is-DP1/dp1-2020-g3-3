@@ -12,7 +12,9 @@ import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,22 +35,30 @@ class IdiomaTypeFormatterTests {
 	void testPrint() {
 		IdiomaType idiomaType = new IdiomaType();
 		idiomaType.setIdioma("ES");
-		String idiomaTypeName = idiomaTypeFormatter.print(idiomaType, Locale.ENGLISH);
-		assertEquals("ES", idiomaTypeName);
+		IdiomaType idiomaType2 = new IdiomaType();
+		idiomaType2.setIdioma("EN");
+		
+		Set<IdiomaType> idiomaTypes = new HashSet<IdiomaType>();
+		idiomaTypes.add(idiomaType);
+		idiomaTypes.add(idiomaType2);
+		
+		
+		String idiomaTypeName = idiomaTypeFormatter.print(idiomaTypes, Locale.ENGLISH);
+		assertEquals("[ES, EN]", idiomaTypeName);
 	}
 
 	@Test
 	void shouldParse() throws ParseException {
 		Mockito.when(azafatoService.findIdiomaTypes()).thenReturn(makeIdiomaTypes());
-		IdiomaType idiomaType = idiomaTypeFormatter.parse("EN", Locale.ENGLISH);
-		assertEquals("EN", idiomaType.getIdioma());
+		Set<IdiomaType> idiomaType = idiomaTypeFormatter.parse("EN", Locale.ENGLISH);
+		assertEquals("[EN]", idiomaType.toString());
 	}
 
 	@Test
 	void shouldThrowParseException() throws ParseException {
 		Mockito.when(azafatoService.findIdiomaTypes()).thenReturn(makeIdiomaTypes());
 		Assertions.assertThrows(ParseException.class, () -> {
-			idiomaTypeFormatter.parse("ES", Locale.ENGLISH);
+			idiomaTypeFormatter.parse("[ES]", Locale.ENGLISH);
 		});
 	}
 

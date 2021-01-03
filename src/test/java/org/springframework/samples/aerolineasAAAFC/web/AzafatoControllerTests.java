@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.HashSet;
 import java.util.Set;
+
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,10 +72,7 @@ public class AzafatoControllerTests {
 		lng.setIdioma("FR");
 		IdiomaType lng2 = new IdiomaType();
 		lng.setIdioma("ES");
-		Set<IdiomaType> lngs = new HashSet<IdiomaType>();
-		lngs.add(lng);
-		lngs.add(lng2);
-		Martina.setIdiomas(lngs);
+		given(this.azafatoService.findIdiomaTypes()).willReturn(Lists.newArrayList(lng,lng2));
 
 		Martina.setSalario(1200.);
 		
@@ -101,18 +100,20 @@ public class AzafatoControllerTests {
 
 	@WithMockUser(value = "spring")
 	@Test
-	void testProcessCreationFormSuccess() throws Exception {
+	void testProcessCreationFormSuccess() throws Exception {  //OJO que este no va por la redireccion
 		mockMvc.perform(post("/azafatos/new")
 				.param("nombre", "Gonzalo")
 				.param("apellidos", "Gonzalez")
 				.with(csrf())
-				.param("nif", "589614237D")
+				.param("nif", "11571749N")
 				.param("iban", "ES 3332020458401202067812")
-				.param("idiomas", "[FR,ES]")
+				.param("idiomas", "{FR,ES}")
 				.param("salario", "1400")
-				.param("user.username", "589614237D")
+				.param("user.username", "11571749N")
 				.param("user.password", "AAAAAAA"))
-		.andExpect(status().is3xxRedirection());
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/azafatos/"));
+		//		.andExpect(status().is2xxSuccessful());  
 	}
 
 
