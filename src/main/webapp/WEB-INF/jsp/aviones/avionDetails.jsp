@@ -79,60 +79,27 @@ edición y borrado en una vista u otra -->
 
     <br/>
     <br/>
-    <br/>
+
     <h2>Vuelos asociados</h2>
-<!--
+
     <table class="table table-striped">
-        <c:forEach var="pet" items="${owner.pets}">
+        <c:forEach var="vuelo" items="${avion.vuelos}">
 
 
             <tr>
                 <td valign="top">
                     <dl class="dl-horizontal">
-                        <dt>Name</dt>
-                        <dd><c:out value="${pet.name}"/></dd>
-                        <dt>Birth Date</dt>
-                        <dd><petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/></dd>
-                        <dt>Type</dt>
-                        <dd><c:out value="${pet.type.name}"/></dd>
+                        <dt>ID Vuelo</dt>
+                        <dd><c:out value="${vuelo.id}"/></dd>
+                        <dt>Fecha de salida</dt>
+                        <dd><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd' T'HH:mm"/></dd>
+                        <dt>Fecha de llegada</dt>
+                        <dd><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd' T'HH:mm"/></dd>
                     </dl>
                 </td>
-                <td valign="top">
-                    <table class="table-condensed">
-                        <thead>
-                        <tr>
-                            <th>Visit Date</th>
-                            <th>Description</th>
-                        </tr>
-                        </thead>
-                        <c:forEach var="visit" items="${pet.visits}">
-                            <tr>
-                                <td><petclinic:localDate date="${visit.date}" pattern="yyyy-MM-dd"/></td>
-                                <td><c:out value="${visit.description}"/></td>
-                            </tr>
-                        </c:forEach>
-                        <tr>
-                            <td>
-                                <spring:url value="/owners/{ownerId}/pets/{petId}/edit" var="petUrl">
-                                    <spring:param name="ownerId" value="${owner.id}"/>
-                                    <spring:param name="petId" value="${pet.id}"/>
-                                </spring:url>
-                                <a href="${fn:escapeXml(petUrl)}">Edit Pet</a>
-                            </td>
-                            <td>
-                                <spring:url value="/owners/{ownerId}/pets/{petId}/visits/new" var="visitUrl">
-                                    <spring:param name="ownerId" value="${owner.id}"/>
-                                    <spring:param name="petId" value="${pet.id}"/>
-                                </spring:url>
-                                <a href="${fn:escapeXml(visitUrl)}">Add Visit</a>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
             </tr>
-
         </c:forEach>
     </table>
--->
+
 
 </aerolineasAAAFC:layout>
