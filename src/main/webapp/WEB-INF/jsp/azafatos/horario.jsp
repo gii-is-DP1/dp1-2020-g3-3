@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
 
-<aerolineasAAAFC:layout pageName="controladores">
+<aerolineasAAAFC:layout pageName="azafatos">
 
 	<h2>Horario de este mes</h2>
 
