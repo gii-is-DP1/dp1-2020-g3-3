@@ -133,16 +133,10 @@ public class AzafatoControllerTests {
 				.param("nombre", "Gonzalo")
 				.param("apellidos", "Gonzalez")
 				.with(csrf())
-				.param("nif", "11571749N")
-				.param("iban", "ES 3332020458401202067812")
-				.param("idiomas", "E")
-				.param("salario", "nosalario")
-				.param("user.username", "11571749N")
-				.param("user.password", "AAAAAAA"))
+				.param("salario", "nosalario"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("azafato"))
-		.andExpect(model().attributeHasFieldErrors("azafato", "salario"))
-		.andExpect(model().attributeHasFieldErrors("azafato", "idiomas"))
+		.andExpect(model().attributeHasFieldErrors("cliente", "salario"))
 		.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
 	}
 
@@ -180,15 +174,11 @@ public class AzafatoControllerTests {
 				.param("apellidos", "Fischer")
 				.param("nif", "XXX")
 				.param("iban", "XXX")
-				.param("idiomas", "Frrr")
-				.param("salario", "XXX")
-				.param("user.username", "11571749N")
-				.param("user.password", "AAAAAAA"))
+				.param("salario", "XXX"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("azafato"))
 		.andExpect(model().attributeHasFieldErrors("azafato", "nif"))
 		.andExpect(model().attributeHasFieldErrors("azafato", "iban"))
-		.andExpect(model().attributeHasFieldErrors("azafato", "idiomas"))
 		.andExpect(model().attributeHasFieldErrors("azafato", "salario"))
 		.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
 	}
