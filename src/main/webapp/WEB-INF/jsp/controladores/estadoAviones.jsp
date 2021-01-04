@@ -6,27 +6,26 @@
 
 <aerolineasAAAFC:layout pageName="controladores">
 
-	<h2>Horario de este mes</h2>
+	<h2>Estado del avión</h2>
 
 
 	<table id="tablaVuelos" class="table table-striped">
 		<thead>
 			<tr>
-				<th width="25%">Id Vuelo</th>
-				<th width="25%">Fecha de Salida</th>
-				<th width="25%">Fecha de Llegada</th>
-				<th width="25%">Aeropuerto de Salida</th>
-				<th width="25%">Aeropuerto de Llegada</th>
+				<th width="25%">Id avión</th>
+				<th width="25%">Fecha fabricación</th>
+				<th width="25%">Horas acumuladas</th>
+				<th width="25%">Estacionamiento</th>
+				<th width="25%">Disponibilidad</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${vuelos}" var="vuelo">
 				<tr>
 					<td><c:out value="${vuelo.avion_id}" /></td>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm" /></td>
-					<td><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}" /></td>
-					<td><c:out value="${vuelo.aeropuertoDestino.codigoIATA}" /></td>
+					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaFabricacion}" pattern="dd-MM-yyyy HH:mm" /></td>
+					<td><aerolineasAAAFC:localDateTime date="${vuelo.horasAcumuladas}" pattern="dd-MM-yyy HH:mm" /></td>
+					<td><c:out value="${vuelo.disponibilidad}" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>
