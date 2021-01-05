@@ -1,6 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.utils;
 
-import org.springframework.samples.aerolineasAAAFC.model.Menu;
+import org.springframework.samples.aerolineasAAAFC.deprecated.Menu;
 
 public class menuUtils {
 	

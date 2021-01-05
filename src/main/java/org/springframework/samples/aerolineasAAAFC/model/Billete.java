@@ -20,6 +20,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.samples.aerolineasAAAFC.deprecated.Menu;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
