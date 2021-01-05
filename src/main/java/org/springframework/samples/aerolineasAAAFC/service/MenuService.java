@@ -6,7 +6,7 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.aerolineasAAAFC.model.Menu;
+import org.springframework.samples.aerolineasAAAFC.deprecated.Menu;
 import org.springframework.samples.aerolineasAAAFC.repository.MenuRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.MenuPriceException;
 import org.springframework.samples.aerolineasAAAFC.utils.menuUtils;

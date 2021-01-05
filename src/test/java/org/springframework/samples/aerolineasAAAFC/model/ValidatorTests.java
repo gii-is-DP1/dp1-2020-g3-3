@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.samples.aerolineasAAAFC.deprecated.Menu;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 

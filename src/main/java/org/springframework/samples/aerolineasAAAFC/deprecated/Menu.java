@@ -1,10 +1,13 @@
-package org.springframework.samples.aerolineasAAAFC.model;
+package org.springframework.samples.aerolineasAAAFC.deprecated;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.samples.aerolineasAAAFC.model.BaseEntity;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.Menu1AvailabilityConstraint;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.Menu2AvailabilityConstraint;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.Menu3AvailabilityConstraint;

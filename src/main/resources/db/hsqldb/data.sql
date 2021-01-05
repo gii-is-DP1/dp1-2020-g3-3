@@ -126,14 +126,6 @@ INSERT INTO idiomas_azafato VALUES (2, 4);
 INSERT INTO idiomas_azafato VALUES (2, 5);
 INSERT INTO idiomas_azafato VALUES (2, 6);
 
---Idiomas
-INSERT INTO idioma_types(idioma) VALUES ('cat');
-INSERT INTO idioma_types(idioma) VALUES ('dog');
-INSERT INTO idioma_types(idioma) VALUES ('lizard');
-INSERT INTO idioma_types(idioma) VALUES ('snake');
-INSERT INTO idioma_types(idioma) VALUES ('bird');
-INSERT INTO idioma_types(idioma) VALUES ('hamster');
-
 --Asientos
 INSERT INTO asientos(nombre,libre,vuelo_id) VALUES
 				   ('F4',true,2),
@@ -146,4 +138,13 @@ INSERT INTO billetes(coste,asiento_id,fecha_reserva,clase,cliente_id,vuelo_id)
 VALUES (300,2,'2020-04-06',2,2,2);
 
 
+--PlatoType
+--INSERT INTO platos_types(name) VALUES ('primerPlato');
+--INSERT INTO platos_types(name) VALUES ('segundoPlato');
+--INSERT INTO platos_types(name) VALUES ('postre');
 
+--Plato
+--INSERT INTO platos(nombre,apellidos,nif,iban,salario,username)
+--VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R');
+
+--Menu
