@@ -19,24 +19,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BilleteController {
-	
+
 	private static final String VIEWS_BILLETE_CREATE_OR_UPDATE_FORM = "billetes/createOrUpdateBilleteForm";
-	
+
 	private final BilleteService billeteService;
-	
+
 	@Autowired
 	public BilleteController(BilleteService billeteService) {
 		this.billeteService = billeteService;
 	}
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 	/*
 	 *  Alta de un nuevo billete
 	 */
@@ -46,7 +47,7 @@ public class BilleteController {
 		model.put("billete", billete);
 		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	@PostMapping(value = "/billetes/new")
 	public String processCreationBilleteForm(@Valid Billete billete, BindingResult result) {
 		if(result.hasErrors()) {
@@ -56,14 +57,14 @@ public class BilleteController {
 			try {
 				this.billeteService.saveBillete(billete);
 			} catch (TooManyItemsBilleteException e) {
-				 result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
-					return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+				result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
+				return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 			}
-			
+
 			return "redirect:/billetes/" + billete.getId();
 		}
 	}
-	
+
 	/*
 	 * Modificacion de un billete
 	 */
@@ -73,7 +74,7 @@ public class BilleteController {
 		model.addAttribute(billete);
 		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	@PostMapping(value = "/billetes/{billeteId}/edit")
 	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result, @PathVariable("billeteId") int billeteId) {
 		if(result.hasErrors()) {
@@ -84,21 +85,27 @@ public class BilleteController {
 			try {
 				this.billeteService.saveBillete(billete);
 			} catch (TooManyItemsBilleteException e) {
-				 result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
-					return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+				result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
+				return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 			}
-			
+
 			return "redirect:/billetes/{billeteId}";
 		}
 	}
-	
-	
+
+
 	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)
-	public String ShowDatosBillete(Map<String, Object> model) {
-		Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
-		model.put("billetes",billetes);
+	public String ShowDatosBillete(Map<String, Object> model,  @RequestParam(name = "apellidos", defaultValue = "") String apellidos) {
+		if(apellidos.isEmpty()) {
+			Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
+			model.put("billetes",billetes);
+		}else {
+			Collection<Billete> billetes = this.billeteService.findBilletePorApellido(apellidos);
+			model.put("billetes",billetes);
+		}
 		return "billetes/billetesDatosList";
+
 	}
-	
+
 
 }
