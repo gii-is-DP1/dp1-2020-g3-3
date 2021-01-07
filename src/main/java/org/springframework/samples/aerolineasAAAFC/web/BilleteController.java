@@ -93,7 +93,6 @@ public class BilleteController {
 		}
 	}
 
-
 	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)
 	public String ShowDatosBillete(Map<String, Object> model,  @RequestParam(name = "apellidos", defaultValue = "") String apellidos) {
 		if(apellidos.isEmpty()) {
