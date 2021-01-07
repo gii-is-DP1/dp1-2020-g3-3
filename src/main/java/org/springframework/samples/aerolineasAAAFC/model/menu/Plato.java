@@ -13,16 +13,20 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "platos")
 public class Plato extends BaseEntity {
-	
-	@ManyToOne(optional=false)
+
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "menu_id")
-	@EqualsAndHashCode.Exclude 
+	@EqualsAndHashCode.Exclude
 	private Menu menu;
-	
-	@ManyToOne(optional=false)
+
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "platos_base_id")
-	@EqualsAndHashCode.Exclude 
+	@EqualsAndHashCode.Exclude
 	private PlatoBase platoBase;
-	
+
+	@Override
+	public String toString() {
+		return platoBase.getName();
+	}
 
 }

@@ -5,8 +5,11 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -43,8 +46,18 @@ public class EquipajeController {
 			return VIEWS_EQUIPAJE_CREATE_FORM;
 		}
 		else {
-			//this.billeteService.saveEquipaje(equipaje);
-			return "redirect:/";
+			try {
+				this.billeteService.saveEquipaje(equipaje);
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+			} catch (EquipajePriceException e) {
+				result.reject(e.getMessage());
+				e.printStackTrace();
+			} catch (TooManyItemsBilleteException e) {
+				result.reject(e.getMessage());
+				e.printStackTrace();
+			}
+			return "redirect:/billetes/datos";
 		}
 	}
 	
