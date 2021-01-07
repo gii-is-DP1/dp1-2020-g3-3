@@ -37,6 +37,8 @@ public class EquipajeController {
 	
 	@GetMapping(value = "/billetes/{billeteId}/equipajes/new")
 	public String initCreationForm(@PathVariable("billeteId") int billeteId, Map<String, Object> model) {
+		Equipaje equipaje = new Equipaje();
+		model.put("equipaje", equipaje);
 		return VIEWS_EQUIPAJE_CREATE_FORM;
 	}
 

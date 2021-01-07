@@ -3,6 +3,7 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,16 @@ public class PlatoBaseServiceTests {
 		String prueba = "Manzana";
 		PlatoBase p = platoBaseService.findPlatoBaseByName(prueba);
 		assertThat(p.getId()).isNotNull();
+	}
+	
+	@Test
+	public void shouldSearchPlatoByType() {
+		String prueba = "postre";
+		String prueba2 = "Manzana";
+		
+		Collection<String> l = platoBaseService.findPlatosPorTipo(prueba);
+		Boolean testeo = l.stream().anyMatch(x -> x.equals(prueba2));
+		assertThat(testeo).isTrue();
 	}
 
 }

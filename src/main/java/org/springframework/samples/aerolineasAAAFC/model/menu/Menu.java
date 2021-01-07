@@ -30,9 +30,4 @@ public class Menu extends BaseEntity {
 	@EqualsAndHashCode.Exclude
 	private Set<Plato> platos;
 
-	@Override
-	public String toString() {
-		return "Id de billete " + billete.getId() + " platos: " + platos;
-	}
-
 }

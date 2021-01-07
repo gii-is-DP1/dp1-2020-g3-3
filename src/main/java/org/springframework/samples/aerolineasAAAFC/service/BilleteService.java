@@ -62,7 +62,9 @@ public class BilleteService {
 		}
 
 		else {
-			int cont = 0;
+			int cont1 = 0;
+			int cont2 = 0;
+			int cont3 = 0;
 
 			for (Plato p : menu.getPlatos()) {
 				PlatoBase aux = platoBaseService.findPlatoBaseByName(p.getPlatoBase().getName());
@@ -70,14 +72,18 @@ public class BilleteService {
 				if (aux == null)
 					throw new PlatosNoValidosException(2);
 
-				else if (aux.getTipoPlato().getName().equals("primerPlato") || aux.getTipoPlato().getName().equals("segundoPlato")
-						|| aux.getTipoPlato().getName().equals("postre")) {
-					cont = cont + 1;
-				}
-
+				else if (aux.getTipoPlato().getName().equals("primerPlato"))
+					cont1 = 1;
+				
+				else if(aux.getTipoPlato().getName().equals("segundoPlato"))
+					cont2 = 1;
+				
+				else if(aux.getTipoPlato().getName().equals("postre"))
+					cont3 = 1;
+				
 			}
 
-			if (cont != 3)
+			if (cont1 !=1 || cont2 !=1 || cont3 != 1)
 				throw new PlatosNoValidosException(3);
 
 			else

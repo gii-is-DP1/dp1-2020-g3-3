@@ -14,6 +14,5 @@ public interface PlatoBaseRepository extends CrudRepository<PlatoBase, Integer>{
 	public PlatoBase findByName(@Param("name") String name);
 	
 	@Query("SELECT pbase FROM PlatoBase pbase")
-	List<PlatoBase> findPlatosBase() throws DataAccessException;
-	
+	List<PlatoBase> findPlatosBase() throws DataAccessException;	
 }

@@ -118,7 +118,6 @@ public class BilleteServiceTests {
 		m.setPlatos(s);
 		m.setBillete(b);
 		
-		Logger.getLogger(BilleteServiceTests.class.getName()).log(Level.INFO,"Introducimos el menú: " + m.toString());
 		Logger.getLogger(BilleteServiceTests.class.getName()).log(Level.INFO,"Introducimos platosBase: " + p1.getPlatoBase().getTipoPlato().getName() + " de id " + p1.getPlatoBase().getId());
 		Logger.getLogger(BilleteServiceTests.class.getName()).log(Level.INFO,"Introducimos platosBase: " + p2.getPlatoBase().getTipoPlato().getName() + " de id " + p2.getPlatoBase().getId());
 		Logger.getLogger(BilleteServiceTests.class.getName()).log(Level.INFO,"Introducimos platosBase: " + p3.getPlatoBase().getTipoPlato().getName() + " de id " + p3.getPlatoBase().getId());
