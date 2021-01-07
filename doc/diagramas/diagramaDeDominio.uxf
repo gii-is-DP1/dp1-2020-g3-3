@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1096</x>
-      <y>368</y>
+      <x>1240</x>
+      <y>248</y>
       <w>96</w>
       <h>80</h>
     </coordinates>
@@ -21,8 +21,8 @@ primeraClase
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1208</x>
-      <y>368</y>
+      <x>1352</x>
+      <y>248</y>
       <w>104</w>
       <h>80</h>
     </coordinates>
@@ -38,245 +38,206 @@ Ingeniero de Vuelo
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1000</x>
-      <y>504</y>
-      <w>104</w>
-      <h>112</h>
+      <x>1104</x>
+      <y>408</y>
+      <w>144</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>Azafato
 --
-nombre
-apellidos
-nif
-iban
-idiomas [2..*]
-salario</panel_attributes>
+salario: Double {Min(1000)}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>808</x>
-      <y>504</y>
-      <w>104</w>
-      <h>112</h>
+      <x>928</x>
+      <y>408</y>
+      <w>144</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>PersonalControl
 --
-nombre
-apellidos
-nif
-iban
-tipo: rol
-salario
+rol: Rol {NotEmpty}
+salario: Double {Min(1000)}
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>688</x>
-      <y>304</y>
-      <w>136</w>
-      <h>128</h>
+      <x>728</x>
+      <y>200</y>
+      <w>240</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>Person
 --
-nombre
-apellidos
-nif
-direccionFacturacion
-iban
-contraseña
-fechaNacimiento
+nombre: String {NotEmpty}
+apellidos: String {NotEmpty}
+nif: String {NotEmpty, NifConstraint}
+iban: String {NotEmpty, Pattern(^ES\s\d{22}$)}
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>616</x>
-      <y>504</y>
-      <w>120</w>
-      <h>104</h>
+      <x>744</x>
+      <y>408</y>
+      <w>144</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>PersonalOficina
 --
-nombre
-apellidos
-nif
-iban
-salario
+salario: Double {Min(1000)}
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>424</x>
-      <y>504</y>
-      <w>136</w>
-      <h>128</h>
+      <x>520</x>
+      <y>384</y>
+      <w>208</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Cliente
 --
-nombre
-apellidos
-nif
-direccionFacturacion
-iban
-contraseña
-fechaNacimiento
+email: String {Email}
+direccionFacturacion: String {NotEmpty}
+fechaNacimiento: LocalDate {NotNull, 
+  DateTimeFormat(yyyy-MM-dd), 
+  MayoriaEdadConstraint}
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>312</x>
-      <y>312</y>
-      <w>136</w>
-      <h>128</h>
+      <x>456</x>
+      <y>224</y>
+      <w>128</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>PlatoType
 --
-idCliente
-nombre
-apellidos
-nif
-direccionFacturacion
-iban
-contraseña
-fechaNacimiento
+name: String {NotEmpty}
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>904</x>
-      <y>304</y>
+      <x>1048</x>
+      <y>200</y>
       <w>136</w>
-      <h>128</h>
+      <h>72</h>
     </coordinates>
     <panel_attributes>User
 --
-idCliente
-nombre
-apellidos
-nif
-direccionFacturacion
-iban
-contraseña
-fechaNacimiento
+username: String
+password: String
+enabled: Boolean
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>424</x>
-      <y>856</y>
-      <w>136</w>
-      <h>96</h>
+      <x>560</x>
+      <y>736</y>
+      <w>144</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>Asiento
 --
-idCliente
-nombre
-apellidos
-nif
-direccionFacturacion
+nombre: String {NotEmpty, 
+Pattern(^[A-I]\d{2}$)}
+libre: Boolean {NotEmpty}
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1184</x>
-      <y>520</y>
-      <w>136</w>
-      <h>80</h>
+      <x>1352</x>
+      <y>408</y>
+      <w>184</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>IdiomaType
 --
-idCliente
-nombre
-apellidos
-nif
+idioma: String {Pattern(^[A-Z]{2}$)}
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>200</x>
-      <y>472</y>
+      <x>280</x>
+      <y>424</y>
       <w>136</w>
-      <h>128</h>
+      <h>64</h>
     </coordinates>
     <panel_attributes>Plato
 --
-idCliente
-nombre
-apellidos
-nif
-direccionFacturacion
-iban
-contraseña
-fechaNacimiento
-</panel_attributes>
+precio: Double {Positive}
+name: String {NotEmpty}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>664</x>
-      <y>424</y>
-      <w>104</w>
-      <h>96</h>
+      <x>808</x>
+      <y>280</y>
+      <w>56</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>110.0;10.0;110.0;60.0;10.0;60.0;10.0;100.0</additional_attributes>
+    <additional_attributes>50.0;10.0;50.0;90.0;10.0;90.0;10.0;160.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>488</x>
-      <y>464</y>
-      <w>200</w>
+      <x>608</x>
+      <y>344</y>
+      <w>224</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>230.0;10.0;10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>260.0;10.0;10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>744</x>
-      <y>464</y>
-      <w>320</w>
-      <h>56</h>
+      <x>840</x>
+      <y>344</y>
+      <w>368</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>380.0;50.0;380.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>440.0;80.0;440.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>848</x>
-      <y>464</y>
+      <x>992</x>
+      <y>344</y>
       <w>32</w>
-      <h>56</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0;20.0;10.0</additional_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0;20.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>816</x>
-      <y>352</y>
+      <x>960</x>
+      <y>232</y>
       <w>104</w>
       <h>40</h>
     </coordinates>
@@ -289,74 +250,71 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>784</x>
-      <y>704</y>
-      <w>112</w>
-      <h>80</h>
+      <x>872</x>
+      <y>584</y>
+      <w>216</w>
+      <h>88</h>
     </coordinates>
     <panel_attributes>Vuelo
 --
-idVuelo
-fechaSalida
-fechaLlegada
-precio</panel_attributes>
+fechaSalida: LocalDateTime {NotNull, 
+  DateTimeFormat(yyyy-MM-dd'T'HH:mm)}
+fechaLlegada: LocalDateTime {NotNull, 
+  DateTimeFormat(yyyy-MM-dd'T'HH:mm)}
+precio: Double {Positive}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1008</x>
-      <y>680</y>
-      <w>128</w>
-      <h>168</h>
+      <x>1224</x>
+      <y>560</y>
+      <w>248</w>
+      <h>184</h>
     </coordinates>
     <panel_attributes>Avión
 --
-idAvion
-tipoAvion
-capacidadPasajero
-pesoMaximoEquipaje
-horasAcumuladas
-fechaFabricacion
-disponibilidad: boolean
-fechaRevision
-plazasEconomica
-plazasEjecutiva
-plazasPrimera</panel_attributes>
+tipoAvion: String
+capacidadPasajero: Integer
+pesoMaximoEquipaje: Integer {min(0),max(32)}
+horasAcumuladas: Integer {PositiveOrZero}
+fechaFabricacion: LocalDate {NotNull, 
+  DateTimeFormat(yyyy/MM/dd)}
+disponibilidad: Boolean {NotNull}
+fechaRevision: LocalDate {NotNull, 
+  DateTimeFormat(yyyy/MM/dd)}
+plazasEconomica: int
+plazasEjecutiva: int
+plazasPrimera: int</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>200</x>
-      <y>664</y>
+      <x>280</x>
+      <y>560</y>
       <w>136</w>
-      <h>88</h>
+      <h>48</h>
     </coordinates>
     <panel_attributes>Menú
 --
-idMenu
-precio
-primerPlato
-segundoPlato
-postre
+name: String {NotEmpty}
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>216</x>
-      <y>784</y>
-      <w>120</w>
-      <h>80</h>
+      <x>152</x>
+      <y>664</y>
+      <w>256</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>Equipaje
 --
-idEquipaje
-peso
-medidas
-precio
+peso: Integer {min(3), max(32)}
+dimensiones: String {MedidasEquipajesConstraint}
+precio: Double
 
 </panel_attributes>
     <additional_attributes/>
@@ -364,17 +322,14 @@ precio
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>912</x>
-      <y>160</y>
-      <w>120</w>
-      <h>80</h>
+      <x>1024</x>
+      <y>80</y>
+      <w>176</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>Authorities
 --
-idEquipaje
-peso
-medidas
-precio
+authority: String {min(3), max(50)}
 
 </panel_attributes>
     <additional_attributes/>
@@ -382,124 +337,123 @@ precio
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>784</x>
-      <y>872</y>
-      <w>112</w>
-      <h>88</h>
+      <x>896</x>
+      <y>776</y>
+      <w>184</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Aeropuerto
 --
-idAeropuerto
-Nombre
-localizacion
-codigoIATA
-telefono</panel_attributes>
+nombre: String {NotEmpty}
+localizacion: String {NotEmpty}
+codigoIATA: String {NotEmpty}
+telefono: String {NotEmpty, 
+  Pattern(^(\+|\d)[0-9]{7,16}$)}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>424</x>
-      <y>696</y>
-      <w>136</w>
-      <h>96</h>
+      <x>544</x>
+      <y>576</y>
+      <w>184</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>Billete
 --
-idBillete
-coste
-asiento
-fechaReserva
-tipo: clase</panel_attributes>
+coste: Double {Positive}
+fechaReserva: LocalDate {NotNull, 
+  DateTimeFormat(yyyy/MM/dd)}
+tipo: Clase {@NotNull}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>960</x>
-      <y>232</y>
+      <x>1104</x>
+      <y>112</y>
       <w>40</w>
-      <h>88</h>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1    
 m2=0..n
 </panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>624</y>
+      <x>624</x>
+      <y>472</y>
       <w>40</w>
-      <h>88</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..n    
 m2=1
 </panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
-      <y>744</y>
-      <w>112</w>
+      <x>400</x>
+      <y>624</y>
+      <w>160</w>
       <h>104</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..3    
 m2=1
 </panel_attributes>
-    <additional_attributes>10.0;100.0;60.0;100.0;60.0;10.0;120.0;10.0</additional_attributes>
+    <additional_attributes>10.0;100.0;110.0;100.0;110.0;10.0;180.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
-      <y>704</y>
-      <w>64</w>
+      <x>408</x>
+      <y>584</y>
+      <w>96</w>
       <h>64</h>
     </coordinates>
     <panel_attributes>lt=-
 m2=0..3  </panel_attributes>
-    <additional_attributes>60.0;60.0;60.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>100.0;60.0;100.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>784</y>
+      <x>624</x>
+      <y>648</y>
       <w>32</w>
-      <h>88</h>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1    
 m2=1
 </panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>552</x>
-      <y>728</y>
-      <w>248</w>
+      <x>720</x>
+      <y>608</y>
+      <w>168</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..n    
 m2=1
 </panel_attributes>
-    <additional_attributes>10.0;20.0;290.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>552</x>
-      <y>736</y>
+      <x>696</x>
+      <y>616</y>
       <w>136</w>
       <h>176</h>
     </coordinates>
@@ -513,24 +467,24 @@ fg=red
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>888</x>
-      <y>736</y>
-      <w>136</w>
+      <x>1080</x>
+      <y>616</y>
+      <w>160</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..n    
 m2=1
 </panel_attributes>
-    <additional_attributes>10.0;20.0;150.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>800</x>
-      <y>776</y>
+      <x>944</x>
+      <y>664</y>
       <w>56</w>
-      <h>112</h>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..n    
@@ -538,104 +492,104 @@ m2=1
 
 llegaA
 </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>856</x>
-      <y>776</y>
+      <x>1000</x>
+      <y>664</y>
       <w>56</w>
-      <h>112</h>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..n    
 m2=1
 saleDe</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>664</x>
-      <y>600</y>
+      <x>808</x>
+      <y>448</y>
       <w>184</w>
-      <h>80</h>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n    
 
 </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;80.0;210.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0;210.0;120.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>824</x>
-      <y>608</y>
+      <x>968</x>
+      <y>456</y>
       <w>64</w>
-      <h>112</h>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n    
 m2=0..n
 </panel_attributes>
-    <additional_attributes>40.0;10.0;40.0;70.0;10.0;70.0;10.0;120.0</additional_attributes>
+    <additional_attributes>40.0;10.0;40.0;110.0;10.0;110.0;10.0;160.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>848</x>
-      <y>608</y>
+      <x>992</x>
+      <y>448</y>
       <w>232</w>
-      <h>72</h>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n    
 
 </panel_attributes>
-    <additional_attributes>250.0;10.0;250.0;70.0;10.0;70.0</additional_attributes>
+    <additional_attributes>250.0;10.0;250.0;120.0;10.0;120.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1096</x>
-      <y>544</y>
-      <w>104</w>
+      <x>1240</x>
+      <y>424</y>
+      <w>128</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n    
 m2=0..n
 </panel_attributes>
-    <additional_attributes>10.0;20.0;110.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>256</x>
-      <y>592</y>
+      <x>336</x>
+      <y>480</y>
       <w>40</w>
-      <h>88</h>
+      <h>96</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..n    
 m2=1
 </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>256</x>
-      <y>368</y>
-      <w>72</w>
-      <h>120</h>
+      <x>336</x>
+      <y>248</y>
+      <w>136</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1    
 m2=0..n
 </panel_attributes>
-    <additional_attributes>70.0;20.0;10.0;20.0;10.0;130.0</additional_attributes>
+    <additional_attributes>150.0;20.0;10.0;20.0;10.0;220.0</additional_attributes>
   </element>
 </diagram>
