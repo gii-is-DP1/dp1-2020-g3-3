@@ -5,8 +5,11 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -43,8 +46,18 @@ public class MenuController {
 			return VIEWS_MENU_CREATE_FORM;
 		}
 		else {
-			//this.billeteService.saveMenu(menu);
-			return "redirect:/";
+			try {
+				this.billeteService.saveMenu(menu);
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+			} catch (TooManyItemsBilleteException e) {
+				result.reject(e.getMessage());
+				e.printStackTrace();
+			} catch (PlatosNoValidosException e) {
+				result.reject(e.getMessage());
+				e.printStackTrace();
+			}
+			return "redirect:/billetes/datos";
 		}
 	}
 	
