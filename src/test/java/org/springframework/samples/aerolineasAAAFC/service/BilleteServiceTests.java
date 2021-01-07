@@ -19,10 +19,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
-import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Plato;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
@@ -128,10 +129,31 @@ public class BilleteServiceTests {
 	
 	}
 	
-//	@Test
-//	@Transactional
-//	public void shouldInsertEquipajeIntoDatabaseAndGenerateId() {
-//		
-//	}
+	@Test
+	@Transactional
+	public void shouldInsertEquipajeIntoDatabaseAndGenerateId() {
+		Collection<Equipaje> equipajes = this.billeteService.findEquipajes();
+		int found = equipajes.size();
+		
+		Billete b = this.billeteService.findBilleteById(1);
+		
+		Equipaje e = new Equipaje();
+		e.setBillete(b);
+		e.setDimensiones("110x110x78");
+		e.setPeso(21);
+		e.setPrecio(30.);
+			
+		try {
+			this.billeteService.saveEquipaje(e);
+		} catch (DataAccessException e1) {
+			e1.printStackTrace();
+		} catch (EquipajePriceException e1) {
+			e1.printStackTrace();
+		} catch (TooManyItemsBilleteException e1) {
+			e1.printStackTrace();
+		}
+		equipajes = this.billeteService.findEquipajes();
+		assertThat(equipajes.size()).isEqualTo(found + 1);
+	}
 
 }
