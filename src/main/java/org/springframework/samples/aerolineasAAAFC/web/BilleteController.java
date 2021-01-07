@@ -37,7 +37,7 @@ public class BilleteController {
 	}
 
 	/*
-	 * Alta de un nuevo billete
+	 *  Alta de un nuevo billete
 	 */
 	@GetMapping(value = "/billetes/new")
 	public String initCreationBilleteForm(Map<String, Object> model) {
@@ -48,16 +48,11 @@ public class BilleteController {
 
 	@PostMapping(value = "/billetes/new")
 	public String processCreationBilleteForm(@Valid Billete billete, BindingResult result) {
-		if (result.hasErrors()) {
+		if(result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			try {
-				this.billeteService.saveBillete(billete);
-			} catch (TooManyItemsBilleteException e) {
-				result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
-				return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-			}
+		} else {
+
+			this.billeteService.saveBillete(billete);
 
 			return "redirect:/billetes/" + billete.getId();
 		}
@@ -74,36 +69,30 @@ public class BilleteController {
 	}
 
 	@PostMapping(value = "/billetes/{billeteId}/edit")
-	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result,
-			@PathVariable("billeteId") int billeteId) {
-		if (result.hasErrors()) {
+	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result, @PathVariable("billeteId") int billeteId) {
+		if(result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		} else {
+		}
+		else {
 			billete.setId(billeteId);
-      
-			try {
-				this.billeteService.saveBillete(billete);
-			} catch (TooManyItemsBilleteException e) {
-				result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
-				return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-			}
+			this.billeteService.saveBillete(billete);
 
 			return "redirect:/billetes/{billeteId}";
 		}
 	}
 
 	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)
-	public String ShowDatosBillete(Map<String, Object> model,  @RequestParam(name = "apellidos", defaultValue = "") String apellidos) {
-		if(apellidos.isEmpty()) {
+	public String ShowDatosBillete(Map<String, Object> model,
+			@RequestParam(name = "apellidos", defaultValue = "") String apellidos) {
+		if (apellidos.isEmpty()) {
 			Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
-			model.put("billetes",billetes);
-		}else {
+			model.put("billetes", billetes);
+		} else {
 			Collection<Billete> billetes = this.billeteService.findBilletePorApellido(apellidos);
-			model.put("billetes",billetes);
+			model.put("billetes", billetes);
 		}
-    
 		return "billetes/billetesDatosList";
-
 	}
+
 
 }
