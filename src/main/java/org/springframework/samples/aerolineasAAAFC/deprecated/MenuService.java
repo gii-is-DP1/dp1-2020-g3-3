@@ -1,4 +1,4 @@
-package org.springframework.samples.aerolineasAAAFC.service;
+package org.springframework.samples.aerolineasAAAFC.deprecated;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -6,10 +6,8 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.aerolineasAAAFC.deprecated.Menu;
+import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.repository.MenuRepository;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.MenuPriceException;
-import org.springframework.samples.aerolineasAAAFC.utils.menuUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,15 +22,9 @@ public class MenuService {
 	}
 
 	@Transactional(rollbackFor = MenuPriceException.class)
-	public void saveMenu(Menu menu) throws DataAccessException, MenuPriceException {
+	public void saveMenu(Menu menu) throws DataAccessException {
 
-		if (!menuUtils.validaPrecio(menu)) {
-			throw new MenuPriceException("El precio recibido no se corresponde con el estipulado en web.");
-		}
-
-		else {
-			menuRepository.save(menu);
-		}
+		menuRepository.save(menu);
 
 	}
 
@@ -41,17 +33,16 @@ public class MenuService {
 		menuRepository.deleteById(id);
 	}
 
-	@Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Menu findMenuById(int id) throws DataAccessException {
-		
+
 		Menu menu = menuRepository.findById(id).orElseGet(null);
-		
+
 		return menu;
 	}
 
-	public Collection<Menu> findMenus(){
-		return StreamSupport.stream(menuRepository.findAll().spliterator(), false)
-			    .collect(Collectors.toList());
+	public Collection<Menu> findMenus() {
+		return StreamSupport.stream(menuRepository.findAll().spliterator(), false).collect(Collectors.toList());
 	}
 
 }

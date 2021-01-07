@@ -8,7 +8,6 @@ public class MedidasEquipajesValidator implements ConstraintValidator<MedidasEqu
 	@Override
 	public void initialize(MedidasEquipajesConstraint medidasValue) {
 	}
-
 	
 	@Override
 	public boolean isValid(String medidasValue, ConstraintValidatorContext context) {
@@ -26,8 +25,7 @@ public class MedidasEquipajesValidator implements ConstraintValidator<MedidasEqu
 			cond = true;
 			break;
 		}
-		
-		
+			
 		return cond;
 	}
 

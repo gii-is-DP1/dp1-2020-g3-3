@@ -1,4 +1,4 @@
-package org.springframework.samples.aerolineasAAAFC.service;
+package org.springframework.samples.aerolineasAAAFC.deprecated;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

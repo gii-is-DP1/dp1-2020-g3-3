@@ -9,18 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.aerolineasAAAFC.deprecated.Menu;
+import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

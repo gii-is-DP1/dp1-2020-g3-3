@@ -139,12 +139,51 @@ VALUES (300,2,'2020-04-06',2,2,2);
 
 
 --PlatoType
---INSERT INTO platos_types(name) VALUES ('primerPlato');
---INSERT INTO platos_types(name) VALUES ('segundoPlato');
---INSERT INTO platos_types(name) VALUES ('postre');
+INSERT INTO platos_types(name) VALUES ('primerPlato');
+INSERT INTO platos_types(name) VALUES ('segundoPlato');
+INSERT INTO platos_types(name) VALUES ('postre');
 
---Plato
---INSERT INTO platos(nombre,apellidos,nif,iban,salario,username)
---VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R');
+--Plato Base
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.98,1,'Sopa de miso');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.21,1,'Ensalada césar');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (2,1,'Revuelto de setas y gambas');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (2,1,'Tortellini de ternera Sin gluten');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.98,1,'Fideuá de almejas');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (2.32,1,'Salmón con cítricos');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.26,1,'Tomate con mozzarella');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.74,1,'Pan con mantequilla');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.91,1,'Pan con mantequilla Sin gluten');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.56,1,'Cereales miniatura');
+
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (4.78,2,'Pollo Tikka Masala');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (3.54,2,'Arroz con ternera al curry');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (3.12,2,'Arroz con pollo al curry');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (5.54,2,'Pato a la pekinesa');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (3.21,2,'Gnocchi de patata Sin gluten');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (4.76,2,'Ternera con patatas');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (3.45,2,'Merluza al horno');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (2.87,2,'Risotto vegetal');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (2.65,2,'Tortilla con verduras');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.97,2,'Bagel con jamón');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.65,2,'Cruasán con jamón cocido');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (2.01,2,'Rollo de canela');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.29,2,'Muffin de chocolate');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.29,2,'Muffin de vainilla');
+
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.23,3,'Manzana');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.29,3,'Plátano');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.19,3,'Pera');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.16,3,'Naranja');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.87,3,'Crème brûlée');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.21,3,'Tiramisú');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (0.65,3,'Flan de huevo Sin gluten');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.43,3,'Panna cotta');
+INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.74,3,'Macarons Sin gluten');
 
 --Menu
+INSERT INTO menus(billete_id) VALUES (1);
+
+--Plato
+INSERT INTO platos(menu_id, platos_base_id) VALUES (1,1);
+INSERT INTO platos(menu_id, platos_base_id) VALUES (1,12);
+INSERT INTO platos(menu_id, platos_base_id) VALUES (1,27);

@@ -7,7 +7,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.samples.aerolineasAAAFC.deprecated.Menu;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
@@ -17,69 +16,6 @@ class ValidatorTests {
 		LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
 		localValidatorFactoryBean.afterPropertiesSet();
 		return localValidatorFactoryBean;
-	}
-	
-	@Test
-	@Transactional
-	public void shouldNotValidateMenuPlato1NoValido() {
-
-		Menu menu = new Menu();
-
-		menu.setPrecio(1.21 + 5.54 + 0.19);
-		menu.setPrimerPlato("EnsaladaMaliciosa");
-		menu.setSegundoPlato("PatoPekinesa");
-		menu.setPostre("Pera");
-		
-		Validator validator = createValidator();
-		Set<ConstraintViolation<Menu>> constraintViolations = validator.validate(menu);
-
-		assertThat(constraintViolations.size()).isEqualTo(1);
-		ConstraintViolation<Menu> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("primerPlato");
-		assertThat(violation.getMessage()).isEqualTo("El primer plato no está disponible");
-
-	}
-	
-	@Test
-	@Transactional
-	public void shouldNotValidateMenuPlato2NoValido() {
-
-		Menu menu = new Menu();
-
-		menu.setPrecio(1.21 + 5.54 + 0.19);
-		menu.setPrimerPlato("EnsaladaCésar");
-		menu.setSegundoPlato("Pat");
-		menu.setPostre("Pera");
-		
-		Validator validator = createValidator();
-		Set<ConstraintViolation<Menu>> constraintViolations = validator.validate(menu);
-
-		assertThat(constraintViolations.size()).isEqualTo(1);
-		ConstraintViolation<Menu> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("segundoPlato");
-		assertThat(violation.getMessage()).isEqualTo("El segundo plato no está disponible");
-
-	}
-	
-	@Test
-	@Transactional
-	public void shouldNotValidateMenuPostreNoValido() {
-
-		Menu menu = new Menu();
-
-		menu.setPrecio(1.21 + 5.54 + 0.19);
-		menu.setPrimerPlato("EnsaladaCésar");
-		menu.setSegundoPlato("PatoPekinesa");
-		menu.setPostre("PeraMaliciosa");
-		
-		Validator validator = createValidator();
-		Set<ConstraintViolation<Menu>> constraintViolations = validator.validate(menu);
-
-		assertThat(constraintViolations.size()).isEqualTo(1);
-		ConstraintViolation<Menu> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("postre");
-		assertThat(violation.getMessage()).isEqualTo("El postre no está disponible");
-
 	}
 	
 	@Test

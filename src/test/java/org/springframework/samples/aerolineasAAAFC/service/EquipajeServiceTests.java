@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.samples.aerolineasAAAFC.deprecated.EquipajeService;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
@@ -60,11 +61,7 @@ public class EquipajeServiceTests {
 					"Parece que ha introducido un precio incorrecto.", e);
 		}
 
-		try {
-			this.billeteService.saveBillete(billete1);
-		} catch (TooManyItemsBilleteException e) {
-			 e.printStackTrace();
-		}
+		this.billeteService.saveBillete(billete1);
 		
 		Logger.getLogger(MenuServiceTests.class.getName()).log(Level.INFO, "El equipaje tiene id: " + equipaje.getId());
 		assertThat(billete1.getEquipajes().size()).isEqualTo(found + 1);

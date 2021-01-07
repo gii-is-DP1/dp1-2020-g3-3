@@ -5,10 +5,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,23 +20,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class BilleteController {
-	
+
 	private static final String VIEWS_BILLETE_CREATE_OR_UPDATE_FORM = "billetes/createOrUpdateBilleteForm";
-	
+
 	private final BilleteService billeteService;
-	
+
 	@Autowired
 	public BilleteController(BilleteService billeteService) {
 		this.billeteService = billeteService;
 	}
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 	/*
-	 *  Alta de un nuevo billete
+	 * Alta de un nuevo billete
 	 */
 	@GetMapping(value = "/billetes/new")
 	public String initCreationBilleteForm(Map<String, Object> model) {
@@ -46,24 +44,19 @@ public class BilleteController {
 		model.put("billete", billete);
 		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	@PostMapping(value = "/billetes/new")
 	public String processCreationBilleteForm(@Valid Billete billete, BindingResult result) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			try {
-				this.billeteService.saveBillete(billete);
-			} catch (TooManyItemsBilleteException e) {
-				 result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
-					return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-			}
-			
+		} else {
+
+			this.billeteService.saveBillete(billete);
+
 			return "redirect:/billetes/" + billete.getId();
 		}
 	}
-	
+
 	/*
 	 * Modificacion de un billete
 	 */
@@ -73,32 +66,25 @@ public class BilleteController {
 		model.addAttribute(billete);
 		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	@PostMapping(value = "/billetes/{billeteId}/edit")
-	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result, @PathVariable("billeteId") int billeteId) {
-		if(result.hasErrors()) {
+	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result,
+			@PathVariable("billeteId") int billeteId) {
+		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			billete.setId(billeteId);
-			try {
-				this.billeteService.saveBillete(billete);
-			} catch (TooManyItemsBilleteException e) {
-				 result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
-					return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-			}
-			
+			this.billeteService.saveBillete(billete);
+
 			return "redirect:/billetes/{billeteId}";
 		}
 	}
-	
-	
+
 	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)
 	public String ShowDatosBillete(Map<String, Object> model) {
 		Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
-		model.put("billetes",billetes);
+		model.put("billetes", billetes);
 		return "billetes/billetesDatosList";
 	}
-	
 
 }
