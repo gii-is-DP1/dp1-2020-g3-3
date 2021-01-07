@@ -54,16 +54,30 @@ public class Vuelo extends BaseEntity{
 	private double coste;
 	
 	// Relaciones de tabla:
-
-	@OneToMany(mappedBy = "vuelos")
-	@EqualsAndHashCode.Exclude
-	private Set<Billete> billetes;
 	
+//  -- Personal
 	@ManyToMany(mappedBy = "vuelos")
 	@EqualsAndHashCode.Exclude
 	private Set<PersonalOficina> personalOficina;
 	
+	@ManyToMany(mappedBy="vuelos")
+	@EqualsAndHashCode.Exclude
+	private Set<Azafato> azafatos;
 	
+	@ManyToMany(mappedBy="vuelos")
+	@EqualsAndHashCode.Exclude
+	private Set<PersonalControl> personalControl;
+	
+//	-- Billete
+	@OneToMany(mappedBy = "vuelos")
+	@EqualsAndHashCode.Exclude
+	private Set<Billete> billetes;
+	
+	@OneToMany(mappedBy="vuelos") 
+	@EqualsAndHashCode.Exclude
+	private Set<Asiento> asientos;
+	
+//	-- Aeropuertos y avión
 	@ManyToOne(optional=false)
 	@EqualsAndHashCode.Exclude
 	private Aeropuerto aeropuertoOrigen;
@@ -77,18 +91,6 @@ public class Vuelo extends BaseEntity{
 	@JoinColumn(name = "avion_id")
 	private Avion avion;
 	
-	@ManyToMany(mappedBy="vuelos")
-	@EqualsAndHashCode.Exclude
-	private Set<Azafato> azafatos;
-	
-	@ManyToMany(mappedBy="vuelos")
-	@EqualsAndHashCode.Exclude
-	private Set<PersonalControl> personalControl;
-	
-	@OneToMany(mappedBy="vuelos") 
-	@EqualsAndHashCode.Exclude
-	private Set<Asiento> asientos;
-
 	
 	@PreRemove
 	private void removeVuelosFromEntities() {

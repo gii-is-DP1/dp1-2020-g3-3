@@ -12,7 +12,6 @@
 	<table id="tablaVuelos" class="table table-striped">
 		<thead>
 			<tr>
-				<th width="25%">Id Vuelo</th>
 				<th width="25%">Fecha de Salida</th>
 				<th width="25%">Fecha de Llegada</th>
 				<th width="25%">Aeropuerto de Salida</th>
@@ -22,7 +21,6 @@
 		<tbody>
 			<c:forEach items="${vuelos}" var="vuelo">
 				<tr>
-					<td><c:out value="${vuelo.avion_id}" /></td>
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm" /></td>
 					<td><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}" /></td>

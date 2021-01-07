@@ -21,13 +21,16 @@
 		<tbody>
 			<c:forEach items="${vuelos}" var="vuelo">
 				<tr>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm" /></td>
+					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}"
+							pattern="dd-MM-yyyy HH:mm" /></td>
+					<td><aerolineasAAAFC:localDateTime
+							date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm" /></td>
 					<td><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}" /></td>
 					<td><c:out value="${vuelo.aeropuertoDestino.codigoIATA}" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+
 
 </aerolineasAAAFC:layout>

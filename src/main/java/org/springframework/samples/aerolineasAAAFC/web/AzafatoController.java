@@ -142,10 +142,7 @@ public class AzafatoController {
 	public String showVuelosList(Map<String, Object> model, @PathVariable("azafatoId") int azafatoId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
 
 		if(fecha.isEmpty()) {
-			LocalDate date = LocalDate.now();
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			model.put("vuelos", this.azafatoService.findVuelosByDate(azafatoId, mes, año));
+			model.put("vuelos", this.azafatoService.horario(azafatoId));
 		}else {
 			fecha += "-01";
 			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));

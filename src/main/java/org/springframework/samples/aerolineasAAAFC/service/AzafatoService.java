@@ -1,7 +1,9 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -79,10 +81,27 @@ public class AzafatoService {
 		Azafato azafato = azafatoRepository.findById(id).get();
 		Set<Vuelo> vuelos = azafato.getVuelos();
 		
-		Set<Vuelo> res = new HashSet<Vuelo>();
+		List<Vuelo> res = new ArrayList<Vuelo>();
 		
-		for(Vuelo v: vuelos) {
+		for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
 			if(v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) res.add(v);
+		}
+		
+		return res;
+	}
+	
+	public Collection<Vuelo> horario(int id){ 
+		Azafato azafato = azafatoRepository.findById(id).get();
+		Set<Vuelo> vuelos = azafato.getVuelos();
+		
+		LocalDate date = LocalDate.now();
+		int mes = date.getMonthValue();
+		int año = date.getYear();
+		
+		List<Vuelo> res = new ArrayList<Vuelo>();
+		
+		for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
+			if((v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) || (v.getFechaSalida().getMonthValue() == (mes + 1)  && v.getFechaSalida().getYear() == año)) res.add(v);
 		}
 		
 		return res;

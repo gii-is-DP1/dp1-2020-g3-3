@@ -19,9 +19,6 @@ public interface AzafatoRepository extends CrudRepository<Azafato, Integer>{
 	@Query("SELECT DISTINCT azafato FROM Azafato azafato WHERE azafato.iban LIKE :iban%")
 	public Azafato findByIban(@Param("iban") String iban);
 
-	@Query("SELECT azafato.vuelos FROM Azafato azafato JOIN azafato.vuelos v WHERE MONTH(v.fechaSalida) = :mes AND YEAR(v.fechaSalida) = :año AND azafato.id = :id")
-	public Collection<Vuelo> findVuelosByDate(@Param("id") int id, @Param("mes") int mes, @Param("año") int año);
-
 	@Query("SELECT itype FROM IdiomaType itype ORDER BY itype.idioma")
 	List<IdiomaType> findIdiomaTypes() throws DataAccessException;
 }
