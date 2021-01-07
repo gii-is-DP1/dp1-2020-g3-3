@@ -1,7 +1,8 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,14 +11,10 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
-import org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,13 +74,30 @@ public class PersonalControlService {
 	}
 
 	//Una solución para la historia 14
+	public Collection<Vuelo> horario(int id){ 
+		PersonalControl personal = pControlRepository.findById(id).get();
+		Set<Vuelo> vuelos = personal.getVuelos();		
+		
+		LocalDate date = LocalDate.now();
+		int mes = date.getMonthValue();
+		int año = date.getYear();
+		
+		List<Vuelo> res = new ArrayList<Vuelo>();
+		
+		for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
+			if((v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) || (v.getFechaSalida().getMonthValue() == (mes + 1)  && v.getFechaSalida().getYear() == año)) res.add(v);
+		}
+		
+		return res;
+	}
+	
 	public Collection<Vuelo> findVuelosByDate(int id, int mes, int año){ 
 		PersonalControl personal = pControlRepository.findById(id).get();
 		Set<Vuelo> vuelos = personal.getVuelos();
 		
-		Set<Vuelo> res = new HashSet<Vuelo>();
+		List<Vuelo> res = new ArrayList<Vuelo>();
 		
-		for(Vuelo v: vuelos) {
+		for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
 			if(v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) res.add(v);
 		}
 		

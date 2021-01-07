@@ -2,7 +2,6 @@ package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -42,11 +41,11 @@ public class PersonalControl extends Person{
 	// Relaciones de tabla:
 	
 	@ManyToMany
+	@OrderBy("fechaSalida DESC")
 	@JoinTable(name = "control_vuelo",
 	   joinColumns = @JoinColumn(name = "personal_control_id"),
 	   inverseJoinColumns = @JoinColumn(name= "vuelos_id"))
 	@EqualsAndHashCode.Exclude
-	@OrderBy("fechaSalida DESC")
 	private Set<Vuelo> vuelos;
 
 }

@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
@@ -40,6 +41,7 @@ public class Azafato extends Person{
 	// Relaciones de tabla:
 
 	@ManyToMany
+	@OrderBy("fechaSalida DESC")
 	@JoinTable(name = "azafatos_vuelo",
 			   joinColumns = @JoinColumn(name = "azafatos_id"),
 			   inverseJoinColumns = @JoinColumn(name= "vuelos_id"))
