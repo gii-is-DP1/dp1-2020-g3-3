@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.IdClass;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -162,5 +165,12 @@ public class ClienteController {
 		return "redirect:/clientesList";
 	}
 
-
+	// Metodo HU8
+	@GetMapping(value = "/clientes/{clienteId}/compras")
+	public String showBilletesPorCliente(Map<String, Object> model, @PathVariable("clienteId") int clienteId) {
+		model.put("cliente",this.clienteService.findClienteById(clienteId));
+		model.put("billetes", this.clienteService.findBilletesByIdCliente(clienteId));
+		
+		return "clientes/compras";
+	}
 }

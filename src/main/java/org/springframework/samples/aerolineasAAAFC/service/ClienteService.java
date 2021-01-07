@@ -8,6 +8,7 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -66,5 +67,11 @@ public class ClienteService {
 	@Transactional
 	public void deleteClienteById(int id) throws DataAccessException{
 		clienteRepository.deleteById(id);
+	}
+	
+	// Historia 8: Sacar billetes comprados
+	@Transactional
+	public Collection<Billete> findBilletesByIdCliente(int idCliente){
+		return clienteRepository.findById(idCliente).get().getBilletes();
 	}
 }

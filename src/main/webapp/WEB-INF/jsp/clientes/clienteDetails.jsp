@@ -52,7 +52,10 @@
     <br/>
     <br/>
     <h2>Billetes</h2>
+    
+	<a href="<spring:url value="/clientes/${cliente.id}/compras" htmlEscape="true" />">Ver billetes</a>
 
+<!--
     <table class="table table-striped">
         <c:forEach var="billete" items="${cliente.billetes}">
         
@@ -73,6 +76,6 @@
 
         </c:forEach>
     </table> 
-
+-->
 
 </aerolineasAAAFC:layout>
