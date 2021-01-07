@@ -90,10 +90,6 @@ public class BilleteService {
 	public void saveEquipaje(Equipaje equipaje)
 			throws DataAccessException, EquipajePriceException, TooManyItemsBilleteException {
 
-		equipajeRepository.save(equipaje);
-
-		equipaje.getBillete().getId();
-
 		if (!equipajeUtils.validaPrecio(equipaje)) {
 			throw new EquipajePriceException("El precio recibido no se corresponde con el estipulado en web.");
 		}
