@@ -115,7 +115,15 @@ public class BilleteService {
 	@Transactional
 	public Collection<Billete> findBilleteConCliente() {
 		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> !x.getCliente().equals(null)).collect(Collectors.toList());
+				.filter(x->!x.getCliente().equals(null))
+				.filter(x->x.getFechaReserva().getMonth().equals(LocalDate.now().getMonth()))
+				.collect(Collectors.toList());
+	}
+
+	public Collection<Billete> findBilletePorApellido(String apellidos) {
+		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
+				.filter(x->x.getCliente().getApellidos().equals(apellidos))
+				.collect(Collectors.toList());
 	}
 
 }

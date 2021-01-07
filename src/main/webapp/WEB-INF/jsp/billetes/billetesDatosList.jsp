@@ -6,7 +6,20 @@
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
 <aerolineasAAAFC:layout pageName="billetes">
-    <h2>Listado de Billetes</h2>
+    
+    <c:if test="${empty param.apellidos}"><h2 style="float: left;">Billetes de este mes </h2></c:if>
+    <c:if test="${not empty param.apellidos}"><h2 style="float: left;">Billetes de ${param.apellidos} </h2></c:if>
+    
+    <div style="float: right;">
+	<form action="/billetes/datos" method="get">
+		<label for="apellidos">Apellidos: </label>
+   		<input name="apellidos" id="apellidos" type="text" />
+   		<button type="submit" class="btn btn-default">Buscar por apellidos</button>
+   	</form>
+	</div>
+    
+    
+  
 
     <table id="tablaBilletes" class="table table-striped">
         <thead>

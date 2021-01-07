@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BilleteController {
@@ -49,9 +50,14 @@ public class BilleteController {
 	public String processCreationBilleteForm(@Valid Billete billete, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		} else {
-
-			this.billeteService.saveBillete(billete);
+		}
+		else {
+			try {
+				this.billeteService.saveBillete(billete);
+			} catch (TooManyItemsBilleteException e) {
+				result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
+				return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+			}
 
 			return "redirect:/billetes/" + billete.getId();
 		}
@@ -74,17 +80,30 @@ public class BilleteController {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		} else {
 			billete.setId(billeteId);
-			this.billeteService.saveBillete(billete);
+      
+			try {
+				this.billeteService.saveBillete(billete);
+			} catch (TooManyItemsBilleteException e) {
+				result.rejectValue(e.getCauseF(), "many", "way too many "+e.getCauseF());
+				return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+			}
 
 			return "redirect:/billetes/{billeteId}";
 		}
 	}
 
 	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)
-	public String ShowDatosBillete(Map<String, Object> model) {
-		Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
-		model.put("billetes", billetes);
+	public String ShowDatosBillete(Map<String, Object> model,  @RequestParam(name = "apellidos", defaultValue = "") String apellidos) {
+		if(apellidos.isEmpty()) {
+			Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
+			model.put("billetes",billetes);
+		}else {
+			Collection<Billete> billetes = this.billeteService.findBilletePorApellido(apellidos);
+			model.put("billetes",billetes);
+		}
+    
 		return "billetes/billetesDatosList";
+
 	}
 
 }
