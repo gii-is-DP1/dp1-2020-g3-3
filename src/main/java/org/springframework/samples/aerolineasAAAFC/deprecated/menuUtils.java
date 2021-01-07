@@ -1,10 +1,10 @@
-package org.springframework.samples.aerolineasAAAFC.utils;
+package org.springframework.samples.aerolineasAAAFC.deprecated;
 
-import org.springframework.samples.aerolineasAAAFC.deprecated.Menu;
+import org.springframework.samples.aerolineasAAAFC.deprecated.OldMenu;
 
 public class menuUtils {
 	
-	public static Boolean validaPrecio(Menu menu) {
+	public static Boolean validaPrecio(OldMenu menu) {
 		
 		Double precio = menu.getPrecio();
 		String primerPlato = menu.getPrimerPlato();

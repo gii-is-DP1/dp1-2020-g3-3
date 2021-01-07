@@ -20,7 +20,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
-import org.springframework.samples.aerolineasAAAFC.deprecated.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
@@ -60,9 +59,9 @@ public class BilleteControllerTests {
 
 	private Billete billetazo;
 	
-	private Menu wrongMenu;
-	
-	private Set<Menu> wrongMenus = new HashSet<Menu>();
+//	private Menu wrongMenu;
+//	
+//	private Set<Menu> wrongMenus = new HashSet<Menu>();
 
 
 	@BeforeEach
@@ -81,12 +80,12 @@ public class BilleteControllerTests {
 		//billetazo.setMenus(menus);
 		//billetazo.setVuelos(vuelos);
 		
-		wrongMenu.setBillete(billetazo);
-		wrongMenu.setPostre("Bacalao");
-		wrongMenu.setPrecio(5.);
-		wrongMenu.setPrimerPlato("Caracoles");
-		wrongMenu.setSegundoPlato("CaracolesX2");
-		wrongMenus.add(wrongMenu);
+//		wrongMenu.setBillete(billetazo);
+//		wrongMenu.setPostre("Bacalao");
+//		wrongMenu.setPrecio(5.);
+//		wrongMenu.setPrimerPlato("Caracoles");
+//		wrongMenu.setSegundoPlato("CaracolesX2");
+//		wrongMenus.add(wrongMenu);
 		
 
 
@@ -170,13 +169,6 @@ public class BilleteControllerTests {
 		.andExpect(model().attributeHasFieldErrors("billete", "coste"))
 		.andExpect(view().name("billetes/createOrUpdateBilleteForm"));
 	}
-
-
-
-
-
-
-
 
 
 }

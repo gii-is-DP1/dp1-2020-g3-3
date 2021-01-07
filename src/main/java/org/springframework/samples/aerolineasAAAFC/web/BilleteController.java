@@ -5,10 +5,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,7 +37,7 @@ public class BilleteController {
 	}
 
 	/*
-	 *  Alta de un nuevo billete
+	 * Alta de un nuevo billete
 	 */
 	@GetMapping(value = "/billetes/new")
 	public String initCreationBilleteForm(Map<String, Object> model) {
@@ -50,7 +48,7 @@ public class BilleteController {
 
 	@PostMapping(value = "/billetes/new")
 	public String processCreationBilleteForm(@Valid Billete billete, BindingResult result) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		}
 		else {
@@ -76,12 +74,13 @@ public class BilleteController {
 	}
 
 	@PostMapping(value = "/billetes/{billeteId}/edit")
-	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result, @PathVariable("billeteId") int billeteId) {
-		if(result.hasErrors()) {
+	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result,
+			@PathVariable("billeteId") int billeteId) {
+		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			billete.setId(billeteId);
+      
 			try {
 				this.billeteService.saveBillete(billete);
 			} catch (TooManyItemsBilleteException e) {
@@ -93,7 +92,6 @@ public class BilleteController {
 		}
 	}
 
-
 	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)
 	public String ShowDatosBillete(Map<String, Object> model,  @RequestParam(name = "apellidos", defaultValue = "") String apellidos) {
 		if(apellidos.isEmpty()) {
@@ -103,9 +101,9 @@ public class BilleteController {
 			Collection<Billete> billetes = this.billeteService.findBilletePorApellido(apellidos);
 			model.put("billetes",billetes);
 		}
+    
 		return "billetes/billetesDatosList";
 
 	}
-
 
 }

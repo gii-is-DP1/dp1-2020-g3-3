@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "plato_types")
+@Table(name = "platos_types")
 public class PlatoType extends BaseEntity{
 
 	@Column(name = "name")

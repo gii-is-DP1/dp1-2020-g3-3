@@ -4,19 +4,13 @@ public class TooManyItemsBilleteException extends Exception{
     
 	private static final long serialVersionUID = 1L;
 	private String message;
-	private String causeF;
 	
-	public TooManyItemsBilleteException(String message, String causeF) {
+	public TooManyItemsBilleteException(String message) {
 		this.message = message;
-		this.causeF = causeF;
 	}
 	
 	public String toString() {
 		return this.message;
 	}
-	
-	public String getCauseF() {
-		return causeF;
-	}	
 	
 }

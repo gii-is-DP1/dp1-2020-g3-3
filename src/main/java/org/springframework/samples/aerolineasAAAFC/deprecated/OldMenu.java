@@ -8,9 +8,6 @@ import javax.persistence.Table;
 
 import org.springframework.samples.aerolineasAAAFC.model.BaseEntity;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
-import org.springframework.samples.aerolineasAAAFC.service.businessrules.Menu1AvailabilityConstraint;
-import org.springframework.samples.aerolineasAAAFC.service.businessrules.Menu2AvailabilityConstraint;
-import org.springframework.samples.aerolineasAAAFC.service.businessrules.Menu3AvailabilityConstraint;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,8 +19,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "menus")
-public class Menu extends BaseEntity {
+@Table(name = "oldmenus")
+public class OldMenu extends BaseEntity {
 	
 	//Atributos
 
