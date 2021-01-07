@@ -79,15 +79,6 @@ public class BilleteControllerTests {
 		billetazo.setFechaReserva(LocalDate.of(2789, 12, 03));
 		//billetazo.setMenus(menus);
 		//billetazo.setVuelos(vuelos);
-		
-//		wrongMenu.setBillete(billetazo);
-//		wrongMenu.setPostre("Bacalao");
-//		wrongMenu.setPrecio(5.);
-//		wrongMenu.setPrimerPlato("Caracoles");
-//		wrongMenu.setSegundoPlato("CaracolesX2");
-//		wrongMenus.add(wrongMenu);
-		
-
 
 		given(this.billeteService.findBilleteById(TEST_BILLETE_ID)).willReturn(billetazo);
 	}
@@ -139,8 +130,6 @@ public class BilleteControllerTests {
 //				.param("asiento", "F99")
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
-		//.param("equipajes", equipajes)
-		//.param("menus",)
 		//.param("cliente",)
 		//.param("vuelos",))
 		.andExpect(status().isOk())
@@ -159,8 +148,6 @@ public class BilleteControllerTests {
 //				.param("asiento", "F99")
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
-		//.param("equipajes", equipajes)
-		//.param("menus",wrongMenus)
 		//.param("cliente",)
 		//.param("vuelos",))
 		.andExpect(status().isOk())
