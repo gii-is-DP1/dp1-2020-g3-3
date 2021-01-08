@@ -37,7 +37,19 @@
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span>Buscar vuelos</span>
 				</aerolineasAAAFC:menuItem>
-
+				
+				<aerolineasAAAFC:menuItem active="${name eq 'aviones'}"
+					url="urlparaaviones" title="find aviones">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Buscar aviones</span>
+				</aerolineasAAAFC:menuItem>
+				
+				<aerolineasAAAFC:menuItem active="${name eq 'clientes'}"
+					url="urlparaclientes" title="find clientes">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Buscar clientes</span>
+				</aerolineasAAAFC:menuItem>
+				
 				<aerolineasAAAFC:menuItem active="${name eq 'vets'}" url="/vets"
 					title="veterinarians">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
