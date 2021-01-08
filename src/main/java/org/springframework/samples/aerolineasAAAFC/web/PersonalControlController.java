@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
@@ -164,6 +165,8 @@ public class PersonalControlController {
 		return "redirect:/personalControlList";
 	}
 	
+	//Horario del controlador
+	
 	@RequestMapping(value = { "/controladores/{pControlId}/horario" }, method = RequestMethod.GET)
 	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
 
@@ -177,6 +180,46 @@ public class PersonalControlController {
 			model.put("vuelos", this.pControlService.findVuelosByDate(pControlId, mes, año));
 		}
 		return "controladores/horario";
+	}
+	
+	// estadoAviones (H4)
+	
+	@RequestMapping(value = { "/controladores/{pControlId}/estadoAviones" }, method = RequestMethod.GET)
+	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+
+		if(fecha.isEmpty()) {
+			model.put("vuelos", this.pControlService.estadoAviones(pControlId));
+		}else {
+			fecha += "-01";
+			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			int mes = date.getMonthValue();
+			int año = date.getYear();
+			Boolean disponibilidad; //??
+			Integer horasAcumuladas; //??
+			LocalDate fechaFabricacion; //??
+			model.put("vuelos", this.pControlService.findVuelosByDate(pControlId, mes, año));
+		}
+		return "controladores/estadoAviones";
+	}
+	
+	//consulta de vuelos para conocer ruta (H9)
+	
+	@RequestMapping(value = { "/controladores/{pControlId}/" }, method = RequestMethod.GET)
+	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+
+		if(fecha.isEmpty()) {
+			model.put("vuelos", this.pControlService.rutaVuelos(pControlId));
+		}else {
+			fecha += "-01";
+			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			int mes = date.getMonthValue();
+			int año = date.getYear();
+			Aeropuerto aeropuertoOrigen; 
+			Aeropuerto aeropuertoDestino; 
+			
+			model.put("vuelos", this.pControlService.findVuelosByDate(pControlId, mes, año));
+		}
+		return "controladores/rutaVuelos";
 	}
 	
 }
