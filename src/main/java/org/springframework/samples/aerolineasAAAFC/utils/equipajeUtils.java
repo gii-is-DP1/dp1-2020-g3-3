@@ -29,8 +29,7 @@ public class equipajeUtils {
 			priceCalc = 15.;
 			break;
 		}
-		
-		
+	
 		return priceCalc;
 	}
 

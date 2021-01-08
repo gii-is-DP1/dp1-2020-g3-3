@@ -86,8 +86,11 @@ public class BilleteService {
 			if (cont1 !=1 || cont2 !=1 || cont3 != 1)
 				throw new PlatosNoValidosException(3);
 
-			else
+			else {
 				menuRepository.save(menu);
+				menu.getBillete().getMenus().add(menu);
+			}
+				
 		}
 
 	}
@@ -106,6 +109,7 @@ public class BilleteService {
 
 		else {
 			equipajeRepository.save(equipaje);
+			equipaje.getBillete().getEquipajes().add(equipaje);
 		}
 
 	}
