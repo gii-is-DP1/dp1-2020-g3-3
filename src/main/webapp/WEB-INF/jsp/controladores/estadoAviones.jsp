@@ -25,6 +25,7 @@
 					<td><c:out value="${vuelo.avion_id}" /></td>
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaFabricacion}" pattern="dd-MM-yyyy HH:mm" /></td>
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.horasAcumuladas}" pattern="dd-MM-yyy HH:mm" /></td>
+					<td><c:out value="${vuelo.aeropuertoDestino}" /></td>
 					<td><c:out value="${vuelo.disponibilidad}" /></td>
 				</tr>
 			</c:forEach>

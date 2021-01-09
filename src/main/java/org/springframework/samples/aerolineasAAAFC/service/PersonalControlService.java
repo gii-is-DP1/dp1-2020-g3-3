@@ -104,35 +104,7 @@ public class PersonalControlService {
 		
 		return res;
 	}
-	
-	/* Una solución para la historia 4 
-	 * 
-	 * consultar las fechas de fabricación y las horas acumuladas de los aviones de la empresa,
-	 * además de su estacionamiento y disponibilidad.
-	 * 
-	 */
-	
-		public Collection<Vuelo> estadoAviones(int id){ 
-			PersonalControl personal = pControlRepository.findById(id).get();
-			Set<Vuelo> vuelos = personal.getVuelos();		
-			
-			LocalDate date = LocalDate.now();
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			
-			Boolean disponibilidad; //??
-			Integer horasAcumuladas; //??
-			LocalDate fechaFabricacion; //??
-			
-			List<Vuelo> res = new ArrayList<Vuelo>();
-			
-			for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
-				if((v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) || (v.getFechaSalida().getMonthValue() == (mes + 1)  && v.getFechaSalida().getYear() == año)) res.add(v);
-			}
-			
-			return res;
 
-		}
 		
 		/* Una solución para la historia 9
 		 * 

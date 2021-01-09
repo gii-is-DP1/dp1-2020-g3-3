@@ -1,3 +1,4 @@
+<%@page import="java.sql.ResultSet"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -41,9 +42,24 @@
                 <td><c:out value="${vuelo.avion.plazasEjecutiva}"/></td>
                 <td><c:out value="${vuelo.avion.plazasPrimera}"/></td>
                 
-            <tr>
-					
 			</tr>
+			 <tr>
+            	<td> <c:out value="cantidad"/></td>
+
+                <td></td>
+                <td><c:out value="50"/></td>
+                <td><c:out value="100"/></td>
+                <td><c:out value="200"/></td>
+                
+			</tr>
+			<tr>
+
+			<td>Total posible:</td>
+			<c:set var="total" value="${vuelo.avion.plazasEconomica*50 +vuelo.avion.plazasEjecutiva*100
+			+  vuelo.avion.plazasPrimera*200  }"/>
+			<td><c:out value="${total}"/></td>
+			</tr>
+			
         </c:forEach>
         </tbody>
     </table>

@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
@@ -53,6 +54,7 @@ public class Billete extends BaseEntity{
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
 	@EqualsAndHashCode.Exclude
+	@Size(min = 0, max = 3)
 	private Set<Equipaje> equipajes;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")

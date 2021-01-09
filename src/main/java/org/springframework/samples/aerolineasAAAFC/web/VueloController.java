@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,9 @@ import org.springframework.samples.aerolineasAAAFC.service.PersonalControlServic
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.DisponibilidadAvionException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -133,6 +136,15 @@ public class VueloController {
 				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 			} 
+			catch (HorasMaximasVueloException e) {
+				result.rejectValue("horaLlegada", "invalid", "Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
+				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
+				
+			}
+			catch (DisponibilidadAvionException e) {
+				result.rejectValue("avion", "invalid", "El avión no está disponible porque debe pasar una revisión");
+				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
+			}
 			catch (ConstraintViolationException e) {
 				result.rejectValue("aeropuerto", "invalid", "El aeropuerto de salida y destino deben ser distintos");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
@@ -194,6 +206,12 @@ public class VueloController {
 			} catch (HorasImposiblesException e) {
 				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
+			} catch (HorasMaximasVueloException e) {
+				result.rejectValue("horaLlegada", "invalid", "Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
+				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
+			}catch (DisponibilidadAvionException e) {
+					result.rejectValue("avion", "invalid", "El avión no está disponible porque debe pasar una revisión");
+					return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 			}catch (ConstraintViolationException e) {
 				result.rejectValue("aeropuerto", "invalid", "El aeropuerto de salida y destino deben ser distintos");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
@@ -230,7 +248,10 @@ public class VueloController {
 			LocalDate date = LocalDate.now();
 			int mes = date.getMonthValue();
 			int año = date.getYear();
-			model.put("vuelosOferta", this.vueloService.findVuelosOfertadosByMes(mes, año));
+			
+			Collection<Vuelo> vuelos =this.vueloService.findVuelosOfertadosByMes(mes, año);
+			model.put("vuelosOferta", vuelos);
+				
 		}else {
 			fecha += "-01";
 			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));

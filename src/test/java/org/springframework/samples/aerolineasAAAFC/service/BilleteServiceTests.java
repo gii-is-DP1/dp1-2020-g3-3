@@ -28,8 +28,10 @@ import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Plato;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +54,7 @@ public class BilleteServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldInsertBilleteIntoDatabaseAndGenerateId() throws ParseException {
+	public void shouldInsertBilleteIntoDatabaseAndGenerateId() throws ParseException, HorasMaximasVueloException, DisponibilidadAvionException {
 
 
 		Vuelo vuelo = this.vueloService.findVueloById(1);

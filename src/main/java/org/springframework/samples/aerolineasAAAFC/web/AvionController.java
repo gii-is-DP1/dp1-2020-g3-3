@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -98,6 +102,26 @@ public class AvionController {
 		ModelAndView mav = new ModelAndView("aviones/avionDetails");
 		mav.addObject(this.avionService.findAvionById(avionId));
 		return mav;
+	}
+	
+	// estadoAviones (H4)
+	
+	@RequestMapping(value = { "/controladores/{pControlId}/estadoAviones" }, method = RequestMethod.GET)
+	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+
+		if(fecha.isEmpty()) {
+			model.put("vuelos", this.avionService.estadoAviones(pControlId));
+		}else {
+			fecha += "-01";
+			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			int mes = date.getMonthValue();
+			int año = date.getYear();
+			Boolean disponibilidad; //??
+			Integer horasAcumuladas; //??
+			LocalDate fechaFabricacion; //??
+			model.put("vuelos", this.avionService.findAviones());
+		}
+		return "controladores/estadoAviones";
 	}
 
 }

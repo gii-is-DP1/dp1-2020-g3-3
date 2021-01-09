@@ -13,7 +13,7 @@
     <h2>Find Controladores</h2>
 
     
-    <form:form modelAttribute="controlador" action="/controladores" method="get" class="form-horizontal"
+    <form:form modelAttribute="personalControl" action="/controladores" method="get" class="form-horizontal"
                id="search-owner-form">
         <div class="form-group">
             <div class="control-group" id="nif">

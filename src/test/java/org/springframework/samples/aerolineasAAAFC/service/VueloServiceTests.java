@@ -20,10 +20,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
+import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.DisponibilidadAvionException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoErroneoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +46,12 @@ public class VueloServiceTests {
 	
 	@Autowired
 	protected AeropuertoService aeroService;
+	
+	@Autowired
+	protected PersonalControlService pControlService;
+	
+	@Autowired
+	protected AzafatoService AzafatoService;
 	
 	
 	//TEST DE CONSULTA
@@ -110,7 +121,7 @@ public class VueloServiceTests {
 		
 		Vuelo vuelo = new Vuelo();
 		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
-		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 2, 15, 23));
+		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 1, 19, 23));
 		vuelo.setCoste(42.0);
 		vuelo.setBilletes(new HashSet<>());
 		vuelo.setPersonalOficina(new HashSet<>());
@@ -140,10 +151,32 @@ public class VueloServiceTests {
 		}
 		vuelo.setAeropuertoDestino(aeroDest);
 		
+		Set<PersonalControl> personalControl = new HashSet<>();
+		personalControl.add(pControlService.findPersonalControlById(1));
+		personalControl.add(pControlService.findPersonalControlById(4));
+		personalControl.add(pControlService.findPersonalControlById(5));
+		vuelo.setPersonalControl(personalControl);
+		
+		vuelo.setAvion(avionService.findAvionById(1));
+		
+		Set<Azafato> azafatos = new HashSet<>();
+		azafatos.add(AzafatoService.findAzafatoById(1));
+		azafatos.add(AzafatoService.findAzafatoById(2));
+		azafatos.add(AzafatoService.findAzafatoById(3));
+		azafatos.add(AzafatoService.findAzafatoById(4));
+		azafatos.add(AzafatoService.findAzafatoById(5));
+		azafatos.add(AzafatoService.findAzafatoById(6));
+		azafatos.add(AzafatoService.findAzafatoById(7));
+		vuelo.setAzafatos(azafatos);
+		
 		try {
 			this.vueloService.saveVuelo(vuelo);
 		} catch (HorasImposiblesException ex) {
 			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+		}catch (HorasMaximasVueloException ex1) {
+			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex1);
+		}catch (DisponibilidadAvionException ex2) {
+			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex2);
 		}
 //		catch (DataIntegrityViolationException ex) {
 //			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,7 +196,7 @@ public class VueloServiceTests {
 		
 		Vuelo vuelo = new Vuelo();
 		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
-		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 2, 15, 23));
+		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 1, 20, 23));
 		vuelo.setCoste(42.0);
 		
 		Aeropuerto aeroOri = new Aeropuerto();
@@ -180,6 +213,25 @@ public class VueloServiceTests {
 		
 		
 		vuelo.setAeropuertoDestino(aeroOri);
+		
+		Set<PersonalControl> personalControl = new HashSet<>();
+		personalControl.add(pControlService.findPersonalControlById(1));
+		personalControl.add(pControlService.findPersonalControlById(4));
+		personalControl.add(pControlService.findPersonalControlById(5));
+		vuelo.setPersonalControl(personalControl);
+		
+		vuelo.setAvion(avionService.findAvionById(1));
+		
+		Set<Azafato> azafatos = new HashSet<>();
+		azafatos.add(AzafatoService.findAzafatoById(1));
+		azafatos.add(AzafatoService.findAzafatoById(2));
+		azafatos.add(AzafatoService.findAzafatoById(3));
+		azafatos.add(AzafatoService.findAzafatoById(4));
+		azafatos.add(AzafatoService.findAzafatoById(5));
+		azafatos.add(AzafatoService.findAzafatoById(6));
+		azafatos.add(AzafatoService.findAzafatoById(7));
+		vuelo.setAzafatos(azafatos);
+		
 		
 		Assertions.assertThrows(ConstraintViolationException.class, ()->{ this.vueloService.saveVuelo(vuelo); });
 		
@@ -223,6 +275,24 @@ public class VueloServiceTests {
 			Logger.getLogger(AeropuertoServiceTests.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		vuelo.setAeropuertoDestino(aeroDest);
+		
+		Set<PersonalControl> personalControl = new HashSet<>();
+		personalControl.add(pControlService.findPersonalControlById(1));
+		personalControl.add(pControlService.findPersonalControlById(4));
+		personalControl.add(pControlService.findPersonalControlById(5));
+		vuelo.setPersonalControl(personalControl);
+		
+		vuelo.setAvion(avionService.findAvionById(1));
+		
+		Set<Azafato> azafatos = new HashSet<>();
+		azafatos.add(AzafatoService.findAzafatoById(1));
+		azafatos.add(AzafatoService.findAzafatoById(2));
+		azafatos.add(AzafatoService.findAzafatoById(3));
+		azafatos.add(AzafatoService.findAzafatoById(4));
+		azafatos.add(AzafatoService.findAzafatoById(5));
+		azafatos.add(AzafatoService.findAzafatoById(6));
+		azafatos.add(AzafatoService.findAzafatoById(7));
+		vuelo.setAzafatos(azafatos);
 		
 		Assertions.assertThrows(HorasImposiblesException.class, ()->{ this.vueloService.saveVuelo(vuelo); });
 		vuelos = this.vueloService.findVuelos();
@@ -270,7 +340,7 @@ public class VueloServiceTests {
 	@Transactional
 	public void shouldFindVueloByDate() {
 		
-		Collection<Vuelo> vuelos = this.vueloService.findVuelosByMes(12, 2020);
+		Collection<Vuelo> vuelos = this.vueloService.findVuelosByMes(01, 2018);
 		int found = vuelos.size();
 		
 		assertThat(found).isEqualTo(1);
