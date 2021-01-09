@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.PlatoBaseService;
@@ -36,7 +35,6 @@ public class MenuController {
 		this.billeteService = billeteService;
 		this.platoBaseService = platoBaseService;
 	}
-	
 	
 	@ModelAttribute("platos_primeros")
 	public Collection<String> populatePlatosPrimeros() {
@@ -75,12 +73,15 @@ public class MenuController {
 				this.billeteService.saveMenu(menu);
 			} catch (DataAccessException e) {
 				e.printStackTrace();
+				return VIEWS_MENU_CREATE_FORM;
 			} catch (TooManyItemsBilleteException e) {
 				result.reject(e.getMessage());
 				e.printStackTrace();
+				return VIEWS_MENU_CREATE_FORM;
 			} catch (PlatosNoValidosException e) {
 				result.reject(e.getMessage());
 				e.printStackTrace();
+				return VIEWS_MENU_CREATE_FORM;
 			}
 			return "redirect:/billetes/datos";
 		}

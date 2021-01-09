@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
-import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
+import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
+import org.springframework.samples.aerolineasAAAFC.model.equipaje.EquipajeBase;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Plato;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.DisponibilidadAvionException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
@@ -47,7 +48,9 @@ public class BilleteServiceTests {
 	
 	@Autowired
 	protected PlatoBaseService platoBaseService;
-
+	
+	@Autowired
+	protected EquipajeBaseService equipajeBaseService;
 
 	@Test
 	@Transactional
@@ -248,24 +251,23 @@ public class BilleteServiceTests {
 		int found = equipajes.size();
 		
 		Billete b = this.billeteService.findBilleteById(1);
+		EquipajeBase eb = this.equipajeBaseService.findEquipajeBaseByName("Grande");
 		
 		Equipaje e = new Equipaje();
 		e.setBillete(b);
-		e.setDimensiones("110x110x78");
 		e.setPeso(21);
-		e.setPrecio(30.);
+		e.setEquipajeBase(eb);
 			
 		try {
 			this.billeteService.saveEquipaje(e);
 		} catch (DataAccessException e1) {
-			e1.printStackTrace();
-		} catch (EquipajePriceException e1) {
 			e1.printStackTrace();
 		} catch (TooManyItemsBilleteException e1) {
 			e1.printStackTrace();
 		}
 		equipajes = this.billeteService.findEquipajes();
 		assertThat(equipajes.size()).isEqualTo(found + 1);
+		assertThat(e.getId()).isNotNull();
 	}
 	
 	@Test
@@ -273,34 +275,30 @@ public class BilleteServiceTests {
 	public void shouldNotInsertTooManyEquipajesIntoDatabase() {
 		Billete b = this.billeteService.findBilleteById(1);
 		
+		EquipajeBase eb = this.equipajeBaseService.findEquipajeBaseByName("Grande");
+		
 		Equipaje e = new Equipaje();
 		e.setBillete(b);
-		e.setDimensiones("110x110x78");
 		e.setPeso(21);
-		e.setPrecio(30.);
+		e.setEquipajeBase(eb);
 		Equipaje e1 = new Equipaje();
 		e1.setBillete(b);
-		e1.setDimensiones("110x110x78");
 		e1.setPeso(21);
-		e1.setPrecio(30.);
+		e1.setEquipajeBase(eb);
 		Equipaje e2 = new Equipaje();
 		e2.setBillete(b);
-		e2.setDimensiones("110x110x78");
 		e2.setPeso(21);
-		e2.setPrecio(30.);
+		e2.setEquipajeBase(eb);
 		Equipaje e3 = new Equipaje();
 		e3.setBillete(b);
-		e3.setDimensiones("110x110x78");
-		e3.setPeso(21);
-		e3.setPrecio(30.);	
+		e3.setPeso(21);	
+		e3.setEquipajeBase(eb);
 			
 		try {
 			this.billeteService.saveEquipaje(e);
 			this.billeteService.saveEquipaje(e1);
 			this.billeteService.saveEquipaje(e2);
 		} catch (DataAccessException ex) {
-			ex.printStackTrace();
-		} catch (EquipajePriceException ex) {
 			ex.printStackTrace();
 		} catch (TooManyItemsBilleteException ex) {
 			ex.printStackTrace();
@@ -311,16 +309,16 @@ public class BilleteServiceTests {
 	
 	@Test
 	@Transactional
-	public void shouldNotInsertEquipajeWithWrongPrice() {
+	public void shouldNotInsertEquipajeWithWrongWeight() {
 		Billete b = this.billeteService.findBilleteById(1);
+		EquipajeBase eb = this.equipajeBaseService.findEquipajeBaseByName("Grande");
 		
 		Equipaje e = new Equipaje();
 		e.setBillete(b);
-		e.setDimensiones("110x110x78");
-		e.setPeso(21);
-		e.setPrecio(30.2);
+		e.setPeso(2);
+		e.setEquipajeBase(eb);
 			
-		Assertions.assertThrows(EquipajePriceException.class, () ->{
+		Assertions.assertThrows(ConstraintViolationException.class, () ->{
 			this.billeteService.saveEquipaje(e);});
 	}
 

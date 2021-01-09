@@ -1,20 +1,23 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
+import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
+import org.springframework.samples.aerolineasAAAFC.model.equipaje.EquipajeBase;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
+import org.springframework.samples.aerolineasAAAFC.service.EquipajeBaseService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -25,14 +28,22 @@ public class EquipajeController {
 	
 	private final BilleteService billeteService;
 	
+	private final EquipajeBaseService equipajeBaseService;
+	
 	@Autowired
-	public EquipajeController(BilleteService billeteService) {
+	public EquipajeController(BilleteService billeteService, EquipajeBaseService equipajeBaseService) {
 		this.billeteService = billeteService;
+		this.equipajeBaseService = equipajeBaseService;
 	}
 	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
+	}
+	
+	@ModelAttribute("equipajes")
+	public Collection<EquipajeBase> populateEquipajeTypes() {
+		return this.equipajeBaseService.findEquipamientosSize();
 	}
 	
 	@GetMapping(value = "/billetes/{billeteId}/equipajes/new")
@@ -50,15 +61,15 @@ public class EquipajeController {
 		else {
 			try {
 				this.billeteService.saveEquipaje(equipaje);
-			} catch (DataAccessException e) {
-				e.printStackTrace();
-			} catch (EquipajePriceException e) {
-				result.reject(e.getMessage());
-				e.printStackTrace();
 			} catch (TooManyItemsBilleteException e) {
 				result.reject(e.getMessage());
 				e.printStackTrace();
+				return VIEWS_EQUIPAJE_CREATE_FORM;
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+				return VIEWS_EQUIPAJE_CREATE_FORM;
 			}
+			
 			return "redirect:/billetes/datos";
 		}
 	}
