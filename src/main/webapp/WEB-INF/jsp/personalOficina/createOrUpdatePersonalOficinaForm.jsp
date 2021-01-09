@@ -19,6 +19,8 @@
             <aerolineasAAAFC:inputField label="Salario" name="salario"/>
 			<aerolineasAAAFC:inputField label="Username" name="user.username" />
 			<aerolineasAAAFC:inputField label="Password" name="user.password" type="password" />
+			
+			<form:errors> </form:errors>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

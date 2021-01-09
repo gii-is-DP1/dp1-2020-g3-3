@@ -4,11 +4,11 @@ INSERT INTO users(username,password,enabled) VALUES ('admin','4dm1n',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (1,'admin','admin');
 
 --Clientes
-INSERT INTO users(username,password,enabled) VALUES ('marSoRa','Fly_High14&',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (2,'marSoRa','cliente');
+INSERT INTO users(username,password,enabled) VALUES ('01446551N','Fly_High14&',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (2,'01446551N','cliente');
 
-INSERT INTO users(username,password,enabled) VALUES ('dolRamCe','Fly_Low14&',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (3,'dolRamCe','cliente');
+INSERT INTO users(username,password,enabled) VALUES ('29565800A','Fly_Low14&',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (3,'29565800A','cliente');
 
 --Personal Control
 INSERT INTO users(username,password,enabled) VALUES ('48736253T','P9012%adsa',TRUE);
@@ -159,9 +159,9 @@ VALUES ('Sergio','Ferreo Quintán','39658948W','ES 4820381461196657997548',1800,
 
 --Clientes
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username)
-VALUES ('María', 'Soto Ramírez', '01446551N', 'C/Enladrillada,2 1ºB Sevilla', 'ES 7771056418401234567893', '1995-03-08','marisotoram@hotmail.com','marSoRa');
+VALUES ('María', 'Soto Ramírez', '01446551N', 'C/Enladrillada,2 1ºB Sevilla', 'ES 7771056418401234567893', '1995-03-08','marisotoram@hotmail.com','01446551N');
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username)
-VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 - 41011 Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','dolRamCe'); 
+VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 - 41011 Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','29565800A'); 
 
 --Idiomas
 INSERT INTO idioma_types(idioma) VALUES ('ES');
