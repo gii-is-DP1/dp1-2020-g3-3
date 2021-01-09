@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
-<aerolineasAAAFC:layout pageName="oficinistas">
+<aerolineasAAAFC:layout pageName="personalOficina">
 
     <h2>Información del Personal de Oficina</h2>
 
@@ -31,7 +31,7 @@
         
     </table>
 
-  	<spring:url value="/oficinistas/{pOficinaId}/edit" var="editUrl">
+  	<spring:url value="/personalOficina/{pOficinaId}/edit" var="editUrl">
         <spring:param name="pOficinaId" value="${personalOficina.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Oficinista</a>

@@ -32,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class PersonalOficinaController {
 
-	private static final String VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM = "oficinistas/createOrUpdatePersonalOficinaForm";
+	private static final String VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM = "personalOficina/createOrUpdatePersonalOficinaForm";
 	
 	private final PersonalOficinaService pOficinaService;
 	
@@ -56,14 +56,14 @@ public class PersonalOficinaController {
 	/*
 	 * Alta de un nuevo oficinista
 	 */
-	@GetMapping(value = "/oficinistas/new")
+	@GetMapping(value = "/personalOficina/new")
 	public String initCreationPersonalOficinaForm(Map<String, Object> model) {
 		PersonalOficina pOficina = new PersonalOficina();
-		model.put("pOficina", pOficina);
+		model.put("personalOficina", pOficina);
 		return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 	}
 	
-	@PostMapping(value = "/oficinistas/new")
+	@PostMapping(value = "/personalOficina/new")
 	public String processCreationPersonalOficinaForm(@Valid PersonalOficina pOficina, BindingResult result) {
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
@@ -79,21 +79,21 @@ public class PersonalOficinaController {
 				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			}
 			
-			return "redirect:/oficinistas/" + pOficina.getId() ;
+			return "redirect:/personalOficina/" + pOficina.getId() ;
 		}
 	}
 	
 	/*
 	 *  Update sobre un oficinista
 	 */
-	@GetMapping(value = "/oficinistas/{pOficinaId}/edit")
+	@GetMapping(value = "/personalOficina/{pOficinaId}/edit")
 	public String initUpdatePersonalOficinaForm(@PathVariable("pOficinaId") int pOficinaId, Model model) {
 		PersonalOficina pOficina = this.pOficinaService.findPersonalOficinaById(pOficinaId);
 		model.addAttribute(pOficina);
 		return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 	}
 	
-	@PostMapping(value = "/oficinistas/{pOficinaId}/edit")
+	@PostMapping(value = "/personalOficina/{pOficinaId}/edit")
 	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina pOficina, BindingResult result, @PathVariable("pOficinaId") int pOficinaId) {
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
@@ -101,7 +101,7 @@ public class PersonalOficinaController {
 		else {
 			pOficina.setId(pOficinaId);
 			PersonalOficina pOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
-			BeanUtils.copyProperties(pOficina, pOficinaToUpdate, "id","nif","username");
+			BeanUtils.copyProperties(pOficina, pOficinaToUpdate, "id","nif","iban");
 			try {
 				this.pOficinaService.savePersonalOficina(pOficina);
 			} catch (DataIntegrityViolationException e) {
@@ -112,7 +112,7 @@ public class PersonalOficinaController {
 				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			}
 			
-			return "redirect:/oficinistas/{pOficinaId}";
+			return "redirect:/personalOficina/{pOficinaId}";
 		}
 	}
 	
@@ -120,18 +120,18 @@ public class PersonalOficinaController {
 	 * Vistas de consulta
 	 */
 	
-	@GetMapping(value = "/oficinistas")
+	@GetMapping(value = "/personalOficina")
 	public String showPersonalOficinaList(Map<String, Object> model) {
 		List<PersonalOficina> oficinistas = new ArrayList<PersonalOficina>();
 		oficinistas.addAll(this.pOficinaService.findPersonal());
-		model.put("oficinistas", oficinistas);
+		model.put("personalOficina", oficinistas);
 		
-		return "oficinistas/personalOficinaList";
+		return "personalOficina/personalOficinaList";
 	}
 	
-	@GetMapping("/oficinistas/{pOficinaId}")
+	@GetMapping("/personalOficina/{pOficinaId}")
 	public ModelAndView showAvion(@PathVariable("pOficinaId") int pOficinaId) {
-		ModelAndView mav = new ModelAndView("oficinistas/oficinistaDetails");
+		ModelAndView mav = new ModelAndView("personalOficina/oficinistaDetails");
 		mav.addObject(this.pOficinaService.findPersonalOficinaById(pOficinaId));
 		return mav;
 	}
