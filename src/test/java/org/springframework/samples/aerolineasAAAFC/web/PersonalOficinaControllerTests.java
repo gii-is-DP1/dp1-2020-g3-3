@@ -85,17 +85,17 @@ public class PersonalOficinaControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/oficinistas/new"))
+		mockMvc.perform(get("/personalOficina/new"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeExists("pOficina"))
-		.andExpect(view().name("oficinistas/createOrUpdatePersonalOficinaForm"));
+		.andExpect(model().attributeExists("personalOficina"))
+		.andExpect(view().name("personalOficina/createOrUpdatePersonalOficinaForm"));
 	}
 
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/oficinistas/new")
+		mockMvc.perform(post("/personalOficina/new")
 				.param("nombre", "Kenneth")
 				.param("apellidos", "Downing Jr")
 				.with(csrf())
@@ -110,7 +110,7 @@ public class PersonalOficinaControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception {
-		mockMvc.perform(post("/oficinistas/new")
+		mockMvc.perform(post("/personalOficina/new")
 				.with(csrf())
 				.param("nombre", "Kenneth")
 				.param("apellidos", "Downing Jr")
@@ -120,7 +120,7 @@ public class PersonalOficinaControllerTests {
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("personalOficina"))
 		.andExpect(model().attributeHasFieldErrors("personalOficina", "salario"))
-		.andExpect(view().name("oficinistas/createOrUpdatePersonalOficinaForm"));
+		.andExpect(view().name("personalOficina/createOrUpdatePersonalOficinaForm"));
 	}
 
 
@@ -130,20 +130,20 @@ public class PersonalOficinaControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdatePersonalOficinaFormSuccess() throws Exception {
-		mockMvc.perform(post("/oficinistas/{pOficinaId}/edit", TEST_PERSONALOFICINA_ID)
+		mockMvc.perform(post("/personalOficina/{pOficinaId}/edit", TEST_PERSONALOFICINA_ID)
 				.with(csrf())
 				.param("nombre", "Joe")
 				.param("apellidos", "Bloggs")
-				.param("nif", "29763330X")
+				.param("nif", "94630103F")
 				.param("iban", "ES 4433300418454322567812")
-				.param("salario", "4312"))
-		.andExpect(view().name("redirect:/oficinistas/{pOficinaId}"));
+				.param("salario", "4312.0"))
+		.andExpect(view().name("redirect:/personalOficina/{pOficinaId}"));
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdatePersonalOficinaFormError() throws Exception {
-		mockMvc.perform(post("/oficinistas/{pOficinaId}/edit", TEST_PERSONALOFICINA_ID)
+		mockMvc.perform(post("/personalOficina/{pOficinaId}/edit", TEST_PERSONALOFICINA_ID)
 				.with(csrf())
 				.param("nombre", "Joe")
 				.param("apellidos", "Bloggs")
@@ -151,11 +151,11 @@ public class PersonalOficinaControllerTests {
 				.param("iban", "nosoyuniban")
 				.param("salario", "soyunString"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("pOficina"))
+		.andExpect(model().attributeHasErrors("personalOficina"))
 		.andExpect(model().attributeHasFieldErrors("personalOficina", "nif"))
 		.andExpect(model().attributeHasFieldErrors("personalOficina", "iban"))
 		.andExpect(model().attributeHasFieldErrors("personalOficina", "salario"))
-		.andExpect(view().name("oficinistas/createOrUpdatePersonalOficinaForm"));
+		.andExpect(view().name("personalOficina/createOrUpdatePersonalOficinaForm"));
 	}
 
 

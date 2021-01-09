@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
-<aerolineasAAAFC:layout pageName="oficinistas">
+<aerolineasAAAFC:layout pageName="personalOficina">
     <h2>
         <c:if test="${personalOficina['new']}">Nuevo </c:if> Oficinista
     </h2>
@@ -17,6 +17,8 @@
             <aerolineasAAAFC:inputField label="NIF" name="nif"/>
             <aerolineasAAAFC:inputField label="IBAN" name="iban"/>
             <aerolineasAAAFC:inputField label="Salario" name="salario"/>
+			<aerolineasAAAFC:inputField label="Username" name="user.username" />
+			<aerolineasAAAFC:inputField label="Password" name="user.password" type="password" />
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

@@ -13,7 +13,7 @@
     <h2>Find Oficinistas</h2>
 
     
-    <form:form modelAttribute="personalOficina" action="/oficinistas" method="get" class="form-horizontal"
+    <form:form modelAttribute="personalOficina" action="/personalOficina" method="get" class="form-horizontal"
                id="search-owner-form">
         <div class="form-group">
             <div class="control-group" id="nif">
@@ -34,7 +34,7 @@
 
     <br/> 
     <sec:authorize access="hasAuthority('admin')">
-		<a class="btn btn-default" href='<spring:url value="/oficinistas/new" htmlEscape="true"/>'>Añadir Oficinista</a>
+		<a class="btn btn-default" href='<spring:url value="/personalOficina/new" htmlEscape="true"/>'>Añadir Oficinista</a>
 	</sec:authorize>
 	
 </aerolineasAAAFC:layout>

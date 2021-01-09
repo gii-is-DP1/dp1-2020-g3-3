@@ -7,7 +7,7 @@
 
 <!-- Archivo .jsp que muestra el listado de todos los oficinistas -->
 
-<aerolineasAAAFC:layout pageName="oficinistas">
+<aerolineasAAAFC:layout pageName="personalOficina">
     <h2>Personal de oficina</h2>
 
     <table id="tablaPersonalOficina" class="table table-striped">
@@ -26,7 +26,7 @@
         <c:forEach items="${oficinistas}" var="oficinista">
             <tr>
                 <td>
-                    <spring:url value="/oficinistas/{pOficinaId}" var="pOficinaUrl">
+                    <spring:url value="/personalOficina/{pOficinaId}" var="pOficinaUrl">
                         <spring:param name="pOficinaId" value="${oficinista.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(pOficinaUrl)}"><c:out value="${oficinista.id}"/></a>
@@ -47,7 +47,7 @@
                     <c:out value="${oficinista.salario}"/>
                 </td>
                 <td>
-                	<spring:url value="/oficinistas/{pOficinaId}/edit" var="pOficinaUrl">
+                	<spring:url value="/personalOficina/{pOficinaId}/edit" var="pOficinaUrl">
         			<spring:param name="pOficinaId" value="${oficinista.id}"/>
     				</spring:url>
     				<a href="${fn:escapeXml(pOficinaUrl)}" class="btn btn-default">Editar oficinista</a>
@@ -56,4 +56,5 @@
         </c:forEach>
         </tbody>
     </table>
+    <a href="<spring:url value="/personalOficina/new" htmlEscape="true" />">Nuevo oficinista</a>
 </aerolineasAAAFC:layout>
