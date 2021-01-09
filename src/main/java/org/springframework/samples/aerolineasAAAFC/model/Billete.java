@@ -71,6 +71,7 @@ public class Billete extends BaseEntity{
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "vuelo_id")
+	@EqualsAndHashCode.Exclude 
 	private Vuelo vuelos;
 
 	public String toString() {

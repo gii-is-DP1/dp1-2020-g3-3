@@ -18,17 +18,16 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "menus")
 public class Menu extends BaseEntity {
-	
-	//Atributos
-	
-	@ManyToOne(optional=false)
+
+	// Atributos
+
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "billete_id")
-	@EqualsAndHashCode.Exclude 
+	@EqualsAndHashCode.Exclude
 	private Billete billete;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "menu")
 	@EqualsAndHashCode.Exclude
 	private Set<Plato> platos;
-	
 
 }

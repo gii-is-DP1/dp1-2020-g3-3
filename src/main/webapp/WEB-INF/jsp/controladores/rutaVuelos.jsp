@@ -6,27 +6,26 @@
 
 <aerolineasAAAFC:layout pageName="controladores">
 
-	<h2>Estado del avión</h2>
+	<h2>Detalles del vuelo para planificar ruta</h2>
 
 
 	<table id="tablaVuelos" class="table table-striped">
 		<thead>
 			<tr>
-				<th width="25%">Id avión</th>
-				<th width="25%">Fecha fabricación</th>
-				<th width="25%">Horas acumuladas</th>
-				<th width="25%">Estacionamiento</th> 
-				<th width="25%">Disponibilidad</th>
+				<th width="25%">ID</th>
+				<th width="25%">Fecha de Salida</th>
+				<th width="25%">Fecha de Llegada</th>
+				<th width="25%">Aeropuerto de Salida</th>
+				<th width="25%">Aeropuerto de Llegada</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${vuelos}" var="vuelo">
 				<tr>
-					<td><c:out value="${vuelo.avion_id}" /></td>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaFabricacion}" pattern="dd-MM-yyyy HH:mm" /></td>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.horasAcumuladas}" pattern="dd-MM-yyy HH:mm" /></td>
-					<td><c:out value="${vuelo.aeropuertoDestino}" /></td>
-					<td><c:out value="${vuelo.disponibilidad}" /></td>
+					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
+					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm" /></td>
+					<td><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}" /></td>
+					<td><c:out value="${vuelo.aeropuertoDestino.codigoIATA}" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>

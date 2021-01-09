@@ -10,13 +10,13 @@
     <h2>
         <c:if test="${personalControl['new']}">Nuevo </c:if> Controlador
     </h2>
-    <form:form modelAttribute="controlador" class="form-horizontal" id="add-controlador-form">
+    <form:form modelAttribute="personalControl" class="form-horizontal" id="add-controlador-form">
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Nombre" name="nombre"/>
             <aerolineasAAAFC:inputField label="Apellidos" name="apellidos"/>
             <aerolineasAAAFC:inputField label="NIF" name="nif"/>
             <aerolineasAAAFC:inputField label="IBAN" name="iban"/>
-             <aerolineasAAAFC:inputField label="Rol" name="rol"/>
+            <aerolineasAAAFC:selectField label="Rol" name="rol" names="${rol}"/>
             <aerolineasAAAFC:inputField label="Salario" name="salario"/>
         </div>
         <div class="form-group">

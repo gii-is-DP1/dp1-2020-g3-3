@@ -259,3 +259,6 @@ INSERT INTO menus(billete_id) VALUES (1);
 INSERT INTO platos(menu_id, platos_base_id) VALUES (1,1);
 INSERT INTO platos(menu_id, platos_base_id) VALUES (1,12);
 INSERT INTO platos(menu_id, platos_base_id) VALUES (1,27);
+
+--Equipaje
+INSERT INTO equipajes(billete_id, peso, dimensiones, precio) VALUES (1,15,'110x110x78',30.0);

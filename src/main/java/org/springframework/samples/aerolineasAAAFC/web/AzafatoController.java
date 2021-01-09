@@ -17,7 +17,6 @@ import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
-import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -8,8 +8,10 @@ public class PlatosNoValidosException extends Exception{
 	public PlatosNoValidosException(int code) {
 		if(code == 1)
 			this.message = "Ha escogido muy pocos platos.";
-		else
+		else if(code == 2)
 			this.message = "Ha escogido un plato inexistente.";
+		else if(code == 3)
+			this.message = "Ha escogido demasiados platos primeros, segundos o postres.";
 	}
 	
 	public String toString() {

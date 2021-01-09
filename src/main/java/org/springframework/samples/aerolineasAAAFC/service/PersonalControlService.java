@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
@@ -103,6 +104,36 @@ public class PersonalControlService {
 		
 		return res;
 	}
+
+		
+		/* Una solución para la historia 9
+		 * 
+		 * Conocer los aeropuertos de salida y destino asociados a los vuelos,
+		 * para conocer la ruta de vuelo con antelación.
+		 *
+		 */
+		
+			public Collection<Vuelo> rutaVuelos(int id){ 
+				PersonalControl personal = pControlRepository.findById(id).get();
+				Set<Vuelo> vuelos = personal.getVuelos();		
+				
+				LocalDate date = LocalDate.now();
+				int mes = date.getMonthValue();
+				int año = date.getYear();
+				
+				Aeropuerto aeropuertoOrigen; //??
+				Aeropuerto aeropuertoDestino; //??
+				
+				
+				List<Vuelo> res = new ArrayList<Vuelo>();
+				
+				for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
+					if((v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) || (v.getFechaSalida().getMonthValue() == (mes + 1)  && v.getFechaSalida().getYear() == año)) res.add(v);
+				}
+				
+				return res;
+
+			}
 	
 
 }
