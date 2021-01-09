@@ -182,42 +182,18 @@ public class PersonalControlController {
 		return "controladores/horario";
 	}
 	
-	// estadoAviones (H4)
-	
-	@RequestMapping(value = { "/controladores/{pControlId}/estadoAviones" }, method = RequestMethod.GET)
-	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
 
-		if(fecha.isEmpty()) {
-			model.put("vuelos", this.pControlService.estadoAviones(pControlId));
-		}else {
-			fecha += "-01";
-			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			Boolean disponibilidad; //??
-			Integer horasAcumuladas; //??
-			LocalDate fechaFabricacion; //??
-			model.put("vuelos", this.pControlService.findVuelosByDate(pControlId, mes, año));
-		}
-		return "controladores/estadoAviones";
-	}
 	
-	//consulta de vuelos para conocer ruta (H9)
+	//consulta de vuelos para conocer ruta (H9) ??
 	
 	@RequestMapping(value = { "/controladores/{pControlId}/" }, method = RequestMethod.GET)
-	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+	public String consultaVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "aeropuertoOrigen", defaultValue = "") String aeropuertoOrigen) {
 
-		if(fecha.isEmpty()) {
+		if(aeropuertoOrigen.isEmpty()) {
 			model.put("vuelos", this.pControlService.rutaVuelos(pControlId));
 		}else {
-			fecha += "-01";
-			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			Aeropuerto aeropuertoOrigen; 
 			Aeropuerto aeropuertoDestino; 
-			
-			model.put("vuelos", this.pControlService.findVuelosByDate(pControlId, mes, año));
+			model.put("vuelos", this.pControlService.rutaVuelos(pControlId));
 		}
 		return "controladores/rutaVuelos";
 	}

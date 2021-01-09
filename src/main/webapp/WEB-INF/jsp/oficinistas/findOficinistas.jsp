@@ -13,7 +13,7 @@
     <h2>Find Oficinistas</h2>
 
     
-    <form:form modelAttribute="oficinista" action="/oficinistas" method="get" class="form-horizontal"
+    <form:form modelAttribute="personalOficina" action="/oficinistas" method="get" class="form-horizontal"
                id="search-owner-form">
         <div class="form-group">
             <div class="control-group" id="nif">
