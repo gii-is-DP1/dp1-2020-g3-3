@@ -188,5 +188,10 @@ INSERT INTO platos(menu_id, platos_base_id) VALUES (1,1);
 INSERT INTO platos(menu_id, platos_base_id) VALUES (1,12);
 INSERT INTO platos(menu_id, platos_base_id) VALUES (1,27);
 
+--Equipaje Base
+INSERT INTO equipajes_base(name, dimensiones, precio) VALUES ('Grande','110x110x78',30.0);
+INSERT INTO equipajes_base(name, dimensiones, precio) VALUES ('Mediano','60x60x42',22.0);
+INSERT INTO equipajes_base(name, dimensiones, precio) VALUES ('Pequeño','36x36x26',15.0);
+
 --Equipaje
-INSERT INTO equipajes(billete_id, peso, dimensiones, precio) VALUES (1,15,'110x110x78',30.0);
+INSERT INTO equipajes(billete_id, peso, equipajes_base_id) VALUES (1,15,1);

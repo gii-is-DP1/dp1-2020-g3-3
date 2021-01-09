@@ -7,6 +7,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
+import org.springframework.samples.aerolineasAAAFC.model.equipaje.EquipajeBase;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
@@ -23,30 +25,12 @@ class ValidatorTests {
 	public void shouldNotValidateEquipajeMedidasNoValido() {
 
 		Equipaje equipaje = new Equipaje();
-
-		equipaje.setDimensiones("11x110x78");
-		equipaje.setPeso(24);
-		equipaje.setPrecio(30.);
+		EquipajeBase eb = new EquipajeBase();
 		
-		Validator validator = createValidator();
-		Set<ConstraintViolation<Equipaje>> constraintViolations = validator.validate(equipaje);
+		eb.setDimensiones("110x110x78");
+		eb.setPrecio(30.);
 
-		assertThat(constraintViolations.size()).isEqualTo(1);
-		ConstraintViolation<Equipaje> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("dimensiones");
-		assertThat(violation.getMessage()).isEqualTo("Las medidas del equipaje deben ser las definidas por la página");
-
-	}
-	
-	@Test
-	@Transactional
-	public void shouldNotValidateEquipajePesoNoValido() {
-
-		Equipaje equipaje = new Equipaje();
-
-		equipaje.setDimensiones("110x110x78");
-		equipaje.setPeso(2);
-		equipaje.setPrecio(30.);
+		equipaje.setPeso(34);
 		
 		Validator validator = createValidator();
 		Set<ConstraintViolation<Equipaje>> constraintViolations = validator.validate(equipaje);

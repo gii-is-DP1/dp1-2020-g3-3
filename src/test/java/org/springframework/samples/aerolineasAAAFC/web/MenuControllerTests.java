@@ -110,7 +110,6 @@ public class MenuControllerTests {
 		mockMvc.perform(post("/billetes/{billeteId}/menus/new",TEST_BILLETE_ID)
 				.with(csrf())
 				.param("platos", "Esta entidad es un infierno", "Risotto vegetal", "Manzana"))
-		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("menu"))
 		.andExpect(model().attributeHasFieldErrors("menu", "platos"))
 		.andExpect(view().name("billetes/createOrUpdateMenuForm"));

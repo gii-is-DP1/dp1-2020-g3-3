@@ -1,4 +1,4 @@
-package org.springframework.samples.aerolineasAAAFC.model;
+package org.springframework.samples.aerolineasAAAFC.model.equipaje;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -6,15 +6,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.samples.aerolineasAAAFC.service.businessrules.MedidasEquipajesConstraint;
-
+import org.springframework.samples.aerolineasAAAFC.model.BaseEntity;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-/**
- * Entidad simple que representa un equipaje
- */
-
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,22 +24,15 @@ public class Equipaje extends BaseEntity{
 	@Range(min=3,max=32,message="El peso debe de estar entre los 3kg y 32kg")
 	private Integer peso;
 	
-	@Column(name = "dimensiones")
-	@MedidasEquipajesConstraint
-	private String dimensiones;	
-	
-	@Column(name = "precio")
-	private double precio;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "equipajes_base_id")
+	@EqualsAndHashCode.Exclude
+	private EquipajeBase equipajeBase;
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "billete_id")
 	@EqualsAndHashCode.Exclude
 	private Billete billete;
-	
-	public String toString() {
-		
-		return "Id equipaje "+this.getId()+" Dimensiones "+this.getDimensiones()+" Id Billete "+(this.getBillete()==null?"":this.getBillete().getId());
-	}
 	
 	
 }

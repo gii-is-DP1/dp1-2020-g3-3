@@ -1,17 +1,17 @@
-package org.springframework.samples.aerolineasAAAFC.utils;
+package org.springframework.samples.aerolineasAAAFC.deprecated;
 
-import org.springframework.samples.aerolineasAAAFC.model.Equipaje;
+import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 
 public class equipajeUtils {
 	
 	public static Boolean validaPrecio(Equipaje equipaje) {
 		
-		String dimensiones = equipaje.getDimensiones();
-		Double precio = equipaje.getPrecio();
-		
-		Boolean cond = (precio.equals(calculaPrecio(dimensiones, precio)));
+//		String dimensiones = equipaje.getDimensiones();
+//		Double precio = equipaje.getPrecio();
+//		
+//		Boolean cond = (precio.equals(calculaPrecio(dimensiones, precio)));
 			
-		return cond;
+		return true; //cond;
 	}
 	
 	public static Double calculaPrecio(String medidasValue, Double precio) {
