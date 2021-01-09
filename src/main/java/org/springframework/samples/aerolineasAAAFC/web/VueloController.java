@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -247,7 +248,10 @@ public class VueloController {
 			LocalDate date = LocalDate.now();
 			int mes = date.getMonthValue();
 			int año = date.getYear();
-			model.put("vuelosOferta", this.vueloService.findVuelosOfertadosByMes(mes, año));
+			
+			Collection<Vuelo> vuelos =this.vueloService.findVuelosOfertadosByMes(mes, año);
+			model.put("vuelosOferta", vuelos);
+				
 		}else {
 			fecha += "-01";
 			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
