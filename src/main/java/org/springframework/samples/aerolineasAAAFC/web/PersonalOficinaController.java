@@ -88,30 +88,31 @@ public class PersonalOficinaController {
 	 */
 	@GetMapping(value = "/personalOficina/{pOficinaId}/edit")
 	public String initUpdatePersonalOficinaForm(@PathVariable("pOficinaId") int pOficinaId, Model model) {
-		PersonalOficina pOficina = this.pOficinaService.findPersonalOficinaById(pOficinaId);
-		model.addAttribute(pOficina);
+		PersonalOficina personalOficina = this.pOficinaService.findPersonalOficinaById(pOficinaId);
+		model.addAttribute(personalOficina);
 		return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/personalOficina/{pOficinaId}/edit")
-	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina pOficina, BindingResult result, @PathVariable("pOficinaId") int pOficinaId) {
+	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina pOficina, BindingResult result, 
+			@PathVariable("pOficinaId") int pOficinaId) {
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			pOficina.setId(pOficinaId);
 			PersonalOficina pOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
-			BeanUtils.copyProperties(pOficina, pOficinaToUpdate, "id","nif","iban");
+			BeanUtils.copyProperties(pOficina, pOficinaToUpdate, "id","nif","username");
 			try {
 				this.pOficinaService.savePersonalOficina(pOficina);
-			} catch (DataIntegrityViolationException e) {
-				result.rejectValue("nif", "duplicate", "already exists");
-				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
+			
 			} catch (IbanDuplicadoException e) {
 				result.rejectValue("iban", "duplicate", "already exists");
 				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
+			} catch (DataIntegrityViolationException e) {
+				result.rejectValue("nif", "duplicate", "already exists");
+				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			}
-			
 			return "redirect:/personalOficina/{pOficinaId}";
 		}
 	}

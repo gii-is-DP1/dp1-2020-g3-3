@@ -43,12 +43,9 @@ public class PersonalOficinaService {
 	@Transactional
 	public void savePersonalOficina(PersonalOficina pOficina) throws DataIntegrityViolationException, IbanDuplicadoException{
 		PersonalOficina pIban = pOficinaRepository.findByIban(pOficina.getIban());
-//		PersonalOficina pNif = pOficinaRepository.findByNif(pOficina.getNif());
 		
 		if(pIban != null && !pIban.getId().equals(pOficina.getId())){
 			throw new IbanDuplicadoException("");
-//		}else if(pNif != null && !pNif.getId().equals(pOficina.getId())){
-//			throw new DataIntegrityViolationException("");
 		}else {
 			pOficinaRepository.save(pOficina);
 			userService.saveUser(pOficina.getUser());

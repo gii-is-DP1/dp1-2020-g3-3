@@ -99,11 +99,12 @@ public class PersonalOficinaControllerTests {
 				.param("nombre", "Kenneth")
 				.param("apellidos", "Downing Jr")
 				.with(csrf())
-				.param("nif", "29763330H")
-				.param("iban", "ES 4433300418403322567812")
-				.param("salario", "1432."))
-		.andExpect(status().isOk());
-//		.andExpect(status().is3xxRedirection());
+				.param("nif", "89628343B")
+				.param("iban", "ES 6721007638981977233634")
+				.param("salario", "1432.")
+				.param("user.username", "89628343B")
+				.param("user.password", "AAAAAAA"))
+		.andExpect(status().is3xxRedirection());
 	}
 
 
@@ -116,7 +117,9 @@ public class PersonalOficinaControllerTests {
 				.param("apellidos", "Downing Jr")
 				.param("nif", "29763330H")
 				.param("iban", "ES 4433300418403322567812")
-				.param("salario", "London"))
+				.param("salario", "London")
+				.param("user.username", "29763330H")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("personalOficina"))
 		.andExpect(model().attributeHasFieldErrors("personalOficina", "salario"))
@@ -132,11 +135,13 @@ public class PersonalOficinaControllerTests {
 	void testProcessUpdatePersonalOficinaFormSuccess() throws Exception {
 		mockMvc.perform(post("/personalOficina/{pOficinaId}/edit", TEST_PERSONALOFICINA_ID)
 				.with(csrf())
-				.param("nombre", "Joe")
+				.param("nombre", "Carlos")
 				.param("apellidos", "Bloggs")
-				.param("nif", "94630103F")
-				.param("iban", "ES 4433300418454322567812")
-				.param("salario", "4312.0"))
+				.param("nif", "70292959Z")
+				.param("iban", "ES 1804875866011781392136")
+				.param("salario", "4312.0")
+				.param("user.username", "70292959Z")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(view().name("redirect:/personalOficina/{pOficinaId}"));
 	}
 
@@ -149,7 +154,9 @@ public class PersonalOficinaControllerTests {
 				.param("apellidos", "Bloggs")
 				.param("nif", "uvedoblexdxdxd")
 				.param("iban", "nosoyuniban")
-				.param("salario", "soyunString"))
+				.param("salario", "soyunString")
+				.param("user.username", "uvedoblexdxdxd")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("personalOficina"))
 		.andExpect(model().attributeHasFieldErrors("personalOficina", "nif"))
