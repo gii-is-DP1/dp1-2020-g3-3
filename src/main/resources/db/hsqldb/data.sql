@@ -11,28 +11,55 @@ INSERT INTO users(username,password,enabled) VALUES ('dolRamCe','Fly_Low14&',TRU
 INSERT INTO authorities(id,username,authority) VALUES (3,'dolRamCe','cliente');
 
 --Personal Control
-INSERT INTO users(username,password,enabled) VALUES ('48736253T','P1234%adsa',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('48736253T','P9012%adsa',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'48736253T','personalControl');
 
-INSERT INTO users(username,password,enabled) VALUES ('12355435L','P5678%adsa',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('12355435L','P9012%adsa',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (5,'12355435L','personalControl');
 
 INSERT INTO users(username,password,enabled) VALUES ('54425951Q','P9012%adsa',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (6,'54425951Q','personalControl');
 
+INSERT INTO users(username,password,enabled) VALUES ('29353803F','P9012%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (7,'29353803F','personalControl');
+
+INSERT INTO users(username,password,enabled) VALUES ('31123210R','P9012%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (8,'31123210R','personalControl');
+
+INSERT INTO users(username,password,enabled) VALUES ('34109741M','P9012%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (9,'34109741M','personalControl');
+
 --Azafato
 INSERT INTO users(username,password,enabled) VALUES ('21333214R','A1234%adsa',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (7,'21333214R','azafato');
+INSERT INTO authorities(id,username,authority) VALUES (10,'21333214R','azafato');
 
-INSERT INTO users(username,password,enabled) VALUES ('65519676J','A5678%adsa',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (8,'65519676J','azafato');
+INSERT INTO users(username,password,enabled) VALUES ('65519676J','A1234%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (11,'65519676J','azafato');
+
+INSERT INTO users(username,password,enabled) VALUES ('25416743H','A1234%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (12,'25416743H','azafato');
+
+INSERT INTO users(username,password,enabled) VALUES ('17479248F','A1234%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (13,'17479248F','azafato');
+
+INSERT INTO users(username,password,enabled) VALUES ('42693476W','A1234%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (14,'42693476W','azafato');
+
+INSERT INTO users(username,password,enabled) VALUES ('15637561E','A1234%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (15,'15637561E','azafato');
+
+INSERT INTO users(username,password,enabled) VALUES ('16199550Y','A1234%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (16,'16199550Y','azafato');
+
+INSERT INTO users(username,password,enabled) VALUES ('51614708V','A1234%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (17,'51614708V','azafato');
 
 --Personal Oficina
 INSERT INTO users(username,password,enabled) VALUES ('76188332G','F1234%adsa',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (9,'76188332G','personalOficina');
+INSERT INTO authorities(id,username,authority) VALUES (18,'76188332G','personalOficina');
 
-INSERT INTO users(username,password,enabled) VALUES ('39658948W','F5678%adsa',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (10,'39658948W','personalOficina');
+INSERT INTO users(username,password,enabled) VALUES ('39658948W','F1234%adsa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (19,'39658948W','personalOficina');
 
 
 --Aeropuertos
@@ -55,7 +82,7 @@ VALUES ('Aeropuerto de Berlín-Brandeburgo Willy Brandt','Berlín, Alemania' , '
 
 --Aviones
 INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
-VALUES ('Airbus A320', 300, 2, 1700, '2015-09-24', true, '2017-09-24', 200, 80, 20);
+VALUES ('Airbus A320', 300, 2, 400, '2015-09-24', true, '2017-09-24', 200, 80, 20);
 
 INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
 VALUES ('Airbus A220', 130, 2, 100, '2019-10-24', true, '2020-01-24', 100, 25, 5);
@@ -68,7 +95,7 @@ VALUES ('Airbus A330', 335 , 2, 300, '2015-01-20', true, '2020-03-10', 250, 75, 
 
 --Vuelos
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('11-12-2020 10:40','dd-MM-yyyy hh:mm'),parsedatetime('11-12-2020 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
+VALUES (parsedatetime('11-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('11-01-2021 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
 VALUES (parsedatetime('20-01-2015 8:30','dd-MM-yyyy hh:mm'),parsedatetime('20-01-2015 10:55','dd-MM-yyyy hh:mm'),10000,2,3,2);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
@@ -84,18 +111,45 @@ INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
 VALUES ('Felipe','Espadas Monteserrín','12355435L','ES 6621000418401234567892',1,3600,'12355435L');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
 VALUES ('Juan Carlos','Gómez Correa','54425951Q','ES 1200815983982678553411',2,4600,'54425951Q');
+INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
+VALUES ('Enrique','García Domínguez','29353803F','ES 1221081293201234561111',0,5000,'29353803F');
+INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
+VALUES ('Henry','Dalgliesh Cavill','31123210R','ES 6623200418401234567892',0,6000,'31123210R');
+INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
+VALUES ('Giancarlo','Fisichella','34109741M','ES 1200815983982678553411',0,5400,'34109741M');
 
-INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3), (1, 4), 
-																 (2, 1), (2, 2), (2, 3), (2, 4),
-																 (3, 1), (3, 2), (3, 3), (3, 4);
+INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3), 
+																(2, 1), (2, 2), (2, 3), 
+																(3, 1), (3, 2), (3, 3),
+																(4, 1), (4, 2), (4, 3),
+																(5, 1), (5, 2), (5, 3),
+																(6, 1), (6, 2), (6, 3);
 --Azafatos
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
 VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R');
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
 VALUES ('Juana', 'Marín Torres', '65519676J', 'ES 4730045887188485547854', 2400, '65519676J');
+INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
+VALUES ('Oliver', 'Potter', '25416743H', 'ES 6731904499194741489412', 2500, '25416743H');
+INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
+VALUES ('Jack', 'Wayne', '17479248F', 'ES 2021007488858432375725', 2400, '17479248F');
+INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
+VALUES ('Olivia', 'Smith', '42693476W', 'ES 8114655195699842443152', 2500, '42693476W');
+INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
+VALUES ('Elizabeth', 'Williams', '15637561E', 'ES 6100819982199212113975', 2400, '15637561E');
+INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
+VALUES ('Mia', 'Jones', '16199550Y', 'ES 2914653916811294226862', 2500, '16199550Y');
+INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
+VALUES ('Lily', 'Brown', '51614708V', 'ES 3300819669812211263641', 2400, '51614708V');
 
 INSERT INTO azafatos_vuelo(azafatos_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3), (1, 4), 
-														 (2, 1), (2, 2), (2, 3), (2, 4);
+														 (2, 1), (2, 2), (2, 3), (2, 4),
+														 (3, 1), (3, 2), (3, 3), (3, 4),
+														 (4, 1), (4, 3),
+														 (5, 3), (5, 4),
+														 (6, 1), (6, 2), (6, 3), (6, 4),
+														 (7, 1), (7, 2), (7, 3), (7, 4),
+														 (8, 1), (8, 2), (8, 3), (8, 4);
 
 --Personal Oficina
 INSERT INTO personal_oficina(nombre,apellidos,nif,iban,salario,username)
@@ -125,6 +179,24 @@ INSERT INTO idiomas_azafato VALUES (1, 3);
 INSERT INTO idiomas_azafato VALUES (2, 4);
 INSERT INTO idiomas_azafato VALUES (2, 5);
 INSERT INTO idiomas_azafato VALUES (2, 6);
+INSERT INTO idiomas_azafato VALUES (3, 1);
+INSERT INTO idiomas_azafato VALUES (3, 2);
+INSERT INTO idiomas_azafato VALUES (3, 3);
+INSERT INTO idiomas_azafato VALUES (4, 4);
+INSERT INTO idiomas_azafato VALUES (4, 5);
+INSERT INTO idiomas_azafato VALUES (4, 6);
+INSERT INTO idiomas_azafato VALUES (5, 1);
+INSERT INTO idiomas_azafato VALUES (5, 2);
+INSERT INTO idiomas_azafato VALUES (5, 3);
+INSERT INTO idiomas_azafato VALUES (6, 4);
+INSERT INTO idiomas_azafato VALUES (6, 5);
+INSERT INTO idiomas_azafato VALUES (6, 6);
+INSERT INTO idiomas_azafato VALUES (7, 1);
+INSERT INTO idiomas_azafato VALUES (7, 2);
+INSERT INTO idiomas_azafato VALUES (7, 3);
+INSERT INTO idiomas_azafato VALUES (8, 4);
+INSERT INTO idiomas_azafato VALUES (8, 5);
+INSERT INTO idiomas_azafato VALUES (8, 6);
 
 --Asientos
 INSERT INTO asientos(nombre,libre,vuelo_id) VALUES

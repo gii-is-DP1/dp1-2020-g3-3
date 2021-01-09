@@ -101,7 +101,7 @@ public class ClienteServiceTests {
 		cliente.setEmail("juanjeferrero@outlook.com");
 
 		User user = new User();
-		user.setUsername("juanjiniero");
+		user.setUsername("28976897W");
 		user.setPassword("*Fly_High14&");
 		user.setEnabled(true);
 		cliente.setUser(user);                
@@ -129,7 +129,7 @@ public class ClienteServiceTests {
 		cliente.setEmail("marisotoram@hotmail.com");
 		
 		User user = new User();
-		user.setUsername("marSoRa");
+		user.setUsername("01446551N");
 		user.setPassword("*Fly_Low14&");
 		user.setEnabled(true);
 		cliente.setUser(user);

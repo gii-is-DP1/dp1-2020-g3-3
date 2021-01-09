@@ -3,7 +3,6 @@ package org.springframework.samples.aerolineasAAAFC.model;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -18,8 +17,9 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.AeropuertoConstraint;
+import org.springframework.samples.aerolineasAAAFC.service.businessrules.VueloPilotoConstraint;
+import org.springframework.samples.aerolineasAAAFC.service.businessrules.VueloTCPConstraint;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +29,8 @@ import lombok.Setter;
 */
 
 @AeropuertoConstraint(value={"aeropuertoOrigen","aeropuertoDestino"})
+@VueloPilotoConstraint
+@VueloTCPConstraint
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)

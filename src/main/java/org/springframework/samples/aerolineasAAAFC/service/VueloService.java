@@ -2,11 +2,9 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.Year;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -16,7 +14,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.DisponibilidadAvionException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,12 +32,24 @@ public class VueloService {
 
 	 
 	@Transactional
-	public void saveVuelo(Vuelo vuelo) throws DataAccessException, HorasImposiblesException{
+	public void saveVuelo(Vuelo vuelo) throws DataAccessException, HorasImposiblesException, HorasMaximasVueloException, DisponibilidadAvionException{
 		LocalDateTime salida = vuelo.getFechaSalida();
 		LocalDateTime llegada = vuelo.getFechaLlegada();
+		
+		long horasVuelo = salida.until(llegada, ChronoUnit.HOURS);
+		int horasAcum = vuelo.getAvion().getHorasAcumuladas();
+		long horasTotal = horasVuelo + horasAcum;
+		LocalDate añosSinRevisar = vuelo.getAvion().getFechaRevision().plusYears(2);
+		
 		if(salida.isAfter(llegada)) {
 			throw new HorasImposiblesException("Horas de vuelo imposibles");
-		}else {
+		}else if(horasVuelo > 14){
+			throw new HorasMaximasVueloException("Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
+		}else if(horasTotal > 600 || horasTotal > 30000 || añosSinRevisar.isEqual(LocalDate.now()) || añosSinRevisar.isAfter(LocalDate.now())) {
+			vuelo.getAvion().setDisponibilidad(false);
+			throw new DisponibilidadAvionException("El avión no está disponible porque debe pasar una revisión");
+		}else{
+			vuelo.getAvion().setHorasAcumuladas(horasAcum);
 			vueloRepository.save(vuelo); 
 			
 		}

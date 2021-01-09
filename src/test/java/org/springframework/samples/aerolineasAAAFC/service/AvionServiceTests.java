@@ -57,7 +57,7 @@ public class AvionServiceTests {
 	@Test
 	void getHorasAcumuladasAvionSuccesful() {
 		Avion a = avionService.findAvionById(1);
-		assertThat(a.getHorasAcumuladas()).isEqualTo(1700);
+		assertThat(a.getHorasAcumuladas()).isEqualTo(400);
 	}
 	
 	@Test

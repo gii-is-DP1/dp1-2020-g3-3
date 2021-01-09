@@ -167,7 +167,7 @@ public class AzafatoServiceTests {
 	@Test
 	void getVuelosByDateSuccessful() {
 		Azafato personal = azafatoService.findAzafatoById(1);
-		Collection<Vuelo> vuelos = azafatoService.findVuelosByDate(personal.getId(), 12, 2020);
+		Collection<Vuelo> vuelos = azafatoService.findVuelosByDate(personal.getId(), 01, 2015);
 		
 		int found = vuelos.size();
 		
