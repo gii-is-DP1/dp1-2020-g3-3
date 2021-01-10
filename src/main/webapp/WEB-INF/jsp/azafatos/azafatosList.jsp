@@ -52,6 +52,6 @@
 		</tbody>
 
 	</table>
-	<a href="<spring:url value="/azafatos/new" htmlEscape="true" />">Nuevo</a>
+	<a href="<spring:url value="/azafatos/new" htmlEscape="true" />">Nuevo azafato</a>
 				
 </aerolineasAAAFC:layout>

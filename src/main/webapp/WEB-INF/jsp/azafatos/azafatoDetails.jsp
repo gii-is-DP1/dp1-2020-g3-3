@@ -36,10 +36,10 @@
         </tr>
     </table>
 
-  	<spring:url value="{pControlId}/edit" var="editUrl">
-        <spring:param name="pControlId" value="${controladores.id}"/>
+  	<spring:url value="/azafatos/{azafatoId}/edit" var="editUrl">
+        <spring:param name="azafatoId" value="${azafato.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Controlador</a>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Azafato</a>
 
 
     <br/>

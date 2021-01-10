@@ -131,11 +131,15 @@ public class AzafatoController {
 	}
 	
 	@GetMapping("/azafatos/{azafatoId}")
-	public ModelAndView showCliente(@PathVariable("azafatoId") int azafatoId) {
+	public ModelAndView showAzafato(@PathVariable("azafatoId") int azafatoId) {
 		ModelAndView mav = new ModelAndView("azafatos/azafatoDetails");
 		mav.addObject(this.azafatoService.findAzafatoById(azafatoId));
 		return mav;
 	}
+	
+	/*
+	 *  Horario de un azafato
+	 */
 	
 	@RequestMapping(value = { "/azafatos/{azafatoId}/horario" }, method = RequestMethod.GET)
 	public String showVuelosList(Map<String, Object> model, @PathVariable("azafatoId") int azafatoId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
