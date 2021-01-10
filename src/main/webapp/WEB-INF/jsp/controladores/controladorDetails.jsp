@@ -45,7 +45,7 @@
         
     </table>
 
-  	<spring:url value="{pControlId}/edit" var="editUrl">
+  	<spring:url value="/controladores/{pControlId}/edit" var="editUrl">
         <spring:param name="pControlId" value="${personalControl.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Controlador</a>

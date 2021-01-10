@@ -28,6 +28,7 @@ public class PersonalControlServiceTests {
 	@Test
 	void getApellidosPersonalSuccessful() {
 		PersonalControl personal=personalControlService.findPersonalControlById(1);
+		assertThat(personal.getNif()).isNotEmpty();
 		assertThat(personal.getApellidos()).isNotEmpty();
 	}
 

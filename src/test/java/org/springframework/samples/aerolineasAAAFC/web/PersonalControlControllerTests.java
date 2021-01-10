@@ -24,6 +24,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Rol;
+import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
@@ -57,6 +58,9 @@ public class PersonalControlControllerTests {
 	private MockMvc mockMvc;
 
 	private PersonalControl Juan;
+	
+	private User juanUser;
+
 
 
 
@@ -65,12 +69,18 @@ public class PersonalControlControllerTests {
 
 		Juan = new PersonalControl();
 		Juan.setId(TEST_PERSONALCONTROL_ID);
-		Juan.setApellidos("Jones");
-		Juan.setNombre("Marie");
+		Juan.setApellidos("Fernandez Romero");
+		Juan.setNombre("Juan");
 		Juan.setIban("ES 0159480518801639865810");
 		Juan.setNif("01582301T");
 		Juan.setRol(Rol.COPILOTO);
 		Juan.setSalario(2000.);
+		
+		juanUser = new User();
+		juanUser.setEnabled(true);
+		juanUser.setUsername("01582301T");
+		juanUser.setPassword("juFerRo01");
+		Juan.setUser(juanUser);
 
 		given(this.personalControlService.findPersonalControlById(TEST_PERSONALCONTROL_ID)).willReturn(Juan);
 	}
@@ -81,7 +91,9 @@ public class PersonalControlControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/controladores/new")).andExpect(status().isOk()).andExpect(model().attributeExists("PersonalControlador"))
+		mockMvc.perform(get("/controladores/new"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("PersonalControl"))
 		.andExpect(view().name("controladores/createOrUpdatePersonalControlForm"));
 	}
 
@@ -96,8 +108,10 @@ public class PersonalControlControllerTests {
 				.param("nif", "85765119M")
 				.param("iban", "ES 7800230514501459995863")
 				.param("rol", "piloto")
-				.param("salario", "2500."))
-		.andExpect(status().isOk());
+				.param("salario", "2500.")
+				.param("user.username", "85765119M")
+				.param("user.password", "DDDDDD"))
+		.andExpect(status().is3xxRedirection());
 	}
 
 
@@ -107,12 +121,15 @@ public class PersonalControlControllerTests {
 		mockMvc.perform(post("/controladores/new")
 				.param("nombre", "Alessandro")
 				.param("apellidos", "Ferrara")
-				.with(csrf())
+				.param("nif", "297635960K")
+				.param("iban", "ES 4433300418403322567002")
 				.param("rol", "piloto")
-				.param("salario", "nosalario"))
+				.param("salario", "nosalario")
+		.param("user.username", "297635960K")
+		.param("user.password", "AAAAAAA"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("controladores"))
-		//.andExpect(model().attributeHasFieldErrors("controladores", "salario"))
+		.andExpect(model().attributeHasErrors("PersonalControl"))
+		.andExpect(model().attributeHasFieldErrors("PersonalControl", "salario"))
 		.andExpect(view().name("redirect:/controladores/"));
 	}
 
@@ -130,28 +147,31 @@ public class PersonalControlControllerTests {
 				.param("nif", "01565890H")
 				.param("iban", "ES 5723389618452562008819")
 				.param("rol", "piloto")
-				.param("salario", "4500"))
-		.andExpect(status().isOk())
+				.param("salario", "4500")
+				.param("user.username", "01565890H")
+				.param("user.password", "CCCCCCC"))
 		.andExpect(view().name("redirect:/controladores/{pControlId}"));
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdatePersonalControlFormError() throws Exception {
-		mockMvc.perform(post("/oficinistas/{pOficinaId}/edit", TEST_PERSONALCONTROL_ID)
+		mockMvc.perform(post("/controladores/{pControlId}/edit", TEST_PERSONALCONTROL_ID)
 				.with(csrf())
 				.param("nombre", "Camile")
 				.param("apellidos", "Bernard ")
 				.param("nif", "58963425")
-				.param("iban", "XXXXXXXX")
+				.param("iban", "yyyyyyy")
 				.param("rol", "0")
-				.param("salario", "nosalario"))
+				.param("salario", "nosalario")
+				.param("user.username", "xxxxxx")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("pControl"))
-		.andExpect(model().attributeHasFieldErrors("pControl", "nif"))
-		.andExpect(model().attributeHasFieldErrors("pControl", "iban"))
-		.andExpect(model().attributeHasFieldErrors("pControl", "salario"))
-		.andExpect(view().name("oficinistas/createOrUpdatePersonalControlForm"));
+		.andExpect(model().attributeHasErrors("personalControl"))
+		.andExpect(model().attributeHasFieldErrors("personalControl", "nif"))
+		.andExpect(model().attributeHasFieldErrors("personalControl", "iban"))
+		.andExpect(model().attributeHasFieldErrors("personalControl", "salario"))
+		.andExpect(view().name("controladores/createOrUpdatePersonalControlForm"));
 	}
 
 

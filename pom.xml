@@ -33,6 +33,21 @@
 	</properties>
 
 	<developers>
+	
+		<developer>
+			<id>carcardia</id>
+			<name>Carolina</name>
+			<email>carcardia2@tmht.com</email>
+			<url>http://www.tmht.com/carcardia</url>
+			<roles>
+				<role>leader</role>
+			</roles>
+			<properties>
+				<picUrl>
+					https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x?format=jpg&#38;name=large
+				</picUrl>
+			</properties>
+		</developer>
 
 		<developer>
 			<id>antvinper</id>

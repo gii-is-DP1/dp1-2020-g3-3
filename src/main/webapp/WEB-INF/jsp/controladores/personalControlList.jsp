@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
-<!-- .jsp parar mostrar el listado de todos los controladores -->
+<!-- .jsp para mostrar el listado de todos los controladores -->
 
 <aerolineasAAAFC:layout pageName="controladores">
     <h2>Personal de Control</h2>
@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${selections}" var="controladores">
+        <c:forEach items="${controladores}" var="personalControl">
             <tr>
                 <td>
                     <spring:url value="/controladores/{pControlId}" var="pControlUrl">
@@ -51,13 +51,15 @@
                     <c:out value="${personalControl.salario}"/>
                 </td>
                 <td>
-                	<spring:url value="{pControlId}/edit" var="pControlUrl">
+                    <spring:url value="/controladores/{pControlId}/edit" var="pControlUrl">
         			<spring:param name="pControlId" value="${personalControl.id}"/>
     				</spring:url>
-    				<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar controlador</a>
+    				<a href="${fn:escapeXml(pControlUrl)}" class="btn btn-default">Editar controlador</a>
                 </td>   
             </tr>
         </c:forEach>
         </tbody>
     </table>
+        <a href="<spring:url value="/controladores/new" htmlEscape="true" />">Nuevo controlador</a>
+    
 </aerolineasAAAFC:layout>

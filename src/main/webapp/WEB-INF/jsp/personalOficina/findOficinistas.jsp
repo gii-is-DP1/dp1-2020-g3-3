@@ -8,7 +8,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 
-<aerolineasAAAFC:layout pageName="oficinistas">
+<aerolineasAAAFC:layout pageName="personalOficina">
 
     <h2>Find Oficinistas</h2>
 

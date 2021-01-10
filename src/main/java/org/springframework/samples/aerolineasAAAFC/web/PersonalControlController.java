@@ -15,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
@@ -115,14 +116,13 @@ public class PersonalControlController {
 	/*
 	 * BUSCAR CONTROLADOR
 	 */
-
-	@GetMapping(value =  "/personalControlList" )
-	public String showPersonalControlList(Map<String, Object> model) {
-		List<PersonalControl> pControl = new ArrayList<>();
-		this.pControlService.findPersonalControl().forEach(x->pControl.add(x));
-		model.put("pControl", pControl);
-		return "controladores/personalControlList";
-	}
+//
+//	@GetMapping(value =  "/personalControlList" )
+//	public String showPersonalControlList2(Map<String, Object> model) {
+//		List<PersonalControl> pControl = new ArrayList<>();
+//		this.pControlService.findPersonalControl().forEach(x->pControl.add(x));
+//		model.put("pControl", pControl);
+//		return "controladores/personalControlList";
 
 	@GetMapping(value = "/controladores/find")
 	public String initFindPersonalControlForm(Map<String, Object> model) {
@@ -148,6 +148,20 @@ public class PersonalControlController {
 
 	}
 
+	/*
+	 * Vistas de consulta de controladores
+	 */
+	
+	@GetMapping(value = "/controladores")
+	public String showPersonalControlList(Map<String, Object> model) {
+		List<PersonalControl> controladores = new ArrayList<PersonalControl>();
+		controladores.addAll(this.pControlService.findPersonalControl());
+		model.put("personalControl", controladores);
+		
+		return "controladores/personalControlList";
+	}
+	
+	
 	@GetMapping("/controladores/{pControlId}")
 	public ModelAndView showCliente(@PathVariable("pControlId") int pControlId) {
 		ModelAndView mav = new ModelAndView("controladores/controladorDetails");
