@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public class BilleteService {
 			throw new TooManyItemsBilleteException("Ya ha introducido el máximo de menús permitido.");
 		}
 
-		else if (menu.getPlatos().size() != 3) {
+		else if (menu.getPlato1() == null || menu.getPlato2() == null || menu.getPlato3() == null) {
 			throw new PlatosNoValidosException(1);
 		}
 
@@ -68,40 +69,42 @@ public class BilleteService {
 			int cont2 = 0;
 			int cont3 = 0;
 
-			for (Plato p : menu.getPlatos()) {
-				PlatoBase aux = platoBaseService.findPlatoBaseByName(p.getPlatoBase().getName());
+			Plato p1 = menu.getPlato1();
+			Plato p2 = menu.getPlato2();
+			Plato p3 = menu.getPlato3();
+			PlatoBase aux1 = platoBaseService.findPlatoBaseByName(p1.getPlatoBase().getName());
+			PlatoBase aux2 = platoBaseService.findPlatoBaseByName(p2.getPlatoBase().getName());
+			PlatoBase aux3 = platoBaseService.findPlatoBaseByName(p3.getPlatoBase().getName());
 
-				if (aux == null)
-					throw new PlatosNoValidosException(2);
-
-				else if (aux.getTipoPlato().getName().equals("primerPlato"))
-					cont1 = 1;
-				
-				else if(aux.getTipoPlato().getName().equals("segundoPlato"))
-					cont2 = 1;
-				
-				else if(aux.getTipoPlato().getName().equals("postre"))
-					cont3 = 1;
-				
-			}
-
-			if (cont1 !=1 || cont2 !=1 || cont3 != 1)
-				throw new PlatosNoValidosException(3);
+			if (aux1 == null || aux2 == null || aux3 == null)
+				throw new PlatosNoValidosException(2);
 
 			else {
-				menuRepository.save(menu);
-				menu.getBillete().getMenus().add(menu);
-			}
+				if (aux1.getTipoPlato().getName().equals("primerPlato"))
+					cont1 = 1;
+
+				if (aux2.getTipoPlato().getName().equals("segundoPlato"))
+					cont2 = 1;
+
+				if (aux3.getTipoPlato().getName().equals("postre"))
+					cont3 = 1;
 				
+				if (cont1 != 1 || cont2 != 1 || cont3 != 1)
+					throw new PlatosNoValidosException(3);
+
+				else {
+					menuRepository.save(menu);
+					menu.getBillete().getMenus().add(menu);
+				}
+			}
+
 		}
 
 	}
 
 	@Transactional
-	public void saveEquipaje(Equipaje equipaje)
-			throws DataAccessException, TooManyItemsBilleteException {
-		Logger.getLogger(BilleteService.class.getName()).log(Level.INFO,"Equipaje data: "+equipaje.getBillete().getId());
-		
+	public void saveEquipaje(Equipaje equipaje) throws DataAccessException, TooManyItemsBilleteException {
+
 		if (equipaje.getBillete().getEquipajes().size() >= 3) {
 			throw new TooManyItemsBilleteException("Ya ha introducido el máximo de equipajes permitido.");
 		}
@@ -127,7 +130,8 @@ public class BilleteService {
 
 	@Transactional(readOnly = true)
 	public Billete findBilleteById(int id) throws DataAccessException {
-		return billeteRepository.findById(id).get();
+		Optional<Billete> b = billeteRepository.findById(id);
+		return b.get();
 	}
 
 	@Transactional

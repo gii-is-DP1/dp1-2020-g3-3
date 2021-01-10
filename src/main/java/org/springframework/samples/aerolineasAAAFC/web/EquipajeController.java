@@ -69,6 +69,10 @@ public class EquipajeController {
 				result.reject(e.getMessage());
 				e.printStackTrace();
 				return VIEWS_EQUIPAJE_CREATE_FORM;
+			} catch (Exception e) {
+				result.reject(e.getMessage());
+				e.printStackTrace();
+				return "oups";
 			}
 			
 			return "redirect:/billetes/datos";

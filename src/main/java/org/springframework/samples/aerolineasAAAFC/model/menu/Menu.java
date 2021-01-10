@@ -1,12 +1,10 @@
 package org.springframework.samples.aerolineasAAAFC.model.menu;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.springframework.samples.aerolineasAAAFC.model.BaseEntity;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
@@ -25,9 +23,20 @@ public class Menu extends BaseEntity {
 	@JoinColumn(name = "billete_id")
 	@EqualsAndHashCode.Exclude
 	private Billete billete;
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "menu")
+	
+	@OneToOne(optional = true,cascade = {CascadeType.ALL})
+	@JoinColumn(name = "plato1_id")
 	@EqualsAndHashCode.Exclude
-	private Set<Plato> platos;
+	private Plato plato1;
+	
+	@OneToOne(optional = true,cascade = {CascadeType.ALL})
+	@JoinColumn(name = "plato2_id")
+	@EqualsAndHashCode.Exclude
+	private Plato plato2;
+	
+	@OneToOne(optional = true,cascade = {CascadeType.ALL})
+	@JoinColumn(name = "plato3_id")
+	@EqualsAndHashCode.Exclude
+	private Plato plato3;
 
 }

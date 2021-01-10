@@ -37,7 +37,7 @@ public class BilleteController {
 	}
 
 	/*
-	 *  Alta de un nuevo billete
+	 * Alta de un nuevo billete
 	 */
 	@GetMapping(value = "/billetes/new")
 	public String initCreationBilleteForm(Map<String, Object> model) {
@@ -48,7 +48,7 @@ public class BilleteController {
 
 	@PostMapping(value = "/billetes/new")
 	public String processCreationBilleteForm(@Valid Billete billete, BindingResult result) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		} else {
 
@@ -69,11 +69,11 @@ public class BilleteController {
 	}
 
 	@PostMapping(value = "/billetes/{billeteId}/edit")
-	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result, @PathVariable("billeteId") int billeteId) {
-		if(result.hasErrors()) {
+	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result,
+			@PathVariable("billeteId") int billeteId) {
+		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		} else {
 			billete.setId(billeteId);
 			this.billeteService.saveBillete(billete);
 
@@ -94,5 +94,13 @@ public class BilleteController {
 		return "billetes/billetesDatosList";
 	}
 
+//	@RequestMapping(value = { "/billetes/{billeteId}/datos" }, method = RequestMethod.GET)  ESTO ES PARA REMATAR LAS HISTORIAS DE BILLETE
+//	public String ShowDatosBilleteParticular(@PathVariable("billeteId") int billeteId, Map<String, Object> model) {
+//		if(this.billeteService.findBilleteById(billeteId).equals(null)) {
+//			
+//		}
+//
+//		return "billetes/billetesDatosList";
+//	}
 
 }

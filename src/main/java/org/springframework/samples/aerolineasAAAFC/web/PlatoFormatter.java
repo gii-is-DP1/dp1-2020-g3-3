@@ -3,6 +3,8 @@ package org.springframework.samples.aerolineasAAAFC.web;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;

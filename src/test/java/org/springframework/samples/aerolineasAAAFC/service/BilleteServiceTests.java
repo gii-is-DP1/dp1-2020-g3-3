@@ -117,13 +117,10 @@ public class BilleteServiceTests {
 		Plato p3 = new Plato();
 		p3.setPlatoBase(platoBaseService.findPlatoBaseByName("Manzana"));
 		
-		Set<Plato> s = new HashSet<Plato>();
-		s.add(p1);
-		s.add(p2);
-		s.add(p3);
-		
 		Menu m = new Menu();
-		m.setPlatos(s);
+		m.setPlato1(p1);
+		m.setPlato2(p2);
+		m.setPlato3(p3);
 		m.setBillete(b);
 		
 		Logger.getLogger(BilleteServiceTests.class.getName()).log(Level.INFO,"Introducimos platosBase: " + p1.getPlatoBase().getTipoPlato().getName() + " de id " + p1.getPlatoBase().getId());
@@ -133,8 +130,7 @@ public class BilleteServiceTests {
 		try {
 			this.billeteService.saveMenu(m);
 		} catch (DataAccessException | TooManyItemsBilleteException | PlatosNoValidosException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
 		menus = this.billeteService.findMenus();
 		assertThat(menus.size()).isEqualTo(found + 1);
@@ -155,23 +151,27 @@ public class BilleteServiceTests {
 		Plato p3 = new Plato();
 		p3.setPlatoBase(platoBaseService.findPlatoBaseByName("Manzana"));
 		
-		Set<Plato> s = new HashSet<Plato>();
-		s.add(p1);
-		s.add(p2);
-		s.add(p3);
-		
 		Menu m = new Menu();
-		m.setPlatos(s);
+		m.setPlato1(p1);
+		m.setPlato2(p2);
+		m.setPlato3(p3);
 		m.setBillete(b);
 		Menu m1 = new Menu();
-		m1.setPlatos(s);
+		m1.setPlato1(p1);
+		m1.setPlato2(p2);
+		m1.setPlato3(p3);
 		m1.setBillete(b);
 		Menu m2 = new Menu();
-		m2.setPlatos(s);
+		m2.setPlato1(p1);
+		m2.setPlato2(p2);
+		m2.setPlato3(p3);
 		m2.setBillete(b);
 		Menu m3 = new Menu();
-		m3.setPlatos(s);
+		m3.setPlato1(p1);
+		m3.setPlato2(p2);
+		m3.setPlato3(p3);
 		m3.setBillete(b);
+		
 		
 		try {
 			this.billeteService.saveMenu(m);
@@ -182,38 +182,6 @@ public class BilleteServiceTests {
 		}
 		Assertions.assertThrows(TooManyItemsBilleteException.class, () ->{
 			this.billeteService.saveMenu(m3);});
-	
-	}
-	
-	@Test
-	@Transactional
-	public void shouldNotInsertTooManyPlatos() {
-		
-		Billete b = this.billeteService.findBilleteById(1);
-		Plato p1 = new Plato();
-		p1.setPlatoBase(platoBaseService.findPlatoBaseByName("Sopa de miso"));
-		
-		Plato p2 = new Plato();
-		p2.setPlatoBase(platoBaseService.findPlatoBaseByName("Arroz con ternera al curry"));
-		
-		Plato p3 = new Plato();
-		p3.setPlatoBase(platoBaseService.findPlatoBaseByName("Manzana"));
-		
-		Plato p4 = new Plato();
-		p4.setPlatoBase(platoBaseService.findPlatoBaseByName("Manzana"));
-		
-		Set<Plato> s = new HashSet<Plato>();
-		s.add(p1);
-		s.add(p2);
-		s.add(p3);
-		s.add(p4);
-		
-		Menu m = new Menu();
-		m.setPlatos(s);
-		m.setBillete(b);
-		
-		Assertions.assertThrows(PlatosNoValidosException.class, () ->{
-			this.billeteService.saveMenu(m);});
 	
 	}
 	
@@ -237,7 +205,9 @@ public class BilleteServiceTests {
 		s.add(p3);
 		
 		Menu m = new Menu();
-		m.setPlatos(s);
+		m.setPlato1(p1);
+		m.setPlato2(p2);
+		m.setPlato3(p3);
 		m.setBillete(b);
 		
 		Assertions.assertThrows(PlatosNoValidosException.class, () ->{
@@ -278,10 +248,6 @@ public class BilleteServiceTests {
 		
 		EquipajeBase eb = this.equipajeBaseService.findEquipajeBaseByName("Grande");
 		
-		Equipaje e = new Equipaje();
-		e.setBillete(b);
-		e.setPeso(21);
-		e.setEquipajeBase(eb);
 		Equipaje e1 = new Equipaje();
 		e1.setBillete(b);
 		e1.setPeso(21);
@@ -296,7 +262,6 @@ public class BilleteServiceTests {
 		e3.setEquipajeBase(eb);
 			
 		try {
-			this.billeteService.saveEquipaje(e);
 			this.billeteService.saveEquipaje(e1);
 			this.billeteService.saveEquipaje(e2);
 		} catch (DataAccessException ex) {
@@ -305,7 +270,7 @@ public class BilleteServiceTests {
 			ex.printStackTrace();
 		}
 		Assertions.assertThrows(TooManyItemsBilleteException.class, () ->{
-			this.billeteService.saveEquipaje(e3);});
+			this.billeteService.saveEquipaje(e2);});
 	}
 	
 	@Test
