@@ -2,7 +2,6 @@ package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.util.Collection;
 import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,18 +53,20 @@ public class EquipajeController {
 	}
 
 	@PostMapping(value = "/billetes/{billeteId}/equipajes/new")
-	public String processCreationForm(@Valid Equipaje equipaje, BindingResult result) {
+	public String processCreationForm(@PathVariable("billeteId") int billeteId, @Valid Equipaje equipaje, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_EQUIPAJE_CREATE_FORM;
 		}
 		else {
 			try {
+				equipaje.setBillete(this.billeteService.findBilleteById(billeteId));
 				this.billeteService.saveEquipaje(equipaje);
 			} catch (TooManyItemsBilleteException e) {
 				result.reject(e.getMessage());
 				e.printStackTrace();
 				return VIEWS_EQUIPAJE_CREATE_FORM;
 			} catch (DataAccessException e) {
+				result.reject(e.getMessage());
 				e.printStackTrace();
 				return VIEWS_EQUIPAJE_CREATE_FORM;
 			}

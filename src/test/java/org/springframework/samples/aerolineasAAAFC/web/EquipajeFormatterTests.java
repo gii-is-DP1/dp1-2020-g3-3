@@ -34,7 +34,7 @@ class EquipajeFormatterTests {
 		Mockito.when(equipajeBaseService.findEquipajeBaseByName("Grande")).thenReturn(makeEquipajeRandom());
 		EquipajeBase eb = this.equipajeBaseService.findEquipajeBaseByName("Grande");
 		String equipajeName = equipajeBaseFormatter.print(eb, Locale.ENGLISH);
-		assertEquals("Grande", equipajeName);
+		assertEquals("Grande - Dimensiones: "+eb.getDimensiones()+" (cm)  Precio: "+eb.getPrecio()+"€", equipajeName);
 	}
 
 	@Test

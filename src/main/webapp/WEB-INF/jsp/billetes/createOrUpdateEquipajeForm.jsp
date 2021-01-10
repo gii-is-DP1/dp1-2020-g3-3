@@ -14,16 +14,12 @@
 	<form:form modelAttribute="equipaje" class="form-horizontal"
 		id="add-equipaje-form">
 		<div class="form-group has-feedback">
-			<aerolineasAAAFC:inputField label="Número de billete" name="billete" />
 			<aerolineasAAAFC:inputField label="Peso" name="peso" />
-			<aerolineasAAAFC:selectField label="Dimensiones" name="dimensiones"
-				names="${dimensiones}" />
-			<aerolineasAAAFC:inputField label="Precio" name="precio" />
+			<aerolineasAAAFC:selectField label="Medidas" name="equipajeBase"
+				names="${equipajes}"/>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-
-
 				<button class="btn btn-default" type="submit">Añadir
 					equipaje</button>
 

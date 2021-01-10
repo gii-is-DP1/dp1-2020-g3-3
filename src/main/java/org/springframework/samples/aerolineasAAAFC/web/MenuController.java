@@ -64,12 +64,13 @@ public class MenuController {
 	}
 
 	@PostMapping(value = "/billetes/{billeteId}/menus/new")
-	public String processCreationForm(@Valid Menu menu, BindingResult result) {
+	public String processCreationForm(@PathVariable("billeteId") int billeteId, @Valid Menu menu, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_MENU_CREATE_FORM;
 		}
 		else {
 			try {
+				menu.setBillete(this.billeteService.findBilleteById(billeteId));
 				this.billeteService.saveMenu(menu);
 			} catch (DataAccessException e) {
 				e.printStackTrace();

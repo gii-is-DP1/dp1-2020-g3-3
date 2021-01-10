@@ -53,4 +53,5 @@
         </c:forEach>
         </tbody>
     </table>
+        <p>${exception.message}</p>
 </aerolineasAAAFC:layout>

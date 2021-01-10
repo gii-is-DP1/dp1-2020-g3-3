@@ -54,7 +54,7 @@ public class Billete extends BaseEntity{
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
 	@EqualsAndHashCode.Exclude
-	@Size(min = 0, max = 3)
+	//@Size(min = 0, max = 3) Actualmente se usan excepciones
 	private Set<Equipaje> equipajes;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
@@ -77,7 +77,6 @@ public class Billete extends BaseEntity{
 
 	public String toString() {
 		
-		return "Id de billete: " + this.getId()+" Asiento: "+this.getAsiento()+
-				" Menús: "+this.getMenus()+" Equipajes: "+this.getEquipajes();
+		return "Id de billete: " + this.getId();
 	}
 }
