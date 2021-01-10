@@ -16,11 +16,13 @@
             <aerolineasAAAFC:inputField label="Apellidos" name="apellidos"/>
             <aerolineasAAAFC:inputField label="NIF" name="nif"/>
             <aerolineasAAAFC:inputField label="IBAN" name="iban"/>
-            <aerolineasAAAFC:selectField label="Rol" name="rol" names="${rol}"/>
+
+            	<aerolineasAAAFC:selectField label="Rol" name="rol" names="${roles}"/>
+
             <aerolineasAAAFC:inputField label="Salario" name="salario"/>
             <aerolineasAAAFC:inputField label="Username" name="user.username" />
 			<aerolineasAAAFC:inputField label="Password" name="user.password" type="password" />
-            
+           	
             <form:errors> </form:errors> 
         </div>
         <div class="form-group">
