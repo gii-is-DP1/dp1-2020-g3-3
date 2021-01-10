@@ -27,7 +27,6 @@ public class Asiento extends BaseEntity{
 	private String nombre;
 	
 	@Column(name = "libre")
-	@NotEmpty
 	private boolean libre;
 	
 	@ManyToOne(optional=false)

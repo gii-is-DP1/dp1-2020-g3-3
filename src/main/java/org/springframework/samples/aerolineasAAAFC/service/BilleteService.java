@@ -3,7 +3,10 @@ package org.springframework.samples.aerolineasAAAFC.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,6 +23,7 @@ import org.springframework.samples.aerolineasAAAFC.repository.EquipajeRepository
 import org.springframework.samples.aerolineasAAAFC.repository.MenuRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
+import org.springframework.samples.aerolineasAAAFC.web.EquipajeController;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -45,9 +49,7 @@ public class BilleteService {
 
 	@Transactional
 	public void saveBillete(Billete billete) throws DataAccessException {
-
 		billeteRepository.save(billete);
-
 	}
 
 	@Transactional
@@ -98,7 +100,8 @@ public class BilleteService {
 	@Transactional
 	public void saveEquipaje(Equipaje equipaje)
 			throws DataAccessException, TooManyItemsBilleteException {
-
+		Logger.getLogger(BilleteService.class.getName()).log(Level.INFO,"Equipaje data: "+equipaje.getBillete().getId());
+		
 		if (equipaje.getBillete().getEquipajes().size() >= 3) {
 			throw new TooManyItemsBilleteException("Ya ha introducido el máximo de equipajes permitido.");
 		}

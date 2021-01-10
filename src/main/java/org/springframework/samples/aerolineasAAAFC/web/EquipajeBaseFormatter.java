@@ -22,14 +22,16 @@ public class EquipajeBaseFormatter implements Formatter<EquipajeBase> {
 
 	@Override
 	public String print(EquipajeBase equipajeBase, Locale locale) {
-		return equipajeBase.getName();
+		return equipajeBase.getName() + " - Dimensiones: " + equipajeBase.getDimensiones() + " (cm) "+" Precio: " + equipajeBase.getPrecio()+"€";
 	}
 
 	@Override
 	public EquipajeBase parse(String text, Locale locale) throws ParseException {
 		Collection<EquipajeBase> equipajesBase = this.equipajeBaseService.findEquipajesBase();
+		String[] reDo = text.split("-");
+		String newText = reDo[0].trim(); 
 		for (EquipajeBase eb : equipajesBase) {
-			if (eb.getName().equals(text)) {
+			if (eb.getName().equals(newText)) {
 				return eb;
 			}
 		}
