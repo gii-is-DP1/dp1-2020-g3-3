@@ -112,11 +112,11 @@ VALUES ('Felipe','Espadas Monteserrín','12355435L','ES 6621000418401234567892',
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
 VALUES ('Juan Carlos','Gómez Correa','54425951Q','ES 1200815983982678553411',2,4600,'54425951Q');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
-VALUES ('Enrique','García Domínguez','29353803F','ES 1221081293201234561111',0,5000,'29353803F');
+VALUES ('Enrique','García Domínguez','29353803F','ES 6014654763591734464249',0,5000,'29353803F');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
 VALUES ('Henry','Dalgliesh Cavill','31123210R','ES 6623200418401234567892',0,6000,'31123210R');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
-VALUES ('Giancarlo','Fisichella','34109741M','ES 1200815983982678553411',0,5400,'34109741M');
+VALUES ('Giancarlo','Fisichella','34109741M','ES 4131901222458149879764',0,5400,'34109741M');
 
 INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3), 
 																(2, 1), (2, 2), (2, 3), 

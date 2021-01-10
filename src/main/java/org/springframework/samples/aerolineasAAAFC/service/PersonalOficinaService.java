@@ -53,6 +53,26 @@ public class PersonalOficinaService {
 		}
 	}
 	
+//	//Prueba save
+//	@Transactional
+//	public void savePersonalOficina(PersonalOficina pOficina) throws DataIntegrityViolationException{
+//		
+//		pOficinaRepository.save(pOficina);
+//		userService.saveUser(pOficina.getUser());
+//		authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
+//		
+//	}
+	
+	//Prueba
+	@Transactional
+	public void updatePersonalOficina(PersonalOficina personalOficina) throws DataIntegrityViolationException{
+
+		pOficinaRepository.save(personalOficina);
+		userService.saveUser(personalOficina.getUser());
+		authoritiesService.saveAuthorities(personalOficina.getUser().getUsername(), "personalOficina");
+
+	}
+	
 	@Transactional(readOnly=true)
 	public PersonalOficina findPersonalOficinaById(int id) throws DataAccessException{
 		return pOficinaRepository.findById(id).get();
