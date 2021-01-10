@@ -102,6 +102,10 @@ INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropue
 VALUES (parsedatetime('17-01-2018 23:30','dd-MM-yyyy hh:mm'),parsedatetime('18-01-2018 13:40','dd-MM-yyyy hh:mm'),25000,6,5,3);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
 VALUES (parsedatetime('03-06-2019 7:10','dd-MM-yyyy hh:mm'),parsedatetime('03-06-2019 13:20','dd-MM-yyyy hh:mm'),30000,6,7,4);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('07-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-01-2021 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('10-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-01-2021 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
 
 
 --PersonalControl
@@ -123,7 +127,8 @@ INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1, 1), (1, 2), 
 																(3, 1), (3, 2), (3, 3),
 																(4, 1), (4, 2), (4, 3),
 																(5, 1), (5, 2), (5, 3),
-																(6, 1), (6, 2), (6, 3);
+																(6, 1), (6, 2), (6, 3),
+																(1, 5), (1, 6);
 --Azafatos
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
 VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R');
@@ -149,7 +154,8 @@ INSERT INTO azafatos_vuelo(azafatos_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3),
 														 (5, 3), (5, 4),
 														 (6, 1), (6, 2), (6, 3), (6, 4),
 														 (7, 1), (7, 2), (7, 3), (7, 4),
-														 (8, 1), (8, 2), (8, 3), (8, 4);
+														 (8, 1), (8, 2), (8, 3), (8, 4),
+														 (1, 5), (2, 5), (3, 6), (4, 6);
 
 --Personal Oficina
 INSERT INTO personal_oficina(nombre,apellidos,nif,iban,salario,username)
