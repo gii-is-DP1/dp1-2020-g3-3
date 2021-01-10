@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>1088</x>
-      <y>192</y>
+      <y>184</y>
       <w>96</w>
       <h>80</h>
     </coordinates>
@@ -22,7 +22,7 @@ primeraClase
     <id>UMLClass</id>
     <coordinates>
       <x>1200</x>
-      <y>192</y>
+      <y>184</y>
       <w>104</w>
       <h>80</h>
     </coordinates>
@@ -39,7 +39,7 @@ Ingeniero de Vuelo
     <id>UMLClass</id>
     <coordinates>
       <x>952</x>
-      <y>352</y>
+      <y>344</y>
       <w>144</w>
       <h>48</h>
     </coordinates>
@@ -52,7 +52,7 @@ salario: Double {Min(1000)}</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>776</x>
-      <y>352</y>
+      <y>344</y>
       <w>144</w>
       <h>56</h>
     </coordinates>
@@ -67,7 +67,7 @@ salario: Double {Min(1000)}
     <id>UMLClass</id>
     <coordinates>
       <x>576</x>
-      <y>144</y>
+      <y>136</y>
       <w>240</w>
       <h>88</h>
     </coordinates>
@@ -85,7 +85,7 @@ iban: String {NotEmpty, Pattern(^ES\s\d{22}$)}
     <id>UMLClass</id>
     <coordinates>
       <x>592</x>
-      <y>352</y>
+      <y>344</y>
       <w>144</w>
       <h>48</h>
     </coordinates>
@@ -100,7 +100,7 @@ salario: Double {Min(1000)}
     <id>UMLClass</id>
     <coordinates>
       <x>368</x>
-      <y>328</y>
+      <y>320</y>
       <w>208</w>
       <h>96</h>
     </coordinates>
@@ -118,7 +118,7 @@ fechaNacimiento: LocalDate {NotNull,
     <id>UMLClass</id>
     <coordinates>
       <x>304</x>
-      <y>168</y>
+      <y>160</y>
       <w>128</w>
       <h>56</h>
     </coordinates>
@@ -132,7 +132,7 @@ name: String {NotEmpty}
     <id>UMLClass</id>
     <coordinates>
       <x>896</x>
-      <y>144</y>
+      <y>136</y>
       <w>136</w>
       <h>72</h>
     </coordinates>
@@ -148,7 +148,7 @@ enabled: Boolean
     <id>UMLClass</id>
     <coordinates>
       <x>408</x>
-      <y>680</y>
+      <y>672</y>
       <w>144</w>
       <h>72</h>
     </coordinates>
@@ -164,7 +164,7 @@ libre: Boolean {NotEmpty}
     <id>UMLClass</id>
     <coordinates>
       <x>1200</x>
-      <y>352</y>
+      <y>344</y>
       <w>184</w>
       <h>48</h>
     </coordinates>
@@ -179,7 +179,7 @@ idioma: String {Pattern(^[A-Z]{2}$)}
     <id>UMLClass</id>
     <coordinates>
       <x>128</x>
-      <y>368</y>
+      <y>360</y>
       <w>136</w>
       <h>64</h>
     </coordinates>
@@ -193,7 +193,7 @@ name: String {NotEmpty}</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>656</x>
-      <y>224</y>
+      <y>216</y>
       <w>56</w>
       <h>144</h>
     </coordinates>
@@ -204,7 +204,7 @@ name: String {NotEmpty}</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>456</x>
-      <y>288</y>
+      <y>280</y>
       <w>224</w>
       <h>56</h>
     </coordinates>
@@ -215,7 +215,7 @@ name: String {NotEmpty}</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>688</x>
-      <y>288</y>
+      <y>280</y>
       <w>368</w>
       <h>80</h>
     </coordinates>
@@ -226,7 +226,7 @@ name: String {NotEmpty}</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>288</y>
+      <y>280</y>
       <w>32</w>
       <h>80</h>
     </coordinates>
@@ -237,7 +237,7 @@ name: String {NotEmpty}</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>808</x>
-      <y>176</y>
+      <y>168</y>
       <w>104</w>
       <h>40</h>
     </coordinates>
@@ -251,7 +251,7 @@ m2=1
     <id>UMLClass</id>
     <coordinates>
       <x>720</x>
-      <y>528</y>
+      <y>520</y>
       <w>216</w>
       <h>88</h>
     </coordinates>
@@ -268,7 +268,7 @@ precio: Double {Positive}</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>1072</x>
-      <y>504</y>
+      <y>496</y>
       <w>248</w>
       <h>184</h>
     </coordinates>
@@ -292,7 +292,7 @@ plazasPrimera: int</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>128</x>
-      <y>504</y>
+      <y>496</y>
       <w>136</w>
       <h>48</h>
     </coordinates>
@@ -305,8 +305,8 @@ name: String {NotEmpty}
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>608</y>
+      <x>32</x>
+      <y>600</y>
       <w>256</w>
       <h>72</h>
     </coordinates>
@@ -323,7 +323,7 @@ precio: Double
     <id>UMLClass</id>
     <coordinates>
       <x>872</x>
-      <y>24</y>
+      <y>16</y>
       <w>176</w>
       <h>40</h>
     </coordinates>
@@ -338,7 +338,7 @@ authority: String {min(3), max(50)}
     <id>UMLClass</id>
     <coordinates>
       <x>744</x>
-      <y>720</y>
+      <y>704</y>
       <w>184</w>
       <h>96</h>
     </coordinates>
@@ -355,7 +355,7 @@ telefono: String {NotEmpty,
     <id>UMLClass</id>
     <coordinates>
       <x>392</x>
-      <y>520</y>
+      <y>512</y>
       <w>184</w>
       <h>80</h>
     </coordinates>
@@ -371,7 +371,7 @@ tipo: Clase {@NotNull}</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>952</x>
-      <y>56</y>
+      <y>48</y>
       <w>40</w>
       <h>104</h>
     </coordinates>
@@ -385,7 +385,7 @@ m2=0..n
     <id>Relation</id>
     <coordinates>
       <x>472</x>
-      <y>416</y>
+      <y>408</y>
       <w>40</w>
       <h>120</h>
     </coordinates>
@@ -398,22 +398,22 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>248</x>
-      <y>568</y>
-      <w>160</w>
+      <x>280</x>
+      <y>560</y>
+      <w>128</w>
       <h>104</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..3    
 m2=1
 </panel_attributes>
-    <additional_attributes>10.0;100.0;110.0;100.0;110.0;10.0;180.0;10.0</additional_attributes>
+    <additional_attributes>10.0;100.0;70.0;100.0;70.0;10.0;140.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>256</x>
-      <y>528</y>
+      <y>520</y>
       <w>96</w>
       <h>64</h>
     </coordinates>
@@ -425,7 +425,7 @@ m2=0..3  </panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>472</x>
-      <y>592</y>
+      <y>584</y>
       <w>32</w>
       <h>104</h>
     </coordinates>
@@ -439,7 +439,7 @@ m2=1
     <id>Relation</id>
     <coordinates>
       <x>568</x>
-      <y>552</y>
+      <y>544</y>
       <w>168</w>
       <h>40</h>
     </coordinates>
@@ -453,7 +453,7 @@ m2=1
     <id>Relation</id>
     <coordinates>
       <x>544</x>
-      <y>560</y>
+      <y>552</y>
       <w>136</w>
       <h>176</h>
     </coordinates>
@@ -468,7 +468,7 @@ fg=red
     <id>Relation</id>
     <coordinates>
       <x>928</x>
-      <y>560</y>
+      <y>552</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -482,9 +482,9 @@ m2=1
     <id>Relation</id>
     <coordinates>
       <x>792</x>
-      <y>608</y>
+      <y>600</y>
       <w>56</w>
-      <h>128</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..n    
@@ -492,27 +492,27 @@ m2=1
 
 llegaA
 </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>848</x>
-      <y>608</y>
+      <y>600</y>
       <w>56</w>
-      <h>128</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 m1=0..n    
 m2=1
 saleDe</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>656</x>
-      <y>392</y>
+      <y>384</y>
       <w>184</w>
       <h>112</h>
     </coordinates>
@@ -526,7 +526,7 @@ m1=0..n
     <id>Relation</id>
     <coordinates>
       <x>816</x>
-      <y>400</y>
+      <y>392</y>
       <w>64</w>
       <h>144</h>
     </coordinates>
@@ -540,7 +540,7 @@ m2=0..n
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>392</y>
+      <y>384</y>
       <w>232</w>
       <h>112</h>
     </coordinates>
@@ -554,7 +554,7 @@ m1=0..n
     <id>Relation</id>
     <coordinates>
       <x>1088</x>
-      <y>368</y>
+      <y>360</y>
       <w>128</w>
       <h>40</h>
     </coordinates>
@@ -568,7 +568,7 @@ m2=0..n
     <id>Relation</id>
     <coordinates>
       <x>184</x>
-      <y>424</y>
+      <y>416</y>
       <w>40</w>
       <h>96</h>
     </coordinates>
@@ -582,7 +582,7 @@ m2=1
     <id>Relation</id>
     <coordinates>
       <x>184</x>
-      <y>192</y>
+      <y>184</y>
       <w>136</w>
       <h>192</h>
     </coordinates>
@@ -596,7 +596,7 @@ m2=0..n
     <id>UMLNote</id>
     <coordinates>
       <x>1736</x>
-      <y>232</y>
+      <y>224</y>
       <w>112</w>
       <h>56</h>
     </coordinates>
@@ -607,14 +607,20 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>960</x>
-      <y>720</y>
-      <w>160</w>
-      <h>56</h>
+      <x>1072</x>
+      <y>696</y>
+      <w>264</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>Business Rule 1:
-El aeropuerto origen y 
-destino deben ser diferentes
+
+Para todos los aviones con más de 19 asientos
+es obligatorio que cuenten con un tripulante 
+de cabina de pasajeros (TCP) para poder operar. 
+A partir de 50 asientos deben de ir 2 TCP a bordo; 
+por cada bloque de 50 asientos adicionales, 
+sumaremos un TCP más.
+
 fg=red</panel_attributes>
     <additional_attributes/>
   </element>
@@ -622,35 +628,21 @@ fg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>928</x>
-      <y>608</y>
-      <w>72</w>
-      <h>128</h>
+      <y>600</y>
+      <w>184</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=.
 fg=red
 
 </panel_attributes>
-    <additional_attributes>70.0;140.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>208</x>
-      <y>40</y>
-      <w>160</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>Business Rule 1:
-El aeropuerto origen y 
-destino deben ser diferentes
-fg=red</panel_attributes>
-    <additional_attributes/>
+    <additional_attributes>210.0;120.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
       <x>240</x>
-      <y>256</y>
+      <y>248</y>
       <w>160</w>
       <h>56</h>
     </coordinates>
@@ -659,5 +651,133 @@ El aeropuerto origen y
 destino deben ser diferentes
 fg=red</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>320</x>
+      <y>760</y>
+      <w>264</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Business Rule 2:
+
+Un avión debe obligatoriamente pasar 
+un mantenimiento exhaustivo cada 2 años
+ó 30.000 horas de vuelo. 
+Dicho mantenimiento dura 1 mes. 
+Una vez se haga, el contador de horas de 
+vuelo será puesto a 0.
+fg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>544</x>
+      <y>600</y>
+      <w>192</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>lt=.
+fg=red
+
+</panel_attributes>
+    <additional_attributes>10.0;200.0;220.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>896</x>
+      <y>816</y>
+      <w>216</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Business Rule 3:
+
+Un avión debe pasar una revisión 
+cada 600 horas de vuelo. Esta revisión 
+deja inactivo el avión durante 1 semana.
+fg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>656</x>
+      <y>600</y>
+      <w>96</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=.
+fg=red
+
+</panel_attributes>
+    <additional_attributes>10.0;260.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>40</x>
+      <y>736</y>
+      <w>264</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>Business Rule 7:
+
+Los billetes para las clases tienen un 
+límite de mínimo de precio que no se debe
+sobrepasar aunque se apliquen descuentos. 
+Como regla general, ningún billete de clase 
+económica tendrá un precio menor a 5€, 
+ninguno de clase ejecutivaserá menor a 20€ 
+y ninguno de primera clase será menor a 50€.
+fg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>208</x>
+      <y>584</y>
+      <w>256</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=.
+fg=red
+
+</panel_attributes>
+    <additional_attributes>10.0;190.0;300.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>592</x>
+      <y>808</y>
+      <w>168</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Business Rule 6:
+
+Un vuelo de menos de 8 horas 
+debe tener 2 pilotos, en caso 
+de ser más de 8 horas, tendrá 
+un mínimo de 3.
+fg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>912</x>
+      <y>600</y>
+      <w>88</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>lt=.
+fg=red
+
+</panel_attributes>
+    <additional_attributes>90.0;270.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

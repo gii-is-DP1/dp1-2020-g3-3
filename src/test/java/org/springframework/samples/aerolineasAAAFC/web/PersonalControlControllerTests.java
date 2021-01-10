@@ -61,9 +61,6 @@ public class PersonalControlControllerTests {
 	
 	private User juanUser;
 
-
-
-
 	@BeforeEach
 	void setup() {
 
@@ -93,7 +90,7 @@ public class PersonalControlControllerTests {
 	void testInitCreationForm() throws Exception {
 		mockMvc.perform(get("/controladores/new"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeExists("PersonalControl"))
+		.andExpect(model().attributeExists("personalControl"))
 		.andExpect(view().name("controladores/createOrUpdatePersonalControlForm"));
 	}
 
@@ -105,12 +102,12 @@ public class PersonalControlControllerTests {
 				.param("nombre", "Daryl")
 				.param("apellidos", "Brown")
 				.with(csrf())
-				.param("nif", "85765119M")
-				.param("iban", "ES 7800230514501459995863")
-				.param("rol", "piloto")
+				.param("nif", "19083474Y")
+				.param("iban", "ES 4700815264369772656796")
+				.param("rol", "2")
 				.param("salario", "2500.")
-				.param("user.username", "85765119M")
-				.param("user.password", "DDDDDD"))
+				.param("user.username", "19083474Y")
+				.param("user.password", "asdasd23"))
 		.andExpect(status().is3xxRedirection());
 	}
 
@@ -119,36 +116,37 @@ public class PersonalControlControllerTests {
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/controladores/new")
+				.with(csrf())
 				.param("nombre", "Alessandro")
 				.param("apellidos", "Ferrara")
 				.param("nif", "297635960K")
 				.param("iban", "ES 4433300418403322567002")
-				.param("rol", "piloto")
+				.param("rol", "1")
 				.param("salario", "nosalario")
-		.param("user.username", "297635960K")
-		.param("user.password", "AAAAAAA"))
+				.param("user.username", "297635960K")
+				.param("user.password", "AAAAAAA"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("PersonalControl"))
-		.andExpect(model().attributeHasFieldErrors("PersonalControl", "salario"))
+		.andExpect(model().attributeHasErrors("personalControl"))
+		.andExpect(model().attributeHasFieldErrors("personalControl", "nif"))
+		.andExpect(model().attributeHasFieldErrors("personalControl", "salario"))
+		.andExpect(model().attributeHasFieldErrors("personalControl", "user.username"))
 		.andExpect(view().name("redirect:/controladores/"));
 	}
 
 
 	//Test de actualización
-
-
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdatePersonalControlFormSuccess() throws Exception {
-		mockMvc.perform(post("/oficinistas/{pOficinaId}/edit", TEST_PERSONALCONTROL_ID)
+		mockMvc.perform(post("/controladores/{pOficinaId}/edit", TEST_PERSONALCONTROL_ID)
 				.with(csrf())
-				.param("nombre", "Carlo")
-				.param("apellidos", "Santoro")
-				.param("nif", "01565890H")
-				.param("iban", "ES 5723389618452562008819")
-				.param("rol", "piloto")
-				.param("salario", "4500")
-				.param("user.username", "01565890H")
+				.param("nombre", "Juan")
+				.param("apellidos", "Fernandez Romero")
+				.param("nif", "01582301T")
+				.param("iban", "ES 7200813221711748512485")
+				.param("rol", "0")
+				.param("salario", "4500.")
+				.param("user.username", "01582301T")
 				.param("user.password", "CCCCCCC"))
 		.andExpect(view().name("redirect:/controladores/{pControlId}"));
 	}
@@ -159,7 +157,7 @@ public class PersonalControlControllerTests {
 		mockMvc.perform(post("/controladores/{pControlId}/edit", TEST_PERSONALCONTROL_ID)
 				.with(csrf())
 				.param("nombre", "Camile")
-				.param("apellidos", "Bernard ")
+				.param("apellidos", "Bernard")
 				.param("nif", "58963425")
 				.param("iban", "yyyyyyy")
 				.param("rol", "0")
@@ -171,6 +169,7 @@ public class PersonalControlControllerTests {
 		.andExpect(model().attributeHasFieldErrors("personalControl", "nif"))
 		.andExpect(model().attributeHasFieldErrors("personalControl", "iban"))
 		.andExpect(model().attributeHasFieldErrors("personalControl", "salario"))
+		.andExpect(model().attributeHasFieldErrors("personalControl", "user.username"))
 		.andExpect(view().name("controladores/createOrUpdatePersonalControlForm"));
 	}
 

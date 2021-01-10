@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
@@ -30,7 +31,6 @@ public class PersonalControl extends Person{
 	// Atributos
 	
 	@Column(name = "rol")
-	@NotEmpty
 	@Enumerated(EnumType.ORDINAL)
 	private Rol rol;
 	

@@ -5,6 +5,8 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
+import org.springframework.samples.aerolineasAAAFC.model.Rol;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
@@ -61,7 +64,14 @@ public class PersonalControlController {
 	@GetMapping(value = "/controladores/new")
 	public String initCreationPersonalControlForm(Map<String, Object> model) {
 		PersonalControl pControl = new PersonalControl();
-		model.put("personalControl", pControl);
+		
+		List<Rol> rol = new ArrayList<Rol>();
+	    rol.add(Rol.PILOTO);
+	    rol.add(Rol.COPILOTO);
+	    rol.add(Rol.INGENIERO_DE_VUELO);
+	    
+	    model.put("personalControl", pControl);
+	    model.put("roles", rol);
 		return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 	}
 	
@@ -89,9 +99,15 @@ public class PersonalControlController {
 	 *  UPDATE CONTROLADOR
 	 */
 	@GetMapping(value = "/controladores/{pControlId}/edit")
-	public String initUpdatePersonalControlForm(@PathVariable("pControlId") int pControlId, Model model) {
+	public String initUpdatePersonalControlForm(@PathVariable("pControlId") int pControlId, Model model, 
+			Map<String, Object> roles) {
 		PersonalControl pControl = this.pControlService.findPersonalControlById(pControlId);
 		model.addAttribute(pControl);
+		List<Rol> rol = new ArrayList<Rol>();
+	    rol.add(Rol.PILOTO);
+	    rol.add(Rol.COPILOTO);
+	    rol.add(Rol.INGENIERO_DE_VUELO);
+	    roles.put("roles", rol);
 		return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 	}
 	

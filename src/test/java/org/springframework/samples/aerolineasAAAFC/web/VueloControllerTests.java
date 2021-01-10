@@ -11,6 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
+import org.springframework.samples.aerolineasAAAFC.model.Azafato;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
@@ -84,6 +89,22 @@ public class VueloControllerTests {
 		vuelol.setCoste(100.0);
 		vuelol.setAeropuertoOrigen(aeropuertoService.findAeropuertoById(1));
 		vuelol.setAeropuertoDestino(aeropuertoService.findAeropuertoById(2));
+		vuelol.setAvion(avionService.findAvionById(2));
+		
+		Set<PersonalOficina> pOficina = new HashSet<PersonalOficina>();
+		pOficina.add(personalOficinaService.findPersonalOficinaById(1));
+		
+		Set<Azafato> azafatos = new HashSet<Azafato>();
+		azafatos.add(azafatoService.findAzafatoById(1));
+		azafatos.add(azafatoService.findAzafatoById(2));
+		azafatos.add(azafatoService.findAzafatoById(3));
+		azafatos.add(azafatoService.findAzafatoById(4));
+		
+		Set<PersonalControl> pControl = new HashSet<PersonalControl>();
+		pControl.add(personalControlService.findPersonalControlById(1));
+		pControl.add(personalControlService.findPersonalControlById(2));
+		pControl.add(personalControlService.findPersonalControlById(4));
+		pControl.add(personalControlService.findPersonalControlById(5));
 		
 		given(this.vueloService.findVueloById(TEST_VUELO_ID)).willReturn(vuelol);
 	}
@@ -99,26 +120,21 @@ public class VueloControllerTests {
 		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
 	}
 	
-	/*
-	 * echar un ojo a este método, devuelve successful cuando deberia redireccionar,
-	 * hay algun problema con cómo pasar los valores mediante param con los Date
-	 */
-//	@WithMockUser(value = "spring")
-//	@Test
-//	void testProcessCreationFormSuccess() throws Exception{
-////		mockMvc.perform(post("/vuelos/new")
-////				.param("fechaSalida", LocalDate.of(2020, Month.AUGUST, 21).toString())
-////				.param("fechaLlegada", LocalDate.of(2020, Month.AUGUST, 22).toString())
-////				.with(csrf())
-////				.param("coste", String.valueOf(99.0)))
-////		.andExpect(status().is3xxRedirection());
-//		mockMvc.perform(post("/vuelos/new")
-//				.param("fechaSalida", "2020/08/21")
-//				.param("fechaLlegada", "2020/08/22")
-//				.with(csrf())
-//				.param("coste", "90.0"))
-//		.andExpect(status().is3xxRedirection());
-//	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessCreationFormSuccess() throws Exception{
+		mockMvc.perform(post("/vuelos/new")
+				.param("fechaSalida", LocalDateTime.of(2020,01,24,10,00).toString())
+				.param("fechaLlegada", LocalDateTime.of(2020,01,24,15,00).toString())
+				.with(csrf())
+				.param("coste", String.valueOf(99.0))
+				.param("aeropuertoOrigen", "1")
+				.param("aeropuertoDestino", "2")
+				.param("aeropuertoDestino", "2"))
+			
+		.andExpect(status().is3xxRedirection());
+	}
 	
 	@WithMockUser(value = "spring")
 	@Test
@@ -164,6 +180,24 @@ public class VueloControllerTests {
 		.andExpect(model().attributeHasErrors("vuelo"))
 		.andExpect(model().attributeHasFieldErrors("vuelo", "fechaLlegada"))
 		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testshowVuelosListInicial() throws Exception{
+		mockMvc.perform(get("/vuelos"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("vuelo"))
+		.andExpect(view().name("vuelos/vuelosList"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testshowVuelosListConFecha() throws Exception{
+		mockMvc.perform(get("/vuelos?fecha=2018-01"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("vuelo"))
+		.andExpect(view().name("vuelos/vuelosList"));
 	}
 
 }
