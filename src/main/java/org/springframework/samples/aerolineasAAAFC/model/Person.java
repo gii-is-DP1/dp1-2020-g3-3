@@ -35,6 +35,7 @@ public class Person extends BaseEntity{
 	@NifConstraint
 	protected String nif;
 	
+	@Column(name = "iban", unique = true)
 	@NotEmpty
 	@Pattern(message = "Debe corresponder al formato: ES, un espacio en blanco y 22 dígitos" ,regexp="^ES\\s\\d{22}$")
 	protected String iban;

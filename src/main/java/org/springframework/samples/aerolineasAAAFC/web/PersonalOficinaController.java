@@ -93,26 +93,51 @@ public class PersonalOficinaController {
 		return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 	}
 	
+//	@PostMapping(value = "/personalOficina/{pOficinaId}/edit")
+//	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina pOficina, BindingResult result, 
+//			@PathVariable("pOficinaId") int pOficinaId) {
+//		if(result.hasErrors()) {
+//			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
+//		}
+//		else {
+//			pOficina.setId(pOficinaId);
+//			PersonalOficina pOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
+//			BeanUtils.copyProperties(pOficina, pOficinaToUpdate, "id","nif","username");
+//			try {
+//				this.pOficinaService.savePersonalOficina(pOficina);
+//			
+//			} catch (IbanDuplicadoException e) {
+//				result.rejectValue("iban", "duplicate", "already exists");
+//				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
+//			} catch (DataIntegrityViolationException e) {
+//				result.rejectValue("nif", "duplicate", "already exists");
+//				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
+//			}
+//			return "redirect:/personalOficina/{pOficinaId}";
+//		}
+//	}
+	
+	// Prueba con metodo update
 	@PostMapping(value = "/personalOficina/{pOficinaId}/edit")
-	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina pOficina, BindingResult result, 
-			@PathVariable("pOficinaId") int pOficinaId) {
+	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina personalOficina, BindingResult result, @PathVariable("pOficinaId") int pOficinaId) {
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			pOficina.setId(pOficinaId);
-			PersonalOficina pOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
-			BeanUtils.copyProperties(pOficina, pOficinaToUpdate, "id","nif","username");
+			personalOficina.setId(pOficinaId);
+			PersonalOficina personalOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
+			BeanUtils.copyProperties(personalOficina, personalOficinaToUpdate, "id","nif","username");
 			try {
-				this.pOficinaService.savePersonalOficina(pOficina);
-			
-			} catch (IbanDuplicadoException e) {
-				result.rejectValue("iban", "duplicate", "already exists");
-				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
+				this.pOficinaService.updatePersonalOficina(personalOficina);
 			} catch (DataIntegrityViolationException e) {
-				result.rejectValue("nif", "duplicate", "already exists");
+				if(e.getMessage().contains("PUBLIC.PERSONAL_OFICINA(IBAN)")) {
+					result.rejectValue("iban", "duplicate", "already exists");
+				}else{
+					result.rejectValue("nif", "duplicate", "already exists");
+				}
 				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			}
+			
 			return "redirect:/personalOficina/{pOficinaId}";
 		}
 	}
