@@ -14,11 +14,6 @@ import lombok.EqualsAndHashCode;
 @Table(name = "platos")
 public class Plato extends BaseEntity {
 
-	@ManyToOne(optional = true)
-	@JoinColumn(name = "menu_id")
-	@EqualsAndHashCode.Exclude
-	private Menu menu;
-
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "platos_base_id")
 	@EqualsAndHashCode.Exclude

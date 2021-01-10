@@ -98,7 +98,9 @@ public class MenuControllerTests {
 	void testProcessCreationFormSuccess() throws Exception {
 		mockMvc.perform(post("/billetes/{billeteId}/menus/new",TEST_BILLETE_ID)
 				.with(csrf())
-				.param("platos", "Sopa de miso", "Risotto vegetal", "Manzana"))
+				.param("plato1", "Sopa de miso")
+				.param("plato2", "Risotto vegetal")
+				.param("plato3", "Manzana"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(view().name("redirect:/billetes/datos"));
 		
@@ -109,9 +111,12 @@ public class MenuControllerTests {
 	void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/billetes/{billeteId}/menus/new",TEST_BILLETE_ID)
 				.with(csrf())
-				.param("platos", "Esta entidad es un infierno", "Risotto vegetal", "Manzana"))
+				.param("plato1", "Sopa de miso")
+				.param("plato2", "Eaaaaa")
+				.param("plato3", "Esta"))
 		.andExpect(model().attributeHasErrors("menu"))
-		.andExpect(model().attributeHasFieldErrors("menu", "platos"))
+		.andExpect(model().attributeHasFieldErrors("menu", "plato2"))
+		.andExpect(model().attributeHasFieldErrors("menu", "plato3"))
 		.andExpect(view().name("billetes/createOrUpdateMenuForm"));
 	}
 

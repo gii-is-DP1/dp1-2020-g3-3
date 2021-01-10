@@ -36,8 +36,8 @@ public class PlatoBaseServiceTests {
 		String prueba = "postre";
 		String prueba2 = "Manzana";
 		
-		Collection<String> l = platoBaseService.findPlatosPorTipo(prueba);
-		Boolean testeo = l.stream().anyMatch(x -> x.equals(prueba2));
+		Collection<PlatoBase> l = platoBaseService.findPlatosPorTipo(prueba);
+		Boolean testeo = l.stream().anyMatch(x -> x.getName().equals(prueba2));
 		assertThat(testeo).isTrue();
 	}
 

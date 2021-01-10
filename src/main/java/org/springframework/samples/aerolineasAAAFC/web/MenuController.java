@@ -2,12 +2,12 @@ package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.util.Collection;
 import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
+import org.springframework.samples.aerolineasAAAFC.model.menu.PlatoBase;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.PlatoBaseService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
@@ -35,19 +35,19 @@ public class MenuController {
 		this.billeteService = billeteService;
 		this.platoBaseService = platoBaseService;
 	}
-	
+
 	@ModelAttribute("platos_primeros")
-	public Collection<String> populatePlatosPrimeros() {
+	public Collection<PlatoBase> populatePlatosPrimeros() {
 		return this.platoBaseService.findPlatosPorTipo("primerPlato");
 	}
 	
 	@ModelAttribute("platos_segundos")
-	public Collection<String> populatePlatosSegundos() {
+	public Collection<PlatoBase> populatePlatosSegundos() {
 		return this.platoBaseService.findPlatosPorTipo("segundoPlato");
 	}
 	
 	@ModelAttribute("postres")
-	public Collection<String> populatePostres() {
+	public Collection<PlatoBase> populatePostres() {
 		return this.platoBaseService.findPlatosPorTipo("postre");
 	}
 	
@@ -83,6 +83,10 @@ public class MenuController {
 				result.reject(e.getMessage());
 				e.printStackTrace();
 				return VIEWS_MENU_CREATE_FORM;
+			} catch (Exception e) {
+				result.reject(e.getMessage());
+				e.printStackTrace();
+				return "oups";
 			}
 			return "redirect:/billetes/datos";
 		}
