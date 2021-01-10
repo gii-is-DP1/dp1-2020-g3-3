@@ -1,8 +1,10 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +12,14 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.logging.log4j2.Log4J2LoggingSystem;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
@@ -31,6 +35,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import net.bytebuddy.asm.Advice.Local;
 
 @Controller
 public class PersonalControlController {
@@ -152,7 +158,7 @@ public class PersonalControlController {
 	 * Vistas de consulta de controladores
 	 */
 	
-	@GetMapping(value = "/controladores")
+	@GetMapping(value = "/controladoresList")
 	public String showPersonalControlList(Map<String, Object> model) {
 		List<PersonalControl> controladores = new ArrayList<PersonalControl>();
 		controladores.addAll(this.pControlService.findPersonalControl());
@@ -163,7 +169,7 @@ public class PersonalControlController {
 	
 	
 	@GetMapping("/controladores/{pControlId}")
-	public ModelAndView showCliente(@PathVariable("pControlId") int pControlId) {
+	public ModelAndView showControlador(@PathVariable("pControlId") int pControlId) {
 		ModelAndView mav = new ModelAndView("controladores/controladorDetails");
 		mav.addObject(this.pControlService.findPersonalControlById(pControlId));
 		return mav;
@@ -184,15 +190,28 @@ public class PersonalControlController {
 	@RequestMapping(value = { "/controladores/{pControlId}/horario" }, method = RequestMethod.GET)
 	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
 
-		if(fecha.isEmpty()) {
-			model.put("vuelos", this.pControlService.horario(pControlId));
-		}else {
+		int mes = LocalDate.now().getMonthValue();
+		int año = LocalDate.now().getYear();
+		Month mesn = LocalDate.now().getMonth();
+		int dias = LocalDate.now().lengthOfMonth();
+		
+		if(!fecha.isEmpty()) {
 			fecha += "-01";
 			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			model.put("vuelos", this.pControlService.findVuelosByDate(pControlId, mes, año));
+			mes = date.getMonthValue();
+			mesn = date.getMonth();
+			año = date.getYear();
 		}
+		
+		Collection<Vuelo> vuelos = this.pControlService.horario(pControlId, mes, año);
+		
+		
+		
+		model.put("vuelos", vuelos);
+		model.put("id", pControlId);
+		model.put("dias", dias);
+		model.put("mes", mesn);
+		model.put("año", año);
 		return "controladores/horario";
 	}
 	

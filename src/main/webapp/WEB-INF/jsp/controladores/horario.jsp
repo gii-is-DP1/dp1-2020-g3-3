@@ -6,28 +6,37 @@
 
 <aerolineasAAAFC:layout pageName="controladores">
 
-	<h2>Horario de este mes</h2>
+	<div style="padding-left: 40%">
+ 	<form action="/controladores/${pControlId}/horario" method="get">
+			<label for="fecha">Fecha: </label> <input name="fecha" id="fecha"
+				type="month" pattern="^(19|2[0-1])\d{2}-(0[1-9]|1[0-2])$"
+				placeholder="yyyy-mm" />
+			<button type="submit" class="btn btn-default">Buscar</button>
+		</form>
+	</div>
+	<div class="month">
+		<ul>
+			<li>${mes}<br><span style="font-size:20px">${año}</span></li>
+		</ul>
+	</div>
 
+	<ul class="weekdays">
+		<li>Mo</li>
+		<li>Tu</li>
+		<li>We</li>
+		<li>Th</li>
+		<li>Fr</li>
+		<li>Sa</li>
+		<li>Su</li>
+	</ul>
 
-	<table id="tablaVuelos" class="table table-striped">
-		<thead>
-			<tr>
-				<th width="25%">Fecha de Salida</th>
-				<th width="25%">Fecha de Llegada</th>
-				<th width="25%">Aeropuerto de Salida</th>
-				<th width="25%">Aeropuerto de Llegada</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${vuelos}" var="vuelo">
-				<tr>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm" /></td>
-					<td><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}" /></td>
-					<td><c:out value="${vuelo.aeropuertoDestino.codigoIATA}" /></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+	<ul class="days">
+	<c:forEach var="dia" begin="1" end="${dias}" >
+		<li>
+			<c:out value="${dia}"/>
+		</li>
+	</c:forEach>
+	</ul>
+
 
 </aerolineasAAAFC:layout>

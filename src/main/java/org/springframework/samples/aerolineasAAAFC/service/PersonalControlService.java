@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
+import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,9 @@ public class PersonalControlService {
 	
 	@Autowired
 	private AuthoritiesService authoritiesService;
+
+	@Autowired
+	private VueloRepository vueloRepository;
 	
 	@Autowired
 	public PersonalControlService(PersonalControlRepository pControlRepository) {
@@ -73,36 +78,11 @@ public class PersonalControlService {
 	public void deletePersonalControlById(int id) throws DataAccessException {
 		pControlRepository.deleteById(id);
 	}
-
-	//Una solución para la historia 14
-	public Collection<Vuelo> horario(int id){ 
-		PersonalControl personal = pControlRepository.findById(id).get();
-		Set<Vuelo> vuelos = personal.getVuelos();		
-		
-		LocalDate date = LocalDate.now();
-		int mes = date.getMonthValue();
-		int año = date.getYear();
-		
-		List<Vuelo> res = new ArrayList<Vuelo>();
-		
-		for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
-			if((v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) || (v.getFechaSalida().getMonthValue() == (mes + 1)  && v.getFechaSalida().getYear() == año)) res.add(v);
-		}
-		
-		return res;
-	}
 	
-	public Collection<Vuelo> findVuelosByDate(int id, int mes, int año){ 
-		PersonalControl personal = pControlRepository.findById(id).get();
-		Set<Vuelo> vuelos = personal.getVuelos();
+	
+	public Collection<Vuelo> horario(int pControlId, int mes, int año) {
 		
-		List<Vuelo> res = new ArrayList<Vuelo>();
-		
-		for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
-			if(v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) res.add(v);
-		}
-		
-		return res;
+		return this.vueloRepository.findVuelosControl(pControlId, mes, año);
 	}
 
 		
@@ -134,6 +114,8 @@ public class PersonalControlService {
 				return res;
 
 			}
+
+
 	
 
 }

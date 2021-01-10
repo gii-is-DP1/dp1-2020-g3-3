@@ -63,7 +63,7 @@ public class PersonalControlServiceTests {
 	@Test
 	void getVuelosByDateSuccessful() {
 
-		Collection<Vuelo> vuelos = personalControlService.findVuelosByDate(1, 01, 2015);
+		Collection<Vuelo> vuelos = personalControlService.horario(1, 01, 2015);
 		
 		int found = vuelos.size();
 		
