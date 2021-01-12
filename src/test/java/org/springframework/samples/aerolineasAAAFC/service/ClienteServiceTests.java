@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
@@ -61,6 +62,7 @@ public class ClienteServiceTests {
 	@Test
 	void shouldAddBillete() {
 		Billete billete = new Billete();
+		billete.setAsiento(new Asiento());
 		Cliente cliente = clienteService.findClienteById(1);
 		int found = cliente.getBilletes().size();
 		
@@ -68,7 +70,7 @@ public class ClienteServiceTests {
 		billete.setCoste(80);
 //		billete.setAsiento("F5");
 		billete.setFechaReserva(LocalDate.of(2020, 04, 06));
-		billete.setClase(Clase.ECONOMICA);
+		billete.getAsiento().setClase(Clase.ECONOMICA);
 		cliente.getBilletes().add(billete);
 		
 		assertThat(cliente.getBilletes().size())

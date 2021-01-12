@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
+import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
@@ -61,7 +62,7 @@ public class BilleteControllerTests {
 		billetazo = new Billete();
 		billetazo.setId(TEST_BILLETE_ID);
 //		billetazo.setAsiento("A34");
-		billetazo.setClase(Clase.ECONOMICA);
+		billetazo.setAsiento(new Asiento());
 		//billetazo.setCliente(cliente);
 		billetazo.setCoste(123.56);
 		

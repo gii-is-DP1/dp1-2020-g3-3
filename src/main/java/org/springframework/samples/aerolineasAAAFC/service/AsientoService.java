@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.AsientoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,4 +43,15 @@ public class AsientoService {
 	public void eliminarAsiento(int id) throws DataAccessException{
 		asientoRepository.deleteById(id);
 	}
+	
+//	@Transactional
+//	public void saveManyAsiento(Integer total,Vuelo vuelo) {
+//		
+//		for(int i=0;i<total;i++) {
+//			Asiento asiento=new Asiento();
+//			asiento.setVuelos(vuelo);
+//			this.saveAsiento(asiento);
+//		}
+//		
+//	}
 }

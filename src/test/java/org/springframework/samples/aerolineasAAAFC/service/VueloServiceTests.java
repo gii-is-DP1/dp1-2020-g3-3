@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolationException;
 
@@ -56,47 +57,24 @@ public class VueloServiceTests {
 	
 	//TEST DE CONSULTA
 	@Test
-	void getFechaSalidaVueloSuccessful() {
+	void getDatosVueloSuccessful() {
 		Vuelo vuelo = vueloService.findVueloById(1);
 		
 		assertThat(vuelo.getFechaSalida())
 		.isBefore(vuelo.getFechaLlegada());
 		
-//		assertThat(vuelo.getFechaSalida().format(formatter))
-//		.isEqualTo("2040-12-11 10:40");
-	}
-	
-	@Test
-	void getFechaLlegadaVueloSuccessful() {
-		Vuelo vuelo = vueloService.findVueloById(1);
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
-		
 		assertThat(vuelo.getFechaLlegada())
 		.isAfter(vuelo.getFechaSalida());
 		
-//		assertThat(vuelo.getFechaLlegada().format(formatter))
-//		.isEqualTo("2040-12-11 10:40");
-	}
 
-	@Test
-	void getPrecioVueloSuccesful() {
-		Vuelo vuelo = vueloService.findVueloById(1);
 		String precio = String.valueOf(vuelo.getCoste());
 		
 		assertThat(precio).isEqualTo(String.valueOf(vuelo.getCoste()));
-	}
 	
-	@Test
-	void getNombreAeropuertoOrigenVueloSuccessful() {
-		Vuelo vuelo = vueloService.findVueloById(1);
 		String nombreAeroOrigen = vuelo.getAeropuertoOrigen().getNombre();
 		
 		assertThat(nombreAeroOrigen).isEqualTo("Aeropuerto de São Paulo Guarulhos");
-	}
-	
-	@Test
-	void getCodigoIATAAeropuertoDestinoVueloSuccessful() {
-		Vuelo vuelo = vueloService.findVueloById(1);
+
 		String codigoAeroDestino = vuelo.getAeropuertoDestino().getCodigoIATA();
 		
 		assertThat(codigoAeroDestino).isEqualTo("MAD");
@@ -106,10 +84,10 @@ public class VueloServiceTests {
 	@Test
 	void getBilletesSuccessful() {
 		Vuelo vuelo = vueloService.findVueloById(2);
-		Set<Billete> billetes = vuelo.getBilletes();
+		Set<Billete> billetes = vuelo.getAsientos().stream().map(x->x.getBillete()).collect(Collectors.toSet());
 		int found = billetes.size();
 		
-		assertThat(found).isEqualTo(2);
+		assertThat(found).isEqualTo(1);
 	}
 	
 	//TEST DE INSERCIÓN
@@ -123,7 +101,7 @@ public class VueloServiceTests {
 		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
 		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 1, 19, 23));
 		vuelo.setCoste(42.0);
-		vuelo.setBilletes(new HashSet<>());
+		vuelo.setAsientos(new HashSet<>());
 		vuelo.setPersonalOficina(new HashSet<>());
 		vuelo.setAvion(avionService.findAvionById(1));
 		
