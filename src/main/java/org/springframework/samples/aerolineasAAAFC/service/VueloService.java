@@ -29,7 +29,8 @@ public class VueloService {
 	private VueloRepository vueloRepository;
 	
 
-
+//	@Autowired
+//	private AsientoService asientoService;
 	 
 	@Transactional
 	public void saveVuelo(Vuelo vuelo) throws DataAccessException, HorasImposiblesException, HorasMaximasVueloException, DisponibilidadAvionException{
@@ -50,7 +51,10 @@ public class VueloService {
 			throw new DisponibilidadAvionException("El avión no está disponible porque debe pasar una revisión");
 		}else{
 			vuelo.getAvion().setHorasAcumuladas(horasAcum);
-			vueloRepository.save(vuelo); 
+			vueloRepository.save(vuelo);
+			
+//			asientoService.saveManyAsiento(vuelo.getAvion().getCapacidadPasajero(),vuelo);
+
 			
 		}
 	}
@@ -80,7 +84,9 @@ public class VueloService {
 	
 	@Transactional
 	public List<Cliente> findClientesPorVuelo(Vuelo vuelo){
-		List<Cliente> res =vuelo.getBilletes().stream().
+		List<Cliente> res =vuelo.getAsientos().stream().
+				filter(x->!x.getBillete().equals(null)).
+				map(x->x.getBillete()).
 				filter(x->!x.getCliente().equals(null)).
 				map(x->x.getCliente()).
 				collect(Collectors.toList());

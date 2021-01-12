@@ -205,15 +205,15 @@ INSERT INTO idiomas_azafato VALUES (8, 5);
 INSERT INTO idiomas_azafato VALUES (8, 6);
 
 --Asientos
-INSERT INTO asientos(nombre,libre,vuelo_id) VALUES
-				   ('F4',true,2),
-				   ('A4',true,2);
+INSERT INTO asientos(nombre,libre,clase,vuelo_id) VALUES
+				   ('F4',true,0,2),
+				   ('A4',true,2,2);
 
 --Billetes
-INSERT INTO billetes(coste,asiento_id,fecha_reserva,clase,cliente_id, vuelo_id)
-VALUES (80,1,'2020-04-06',0,1,2);
-INSERT INTO billetes(coste,asiento_id,fecha_reserva,clase,cliente_id,vuelo_id)
-VALUES (300,2,'2020-04-06',2,2,2);
+INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id)
+VALUES (80,1,'2020-04-06',1);
+INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id)
+VALUES (300,2,'2020-04-06',2);
 
 
 --PlatoType

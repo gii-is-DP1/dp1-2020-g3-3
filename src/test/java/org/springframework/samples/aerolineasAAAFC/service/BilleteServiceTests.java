@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
@@ -59,25 +60,29 @@ public class BilleteServiceTests {
 
 
 		Vuelo vuelo = this.vueloService.findVueloById(1);
+		Asiento asiento = vuelo.getAsientos().stream().
+				filter(x->x.getBillete().equals(null)).findFirst().get();
 		
-		int nBilletes=vuelo.getBilletes().size();
+		long nBilletes=vuelo.getAsientos().stream().
+				filter(x->!x.getBillete().equals(null)).count();
 
 		Billete billete = new Billete();
 
 		Clase clase=Clase.ECONOMICA;
-		billete.setClase(clase);
+		billete.getAsiento().setClase(clase);
 //		billete.setAsiento("A44");
 
 		billete.setCoste(12);
 		LocalDate reserva=LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE);
 		billete.setFechaReserva(reserva);
 
-		billete.setVuelos(vuelo);
+		billete.setAsiento(asiento);
 		
 		//se comprueba que se añadio correctamente el billete
-
-		vuelo.getBilletes().add(billete);
-		assertThat(vuelo.getBilletes().size()).isEqualTo(nBilletes + 1);
+		asiento.setBillete(billete);
+		vuelo.getAsientos().add(asiento);
+		assertThat(vuelo.getAsientos().stream().
+				filter(x->!x.getBillete().equals(null)).count()).isEqualTo(nBilletes + 1);
 
 
 		//se comprueba que se guarda exitosamente los cambios en vuelo
@@ -93,7 +98,8 @@ public class BilleteServiceTests {
 		}
 
 		vuelo = this.vueloService.findVueloById(1);
-		assertThat(vuelo.getBilletes().size()).isEqualTo(nBilletes + 1);
+		assertThat(vuelo.getAsientos().stream().
+				filter(x->!x.getBillete().equals(null)).count()).isEqualTo(nBilletes + 1);
 		
 		
 		//se comprueba que el id se añade correctamente

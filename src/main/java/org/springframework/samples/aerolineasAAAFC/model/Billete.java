@@ -44,12 +44,7 @@ public class Billete extends BaseEntity{
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate fechaReserva;
 	
-	@Column(name = "clase")
-	//@NotEmpty
-	@NotNull
-	@Enumerated(EnumType.ORDINAL)
-	private Clase clase;
-	
+
 	// Relaciones de tabla:
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
@@ -65,15 +60,15 @@ public class Billete extends BaseEntity{
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
-	@OneToOne(optional=true) 
+	@OneToOne(optional=false) 
 	@JoinColumn(name = "asiento_id")
 	@NotEmpty
 	private Asiento asiento;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "vuelo_id")
-	@EqualsAndHashCode.Exclude 
-	private Vuelo vuelos;
+//	@ManyToOne(optional = false)
+//	@JoinColumn(name = "vuelo_id")
+//	@EqualsAndHashCode.Exclude 
+//	private Vuelo vuelos;
 
 	public String toString() {
 		
