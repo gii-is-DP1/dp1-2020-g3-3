@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
@@ -225,42 +226,43 @@ public class VueloController {
 	}
 	
 	@RequestMapping(value = { "/vuelos" }, method = RequestMethod.GET)
-	public String showVuelosList(Map<String, Object> model,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+	public String showVuelosList(Map<String, Object> model,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
-		if(fecha.isEmpty()) {
-			LocalDate date = LocalDate.now();
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			model.put("vuelos", this.vueloService.findVuelosByMes(mes, año));
+		int mes = 0;
+		int año = 0;
+		
+		if(fecha == null) {
+			fecha = LocalDate.now();
+			mes = fecha.getMonthValue();
+			año = fecha.getYear();
 		}else {
-			fecha += "-01";
-			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			model.put("vuelos", this.vueloService.findVuelosByMes(mes, año));
+			mes = fecha.getMonthValue();
+			año = fecha.getYear();	
 		}
+		
+		model.put("vuelos", this.vueloService.findVuelosByMes(mes, año));
+		
 		return "vuelos/vuelosList";
 	}
 	
 	
 	@RequestMapping(value = { "/vuelos/ofertas" }, method = RequestMethod.GET)
-	public String showVuelosOfertadosList(Map<String, Object> model,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+	public String showVuelosOfertadosList(Map<String, Object> model,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
-		if(fecha.isEmpty()) {
-			LocalDate date = LocalDate.now();
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			
-			Collection<Vuelo> vuelos =this.vueloService.findVuelosOfertadosByMes(mes, año);
-			model.put("vuelosOferta", vuelos);
-				
+		int mes = 0;
+		int año = 0;
+		
+		if(fecha == null) {
+			fecha = LocalDate.now();
+			mes = fecha.getMonthValue();
+			año = fecha.getYear();
 		}else {
-			fecha += "-01";
-			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			model.put("vuelosOferta", this.vueloService.findVuelosOfertadosByMes(mes, año));
-		}
+			mes = fecha.getMonthValue();
+			año = fecha.getYear();	
+		}			
+		
+		model.put("vuelosOferta", this.vueloService.findVuelosOfertadosByMes(mes, año));
+		
 		return "vuelos/vuelosOfertadosList";
 	}
 	

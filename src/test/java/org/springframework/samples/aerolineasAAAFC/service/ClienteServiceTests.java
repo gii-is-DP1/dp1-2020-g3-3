@@ -5,6 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.validation.ConstraintViolationException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,21 +18,26 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
+import org.springframework.samples.aerolineasAAAFC.model.Authorities;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class ClienteServiceTests {
 
 	@Autowired
 	protected ClienteService clienteService;
-
 
 	//Tests Consultar
 
@@ -57,6 +67,7 @@ public class ClienteServiceTests {
 		//BILLETES
 		assertThat(cliente.getBilletes())
 		.isNotEmpty();
+		
 	}
 
 	@Test
@@ -83,6 +94,20 @@ public class ClienteServiceTests {
 		Cliente cliente = clienteService.findClienteByNif("01446551N");
 		assertThat(cliente.getId());
 	}
+	
+	@Test
+	void shouldGetClientePorNombre() {
+		Collection<Cliente> cliente = clienteService.findClientesPorNombre("Dolores", "Ramos Ceballos");
+		int found = cliente.size();
+		assertThat(found == 1);
+	}
+	
+	@Test
+	void shouldGetBilleteByClienteId() {
+		Collection<Billete> billetes = clienteService.findBilletesByIdCliente(1);
+		int found = billetes.size();
+		assertThat(found == 1);
+	}
 
 	//Tests Añadir
 
@@ -105,10 +130,13 @@ public class ClienteServiceTests {
 		User user = new User();
 		user.setUsername("28976897W");
 		user.setPassword("*Fly_High14&");
-		user.setEnabled(true);
+		user.setMatchingPassword("*Fly_High14&");
+			
+		
 		cliente.setUser(user);                
 
 		this.clienteService.saveCliente(cliente);
+		
 
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
@@ -133,10 +161,34 @@ public class ClienteServiceTests {
 		User user = new User();
 		user.setUsername("01446551N");
 		user.setPassword("*Fly_Low14&");
-		user.setEnabled(true);
+		user.setMatchingPassword("*Fly_Low14&");
 		cliente.setUser(user);
 		
 		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
+		
+	}
+	
+	@Test
+	@Transactional
+	public void shouldNotInsertClienteContraseña(){
+
+		Cliente cliente = new Cliente();
+		cliente.setNombre("Juan");
+		cliente.setApellidos("Soto Ramírez");
+		cliente.setNif("65801218N");
+		cliente.setDireccionFacturacion("C/Enladrillada,2 1ºB Sevilla");
+		cliente.setIban("ES 7771056418401234567893");
+		LocalDate fecha = LocalDate.parse("1995-03-08", DateTimeFormatter.ISO_DATE);
+		cliente.setFechaNacimiento(fecha);     
+		cliente.setEmail("juansotoram@hotmail.com");
+		
+		User user = new User();
+		user.setUsername("65801218N");
+		user.setPassword("*Fly_Low14&");
+		user.setMatchingPassword("*Fly_Low15&");
+		cliente.setUser(user);
+		
+		Assertions.assertThrows(ConstraintViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
 		
 	}
 
