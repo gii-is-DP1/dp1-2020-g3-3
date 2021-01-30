@@ -6,6 +6,7 @@
 
 <aerolineasAAAFC:layout pageName="controladores">
 
+
 	<div style="padding-left: 40%">
  	<form action="/controladores/${pControlId}/horario" method="get">
 			<label for="fecha">Fecha: </label> <input name="fecha" id="fecha"
@@ -30,13 +31,15 @@
 		<li>Su</li>
 	</ul>
 
-	<ul class="days">
+
+	<div id="diasC"></div>
+ 	<ul class="days" id="days">
 	<c:forEach var="dia" begin="1" end="${dias}" >
-		<li>
+		<li >
 			<c:out value="${dia}"/>
 		</li>
 	</c:forEach>
-	</ul>
-
+	</ul> 
+	
 
 </aerolineasAAAFC:layout>

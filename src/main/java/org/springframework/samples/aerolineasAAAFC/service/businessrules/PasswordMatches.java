@@ -10,10 +10,10 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = UsuarioValidator.class)
+@Constraint(validatedBy = PasswordMatchesValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UsuarioConstraint {
-	String message() default "El nif y el usuario deben ser iguales";
-	Class<?>[] groups() default {};
-	Class<? extends Payload>[] payload() default {};
+public @interface PasswordMatches { 
+    String message() default "Las contraseñas no coinciden";
+    Class<?>[] groups() default {}; 
+    Class<? extends Payload>[] payload() default {};
 }

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.log4j2.Log4J2LoggingSystem;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
@@ -122,12 +123,13 @@ public class PersonalControlController {
 			PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
 			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","username");
 			try {
-				this.pControlService.savePersonalControl(pControl);
+				this.pControlService.updatePersonalControl(pControl);
 			} catch (DataIntegrityViolationException e) {
-				result.rejectValue("nif", "duplicate", "already exists");
-				return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
-			} catch (IbanDuplicadoException e) {
-				result.rejectValue("iban", "duplicate", "already exists");
+				if(e.getMessage().contains("PUBLIC.PERSONAL_OFICINA(IBAN)")) {
+					result.rejectValue("iban", "duplicate", "already exists");
+				}else{
+					result.rejectValue("nif", "duplicate", "already exists");
+				}
 				return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 			}
 			
@@ -205,34 +207,46 @@ public class PersonalControlController {
 	//Horario del controlador
 	
 	@RequestMapping(value = { "/controladores/{pControlId}/horario" }, method = RequestMethod.GET)
-	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
-		int mes = LocalDate.now().getMonthValue();
-		int año = LocalDate.now().getYear();
-		Month mesn = LocalDate.now().getMonth();
-		int dias = LocalDate.now().lengthOfMonth();
+		int mes = 0;
+		int año = 0;
+		Month mesn = null;
+		int dias = 0;
 		
-		if(!fecha.isEmpty()) {
-			fecha += "-01";
-			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			mes = date.getMonthValue();
-			mesn = date.getMonth();
-			año = date.getYear();
-		}
+		if(fecha == null) {
+			fecha = LocalDate.now();
+			mes = fecha.getMonthValue();
+			año = fecha.getYear();
+			mesn = fecha.getMonth();
+			dias = fecha.lengthOfMonth();
+		}else {
+			mes = fecha.getMonthValue();
+			año = fecha.getYear();
+			mesn = fecha.getMonth();
+			dias = fecha.lengthOfMonth();
+		}	
 		
 		Collection<Vuelo> vuelos = this.pControlService.horario(pControlId, mes, año);
 		
-		
+		List<Integer> diasV = new ArrayList<>();
+		for(Vuelo v: vuelos) {
+			diasV.add(v.getFechaSalida().getDayOfMonth());
+		}
 		
 		model.put("vuelos", vuelos);
 		model.put("id", pControlId);
 		model.put("dias", dias);
 		model.put("mes", mesn);
 		model.put("año", año);
+		model.put("diasV", diasV);
 		return "controladores/horario";
 	}
 	
-
+	@RequestMapping(value = { "/controladores/{pControlId}/horario2" }, method = RequestMethod.GET)
+	public String prueba(Map<String, Object> model, @PathVariable("pControlId") int pControlId) {
+		return "controladores/horario2";
+	}
 	
 	//consulta de vuelos para conocer ruta (H9) ??
 	

@@ -84,7 +84,6 @@ public class AzafatoControllerTests {
 		Martina.setIdiomas(s);
 		
 		martinaUser = new User();
-		martinaUser.setEnabled(true);
 		martinaUser.setUsername("11571749N");
 		martinaUser.setPassword("EEEEE");
 		Martina.setUser(martinaUser);
