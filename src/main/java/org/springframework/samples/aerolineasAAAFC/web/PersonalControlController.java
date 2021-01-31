@@ -207,7 +207,8 @@ public class PersonalControlController {
 	//Horario del controlador
 	
 	@RequestMapping(value = { "/controladores/{pControlId}/horario" }, method = RequestMethod.GET)
-	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  
+								@RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
 		int mes = 0;
 		int año = 0;
@@ -235,7 +236,6 @@ public class PersonalControlController {
 		}
 		
 		model.put("vuelos", vuelos);
-		model.put("id", pControlId);
 		model.put("dias", dias);
 		model.put("mes", mesn);
 		model.put("año", año);

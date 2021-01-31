@@ -15,6 +15,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.AzafatoRepository;
+import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class AzafatoService {
 
 	@Autowired
 	private AuthoritiesService authoritiesService;
+	
+	@Autowired
+	private VueloRepository vueloRepository;
 
 	@Autowired
 	public AzafatoService(AzafatoRepository azafatoRepository) {
@@ -77,35 +81,12 @@ public class AzafatoService {
 		azafatoRepository.deleteById(id);
 	}
 	
-	public Collection<Vuelo> findVuelosByDate(int id, int mes, int año){ 
-		Azafato azafato = azafatoRepository.findById(id).get();
-		Set<Vuelo> vuelos = azafato.getVuelos();
-		
-		List<Vuelo> res = new ArrayList<Vuelo>();
-		
-		for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
-			if(v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) res.add(v);
-		}
-		
-		return res;
-	}
 	
-	public Collection<Vuelo> horario(int id){ 
-		Azafato azafato = azafatoRepository.findById(id).get();
-		Set<Vuelo> vuelos = azafato.getVuelos();
+	public Collection<Vuelo> horario(int azafatoId, int mes, int año) {
 		
-		LocalDate date = LocalDate.now();
-		int mes = date.getMonthValue();
-		int año = date.getYear();
-		
-		List<Vuelo> res = new ArrayList<Vuelo>();
-		
-		for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
-			if((v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) || (v.getFechaSalida().getMonthValue() == (mes + 1)  && v.getFechaSalida().getYear() == año)) res.add(v);
-		}
-		
-		return res;
+		return this.vueloRepository.findVuelosAzafato(azafatoId, mes, año);
 	}
+
 	
 	@Transactional(readOnly = true)
 	public Collection<IdiomaType> findIdiomaTypes() throws DataAccessException {
