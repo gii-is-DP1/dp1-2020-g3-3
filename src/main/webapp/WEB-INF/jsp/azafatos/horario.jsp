@@ -6,31 +6,47 @@
 
 <aerolineasAAAFC:layout pageName="azafatos">
 
-	<h2>Horario de este mes</h2>
-
-
-	<table id="tablaVuelos" class="table table-striped">
-		<thead>
-			<tr>
-				<th width="25%">Fecha de Salida</th>
-				<th width="25%">Fecha de Llegada</th>
-				<th width="25%">Aeropuerto de Salida</th>
-				<th width="25%">Aeropuerto de Llegada</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${vuelos}" var="vuelo">
-				<tr>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}"
-							pattern="dd-MM-yyyy HH:mm" /></td>
-					<td><aerolineasAAAFC:localDateTime
-							date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm" /></td>
-					<td><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}" /></td>
-					<td><c:out value="${vuelo.aeropuertoDestino.codigoIATA}" /></td>
-				</tr>
+	<div style="padding: 5% 0% 0% 43%">
+ 	<form action="/azafatos/${azafatoId}/horario" method="get">
+			<label for="fecha">Fecha: </label> <input name="fecha" id="fecha" type="date" />
+			<button type="submit" class="btn btn-default">Buscar</button>
+		</form>
+	</div>
+	
+	<div class="calendario">
+		<div class="month">
+			<ul>
+				<li>${mes}<br><span style="font-size:20px">${año}</span></li>
+			</ul>
+		</div>
+	
+		<ul class="weekdays">
+			<li>Mo</li>
+			<li>Tu</li>
+			<li>We</li>
+			<li>Th</li>
+			<li>Fr</li>
+			<li>Sa</li>
+			<li>Su</li>
+		</ul>
+	
+	 	<ul class="days" id="days">
+		<c:forEach var="dia" begin="1" end="${dias}" >
+			<c:forEach items="${diasV}" var="diaV">
+				<c:if test="${diaV == dia}">
+				<li id="${dias}">
+					<span class="active">
+						<c:out value="${dia}"/>
+					</span>
+				</li>
+				</c:if>
 			</c:forEach>
-		</tbody>
-	</table>
+			<li id="${dias}">
+				<c:out value="${dia}"/>
+			</li>
+		</c:forEach>
+		</ul> 
+	</div>
 
 
 </aerolineasAAAFC:layout>
