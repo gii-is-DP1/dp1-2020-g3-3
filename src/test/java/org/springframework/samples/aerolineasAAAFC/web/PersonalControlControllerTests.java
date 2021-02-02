@@ -74,7 +74,6 @@ public class PersonalControlControllerTests {
 		Juan.setSalario(2000.);
 		
 		juanUser = new User();
-		juanUser.setEnabled(true);
 		juanUser.setUsername("01582301T");
 		juanUser.setPassword("juFerRo01");
 		Juan.setUser(juanUser);

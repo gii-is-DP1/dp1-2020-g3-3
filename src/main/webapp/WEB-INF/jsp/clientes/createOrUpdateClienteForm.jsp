@@ -25,8 +25,9 @@
 			<aerolineasAAAFC:inputField label="IBAN" name="iban" />
 			<aerolineasAAAFC:inputField label="Fecha de Nacimiento" name="fechaNacimiento" type="date"/>
 			<aerolineasAAAFC:inputField label="Email" name="email" />
-			<aerolineasAAAFC:inputField label="Username" name="user.username" />
-			<aerolineasAAAFC:inputField label="Password" name="user.password" type="password" />
+			<aerolineasAAAFC:inputField label="Usuario (debe ser igual al DNI)" name="user.username" />
+			<aerolineasAAAFC:inputField label="Contraseña" name="user.password" type="password" />
+			<aerolineasAAAFC:inputField label="Confirmar Contraseña" name="user.matchingPassword" type="password"></aerolineasAAAFC:inputField>
 			
 			<form:errors> </form:errors>
 		</div>

@@ -14,6 +14,9 @@ import org.springframework.samples.aerolineasAAAFC.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ClienteService {
 
@@ -32,11 +35,15 @@ public class ClienteService {
 
 	@Transactional
 	public void saveCliente(Cliente cliente) throws DataIntegrityViolationException{
-
+		
 		clienteRepository.save(cliente);
+		String cl = cliente.getApellidos() + ", " + cliente.getNombre();
+		log.info("Cliente guardado: {}", cl);
+		
 		userService.saveUser(cliente.getUser());
+		
 		authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "cliente");
-
+		log.info("Autoridad establecida: {}", cliente.getUser().getAuth());
 	}
 
 	@Transactional(readOnly = true)

@@ -70,7 +70,6 @@ public class PersonalOficinaControllerTests {
 		carlos.setSalario(1000.);
 		
 		carlosUser = new User();
-		carlosUser.setEnabled(true);
 		carlosUser.setUsername("70292959Z");
 		carlosUser.setPassword("CaSanHi70");
 		carlos.setUser(carlosUser);

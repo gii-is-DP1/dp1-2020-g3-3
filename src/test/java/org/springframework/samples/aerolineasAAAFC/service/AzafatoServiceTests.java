@@ -98,7 +98,6 @@ public class AzafatoServiceTests {
 		User user = new User();
 		user.setUsername("84493294B");
 		user.setPassword("*pepe_csfay");
-		user.setEnabled(true);
 		azafato.setUser(user);    
 		
 
@@ -138,7 +137,7 @@ public class AzafatoServiceTests {
 		User user = new User();
 		user.setUsername("84493294B");
 		user.setPassword("*pepe_csfay");
-		user.setEnabled(true);
+		user.setMatchingPassword("*pepe_csfay");
 		azafato.setUser(user);    
 
 		try {
@@ -160,7 +159,6 @@ public class AzafatoServiceTests {
 		azafatos = this.azafatoService.findAzafatos();
 		assertThat(azafatos.size()).isEqualTo(found + 1);
 		
-		assertThat(azafato.getId()).isNotNull();
 
 	}
 	

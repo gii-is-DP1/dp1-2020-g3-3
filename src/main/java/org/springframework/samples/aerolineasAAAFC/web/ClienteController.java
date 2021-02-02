@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.IdClass;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
-import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
@@ -25,8 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 

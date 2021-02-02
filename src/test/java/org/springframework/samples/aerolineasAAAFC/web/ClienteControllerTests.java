@@ -72,7 +72,6 @@ public class ClienteControllerTests {
 		dolores.setFechaNacimiento(LocalDate.of(1989, 12, 03));
 
 		doloresUser = new User();
-		doloresUser.setEnabled(true);
 		doloresUser.setUsername("29565800A");
 		doloresUser.setPassword("EEEEE");
 		dolores.setUser(doloresUser);

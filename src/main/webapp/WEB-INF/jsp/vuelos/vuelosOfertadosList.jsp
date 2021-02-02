@@ -14,9 +14,9 @@
     <c:if test="${not empty param.fecha}"><h2 style="float: left;">Vuelos ofertados del ${param.fecha} </h2></c:if>
     
 	<div style="float: right;">
-	<form action="/vuelos" method="get">
+	<form action="/vuelos/ofertas" method="get">
 		<label for="fecha">Fecha: </label>
-   		<input name="fecha" id="fecha" type="month" pattern="^(19|2[0-1])\d{2}-(0[1-9]|1[0-2])$" placeholder="yyyy-mm"/>
+   		<input name="fecha" id="fecha" type="date"/>
    		<button type="submit" class="btn btn-default">Buscar Vuelos</button>
    	</form>
 	</div >

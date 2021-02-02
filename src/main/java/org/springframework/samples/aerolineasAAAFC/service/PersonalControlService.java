@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
 import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
@@ -62,6 +63,16 @@ public class PersonalControlService {
 			userService.saveUser(pControl.getUser());
 			authoritiesService.saveAuthorities(pControl.getUser().getUsername(), "personalControl");
 		}
+	}
+	
+	//Prueba
+	@Transactional
+	public void updatePersonalControl(PersonalControl personalControl) throws DataIntegrityViolationException{
+
+		pControlRepository.save(personalControl);
+		userService.saveUser(personalControl.getUser());
+		authoritiesService.saveAuthorities(personalControl.getUser().getUsername(), "personalControl");
+
 	}
 	
 	@Transactional(readOnly=true)

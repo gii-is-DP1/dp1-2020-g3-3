@@ -34,7 +34,7 @@
 			<div class="header-right">
 				<sec:authorize access="!isAuthenticated()">
 					<a href="<c:url value="/login" />">Entra</a>
-					<a href="<c:url value="/users/new" />">Regístrate</a>
+					<a href="<c:url value="/clientes/new" />">Regístrate</a>
 				</sec:authorize>
 
 				<sec:authorize access="isAuthenticated()">

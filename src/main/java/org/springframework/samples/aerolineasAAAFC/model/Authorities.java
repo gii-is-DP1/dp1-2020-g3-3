@@ -10,14 +10,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "authorities")
 public class Authorities extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "username")
-	@EqualsAndHashCode.Exclude
 	User user;
 	
 	@Size(min = 3, max = 50)

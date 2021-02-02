@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,9 +13,14 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+<<<<<<< HEAD
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+=======
+import org.springframework.format.annotation.DateTimeFormat;
+>>>>>>> branch 'master' of https://github.com/gii-is-DP1/dp1-2020-g3-3.git
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
@@ -151,17 +157,41 @@ public class AzafatoController {
 	 */
 	
 	@RequestMapping(value = { "/azafatos/{azafatoId}/horario" }, method = RequestMethod.GET)
-	public String showVuelosList(Map<String, Object> model, @PathVariable("azafatoId") int azafatoId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+	public String showVuelosList(Map<String, Object> model, @PathVariable("azafatoId") int azafatoId,  
+								@RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
-		if(fecha.isEmpty()) {
-			model.put("vuelos", this.azafatoService.horario(azafatoId));
-		}else {
-			fecha += "-01";
-			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			int mes = date.getMonthValue();
-			int año = date.getYear();
-			model.put("vuelos", this.azafatoService.findVuelosByDate(azafatoId, mes, año));
-		}
+
+			int mes = 0;
+			int año = 0;
+			Month mesn = null;
+			int dias = 0;
+			
+			if(fecha == null) {
+				fecha = LocalDate.now();
+				mes = fecha.getMonthValue();
+				año = fecha.getYear();
+				mesn = fecha.getMonth();
+				dias = fecha.lengthOfMonth();
+			}else {
+				mes = fecha.getMonthValue();
+				año = fecha.getYear();
+				mesn = fecha.getMonth();
+				dias = fecha.lengthOfMonth();
+			}	
+			
+			Collection<Vuelo> vuelos = this.azafatoService.horario(azafatoId, mes, año);
+			
+			List<Integer> diasV = new ArrayList<>();
+			for(Vuelo v: vuelos) {
+				diasV.add(v.getFechaSalida().getDayOfMonth());
+			}
+			
+			model.put("vuelos", vuelos);
+			model.put("dias", dias);
+			model.put("mes", mesn);
+			model.put("año", año);
+			model.put("diasV", diasV);
+
 		return "azafatos/horario";
 	}
 }
