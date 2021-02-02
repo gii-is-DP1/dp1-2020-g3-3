@@ -7,15 +7,16 @@
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
 <aerolineasAAAFC:layout pageName="billetes">
+    
     <h2>
         <c:if test="${billete['new']}">Nuevo </c:if> Billete
     </h2>
+   	
     <form:form modelAttribute="billete" class="form-horizontal" id="add-billete-form">
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Precio de venta" name="coste"/>
             <aerolineasAAAFC:inputField label="Asiento" name="asiento"/>
             <aerolineasAAAFC:inputField label="Fecha de reserva" type="date" name="fechaReserva"/>
-            <aerolineasAAAFC:inputField label="Tipo de clase" name="clase"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

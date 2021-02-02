@@ -44,7 +44,8 @@
 						<br>
 					</c:forEach>
 				</td>
-                
+                <td onclick="javascript:location.href='/billetes/createOrUpdateBilleteForm.jsp'" onmouseover="" 
+                style="cursor: pointer;"><b><c:out value="Comprar billete"/></b></td>
                 
 			<tr>	
         </c:forEach>

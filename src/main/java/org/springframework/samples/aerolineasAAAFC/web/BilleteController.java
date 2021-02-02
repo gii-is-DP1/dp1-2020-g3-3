@@ -1,5 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
 import javax.validation.Valid;
@@ -7,6 +8,9 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,10 +29,12 @@ public class BilleteController {
 	private static final String VIEWS_BILLETE_CREATE_OR_UPDATE_FORM = "billetes/createOrUpdateBilleteForm";
 
 	private final BilleteService billeteService;
+	private final ClienteService clienteService;
 
 	@Autowired
-	public BilleteController(BilleteService billeteService) {
+	public BilleteController(BilleteService billeteService, ClienteService clienteService) {
 		this.billeteService = billeteService;
+		this.clienteService=  clienteService;
 	}
 
 	@InitBinder
@@ -41,9 +47,16 @@ public class BilleteController {
 	 */
 	@GetMapping(value = "/billetes/new")
 	public String initCreationBilleteForm(Map<String, Object> model) {
-		Billete billete = new Billete();
-		model.put("billete", billete);
-		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+		if( SecurityContextHolder.getContext().getAuthentication()!=null) {
+			Billete billete = new Billete();
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String name = authentication.getName();//name corresponde al nif del usuario
+			model.put("billete", billete);
+			billete.setCliente(clienteService.findClienteByNif(name));
+			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+		}else {
+			return "user/createClienteForm.jsp";
+		}
 	}
 
 	@PostMapping(value = "/billetes/new")
