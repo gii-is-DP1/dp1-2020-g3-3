@@ -93,4 +93,5 @@ public class AzafatoService {
 		return azafatoRepository.findIdiomaTypes();
 	}
 
+
 }

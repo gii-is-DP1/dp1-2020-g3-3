@@ -13,11 +13,8 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-<<<<<<< HEAD
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
-=======
 import org.springframework.format.annotation.DateTimeFormat;
->>>>>>> branch 'master' of https://github.com/gii-is-DP1/dp1-2020-g3-3.git
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
