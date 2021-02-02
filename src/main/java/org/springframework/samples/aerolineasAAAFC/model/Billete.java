@@ -56,7 +56,7 @@ public class Billete extends BaseEntity{
 	@EqualsAndHashCode.Exclude 
 	private Set<Menu> menus;
 	
-	@ManyToOne(optional=true) //segun el model un billete no tiene por qué ir asociado a un cliente
+	@ManyToOne(optional=true)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	

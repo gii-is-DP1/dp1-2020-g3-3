@@ -40,6 +40,11 @@ public class AsientoService {
 	}
 	
 	@Transactional
+	public Collection<Asiento> findAsientosSinOcupar(Vuelo vuelo){
+		return vuelo.getAsientos().stream().filter(x->x.isLibre()).collect(Collectors.toList());
+	}
+	
+	@Transactional
 	public void eliminarAsiento(int id) throws DataAccessException{
 		asientoRepository.deleteById(id);
 	}
