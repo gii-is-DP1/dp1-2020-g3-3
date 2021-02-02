@@ -10,7 +10,7 @@
 
 <aerolineasAAAFC:layout pageName="clientes">
 	<h2>
-		<c:if test="${cliente['new']}">Nuevo </c:if>Cliente
+		<c:if test="${cliente['new']}"> Nuevo</c:if> Cliente
 	</h2>
 	<form:form modelAttribute="cliente" class="form-horizontal"
 		id="add-cliente-form">

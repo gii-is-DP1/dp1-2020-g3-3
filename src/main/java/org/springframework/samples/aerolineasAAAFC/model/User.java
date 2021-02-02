@@ -7,7 +7,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -20,6 +22,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@SuppressWarnings("serial")
 @PasswordMatches
 @Getter
 @Setter
@@ -35,6 +38,7 @@ public class User implements UserDetails{
 	@NotNull
 	@NotEmpty
 	private String password;
+	
 	@NotNull
 	@NotEmpty
 	private String matchingPassword;

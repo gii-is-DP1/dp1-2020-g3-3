@@ -191,6 +191,31 @@ public class ClienteServiceTests {
 		Assertions.assertThrows(ConstraintViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
 		
 	}
+	
+	@Test
+	@Transactional
+	public void shouldNotInsertClienteUsuario(){
+
+		Cliente cliente = new Cliente();
+		cliente.setNombre("Juan");
+		cliente.setApellidos("Soto Ramírez");
+		cliente.setNif("47595315N");
+		cliente.setDireccionFacturacion("C/Enladrillada,2 1ºB Sevilla");
+		cliente.setIban("ES 7771056418401234568893");
+		LocalDate fecha = LocalDate.parse("1995-03-08", DateTimeFormatter.ISO_DATE);
+		cliente.setFechaNacimiento(fecha);     
+		cliente.setEmail("juansotoram@hotmail.com");
+		
+		User user = new User();
+		user.setUsername("jsoto");
+		user.setPassword("*Fly_Low14&");
+		user.setMatchingPassword("*Fly_Low14&");
+		cliente.setUser(user);
+		
+		Assertions.assertThrows(ConstraintViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
+		
+	}
+	
 
 	//Tests Actualizar
 

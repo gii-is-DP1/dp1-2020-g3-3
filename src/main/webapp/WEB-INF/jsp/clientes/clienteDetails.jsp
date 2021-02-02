@@ -55,27 +55,5 @@
     
 	<a href="<spring:url value="/clientes/${cliente.id}/compras" htmlEscape="true" />">Ver billetes</a>
 
-<!--
-    <table class="table table-striped">
-        <c:forEach var="billete" items="${cliente.billetes}">
-        
-            <tr>
-                <td valign="top">
-                    <dl class="dl-horizontal">
-                    	<dt>Coste</dt>
-                        <dd><c:out value="${billete.coste}"/></dd>
-                        <dt>Asiento</dt>
-                        <dd><c:out value="${billete.asiento}"/></dd>
-                        <dt>Fecha de reserva</dt>
-                        <dd><aerolineasAAAFC:localDate date="${billete.fechaReserva}" pattern="yyyy-MM-dd"/></dd>
-                        <dt>Clase</dt>
-                        <dd><c:out value="${billete.clase}"/></dd>
-                    </dl>
-                </td>
-            </tr>
-
-        </c:forEach>
-    </table> 
--->
 
 </aerolineasAAAFC:layout>
