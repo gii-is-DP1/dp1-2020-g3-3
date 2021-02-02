@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
@@ -20,6 +21,7 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -87,7 +90,7 @@ public class PersonalOficinaController {
 	 *  Update sobre un oficinista
 	 */
 	@GetMapping(value = "/personalOficina/{pOficinaId}/edit")
-	public String initUpdatePersonalOficinaForm(@PathVariable("pOficinaId") int pOficinaId, Model model) {
+	public String initUpdatePersonalOficinaForm(@PathVariable("pOficinaId") int pOficinaId, ModelMap model) {
 		PersonalOficina personalOficina = this.pOficinaService.findPersonalOficinaById(pOficinaId);
 		model.addAttribute(personalOficina);
 		return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
@@ -119,13 +122,20 @@ public class PersonalOficinaController {
 	
 	// Prueba con metodo update
 	@PostMapping(value = "/personalOficina/{pOficinaId}/edit")
-	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina personalOficina, BindingResult result, @PathVariable("pOficinaId") int pOficinaId) {
+	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina personalOficina, BindingResult result, @PathVariable("pOficinaId") int pOficinaId,
+			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		PersonalOficina personalOficinaToUpdate=this.pOficinaService.findPersonalOficinaById(pOficinaId);
+
+		if(personalOficinaToUpdate.getVersion()!=version) {
+			model.put("message","Concurrent modification of Personal Oficina! Try again!");
+			return initUpdatePersonalOficinaForm(pOficinaId,model);
+			}
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			personalOficina.setId(pOficinaId);
-			PersonalOficina personalOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
+			PersonalOficina personalOficinaToUpdate2 = this.pOficinaService.findPersonalOficinaById(pOficinaId);
 			BeanUtils.copyProperties(personalOficina, personalOficinaToUpdate, "id","nif","username");
 			try {
 				this.pOficinaService.updatePersonalOficina(personalOficina);

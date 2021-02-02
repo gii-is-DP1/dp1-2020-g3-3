@@ -40,5 +40,9 @@ public class PersonalOficina extends Person{
 	@ManyToMany(cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
 	private Collection<Vuelo> vuelos;
+
+	public Integer getVersion() {
+		return null;
+	}
 	
 }

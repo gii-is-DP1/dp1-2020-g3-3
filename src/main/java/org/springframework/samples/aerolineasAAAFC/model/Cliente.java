@@ -51,5 +51,9 @@ public class Cliente extends Person{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
 	@EqualsAndHashCode.Exclude
 	private Set<Billete> billetes;
+
+	public Integer getVersion() {
+		return null;
+	}
 	
 }

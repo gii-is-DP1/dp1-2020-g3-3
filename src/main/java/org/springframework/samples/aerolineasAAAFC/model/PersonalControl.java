@@ -48,4 +48,8 @@ public class PersonalControl extends Person{
 	@EqualsAndHashCode.Exclude
 	private Set<Vuelo> vuelos;
 
+	public Integer getVersion() {
+		return null;
+	}
+
 }

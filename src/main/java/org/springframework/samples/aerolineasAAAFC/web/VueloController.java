@@ -40,6 +40,7 @@ import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImpos
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -158,7 +159,7 @@ public class VueloController {
 	//MODIFICACION
 	
 	@GetMapping(value = "/vuelos/{vueloId}/edit")
-	public String initUpdateVueloForm(@PathVariable("vueloId") int vueloId, Model model) {
+	public String initUpdateVueloForm(@PathVariable("vueloId") int vueloId, ModelMap model) {
 		
 		List<Aeropuerto> aeropuertos = new ArrayList<>();
 		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
@@ -198,7 +199,13 @@ public class VueloController {
 	
 	@PostMapping(value = "/vuelos/{vueloId}/edit")
 	public String processUpdateVueloForm(@Valid Vuelo vuelo, BindingResult result, 
-			@PathVariable("vueloId") int vueloId) {
+			@PathVariable("vueloId") int vueloId, ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		Vuelo vueloToUpdate=this.vueloService.findVueloById(vueloId);
+
+		if(vueloToUpdate.getVersion()!=version) {
+			model.put("message","Concurrent modification of Vuelo! Try again!");
+			return initUpdateVueloForm(vueloId,model);
+			}
 		if(result.hasErrors()) {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 		}

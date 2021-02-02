@@ -20,6 +20,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
@@ -30,6 +31,7 @@ import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplic
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -101,7 +103,7 @@ public class PersonalControlController {
 	 *  UPDATE CONTROLADOR
 	 */
 	@GetMapping(value = "/controladores/{pControlId}/edit")
-	public String initUpdatePersonalControlForm(@PathVariable("pControlId") int pControlId, Model model, 
+	public String initUpdatePersonalControlForm(@PathVariable("pControlId") int pControlId, ModelMap model, 
 			Map<String, Object> roles) {
 		PersonalControl pControl = this.pControlService.findPersonalControlById(pControlId);
 		model.addAttribute(pControl);
@@ -114,7 +116,14 @@ public class PersonalControlController {
 	}
 	
 	@PostMapping(value = "/controladores/{pControlId}/edit")
-	public String processUpdatePersonalControlForm(@Valid PersonalControl pControl, BindingResult result, @PathVariable("pControlId") int pControlId) {
+	public String processUpdatePersonalControlForm(@Valid PersonalControl pControl, BindingResult result, @PathVariable("pControlId") int pControlId,
+			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		PersonalControl PersonalControlToUpdate=this.pControlService.findPersonalControlById(pControlId);
+
+		if(PersonalControlToUpdate.getVersion()!=version) {
+			model.put("message","Concurrent modification of Controller Try again!");
+			return initUpdatePersonalControlForm(pControlId,model);
+			}
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 		}
@@ -138,6 +147,11 @@ public class PersonalControlController {
 	}
 	
 	
+	private String initUpdatePersonalControlForm(int pControlId, ModelMap model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/*
 	 * BUSCAR CONTROLADOR
 	 */
