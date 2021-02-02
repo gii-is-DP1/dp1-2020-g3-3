@@ -10,9 +10,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,7 +69,7 @@ public class AvionController {
 	 * MODIFICACIÓN DE UN AVIÓN
 	 */
 	@GetMapping(value = "/aviones/{avionId}/edit")
-	public String initUpdateAvionForm(@PathVariable("avionId") int avionId, Model model) {
+	public String initUpdateAvionForm(@PathVariable("avionId") int avionId, ModelMap model) {
 		Avion avion = this.avionService.findAvionById(avionId);
 		model.addAttribute(avion);
 		
@@ -76,7 +78,13 @@ public class AvionController {
 	
 	@PostMapping(value = "/aviones/{avionId}/edit")
 	public String processUpdateAvionForm(@Valid Avion avion, BindingResult result, 
-			@PathVariable("avionId") int avionId) {
+			@PathVariable("avionId") int avionId,ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		Avion avionToUpdate=this.avionService.findAvionById(avionId);
+
+		if(avionToUpdate.getVersion()!=version) {
+			model.put("message","Concurrent modification of avion! Try again!");
+			return initUpdateAvionForm(avionId,model);
+			} 
 		if(result.hasErrors()) {
 			return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
 		}

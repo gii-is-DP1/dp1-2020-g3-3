@@ -11,6 +11,8 @@
         <c:if test="${owner['new']}">New </c:if> Owner
     </h2>
     <form:form modelAttribute="owner" class="form-horizontal" id="add-owner-form">
+    	<input type="hidden" name= "id" value= "${owner.id}"/>
+    	<input type="hidden" name= "version" value= "${owner.version}"/>
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Nombre" name="nombre"/>
             <aerolineasAAAFC:inputField label="Apellidos" name="apellidos"/>

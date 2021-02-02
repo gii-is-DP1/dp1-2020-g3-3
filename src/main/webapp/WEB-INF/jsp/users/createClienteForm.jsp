@@ -11,6 +11,8 @@
         <c:if test="${cliente['new']}">New </c:if> Cliente
     </h2>
     <form:form modelAttribute="cliente" class="form-horizontal" id="add-owner-form">
+   		<input type="hidden" name= "id" value= "${cliente.id}"/>
+    	<input type="hidden" name= "version" value= "${cliente.version}"/>
         <div class="form-group has-feedback">
             <petclinic:inputField label="Nombre" name="nombre"/>
             <petclinic:inputField label="Apellidos" name="apellidos"/>

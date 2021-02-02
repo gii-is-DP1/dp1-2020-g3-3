@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
@@ -19,6 +20,7 @@ import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplic
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,20 +92,27 @@ public class AzafatoController {
 	 *  Update sobre un azafato
 	 */
 	@GetMapping(value = "/azafatos/{azafatoId}/edit")
-	public String initUpdateAzafatoForm(@PathVariable("azafatoId") int azafatoId, Model model) {
+	public String initUpdateAzafatoForm(@PathVariable("azafatoId") int azafatoId, ModelMap model) {
 		Azafato azafato = this.azafatoService.findAzafatoById(azafatoId);
 		model.addAttribute(azafato);
 		return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/azafatos/{azafatoId}/edit")
-	public String processUpdateAzafatoForm(@Valid Azafato azafato, BindingResult result, @PathVariable("azafatoId") int azafatoId) {
+	public String processUpdateAzafatoForm(@Valid Azafato azafato, BindingResult result, @PathVariable("azafatoId") int azafatoId,
+			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		Azafato azafatoToUpdate=this.azafatoService.findAzafatoById(azafatoId);
+
+		if(azafatoToUpdate.getVersion()!=version) {
+			model.put("message","Concurrent modification of azafato! Try again!");
+			return initUpdateAzafatoForm(azafatoId,model);
+			} 
 		if(result.hasErrors()) {
 			return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			azafato.setId(azafatoId);
-			Azafato azafatoToUpdate = this.azafatoService.findAzafatoById(azafatoId);
+			Azafato azafatoToUpdate2 = this.azafatoService.findAzafatoById(azafatoId);
 			BeanUtils.copyProperties(azafato, azafatoToUpdate, "id","nif","username");  
 			try {
 				this.azafatoService.saveAzafato(azafato);

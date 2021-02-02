@@ -11,6 +11,8 @@
         <c:if test="${billete['new']}">Nuevo </c:if> Billete
     </h2>
     <form:form modelAttribute="billete" class="form-horizontal" id="add-billete-form">
+   		<input type="hidden" name= "id" value= "${billete.id}"/>
+    	<input type="hidden" name= "version" value= "${billete.version}"/>
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Precio de venta" name="coste"/>
             <aerolineasAAAFC:inputField label="Asiento" name="asiento"/>

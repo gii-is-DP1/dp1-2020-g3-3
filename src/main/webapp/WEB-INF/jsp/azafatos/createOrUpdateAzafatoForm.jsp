@@ -11,6 +11,8 @@
         <c:if test="${azafato['new']}">Nuevo </c:if> Azafato
     </h2>
     <form:form modelAttribute="azafato" class="form-horizontal" id="add-azafato-form">
+    	<input type="hidden" name= "id" value= "${azafato.id}"/>
+    	<input type="hidden" name= "version" value= "${azafato.version}"/>
         <div class="form-group has-feedback">
         
 			<aerolineasAAAFC:inputField label="Nombre" name="nombre" />

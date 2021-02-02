@@ -54,6 +54,10 @@ public class Aeropuerto extends BaseEntity{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="aeropuertoDestino")
 	@EqualsAndHashCode.Exclude
 	private Set<Vuelo> vuelosLlegada;
+
+	public Integer getVersion() {
+		return null;
+	}
 	
 	
 }

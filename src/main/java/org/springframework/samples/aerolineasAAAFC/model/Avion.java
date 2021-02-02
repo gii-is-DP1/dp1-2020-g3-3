@@ -73,6 +73,10 @@ public class Avion extends BaseEntity{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="avion") 
 	@EqualsAndHashCode.Exclude
 	private Set<Vuelo> vuelos;
+
+	public Integer getVersion() {
+		return null;
+	}
 	
 
 }

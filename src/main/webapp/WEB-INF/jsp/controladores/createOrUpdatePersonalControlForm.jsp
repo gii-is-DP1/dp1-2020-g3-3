@@ -11,6 +11,8 @@
         <c:if test="${personalControl['new']}">Nuevo </c:if> Controlador
     </h2>
     <form:form modelAttribute="personalControl" class="form-horizontal" id="add-controlador-form">
+    	<input type="hidden" name= "id" value= "${personalControl.id}"/>
+    	<input type="hidden" name= "version" value= "${personalControl.version}"/>
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Nombre" name="nombre"/>
             <aerolineasAAAFC:inputField label="Apellidos" name="apellidos"/>

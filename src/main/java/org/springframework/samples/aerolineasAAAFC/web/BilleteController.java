@@ -5,10 +5,12 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +64,7 @@ public class BilleteController {
 	 * Modificacion de un billete
 	 */
 	@GetMapping(value = "/billetes/{billeteId}/edit")
-	public String initUpdateBilleteForm(@PathVariable("billeteId") int billeteId, Model model) {
+	public String initUpdateBilleteForm(@PathVariable("billeteId") int billeteId, ModelMap model) {
 		Billete billete = this.billeteService.findBilleteById(billeteId);
 		model.addAttribute(billete);
 		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
@@ -70,7 +72,14 @@ public class BilleteController {
 
 	@PostMapping(value = "/billetes/{billeteId}/edit")
 	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result,
-			@PathVariable("billeteId") int billeteId) {
+			@PathVariable("billeteId") int billeteId,
+			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		Billete billeteToUpdate=this.billeteService.findBilleteById(billeteId);
+
+		if(billeteToUpdate.getVersion()!=version) {
+			model.put("message","Concurrent modification of billete! Try again!");
+			return initUpdateBilleteForm(billeteId,model);
+			}
 		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		} else {

@@ -10,6 +10,8 @@
 	<h2>Nuevo menú</h2>
 	<form:form modelAttribute="menu" class="form-horizontal"
 		id="add-menu-form">
+		<input type="hidden" name= "id" value= "${menu.id}"/>
+    	<input type="hidden" name= "version" value= "${menu.version}"/>
 		<div class="form-group has-feedback">
 			<div class="container">
 				<h3>Escoja un primer plato</h3>

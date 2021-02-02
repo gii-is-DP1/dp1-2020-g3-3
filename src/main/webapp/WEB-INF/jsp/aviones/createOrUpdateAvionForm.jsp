@@ -14,6 +14,8 @@
         <c:if test="${avion['new']}">Nuevo </c:if> Avión
     </h2>
     <form:form modelAttribute="avion" class="form-horizontal" id="add-avion-form">
+      	<input type="hidden" name= "id" value= "${avion.id}"/>
+    	<input type="hidden" name= "version" value= "${avion.version}"/>
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Tipo de avión" name="tipoAvion"/>
             <aerolineasAAAFC:inputField label="Capacidad de pasajeros" name="capacidadPasajero"/>

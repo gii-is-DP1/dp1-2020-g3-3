@@ -12,12 +12,14 @@ import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoErroneoException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AeropuertoController {
 	private static final String VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM = "aeropuertos/createOrUpdateAeropuertoForm";
@@ -75,14 +77,21 @@ public class AeropuertoController {
 	//MODIFICACION
 	
 	@GetMapping(value = "/aeropuertos/{aeropuertoId}/edit")
-	public String initUpdateAeropuertoForm(@PathVariable("aeropuertoId") int aeropuertoId, Model model) {
+	public String initUpdateAeropuertoForm(@PathVariable("aeropuertoId") int aeropuertoId, ModelMap model) {
 		Aeropuerto aeropuerto = this.aeropuertoService.findAeropuertoById(aeropuertoId);
 		model.addAttribute(aeropuerto);
 		return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/aeropuertos/{aeropuertoId}/edit")
-	public String processUpdateAeropuertoForm(@Valid Aeropuerto aeropuerto, BindingResult result, @PathVariable("aeropuertoId") int aeropuertoId) {
+	public String processUpdateAeropuertoForm(@Valid Aeropuerto aeropuerto, BindingResult result, @PathVariable("aeropuertoId") int aeropuertoId,
+	ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		Aeropuerto aeropuertoToUpdate=this.aeropuertoService.findAeropuertoById(aeropuertoId);
+
+		if(aeropuertoToUpdate.getVersion()!=version) {
+			model.put("message","Concurrent modification of airport! Try again!");
+			return initUpdateAeropuertoForm(aeropuertoId,model);
+			}
 		if(result.hasErrors()) {
 			return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
 		}

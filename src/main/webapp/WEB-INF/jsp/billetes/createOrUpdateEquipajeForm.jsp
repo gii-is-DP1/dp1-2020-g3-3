@@ -13,6 +13,8 @@
 	</h2>
 	<form:form modelAttribute="equipaje" class="form-horizontal"
 		id="add-equipaje-form">
+		<input type="hidden" name= "id" value= "${equipaje.id}"/>
+    	<input type="hidden" name= "version" value= "${equipaje.version}"/>
 		<div class="form-group has-feedback">
 			<aerolineasAAAFC:inputField label="Peso" name="peso" />
 			<aerolineasAAAFC:selectField label="Medidas" name="equipajeBase"

@@ -74,4 +74,8 @@ public class Billete extends BaseEntity{
 		
 		return "Id de billete: " + this.getId();
 	}
+
+	public Integer getVersion() {
+		return null;
+	}
 }

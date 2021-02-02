@@ -11,6 +11,8 @@
         <c:if test="${personalOficina['new']}">Nuevo </c:if> Oficinista
     </h2>
     <form:form modelAttribute="personalOficina" class="form-horizontal" id="add-oficinista-form">
+    	<input type="hidden" name= "id" value= "${personalOficina.id}"/>
+    	<input type="hidden" name= "version" value= "${personalOficina.version}"/>
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Nombre" name="nombre"/>
             <aerolineasAAAFC:inputField label="Apellidos" name="apellidos"/>
