@@ -1,9 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-<!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
 <%@ attribute name="name" required="true" rtexprvalue="true"
 	description="Name of the active menu: home, clientes, vets or error"%>
 
@@ -34,11 +33,11 @@
 			<div class="header-right">
 				<sec:authorize access="!isAuthenticated()">
 					<a href="<c:url value="/login" />">Entra</a>
-					<a href="<c:url value="/clientes/new" />">Regístrate</a>
+					<a href="<c:url value="/user/new" />">Regístrate</a>
 				</sec:authorize>
 
 				<sec:authorize access="isAuthenticated()">
-					<a href="urlParaPerfilDeUsuario"> <span
+					<a href="/users/miPerfil"> <span
 						class="glyphicon glyphicon-user"></span>  <sec:authentication
 							property="name" />
 					</a>

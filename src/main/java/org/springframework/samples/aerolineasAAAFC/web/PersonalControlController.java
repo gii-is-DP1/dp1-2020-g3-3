@@ -224,23 +224,15 @@ public class PersonalControlController {
 	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  
 								@RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
-		int mes = 0;
-		int año = 0;
-		Month mesn = null;
-		int dias = 0;
-		
+
 		if(fecha == null) {
 			fecha = LocalDate.now();
-			mes = fecha.getMonthValue();
-			año = fecha.getYear();
-			mesn = fecha.getMonth();
-			dias = fecha.lengthOfMonth();
-		}else {
-			mes = fecha.getMonthValue();
-			año = fecha.getYear();
-			mesn = fecha.getMonth();
-			dias = fecha.lengthOfMonth();
-		}	
+		}
+		
+		int mes = fecha.getMonthValue();
+		int año = fecha.getYear();
+		Month mesn = fecha.getMonth();
+		int dias = fecha.lengthOfMonth();
 		
 		Collection<Vuelo> vuelos = this.pControlService.horario(pControlId, mes, año);
 		
@@ -257,10 +249,6 @@ public class PersonalControlController {
 		return "controladores/horario";
 	}
 	
-	@RequestMapping(value = { "/controladores/{pControlId}/horario2" }, method = RequestMethod.GET)
-	public String prueba(Map<String, Object> model, @PathVariable("pControlId") int pControlId) {
-		return "controladores/horario2";
-	}
 	
 	//consulta de vuelos para conocer ruta (H9) ??
 	
