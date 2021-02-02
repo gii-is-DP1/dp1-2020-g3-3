@@ -266,30 +266,23 @@ public class PersonalControlController {
 	
 	// Historia usuario 1:
 	@RequestMapping(value = { "/controladores/{pControlId}/semana" }, method = RequestMethod.GET)
-	public String showHorarioSemanalPersonalControl(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", defaultValue = "") String fecha) {
+	public String showHorarioSemanalPersonalControl(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
-		if(fecha.isEmpty()) {
-			model.put("vuelos", this.pControlService.horarioSemanalSinFecha(pControlId));
-			List<String> date = this.pControlService.sacaFecha();
-			model.put("diaS", date.get(0));
-			model.put("diaM", date.get(1));
-			model.put("mes", date.get(2));
-			model.put("anyo", date.get(3));
-		}else {
-			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			DayOfWeek diaSemana = date.getDayOfWeek();
-			int dia = date.getDayOfYear();
-			int anyo = date.getYear();
-			model.put("vuelos", this.pControlService.horarioSemanalConFecha(pControlId, diaSemana, dia, anyo));
-			String diaS = diaSemana.toString();
-			model.put("diaS", diaS);
-			String diaM = String.valueOf(date.getDayOfMonth());
-			model.put("diaM", diaM);
-			String mes = String.valueOf(date.getMonthValue());
-			model.put("mes", mes);
-			String anyoS = String.valueOf(date.getYear());
-			model.put("anyo", anyoS);
+		LocalDate date = LocalDate.now();
+		
+		if(fecha != null) {
+			date = fecha;
 		}
+		
+		DayOfWeek diaSemana = date.getDayOfWeek();
+		int dia = date.getDayOfYear();
+		int anyo = date.getYear();
+		model.put("vuelos", this.pControlService.horarioSemanalConFecha(pControlId, diaSemana, dia, anyo));
+		String diaS = diaSemana.toString();
+		model.put("diaS", diaS);
+		model.put("diaM", date.getDayOfMonth());
+		model.put("mes", date.getMonthValue());
+		model.put("anyo", date.getYear());
 		return "controladores/horarioSemanal";
 	}
 	

@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -167,6 +169,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo+1) && ((v.getFechaSalida().getDayOfYear() < 7) && (v.getFechaSalida().getDayOfYear() > 0)))) 					//año siguiente
 					res.add(v);
 			};
+			break;
 		case TUESDAY:
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+6) && (v.getFechaSalida().getDayOfYear() > dia-2)))						//año actual
@@ -174,6 +177,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 364)))) 				//año pasado
 					res.add(v);
 			};
+			break;
 		case WEDNESDAY:
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+5) && (v.getFechaSalida().getDayOfYear() > dia-3)))
@@ -181,6 +185,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 363))))
 					res.add(v);
 			};
+			break;
 		case THURSDAY: 
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+4) && (v.getFechaSalida().getDayOfYear() > dia-4)))
@@ -188,6 +193,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 362))))
 					res.add(v);
 			};
+			break;
 		case FRIDAY: 
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+3) && (v.getFechaSalida().getDayOfYear() > dia-5)))
@@ -195,6 +201,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 361))))
 					res.add(v);
 			};
+			break;
 		case SATURDAY: 
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+2) && (v.getFechaSalida().getDayOfYear() > dia-6)))
@@ -202,15 +209,18 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 360))))
 					res.add(v);
 			};
+			break;
 		case SUNDAY: 
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+1) && (v.getFechaSalida().getDayOfYear() > dia-7)))
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 359))))
 					res.add(v);
 			};
+			break;
 		}
-		res.sort(Comparator.comparing(Vuelo::getFechaSalida));
-		return res;
+		res.sort(Comparator.comparing(Vuelo::getFechaSalida).reversed());
+		Set<Vuelo> resSet = new HashSet<Vuelo>(res);
+		return resSet;
 	}
 			
 	public Collection<Vuelo> horarioSemanalConFecha(int id, DayOfWeek diaSemana, int dia, int anyo){
@@ -225,6 +235,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo+1) && ((v.getFechaSalida().getDayOfYear() < 7) && (v.getFechaSalida().getDayOfYear() > 0)))) 					//año siguiente
 					res.add(v);
 			};
+			break;
 		case TUESDAY:
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+6) && (v.getFechaSalida().getDayOfYear() > dia-2)))						//año actual
@@ -232,6 +243,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 364)))) 				//año pasado
 					res.add(v);
 			};
+			break;
 		case WEDNESDAY:
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+5) && (v.getFechaSalida().getDayOfYear() > dia-3)))
@@ -239,6 +251,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 363))))
 					res.add(v);
 			};
+			break;
 		case THURSDAY: 
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+4) && (v.getFechaSalida().getDayOfYear() > dia-4)))
@@ -246,6 +259,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 362))))
 					res.add(v);
 			};
+			break;
 		case FRIDAY: 
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+3) && (v.getFechaSalida().getDayOfYear() > dia-5)))
@@ -253,6 +267,7 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 361))))
 					res.add(v);
 			};
+			break;
 		case SATURDAY: 
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+2) && (v.getFechaSalida().getDayOfYear() > dia-6)))
@@ -260,16 +275,19 @@ public class PersonalControlService {
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 360))))
 					res.add(v);
 			};
+			break;
 		case SUNDAY: 
 			for(Vuelo v: vuelos) {
 				if(((v.getFechaSalida().getYear() == anyo) && ((v.getFechaSalida().getDayOfYear() < dia+1) && (v.getFechaSalida().getDayOfYear() > dia-7)))
 						|| ((v.getFechaSalida().getYear() == anyo-1) && ((v.getFechaSalida().getDayOfYear() < 366) && (v.getFechaSalida().getDayOfYear() > 359))))
 					res.add(v);
 			};
+			break;
 		}
 		
-		res.sort(Comparator.comparing(Vuelo::getFechaSalida));
-		return res;
+		res.sort(Comparator.comparing(Vuelo::getFechaSalida).reversed());
+		Set<Vuelo> resSet = new HashSet<Vuelo>(res);
+		return resSet;
 	}
 	
 }

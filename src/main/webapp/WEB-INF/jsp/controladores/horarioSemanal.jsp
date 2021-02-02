@@ -19,15 +19,37 @@
 	}
 	</style>
 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script>
-	function detalles(){
-		var detalle = document.getElementById("detalle");
-		detalle.classList.toggle("show");
+	$(document).ready(function(){
+	    $("#withcomponent").toggle();
+	    showAndHideUl = function()
+	    {
+	        $("#${vuelo.id}sin").toggle();
+	        $("#${vuelo.id}sin").toggleClass("component");
+	        $("#${vuelo.id}con").toggle();
+	    }
+
+	});
+//	$( "#${vuelo.id}" ).click(function() {
+//		  $( "#vuelo${vuelo.id}" ).toggle();
+//	});
+//	function detalles(){
+//		if ( document.getElementById("vuelo${vuelo.id}").style.visibility === "visible" ) {
+//			document.getElementById("vuelo${vuelo.id}").style.visibility = "hidden";
+//		} else if ( document.getElementById("vuelo${vuelo.id}").style.visibility === "hidden" ) {
+//			document.getElementById("vuelo${vuelo.id}").style.visibility = "visible";
+//		}
 	}
 	</script>
 
 	<h2>Vuelos de la semana del <c:out value = "${diaS}"/> día <c:out value="${diaM}"/>/<c:out value="${mes}"/>/<c:out value="${anyo}"/></h2>
-
+	<div style="padding: 5% 0% 0% 43%">
+ 	<form action="/controladores/${pControlId}/semana" method="get">
+			<label for="fecha">Fecha: </label> <input name="fecha" id="fecha" type="date" />
+			<button type="submit" class="btn btn-default">Buscar</button>
+		</form>
+	</div>
 
 	<table id="tablaVuelos" class="table table-striped">
 		<thead>
@@ -47,14 +69,16 @@
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
 					<td><c:out value="${vuelo.aeropuertoOrigen.nombre}" /></td>
 					<td>
-						<div class="ver" onclick="detalles()">Ver más
-						<span class="mas" id="detalle">
+						<button onclick="showAndHideUl()" id="preview">Ver</button>
+						<div id="${vuelo.id}sin"> 
+						
+						</div>
+						<div id="${vuelo.id}con">
 							<b>Más detalles del vuelo</b> <br>
 							<em>Lugar de salida:</em> <c:out value="${vuelo.aeropuertoOrigen.localizacion}"/><br>
 							<em>Lugar de llegada:</em> <c:out value="${vuelo.aeropuertoDestino.localizacion}"/><br>
-							<em>Pilotos:</em> <c:forEach items="${vuelo.personalControl}" var="control"> <c:out value="${control.nombre} ${control.apellidos}"></c:out> , </c:forEach> <br>
-							<em>Azafatos:</em> <c:forEach items="${vuelo.azafatos}" var="azafato"> <c:out value="${azafato.nombre} ${azafato.apellidos}"></c:out> , </c:forEach> <br>					
-						</span>
+							<em>Pilotos:</em> <c:forEach items="${vuelo.personalControl}" var="control" varStatus="loop"> <c:out value="${control.nombre} ${control.apellidos}"></c:out><c:if test="${!loop.last}">, </c:if></c:forEach>. <br>
+							<em>Azafatos:</em> <c:forEach items="${vuelo.azafatos}" var="azafato" varStatus="loop"> <c:out value="${azafato.nombre} ${azafato.apellidos}"></c:out><c:if test="${!loop.last}">, </c:if></c:forEach>. <br>					
 						</div>
 					</td>
 				</tr>
