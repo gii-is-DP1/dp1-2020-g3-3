@@ -1,6 +1,6 @@
 --Usuarios
 --Admin
-INSERT INTO users(username,password,matching_Password) VALUES ('admin','$2a$10$gPaqVBo4waGhKlUgf60zM.NGMcH2G7aWETHK5TIfMy1jLJskbfW/G','$2a$10$gPaqVBo4waGhKlUgf60zM.NGMcH2G7aWETHK5TIfMy1jLJskbfW/G');--4dm1n
+INSERT INTO users(username, password, matching_Password) VALUES ('admin','$2a$10$gPaqVBo4waGhKlUgf60zM.NGMcH2G7aWETHK5TIfMy1jLJskbfW/G','$2a$10$gPaqVBo4waGhKlUgf60zM.NGMcH2G7aWETHK5TIfMy1jLJskbfW/G');--4dm1n
 INSERT INTO authorities(id,username,authority) VALUES (1,'admin','admin');
 
 --Clientes
@@ -11,8 +11,8 @@ INSERT INTO users(username,password,matching_Password) VALUES ('29565800A','$2a$
 INSERT INTO authorities(id,username,authority) VALUES (3,'29565800A','cliente');
 
 --Personal Control
-INSERT INTO users(username,password,matching_Password) VALUES ('48736253T','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');--P9012%adsa
-INSERT INTO authorities(id,username,authority) VALUES (4,'48736253T','personalControl');
+INSERT INTO users(username,password,matching_Password) VALUES ('17579447H','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');--P9012%adsa
+INSERT INTO authorities(id,username,authority) VALUES (4,'17579447H','personalControl');
 
 INSERT INTO users(username,password,matching_Password) VALUES ('12355435L','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
 INSERT INTO authorities(id,username,authority) VALUES (5,'12355435L','personalControl');
@@ -64,21 +64,21 @@ INSERT INTO authorities(id,username,authority) VALUES (19,'39658948W','personalO
 
 --Aeropuertos
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de São Paulo Guarulhos','São Paulo, Brasil' , 'GRU', '+551124452945');
+VALUES ('Aeropuerto de Sao Paulo Guarulhos','Sao Paulo, Brasil' , 'GRU', '+551124452945');
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
 VALUES ('Aeropuerto de Madrid-Barajas','Madrid, España' , 'MAD', '+34913211000');
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
 VALUES ('Aeropuerto de Londres-Heathrow','Londres, Reino Unido' , 'LHR', '+448443351801');
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de París-Orly','París, Francia' , 'ORY', '+33892563950');
+VALUES ('Aeropuerto de Paris-Orly','Paris, Francia' , 'ORY', '+33892563950');
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto Internacional de Tokio','Tokio, Japón' , 'HND', '+81357578111');
+VALUES ('Aeropuerto Internacional de Tokio','Tokio, Japon' , 'HND', '+81357578111');
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
 VALUES ('Aeropuerto Internacional John F. Kennedy','Nueva York, Estados Unidos' , 'JFK', '+17182444444');
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto Internacional de Los Ángeles','Los Ángeles, Estados Unidos' , 'LAX', '+18554635252');
+VALUES ('Aeropuerto Internacional de Los Angeles','Los Angeles, Estados Unidos' , 'LAX', '+18554635252');
 INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de Berlín-Brandeburgo Willy Brandt','Berlín, Alemania' , 'BER', '+4930609160910');
+VALUES ('Aeropuerto de Berlin-Brandeburgo Willy Brandt','Berlin, Alemania' , 'BER', '+4930609160910');
 
 --Aviones
 INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
@@ -107,18 +107,18 @@ VALUES (parsedatetime('07-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-0
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
 VALUES (parsedatetime('10-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-01-2021 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('05-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('05-02-2021 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
+VALUES (parsedatetime('05-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('05-02-2021 21:30','dd-MM-yyyy hh:mm'),30000,2,1,3);
 
 
 --PersonalControl
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
-VALUES ('Camila','García Pérez','48736253T','ES 1221089893201234561111',0,5345,'48736253T');
+VALUES ('Camila','Garcia Perez','17579447H','ES 1221089893201234561111',0,5345,'17579447H');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
-VALUES ('Felipe','Espadas Monteserrín','12355435L','ES 6621000418401234567892',1,3600,'12355435L');
+VALUES ('Felipe','Espadas Monteserrin','12355435L','ES 6621000418401234567892',1,3600,'12355435L');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
-VALUES ('Juan Carlos','Gómez Correa','54425951Q','ES 1200815983982678553411',2,4600,'54425951Q');
+VALUES ('Juan Carlos','Gomez Correa','54425951Q','ES 1200815983982678553411',2,4600,'54425951Q');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
-VALUES ('Enrique','García Domínguez','29353803F','ES 6014654763591734464249',0,5000,'29353803F');
+VALUES ('Enrique','Garcia Dominguez','29353803F','ES 6014654763591734464249',0,5000,'29353803F');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
 VALUES ('Henry','Dalgliesh Cavill','31123210R','ES 6623200418401234567892',0,6000,'31123210R');
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
@@ -135,7 +135,7 @@ INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1, 1), (1, 2), 
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
 VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R');
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
-VALUES ('Juana', 'Marín Torres', '65519676J', 'ES 4730045887188485547854', 2400, '65519676J');
+VALUES ('Juana', 'Marin Torres', '65519676J', 'ES 4730045887188485547854', 2400, '65519676J');
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
 VALUES ('Oliver', 'Potter', '25416743H', 'ES 6731904499194741489412', 2500, '25416743H');
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
@@ -157,19 +157,22 @@ INSERT INTO azafatos_vuelo(azafatos_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3),
 														 (6, 1), (6, 2), (6, 3), (6, 4),
 														 (7, 1), (7, 2), (7, 3), (7, 4),
 														 (8, 1), (8, 2), (8, 3), (8, 4),
-														 (1, 5), (2, 5), (3, 6), (4, 6);
+														 (1, 5), (2, 5), (3, 6), (4, 6), (3,7);
 
 --Personal Oficina
 INSERT INTO personal_oficina(nombre,apellidos,nif,iban,salario,username)
-VALUES ('Ángel','Soria Escalera','76188332G','ES 1020805593365438514879',1600,'76188332G');
+VALUES ('Angel','Soria Escalera','76188332G','ES 1020805593365438514879',1600,'76188332G');
 INSERT INTO personal_oficina(nombre,apellidos,nif,iban,salario,username)
-VALUES ('Sergio','Ferreo Quintán','39658948W','ES 4820381461196657997548',1800,'39658948W');
+VALUES ('Sergio','Ferrero Quintan','39658948W','ES 4820381461196657997548',1800,'39658948W');
+
+INSERT INTO oficina_vuelo(personal_oficina_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6),(1, 7),
+																(2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6),(2, 7);
 
 --Clientes
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username)
-VALUES ('María', 'Soto Ramírez', '01446551N', 'C/Enladrillada,2 1ºB Sevilla', 'ES 7771056418401234567893', '1995-03-08','marisotoram@hotmail.com','01446551N');
+VALUES ('Maria', 'Soto Ramirez', '01446551N', 'C/Enladrillada,2 1ºB Sevilla', 'ES 7771056418401234567893', '1995-03-08','marisotoram@hotmail.com','01446551N');
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username)
-VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 - 41011 Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','29565800A'); 
+VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 3ºB Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','29565800A'); 
 
 --Idiomas
 INSERT INTO idioma_types(idioma) VALUES ('ES');

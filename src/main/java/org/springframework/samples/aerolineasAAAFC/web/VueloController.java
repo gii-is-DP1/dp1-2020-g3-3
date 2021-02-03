@@ -86,42 +86,21 @@ public class VueloController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
-	
-//	@ModelAttribute("vuelo")
-//	public Vuelo loadVuelo( @PathVariable("vueloId") int vueloId) {
-//		Vuelo vuelo=vueloService.findVueloById(vueloId);
-//		return vuelo;
-//		
-//	}
-	
 	@GetMapping(value = "/vuelos/new") 
 	public String initCreationVueloForm(Map<String, Object> model) {
 		Vuelo vuelo = new Vuelo();
 		model.put("vuelo",vuelo);
 		
-		List<Aeropuerto> aeropuertos = new ArrayList<>();
-		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
-		model.put("aeropuertos",aeropuertos);
+		model.put("aeropuertos",this.aeropuertoService.findAeropuertos());
+		model.put("aviones", this.avionService.findAviones());
 		
-		List<Avion> aviones = new ArrayList<>();
-		this.avionService.findAviones().forEach(x->aviones.add(x));
-		model.put("aviones", aviones);
+//		Long billetes=this.vueloService.findVueloById(vuelo.getId()).getAsientos().stream().
+//		filter(x->!x.getBillete().equals(null)).count();
+//		model.put("billetes", billetes);
 		
-		Long billetes=this.vueloService.findVueloById(vuelo.getId()).getAsientos().stream().
-		filter(x->!x.getBillete().equals(null)).count();
-		model.put("billetes", billetes);
-		
-		List<PersonalOficina> pOficina = new ArrayList<>();
-		this.vueloService.findVueloById(vuelo.getId()).getPersonalOficina().forEach(x->pOficina.add(x));
-		model.put("pOficina", pOficina);
-		
-		List<PersonalControl> pControl = new ArrayList<>();
-		this.vueloService.findVueloById(vuelo.getId()).getPersonalControl().forEach(x->pControl.add(x));
-		model.put("pControl", pControl);
-		
-		List<Azafato> azafatos = new ArrayList<>();
-		this.vueloService.findVueloById(vuelo.getId()).getAzafatos().forEach(x->azafatos.add(x));
-		model.put("azafatos", azafatos);
+		model.put("pOficina", this.pOficinaService.findPersonal());
+		model.put("pControl", this.pControlService.findPersonalControl());
+		model.put("azafatos", this.azafatoService.findAzafatos());
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}

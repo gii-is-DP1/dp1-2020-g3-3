@@ -14,7 +14,7 @@
 	</h2>
 	<form:form modelAttribute="cliente" class="form-horizontal"
 		id="add-cliente-form">
-		<input type="hidden" name= "id" value= "${cliente.id}"/>
+		<input type="hidden" name= "clienteId" value= "${cliente.id}"/>
     	<input type="hidden" name= "version" value= "${cliente.version}"/>
 		<div class="form-group has-feedback">
 		

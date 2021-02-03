@@ -26,15 +26,6 @@
             <th>Teléfono</th>
             <td><c:out value="${aeropuerto.telefono}"/></td>
         </tr>
-        <tr>
-            <th>Vuelo Salida</th>
-            <td><c:out value="${aeropuerto.vuelosSalida}"/></td>
-        </tr>    
-         <tr>
-            <th>Vuelo llegada</th>
-            <td><c:out value="${aeropuerto.vuelosLlegada}"/></td>
-        </tr> 
-        
     </table>
 
   	<spring:url value="{aeropuertoId}/edit" var="editUrl">
@@ -42,10 +33,40 @@
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Aeropuerto</a>
 
-
     <br/>
     <br/>
-  
-
+    
+    <h2>Vuelos de Salida</h2>
+	  <table class="table table-striped">
+	  <tr>
+			<th width="10%" bgcolor="#34302d" style="color: white; text-align: center;">Id:</th>
+			<td style="padding-left:15px;">
+		        <c:forEach var="vuelo" items="${aeropuerto.vuelosSalida}" varStatus="loop">
+		          <b onclick="javascript:location.href='/vuelos/${vuelo.id}'" onmouseover="" style="cursor: pointer;">
+		          <c:out value="${vuelo.id}"/>
+		          </b>
+		          <c:if test="${!loop.last}">, </c:if>
+		        </c:forEach>
+		   </td>
+	   </tr>
+	   </table>  
+	   
+ 	<br/>
+    <br/>
+    
+    <h2>Vuelos de Llegada</h2>
+	  <table class="table table-striped">
+	  <tr>
+			<th width="10%" bgcolor="#34302d" style="color: white; text-align: center;">Id:</th>
+			<td style="padding-left:15px;">
+		        <c:forEach var="vuelo" items="${aeropuerto.vuelosLlegada}" varStatus="loop">
+		          <b onclick="javascript:location.href='/vuelos/${vuelo.id}'" onmouseover="" style="cursor: pointer;">
+		          <c:out value="${vuelo.id}"/>
+		          </b>
+		          <c:if test="${!loop.last}">, </c:if>
+		        </c:forEach>
+		   </td>
+	   </tr>
+	   </table>  
 
 </aerolineasAAAFC:layout>

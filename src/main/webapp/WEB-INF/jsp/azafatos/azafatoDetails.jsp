@@ -6,7 +6,7 @@
 
 <aerolineasAAAFC:layout pageName="azafatos">
 
-    <h2>Información del Personal de Control</h2>
+    <h2>Información del Azafato</h2>
 
 
     <table class="table table-striped">
@@ -39,12 +39,36 @@
   	<spring:url value="/azafatos/{azafatoId}/edit" var="editUrl">
         <spring:param name="azafatoId" value="${azafato.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Azafato</a>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default" style="float:left;">Editar Azafato</a>
 
+	<spring:url value="/azafatos/{azafatoId}/horario" var="editUrl">
+        <spring:param name="azafatoId" value="${azafato.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default" style="float:right;">Horario</a>
 
     <br/>
     <br/>
   
+  	<h2>Vuelos en los que formó parte de la tripulación</h2>
+
+    <table class="table table-striped">
+        <c:forEach var="vuelo" items="${azafato.vuelos}">
+
+
+            <tr>
+                <td valign="top">
+                    <dl class="dl-horizontal">
+                        <dt>ID Vuelo</dt>
+                        <dd onclick="javascript:location.href='/vuelos/${vuelo.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${vuelo.id}"/></b></dd>
+                        <dt>Fecha de salida</dt>
+                        <dd><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd HH:mm"/></dd>
+                        <dt>Fecha de llegada</dt>
+                        <dd><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd HH:mm"/></dd>
+                    </dl>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 
 
 </aerolineasAAAFC:layout>

@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -50,6 +51,7 @@ public class Cliente extends Person{
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="cliente") //fetch = FetchType.EAGER 
 	@EqualsAndHashCode.Exclude
+	@OrderBy("fechaReserva DESC")
 	private Set<Billete> billetes;
 
 	public Integer getVersion() {

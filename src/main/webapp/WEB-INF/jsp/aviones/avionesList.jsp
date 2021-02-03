@@ -26,11 +26,8 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
         <tbody>
         <c:forEach items="${aviones}" var="avion">
             <tr>
-                <td>
-                    <spring:url value="/aviones/{avionId}" var="avionUrl">
-                        <spring:param name="avionId" value="${avion.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(avionUrl)}"><c:out value="${avion.id}"/></a>
+                <td onclick="javascript:location.href='/aviones/${avion.id}'" onmouseover="" style="cursor: pointer;">
+                    <b><c:out value="${avion.id}"/></b>
                 </td>
                 <td>
                     <c:out value="${avion.tipoAvion}"/>
@@ -60,10 +57,15 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
                 	<spring:url value="/aviones/{avionId}/edit" var="avionUrl">
         			<spring:param name="avionId" value="${avion.id}"/>
     				</spring:url>
-    				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Editar avión</a>
+    				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Editar</a>
+    				<spring:url value="/aviones/{avionId}/delete" var="avionUrl">
+        			<spring:param name="avionId" value="${avion.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Eliminar</a>
                 </td>     
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    <a href="<spring:url value="/aviones/new" htmlEscape="true" />">Nuevo Avión</a>
 </aerolineasAAAFC:layout>

@@ -74,6 +74,7 @@ public class ClienteControllerTests {
 		doloresUser = new User();
 		doloresUser.setUsername("29565800A");
 		doloresUser.setPassword("EEEEE");
+		doloresUser.setMatchingPassword("EEEEE");
 		dolores.setUser(doloresUser);
 
 
@@ -104,7 +105,8 @@ public class ClienteControllerTests {
 				.param("fechaNacimiento", "1995-03-08")
 				.param("email", "juanjeferrero@outlook.com")
 				.param("user.username", "28976897W")
-				.param("user.password", "AAAAAAA"))
+				.param("user.password", "AAAAAAA")
+				.param("user.matchingPassword", "AAAAAAA"))
 		.andExpect(status().is3xxRedirection());
 	}
 
@@ -189,6 +191,7 @@ public class ClienteControllerTests {
 				.param("fechaNacimiento", "1997-06-03")
 				.param("email", "juanjeferrero@outlook.com")
 				.param("user.username", "29565800A")
+				.param("user.password", "AAAAAAA")
 				.param("user.password", "AAAAAAA"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("cliente"))

@@ -13,29 +13,18 @@
     <table id="tablaPersonalOficina" class="table table-striped">
         <thead>
         <tr>
-        	<th>ID Oficinista</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
+        	<th>Nombre y apellidos</th>
             <th>NIF</th>
             <th>IBAN</th>
             <th>Salario</th>
-            <th></th>
+            <th>Opciones</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${oficinistas}" var="oficinista">
+        <c:forEach items="${personalOficina}" var="oficinista">
             <tr>
-                <td>
-                    <spring:url value="/personalOficina/{pOficinaId}" var="pOficinaUrl">
-                        <spring:param name="pOficinaId" value="${oficinista.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(pOficinaUrl)}"><c:out value="${oficinista.id}"/></a>
-                </td>
-                <td>
-                    <c:out value="${oficinista.nombre}"/>
-                </td>
-                <td>
-                    <c:out value="${oficinista.apellidos}"/>
+                <td onclick="javascript:location.href='/personalOficina/${oficinista.id}'" onmouseover="" style="cursor: pointer;">
+                	<b><c:out value="${oficinista.nombre} ${oficinista.apellidos}"/></b>
                 </td>
                 <td>
                     <c:out value="${oficinista.nif}"/>
@@ -47,10 +36,15 @@
                     <c:out value="${oficinista.salario}"/>
                 </td>
                 <td>
-                	<spring:url value="/personalOficina/{pOficinaId}/edit" var="pOficinaUrl">
-        			<spring:param name="pOficinaId" value="${oficinista.id}"/>
+                	<spring:url value="/personalOficina/{oficinistaId}/edit" var="url">
+        				<spring:param name="oficinistaId" value="${oficinista.id}"/>
     				</spring:url>
-    				<a href="${fn:escapeXml(pOficinaUrl)}" class="btn btn-default">Editar oficinista</a>
+    				<a href="${fn:escapeXml(url)}" class="btn btn-default">Editar</a>
+    				
+    				<spring:url value="/personalOficina/{oficinistaId}/delete" var="personalControlUrl">
+        				<spring:param name="oficinistaId" value="${oficinista.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(url)}" class="btn btn-default">Eliminar</a>
                 </td>   
             </tr>
         </c:forEach>

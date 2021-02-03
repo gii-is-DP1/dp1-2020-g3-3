@@ -15,7 +15,6 @@
 				<th>ID Billete</th>
 				<th>Coste</th>
 				<th>Asiento</th>
-				<th>Clase</th>
 				<th>Equipaje facturado</th>
 			</tr>
 		</thead>
@@ -25,7 +24,6 @@
 					<td><c:out value="${billete.id}" /></td>
 					<td><c:out value="${billete.coste}" /></td>
 					<td><c:out value="${billete.asiento.nombre}" /></td>
-					<td><c:out value="${billete.clase}" /></td>
 					<td>
 						<c:set var="total" value="${0}"/>
 						<c:forEach items="${billete.equipajes}" var="equipaje">
