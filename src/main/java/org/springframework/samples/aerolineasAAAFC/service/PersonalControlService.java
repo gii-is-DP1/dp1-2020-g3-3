@@ -69,7 +69,7 @@ public class PersonalControlService {
 	
 
 	@Transactional
-	public Collection<PersonalControl> findPersonalControl(){
+	public List<PersonalControl> findPersonalControl(){
 		return StreamSupport.stream(pControlRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
 	}

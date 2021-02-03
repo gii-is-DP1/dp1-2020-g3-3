@@ -67,6 +67,11 @@ public class VueloService {
 	public Vuelo findVueloById(int id) throws DataAccessException{
 		return vueloRepository.findById(id).get();
 	}
+	
+	@Transactional(readOnly = true)
+	public Vuelo findVueloByFechaLLegada(LocalDateTime fechaLLegada) throws DataAccessException{
+		return vueloRepository.findVueloByfechaLlegada(fechaLLegada);
+	}
 	 
 	 
 	@Autowired
@@ -75,7 +80,7 @@ public class VueloService {
 	}
 	 
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelos(){
+	public List<Vuelo> findVuelos(){
 		return StreamSupport.stream(vueloRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
 	}

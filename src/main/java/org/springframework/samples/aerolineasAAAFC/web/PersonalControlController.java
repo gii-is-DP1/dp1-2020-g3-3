@@ -28,6 +28,7 @@ import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Rol;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
+import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Controller;
@@ -53,9 +54,12 @@ public class PersonalControlController {
 	
 	private final PersonalControlService pControlService;
 	
+	private final VueloService vueloService;
+	
 	@Autowired
-	public PersonalControlController(PersonalControlService pControlService) {
+	public PersonalControlController(PersonalControlService pControlService, VueloService vueloService) {
 		this.pControlService = pControlService;
+		this.vueloService = vueloService;
 	}
 	
 	@InitBinder
@@ -141,6 +145,7 @@ public class PersonalControlController {
 		else {
 			pControl.setId(pControlId);
 			PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
+			pControl.incrementVersion();
 			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","username");
 			try {
 				this.pControlService.savePersonalControl(pControl);
@@ -190,8 +195,10 @@ public class PersonalControlController {
 	
 	@GetMapping(value = "/controladoresList")
 	public String showPersonalControlList(Map<String, Object> model) {
+    
 		Collection<PersonalControl> controladores = this.pControlService.findPersonalControl();
 		model.put("personalControl", controladores);
+
 		return "controladores/personalControlList";
 	}
 	
@@ -250,17 +257,14 @@ public class PersonalControlController {
 	}
 	
 	
-	//consulta de vuelos para conocer ruta (H9) ??
+	//consulta de vuelos para conocer ruta (H9) 
 	
-	@RequestMapping(value = { "/controladores/{pControlId}/" }, method = RequestMethod.GET)
-	public String consultaVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  @RequestParam(name = "aeropuertoOrigen", defaultValue = "") String aeropuertoOrigen) {
+	@GetMapping(value = { "/controladores/vuelos" })
+	public String consultaVuelosList(ModelMap model) {
 
-		if(aeropuertoOrigen.isEmpty()) {
-			model.put("vuelos", this.pControlService.rutaVuelos(pControlId));
-		}else {
-			Aeropuerto aeropuertoDestino; 
-			model.put("vuelos", this.pControlService.rutaVuelos(pControlId));
-		}
+		List<Vuelo> vuelos = this.vueloService.findVuelos();
+		model.put("vuelos", vuelos);
+		
 		return "controladores/rutaVuelos";
 	}
 	
