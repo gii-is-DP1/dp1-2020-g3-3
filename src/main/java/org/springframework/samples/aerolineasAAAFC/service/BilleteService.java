@@ -1,13 +1,8 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -24,7 +19,6 @@ import org.springframework.samples.aerolineasAAAFC.repository.EquipajeRepository
 import org.springframework.samples.aerolineasAAAFC.repository.MenuRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
-import org.springframework.samples.aerolineasAAAFC.web.EquipajeController;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -79,7 +73,7 @@ public class BilleteService {
 			if (aux1 == null || aux2 == null || aux3 == null)
 				throw new PlatosNoValidosException(2);
 
-			else {
+			else {   //Esta comprobacion es solo necesaria si usamos el service directamente, se puede eliminar
 				if (aux1.getTipoPlato().getName().equals("primerPlato"))
 					cont1 = 1;
 

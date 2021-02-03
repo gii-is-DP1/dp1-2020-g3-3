@@ -1,11 +1,12 @@
 package org.springframework.samples.aerolineasAAAFC.service;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
+import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
+import org.springframework.samples.aerolineasAAAFC.model.menu.PlatoBase;
 import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.DisponibilidadAvionException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
@@ -92,6 +95,33 @@ public class VueloService {
 				collect(Collectors.toList());
 		return res;
 	}
+	
+	@Transactional
+	public Map<String, Long> findMenusPorVuelo(Vuelo vuelo){
+		
+		List<PlatoBase> lPlatoBase = new ArrayList<PlatoBase>();
+		
+		List<Menu> aux =vuelo.getAsientos().stream().
+				filter(x->!x.getBillete().equals(null)).
+				map(x->x.getBillete()).
+				filter(x->!x.getMenus().equals(null)).
+				flatMap(x->x.getMenus().stream()).
+				collect(Collectors.toList());
+		
+		
+		Map<String, Long> mapaMenuCountTotal = new HashMap<String,Long>();
+		
+		for(Menu m : aux) {		
+			lPlatoBase.add(m.getPlato1().getPlatoBase());
+			lPlatoBase.add(m.getPlato2().getPlatoBase());
+			lPlatoBase.add(m.getPlato3().getPlatoBase());
+		}
+		
+		mapaMenuCountTotal = lPlatoBase.stream()
+				.collect(Collectors.groupingBy(PlatoBase::getName,Collectors.counting()));
+		
+		return mapaMenuCountTotal;
+	}
 
 	@Transactional(readOnly = true)
 	public Collection<Vuelo> findVuelosByMes(int mes, int año){
@@ -109,9 +139,6 @@ public class VueloService {
 		return res;
 	}
 
-	
-
-	
 	 /*
 	 @Transactional(readOnly = true)
 		public Optional<Vuelo> findVueloById(int id) throws DataAccessException {

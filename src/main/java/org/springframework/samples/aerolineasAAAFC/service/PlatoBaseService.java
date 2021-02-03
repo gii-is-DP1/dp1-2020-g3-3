@@ -1,9 +1,8 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.menu.PlatoBase;
@@ -36,5 +35,12 @@ public class PlatoBaseService {
 		return platoBaseRepository.findPlatosBase().stream().filter(x -> x.getTipoPlato().getName().equals(tipoPlato))
 				.collect(Collectors.toList());
 	}
+	
+	@Transactional(readOnly = true)
+	public Map<String,Double> findPlatosPricing() {
+		return platoBaseRepository.findPlatosBase().stream()
+				.collect(Collectors.groupingBy(PlatoBase::getName, Collectors.summingDouble(PlatoBase::getPrecio)));
+	}
+	
 
 }
