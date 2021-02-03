@@ -20,7 +20,6 @@
 				<th>Idiomas</th>
 				<th>Salario</th>
 				<th>Usuario</th>
-				<th>Contraseña</th>
 				<th>Opciones</th>
 
 			</tr>
@@ -31,7 +30,9 @@
 				<tr>
 					<td>
 					</td>
-					<td><c:out value="${azafato.nombre} ${azafato.apellidos}"/></td>
+					<td onclick="javascript:location.href='/azafatos/${azafato.id}'" onmouseover="" style="cursor: pointer;">
+						<b><c:out value="${azafato.nombre} ${azafato.apellidos}"/></b>
+					</td>
 					<td><c:out value="${azafato.nif}" /></td>
 					<td><c:out value="${azafato.iban}" /></td>
 					<td><c:forEach items="${azafato.idiomas}" var="idioma" varStatus="loop">
@@ -41,10 +42,15 @@
 					</td>
 					<td><c:out value="${azafato.salario}" /></td>
 					<td><c:out value="${azafato.user.username}"/></td>
-					<td><c:out value="${azafato.user.password}"/></td>
 					<td>
-						<a href="<spring:url value="/azafatos/${azafato.id}/edit" htmlEscape="true" />">Editar azafato</a>
-						<a href="<spring:url value="/azafatos/${azafato.id}/delete" htmlEscape="true" />">Eliminar azafato</a>
+						<spring:url value="/azafatos/{azafatoId}/edit" var="azafatoUrl">
+        			<spring:param name="azafatoId" value="${azafato.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(azafatoUrl)}" class="btn btn-default">Editar</a>
+    				<spring:url value="/azafatos/{azafatoId}/delete" var="azafatoUrl">
+        			<spring:param name="azafatoId" value="${azafato.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(azafatoUrl)}" class="btn btn-default">Eliminar</a>
 					</td>
 				</tr>
 				

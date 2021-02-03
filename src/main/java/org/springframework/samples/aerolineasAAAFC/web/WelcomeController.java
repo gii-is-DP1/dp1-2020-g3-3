@@ -20,18 +20,16 @@ public class WelcomeController {
 		return "welcome";
 	}
 	
-    //Spring Security see this :
+
     @GetMapping(value = "/login")
-    public ModelAndView login(
-        @RequestParam(value = "error", required = false) String error) {
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
             model.addObject("error", "Invalid username and password!");
         }
-
-        model.setViewName("login");
-
+        
+        model.setViewName("/login");
         return model;
 
     }

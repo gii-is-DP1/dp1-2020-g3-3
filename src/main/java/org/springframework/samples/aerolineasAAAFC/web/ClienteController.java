@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class ClienteController {
 
@@ -90,10 +92,9 @@ public class ClienteController {
 
 	@PostMapping(value = "/clientes/{clienteId}/edit")
 	public String processUpdateClienteForm(@Valid Cliente cliente, BindingResult result, 
-			@PathVariable("clienteId") int clienteId,
-			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
-		Cliente clienteToUpdate2=this.clienteService.findClienteById(clienteId);
-
+			@PathVariable("clienteId") int clienteId, ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		
+		Cliente clienteToUpdate2 = this.clienteService.findClienteById(clienteId);
 		if(clienteToUpdate2.getVersion()!=version) {
 			model.put("message","Concurrent modification of client! Try again!");
 			return initUpdateClienteForm(clienteId,model);
@@ -108,7 +109,11 @@ public class ClienteController {
 			try {
 				this.clienteService.saveCliente(cliente);
 			} catch (DataIntegrityViolationException e) {
-				result.rejectValue("nif", "duplicate", "already exists");
+				if(e.getMessage().contains("PUBLIC.CLIENTE(IBAN)")) {
+					result.rejectValue("iban", "duplicate", "already exists");
+				}else{
+					result.rejectValue("nif", "duplicate", "already exists");
+				}
 				return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 			}
 			return "redirect:/clientes/{clienteId}";

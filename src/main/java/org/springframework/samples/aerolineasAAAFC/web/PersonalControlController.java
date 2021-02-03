@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -88,10 +89,11 @@ public class PersonalControlController {
 			try {
 				this.pControlService.savePersonalControl(pControl);
 			} catch (DataIntegrityViolationException e) {
-				result.rejectValue("nif", "duplicate", "already exists");
-				e.printStackTrace();
-			} catch (IbanDuplicadoException e) {
-				result.rejectValue("iban", "duplicate", "already exists");
+				if(e.getMessage().contains("PUBLIC.PERSONAL_OFICINA(IBAN)")) {
+					result.rejectValue("iban", "duplicate", "already exists");
+				}else{
+					result.rejectValue("nif", "duplicate", "already exists");
+				}
 				return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 			}
 			
@@ -103,27 +105,36 @@ public class PersonalControlController {
 	 *  UPDATE CONTROLADOR
 	 */
 	@GetMapping(value = "/controladores/{pControlId}/edit")
-	public String initUpdatePersonalControlForm(@PathVariable("pControlId") int pControlId, ModelMap model, 
-			Map<String, Object> roles) {
+	public String initUpdatePersonalControlForm(@PathVariable("pControlId") int pControlId, ModelMap model, Map<String, Object> roles) {
+		
 		PersonalControl pControl = this.pControlService.findPersonalControlById(pControlId);
 		model.addAttribute(pControl);
+		
 		List<Rol> rol = new ArrayList<Rol>();
 	    rol.add(Rol.PILOTO);
 	    rol.add(Rol.COPILOTO);
 	    rol.add(Rol.INGENIERO_DE_VUELO);
 	    roles.put("roles", rol);
+	    
 		return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/controladores/{pControlId}/edit")
 	public String processUpdatePersonalControlForm(@Valid PersonalControl pControl, BindingResult result, @PathVariable("pControlId") int pControlId,
-			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
-		PersonalControl PersonalControlToUpdate=this.pControlService.findPersonalControlById(pControlId);
-
+			ModelMap model, Map<String, Object> roles, @RequestParam(value = "version", required=false) Integer version) {
+		
+		PersonalControl PersonalControlToUpdate = this.pControlService.findPersonalControlById(pControlId);		    
 		if(PersonalControlToUpdate.getVersion()!=version) {
 			model.put("message","Concurrent modification of Controller Try again!");
-			return initUpdatePersonalControlForm(pControlId,model);
+			return initUpdatePersonalControlForm(pControlId,model,roles);
 			}
+		
+		List<Rol> rol = new ArrayList<Rol>();
+	    rol.add(Rol.PILOTO);
+	    rol.add(Rol.COPILOTO);
+	    rol.add(Rol.INGENIERO_DE_VUELO);
+	    roles.put("roles", rol);
+		
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 		}
@@ -132,7 +143,7 @@ public class PersonalControlController {
 			PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
 			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","username");
 			try {
-				this.pControlService.updatePersonalControl(pControl);
+				this.pControlService.savePersonalControl(pControl);
 			} catch (DataIntegrityViolationException e) {
 				if(e.getMessage().contains("PUBLIC.PERSONAL_OFICINA(IBAN)")) {
 					result.rejectValue("iban", "duplicate", "already exists");
@@ -141,27 +152,13 @@ public class PersonalControlController {
 				}
 				return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 			}
-			
 			return "redirect:/controladores/{pControlId}";
 		}
-	}
-	
-	
-	private String initUpdatePersonalControlForm(int pControlId, ModelMap model) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/*
 	 * BUSCAR CONTROLADOR
 	 */
-//
-//	@GetMapping(value =  "/personalControlList" )
-//	public String showPersonalControlList2(Map<String, Object> model) {
-//		List<PersonalControl> pControl = new ArrayList<>();
-//		this.pControlService.findPersonalControl().forEach(x->pControl.add(x));
-//		model.put("pControl", pControl);
-//		return "controladores/personalControlList";
 
 	@GetMapping(value = "/controladores/find")
 	public String initFindPersonalControlForm(Map<String, Object> model) {
@@ -193,10 +190,8 @@ public class PersonalControlController {
 	
 	@GetMapping(value = "/controladoresList")
 	public String showPersonalControlList(Map<String, Object> model) {
-		List<PersonalControl> controladores = new ArrayList<PersonalControl>();
-		controladores.addAll(this.pControlService.findPersonalControl());
+		Collection<PersonalControl> controladores = this.pControlService.findPersonalControl();
 		model.put("personalControl", controladores);
-		
 		return "controladores/personalControlList";
 	}
 	
@@ -245,6 +240,11 @@ public class PersonalControlController {
 		model.put("dias", dias);
 		model.put("mes", mesn);
 		model.put("año", año);
+		if(mes>=10) {
+			model.put("mesN", mes);
+		}else {
+			model.put("mesN", "0"+mes);
+		}
 		model.put("diasV", diasV);
 		return "controladores/horario";
 	}

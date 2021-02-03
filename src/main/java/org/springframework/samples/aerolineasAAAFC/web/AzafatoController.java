@@ -70,6 +70,7 @@ public class AzafatoController {
 	
 	@PostMapping(value = "/azafatos/new")
 	public String processCreationAzafatoForm(@Valid Azafato azafato, BindingResult result) {
+		
 		if(result.hasErrors()) {
 			return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 		}
@@ -78,9 +79,6 @@ public class AzafatoController {
 				this.azafatoService.saveAzafato(azafato);
 			} catch (DataIntegrityViolationException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
-				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
-			} catch (IbanDuplicadoException e) {
-				result.rejectValue("iban", "duplicate", "already exists");
 				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			} catch (IdiomasNoSuficientesException e) {
 				result.rejectValue("idiomas", "not enough", "not enough languages");
@@ -89,6 +87,7 @@ public class AzafatoController {
 			
 			return "redirect:/azafatos/" + azafato.getId();
 		}
+		
 	}
 	
 	/*
@@ -96,6 +95,7 @@ public class AzafatoController {
 	 */
 	@GetMapping(value = "/azafatos/{azafatoId}/edit")
 	public String initUpdateAzafatoForm(@PathVariable("azafatoId") int azafatoId, ModelMap model) {
+		
 		Azafato azafato = this.azafatoService.findAzafatoById(azafatoId);
 		model.addAttribute(azafato);
 		return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
@@ -103,27 +103,31 @@ public class AzafatoController {
 	
 	@PostMapping(value = "/azafatos/{azafatoId}/edit")
 	public String processUpdateAzafatoForm(@Valid Azafato azafato, BindingResult result, @PathVariable("azafatoId") int azafatoId,
-			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
-		Azafato azafatoToUpdate=this.azafatoService.findAzafatoById(azafatoId);
+											ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		
+		Azafato azToUpdate = this.azafatoService.findAzafatoById(azafatoId);
 
-		if(azafatoToUpdate.getVersion()!=version) {
+		if(azToUpdate.getVersion() != version) {
 			model.put("message","Concurrent modification of azafato! Try again!");
 			return initUpdateAzafatoForm(azafatoId,model);
 			} 
+		
+		
 		if(result.hasErrors()) {
 			return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			azafato.setId(azafatoId);
-			Azafato azafatoToUpdate2 = this.azafatoService.findAzafatoById(azafatoId);
+			Azafato azafatoToUpdate = this.azafatoService.findAzafatoById(azafatoId);
 			BeanUtils.copyProperties(azafato, azafatoToUpdate, "id","nif","username");  
 			try {
 				this.azafatoService.saveAzafato(azafato);
 			} catch (DataIntegrityViolationException e) {
-				result.rejectValue("nif", "duplicate", "already exists");
-				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
-			} catch (IbanDuplicadoException e) {
-				result.rejectValue("iban", "duplicate", "already exists");
+				if(e.getMessage().contains("PUBLIC.AZAFATO(IBAN)")) {
+					result.rejectValue("iban", "duplicate", "already exists");
+				}else{
+					result.rejectValue("nif", "duplicate", "already exists");
+				}
 				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			} catch (IdiomasNoSuficientesException e) {
 				result.rejectValue("idiomas", "not enough", "not enough languages");
@@ -132,6 +136,7 @@ public class AzafatoController {
 			
 			return "redirect:/azafatos/{azafatoId}";
 		}
+		
 	}
 	
 	@GetMapping(value =  "/azafatosList" )

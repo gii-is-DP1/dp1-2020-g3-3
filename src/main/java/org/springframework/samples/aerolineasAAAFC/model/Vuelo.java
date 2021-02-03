@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PreRemove;
 
 import javax.persistence.Table;
@@ -60,14 +61,17 @@ public class Vuelo extends BaseEntity{
 //  -- Personal
 	@ManyToMany(mappedBy = "vuelos")
 	@EqualsAndHashCode.Exclude
+	@OrderBy("id")
 	private Set<PersonalOficina> personalOficina;
 	
 	@ManyToMany(mappedBy="vuelos")
 	@EqualsAndHashCode.Exclude
+	@OrderBy("id")
 	private Set<Azafato> azafatos;
 	
 	@ManyToMany(mappedBy="vuelos")
 	@EqualsAndHashCode.Exclude
+	@OrderBy("id")
 	private Set<PersonalControl> personalControl;
 	
 //	-- Billete

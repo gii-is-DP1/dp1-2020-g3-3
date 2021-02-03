@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -49,10 +50,12 @@ public class Aeropuerto extends BaseEntity{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="aeropuertoOrigen")
 	@EqualsAndHashCode.Exclude
+	@OrderBy("fechaSalida DESC")
 	private Set<Vuelo> vuelosSalida;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="aeropuertoDestino")
 	@EqualsAndHashCode.Exclude
+	@OrderBy("fechaLlegada DESC")
 	private Set<Vuelo> vuelosLlegada;
 
 	public Integer getVersion() {

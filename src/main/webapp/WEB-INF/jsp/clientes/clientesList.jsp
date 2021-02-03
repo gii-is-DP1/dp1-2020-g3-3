@@ -20,9 +20,7 @@
 				<th>IBAN</th>
 				<th>Fecha de Nacimiento</th>
 				<th>Email</th>
-				<th>Usuario</th>
-				<th>Contraseña</th>
-				<th>Opciones</th>
+				<th width="15%">Opciones</th>
 
 
 			</tr>
@@ -38,11 +36,16 @@
 					<td><c:out value="${cliente.iban}"/></td>
 					<td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="dd-MM-yyy"/></td>
 					<td><c:out value="${cliente.email}"/></td>
-					<td><c:out value="${cliente.user.username}"/></td>
-					<td><c:out value="${cliente.user.password}"/></td>
 					<td>
-						<a href="<spring:url value="/clientes/${cliente.id}/edit" htmlEscape="true" />">Editar cliente</a>
-						<a href="<spring:url value="/clientes/${cliente.id}/delete" htmlEscape="true"/>">Eliminar cliente</a>
+						<spring:url value="/clientes/{clienteId}/edit" var="clientesUrl">
+	        				<spring:param name="clienteId" value="${cliente.id}"/>
+	    				</spring:url>
+	    				<a href="${fn:escapeXml(clientesUrl)}" class="btn btn-default">Editar</a>
+	    				
+	    				<spring:url value="/clientes/{clienteId}/delete" var="clientesUrl">
+	        				<spring:param name="clienteId" value="${cliente.id}"/>
+	    				</spring:url>
+	    				<a href="${fn:escapeXml(clientesUrl)}" class="btn btn-default">Eliminar</a>
 					</td>
 				
 				</tr>

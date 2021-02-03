@@ -90,11 +90,11 @@ edición y borrado en una vista u otra -->
                 <td valign="top">
                     <dl class="dl-horizontal">
                         <dt>ID Vuelo</dt>
-                        <dd><c:out value="${vuelo.id}"/></dd>
+                        <dd onclick="javascript:location.href='/vuelos/${vuelo.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${vuelo.id}"/></b></dd>
                         <dt>Fecha de salida</dt>
-                        <dd><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd' T'HH:mm"/></dd>
+                        <dd><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd HH:mm"/></dd>
                         <dt>Fecha de llegada</dt>
-                        <dd><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd' T'HH:mm"/></dd>
+                        <dd><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd HH:mm"/></dd>
                     </dl>
                 </td>
             </tr>

@@ -11,7 +11,7 @@
         <c:if test="${personalControl['new']}">Nuevo </c:if> Controlador
     </h2>
     <form:form modelAttribute="personalControl" class="form-horizontal" id="add-controlador-form">
-    	<input type="hidden" name= "id" value= "${personalControl.id}"/>
+    	<input type="hidden" name= "pControlId" value= "${personalControl.id}"/>
     	<input type="hidden" name= "version" value= "${personalControl.version}"/>
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Nombre" name="nombre"/>
@@ -22,8 +22,8 @@
             	<aerolineasAAAFC:selectField label="Rol" name="rol" names="${roles}"/>
 
             <aerolineasAAAFC:inputField label="Salario" name="salario"/>
-            <aerolineasAAAFC:inputField label="Username" name="user.username" />
-			<aerolineasAAAFC:inputField label="Password" name="user.password" type="password" />
+			<aerolineasAAAFC:inputField label="Usuario (debe ser igual al DNI)" name="user.username" />
+			<aerolineasAAAFC:inputField label="Contraseña" name="user.password" type="password" />
 			<aerolineasAAAFC:inputField label="Confirmar Contraseña" name="user.matchingPassword" type="password"></aerolineasAAAFC:inputField>
            	
             <form:errors> </form:errors> 

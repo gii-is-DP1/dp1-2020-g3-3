@@ -32,6 +32,7 @@ public class Azafato extends Person{
 	joinColumns = @JoinColumn(name = "azafato_id"),
 	inverseJoinColumns = @JoinColumn(name = "idioma_types_id"))
 	@EqualsAndHashCode.Exclude 
+	@OrderBy("idioma")
 	private Set<IdiomaType> idiomas;
 
 	@Column(name = "salario")
