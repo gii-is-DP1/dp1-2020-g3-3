@@ -38,7 +38,7 @@ public class AvionService {
 	}
 	
 	@Transactional
-	public Collection<Avion> findAviones(){
+	public List<Avion> findAviones(){
 		return StreamSupport.stream(avionRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
 	}
