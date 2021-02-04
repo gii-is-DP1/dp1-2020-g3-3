@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!-- Archivo .jsp que muestra el listado de todos los aviones, a su vez se
 puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
@@ -19,15 +21,22 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
             <th>Horas de vuelo acumuladas</th>
             <th>Fecha de fabricación</th>
             <th>Última revisión</th>
-            <th>Disponibilidad</th>
+            <sec:authorize access="hasAuthority('personalControl')">
+            	<th>Horas Acumuladas</th>
+            	<th>Disponibilidad</th>
+            	<th>Fecha de fabricación</th>
+            </sec:authorize>
             <th> </th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${aviones}" var="avion">
             <tr>
-                <td onclick="javascript:location.href='/aviones/${avion.id}'" onmouseover="" style="cursor: pointer;">
-                    <b><c:out value="${avion.id}"/></b>
+                <td>
+                    <spring:url value="/aviones/{avionId}" var="avionUrl">
+                        <spring:param name="avionId" value="${avion.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(avionUrl)}"><c:out value="${avion.id}"/></a>
                 </td>
                 <td>
                     <c:out value="${avion.tipoAvion}"/>
@@ -41,6 +50,7 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
                 <td>
                     <c:out value="${avion.fechaRevision}"/>
                 </td>
+                <sec:authorize access="hasAuthority('personalControl')">
                 <td>
                     <c:choose>
     					<c:when test="${avion.disponibilidad==true}">
@@ -53,19 +63,45 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
     					</c:otherwise>
 					</c:choose>
                 </td>
+               
+                <td>
+                    <c:out value="${avion.horasAcumuladas}"/>
+                </td>
+            	<td>
+            		<c:out value="${avion.disponibilidad}"/>
+            	</td>
+            	<td>
+            		<c:out value="${avion.fechaFabricacion}"/>
+            	</td>
+            	</sec:authorize>
                 <td>
                 	<spring:url value="/aviones/{avionId}/edit" var="avionUrl">
         			<spring:param name="avionId" value="${avion.id}"/>
     				</spring:url>
-    				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Editar</a>
-    				<spring:url value="/aviones/{avionId}/delete" var="avionUrl">
-        			<spring:param name="avionId" value="${avion.id}"/>
-    				</spring:url>
-    				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Eliminar</a>
+    				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Editar avión</a>
                 </td>     
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a href="<spring:url value="/aviones/new" htmlEscape="true" />">Nuevo Avión</a>
+    <br>
+    <br>
+    <table id="tablaAeropuertos" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Estacionamiento</th>
+        </tr>
+        </thead>
+        <tbody>
+            
+           <c:forEach items="${aeropuertosDestino}" var="aeropuerto">
+           <tr>
+                <td>
+            		<c:out value="${aeropuerto.nombre}"/>
+            	</td>
+            </tr>
+        	</c:forEach>
+        	
+        </tbody>
+    </table>
 </aerolineasAAAFC:layout>

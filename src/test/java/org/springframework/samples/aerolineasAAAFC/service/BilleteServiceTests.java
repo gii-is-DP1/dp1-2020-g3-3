@@ -38,7 +38,9 @@ import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyIte
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class BilleteServiceTests {
 
@@ -57,6 +59,9 @@ public class BilleteServiceTests {
 	
 	@Autowired
 	protected EquipajeBaseService equipajeBaseService;
+	
+	@Autowired
+	protected ClienteService clienteService;
 
 	@Test
 	@Transactional
@@ -107,9 +112,9 @@ public class BilleteServiceTests {
 		m.setPlato3(p3);
 		m.setBillete(b);
 		
-		Logger.getLogger(BilleteServiceTests.class.getName()).log(Level.INFO,"Introducimos platosBase: " + p1.getPlatoBase().getTipoPlato().getName() + " de id " + p1.getPlatoBase().getId());
-		Logger.getLogger(BilleteServiceTests.class.getName()).log(Level.INFO,"Introducimos platosBase: " + p2.getPlatoBase().getTipoPlato().getName() + " de id " + p2.getPlatoBase().getId());
-		Logger.getLogger(BilleteServiceTests.class.getName()).log(Level.INFO,"Introducimos platosBase: " + p3.getPlatoBase().getTipoPlato().getName() + " de id " + p3.getPlatoBase().getId());
+		log.info("Introducimos platosBase: {} de id {}", p1.getPlatoBase().getTipoPlato().getName(), p1.getPlatoBase().getId());
+		log.info("Introducimos platosBase: {} de id {}", p2.getPlatoBase().getTipoPlato().getName(), p2.getPlatoBase().getId());
+		log.info("Introducimos platosBase: {} de id {}", p3.getPlatoBase().getTipoPlato().getName(), p3.getPlatoBase().getId());
 		
 		try {
 			this.billeteService.saveMenu(m);
@@ -270,6 +275,34 @@ public class BilleteServiceTests {
 			
 		Assertions.assertThrows(ConstraintViolationException.class, () ->{
 			this.billeteService.saveEquipaje(e);});
+	}
+	
+	@Test
+	void shouldFindBilletesApellido() {
+		Collection<Billete> billetes = this.billeteService.findBilletePorApellido("Soto Ramírez");
+		
+		assertThat(billetes).isNotEmpty();
+	}
+	
+	@Test
+	void shouldFindBilletesCliente() {
+		Collection<Billete> billetes = this.billeteService.findBilletesPorCliente(this.clienteService.findClienteById(2));
+		
+		assertThat(billetes).isNotEmpty();
+	}
+	
+	@Test
+	void shouldFindBilletesFecha() {
+		Collection<Billete> billetes = this.billeteService.findBilletesPorFecha(LocalDate.of(2020, 4, 6));
+		
+		assertThat(billetes).isNotEmpty();
+	}
+	
+	@Test
+	void shouldFindBilletesComprados() {
+		Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
+		
+		assertThat(billetes).isNotEmpty();
 	}
 
 }

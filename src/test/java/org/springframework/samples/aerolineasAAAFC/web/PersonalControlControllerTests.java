@@ -69,13 +69,14 @@ public class PersonalControlControllerTests {
 		Juan.setApellidos("Fernandez Romero");
 		Juan.setNombre("Juan");
 		Juan.setIban("ES 0159480518801639865810");
-		Juan.setNif("01582301T");
+		Juan.setNif("08493865B");
 		Juan.setRol(Rol.COPILOTO);
 		Juan.setSalario(2000.);
 		
 		juanUser = new User();
-		juanUser.setUsername("01582301T");
+		juanUser.setUsername("08493865B");
 		juanUser.setPassword("juFerRo01");
+		juanUser.setMatchingPassword("juFerRo01");
 		Juan.setUser(juanUser);
 
 		given(this.personalControlService.findPersonalControlById(TEST_PERSONALCONTROL_ID)).willReturn(Juan);

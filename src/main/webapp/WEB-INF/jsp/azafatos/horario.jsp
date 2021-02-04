@@ -47,6 +47,9 @@
 		</c:forEach>
 		</ul> 
 	</div>
-
+	<spring:url value="/azafatos/{azafatoId}" var="editUrl">
+        <spring:param name="azafatoId" value="${azafatoId}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default" style="float:right;">Volver</a>
 
 </aerolineasAAAFC:layout>

@@ -13,30 +13,22 @@
     <table id="tablaPersonalControl" class="table table-striped">
         <thead>
         <tr>
-        	<th>ID Controlador</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
+        
+            <th>Nombre y Apellidos</th>
             <th>NIF</th>
             <th>IBAN</th>
             <th>Rol</th>
             <th>Salario</th>
-            <th></th>
+            <th>Opciones</th>
+            
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${controladores}" var="personalControl">
+        <c:forEach items="${personalControl}" var="personalControl">
             <tr>
-                <td>
-                    <spring:url value="/controladores/{pControlId}" var="pControlUrl">
-                        <spring:param name="pControlId" value="${personalControl.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(pControlUrl)}"><c:out value="${personalControl.id}"/></a>
-                </td>
-                <td>
-                    <c:out value="${personalControl.nombre}"/>
-                </td>
-                <td>
-                    <c:out value="${personalControl.apellidos}"/>
+                
+                <td onclick="javascript:location.href='/controladores/${personalControl.id}'" onmouseover="" style="cursor: pointer;">
+                <b><c:out value="${personalControl.nombre} ${personalControl.apellidos}"/></b>
                 </td>
                 <td>
                     <c:out value="${personalControl.nif}"/>
@@ -50,11 +42,16 @@
                 <td>
                     <c:out value="${personalControl.salario}"/>
                 </td>
-                <td>
-                    <spring:url value="/controladores/{pControlId}/edit" var="pControlUrl">
-        			<spring:param name="pControlId" value="${personalControl.id}"/>
+                <td>						
+                	<spring:url value="/controladores/{personalControlId}/edit" var="personalControlUrl">
+        				<spring:param name="personalControlId" value="${personalControl.id}"/>
     				</spring:url>
-    				<a href="${fn:escapeXml(pControlUrl)}" class="btn btn-default">Editar controlador</a>
+    				<a href="${fn:escapeXml(personalControlUrl)}" class="btn btn-default">Editar</a>
+    				
+    				<spring:url value="/controladores/{personalControlId}/delete" var="personalControlUrl">
+        				<spring:param name="personalControlId" value="${personalControl.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(personalControlUrl)}" class="btn btn-default">Eliminar</a>
                 </td>   
             </tr>
         </c:forEach>

@@ -54,18 +54,11 @@ public class AzafatoService {
 	}
 
 	@Transactional
-	public void saveAzafato(Azafato azafato) throws DataAccessException, IbanDuplicadoException, 
-	DataIntegrityViolationException, IdiomasNoSuficientesException{ 
+	public void saveAzafato(Azafato azafato) throws  DataIntegrityViolationException, IdiomasNoSuficientesException{ 
 		
-		Azafato aIban = azafatoRepository.findByIban(azafato.getIban());
-		
-		if(aIban != null && ! aIban.getId().equals(azafato.getId())){
-			throw new IbanDuplicadoException("");
-		}else if(azafato.getIdiomas().size() < 2){
+		if(azafato.getIdiomas().size() < 2){
 			throw new IdiomasNoSuficientesException("Parece que no ha introducido 2 o más idiomas para este empleado");
-		}
-		
-		else {
+		}else {
 			azafatoRepository.save(azafato);		
 			userService.saveUser(azafato.getUser());
 			authoritiesService.saveAuthorities(azafato.getUser().getUsername(), "azafato");

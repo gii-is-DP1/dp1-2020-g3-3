@@ -7,6 +7,7 @@
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
 <aerolineasAAAFC:layout pageName="azafatos">
+
     <h2>
         <c:if test="${azafato['new']}">Nuevo </c:if> Azafato
     </h2>
@@ -18,8 +19,8 @@
 			<aerolineasAAAFC:inputField label="Nombre" name="nombre" />
 			<aerolineasAAAFC:inputField label="Apellidos" name="apellidos" />
 			<aerolineasAAAFC:inputField label="NIF" name="nif" />
-            <aerolineasAAAFC:inputField label="Salario" name="salario"/>
-            <aerolineasAAAFC:selectField label="Idiomas" name="idiomas" names="${idioma}"/>
+            <aerolineasAAAFC:inputField label="Salario" name="salario"/> 
+            <aerolineasAAAFC:selectField label="Idiomas" name="idiomas" names="${idioma_types}"/>
             <aerolineasAAAFC:inputField label="IBAN" name="iban" />
             <aerolineasAAAFC:inputField label="Username" name="user.username" />
 			<aerolineasAAAFC:inputField label="Password" name="user.password" type="password" />
@@ -41,4 +42,5 @@
             </div>
         </div>
     </form:form>
+    
 </aerolineasAAAFC:layout>

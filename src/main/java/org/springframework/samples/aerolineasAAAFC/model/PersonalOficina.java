@@ -8,12 +8,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.data.annotation.Id;
 
 import lombok.Data;
@@ -39,6 +42,10 @@ public class PersonalOficina extends Person{
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
+	@JoinTable(name = "oficina_vuelo",
+	   joinColumns = @JoinColumn(name = "personal_oficina_id"),
+	   inverseJoinColumns = @JoinColumn(name= "vuelos_id"))
+	@OrderBy("fechaSalida DESC")
 	private Collection<Vuelo> vuelos;
 
 	public Integer getVersion() {
