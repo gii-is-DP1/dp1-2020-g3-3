@@ -53,7 +53,36 @@
     <br/>
     <h2>Billetes</h2>
     
-	<a href="<spring:url value="/clientes/${cliente.id}/compras" htmlEscape="true" />">Ver billetes</a>
+	<a href="<spring:url value="/clientes/${cliente.id}/compras" htmlEscape="true" />" class="btn btn-default">Ver billetes</a>
+	<br/>
+    <br/>
+    
+	<h2>Historial de vuelos</h2>
 
+    <table class="table table-striped">
+        <thead>
+	        <tr>
+	            <th>Ruta</th>
+	            <th>Fecha de salida</th>
+	            <th>Fecha de llegada</th>
+	        </tr>
+	        </thead>
+	        <tbody>
+		        <c:forEach var="billete" items="${cliente.billetes}">
+		            <tr>
+		            	<td>
+		                    <b><c:out value="${billete.asiento.vuelo.aeropuertoOrigen.codigoIATA}"/></b> -
+		                    <b><c:out value="${billete.asiento.vuelo.aeropuertoDestino.codigoIATA}"/></b>
+		                </td>
+		                <td>
+		                    <aerolineasAAAFC:localDateTime date="${billete.asiento.vuelo.fechaSalida}" pattern="yyyy-MM-dd HH:mm"/>
+		                </td>
+		                <td>  
+		                    <aerolineasAAAFC:localDateTime date="${billete.asiento.vuelo.fechaLlegada}" pattern="yyyy-MM-dd HH:mm"/>
+		                </td>
+		            </tr>
+		        </c:forEach>
+        </tbody>
+    </table>
 
 </aerolineasAAAFC:layout>

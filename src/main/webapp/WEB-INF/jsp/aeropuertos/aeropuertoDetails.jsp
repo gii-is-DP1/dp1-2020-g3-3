@@ -68,5 +68,6 @@
 		   </td>
 	   </tr>
 	   </table>  
-
+	<spring:url value="/aeropuertos" var="url"></spring:url>
+    <a href="${fn:escapeXml(url)}" class="btn btn-default" style="float:right;">Volver</a>
 </aerolineasAAAFC:layout>

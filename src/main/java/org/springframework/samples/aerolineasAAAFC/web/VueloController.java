@@ -268,6 +268,15 @@ public class VueloController {
 		mav.addObject(this.vueloService.findVueloById(vueloId));
 		return mav;
 	}
+	
+	@GetMapping(value = "/vuelos/historial")
+	public String showPersonalOficinaList(Map<String, Object> model) {
+		List<Vuelo> vuelos = new ArrayList<Vuelo>();
+		vuelos.addAll(this.vueloService.findVuelosOrdered());
+		model.put("vuelos", vuelos);
+		
+		return "vuelos/vuelosHistorial";
+	}
 
 	
 }
