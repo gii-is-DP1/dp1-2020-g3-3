@@ -6,17 +6,20 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+<<<<<<< HEAD
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+=======
+import javax.validation.constraints.Past;
+
+>>>>>>> parent of c9af95a... He hecho lo de auditing, creo que está bien, pero...
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.MayoriaEdadConstraint;
 
@@ -32,7 +35,6 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Audited
 @Table(name = "clientes")
 public class Cliente extends Person{
 
@@ -41,7 +43,6 @@ public class Cliente extends Person{
 	@Column(name = "email")
 	@Email
 	@NotEmpty
-	@NotAudited
 	private String email;
 	
 	@Column(name = "direccion_facturacion")
@@ -52,7 +53,6 @@ public class Cliente extends Person{
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@MayoriaEdadConstraint
-	@NotAudited
 	private LocalDate fechaNacimiento;
 
 	// Relaciones de tabla
@@ -62,9 +62,6 @@ public class Cliente extends Person{
 	@OrderBy("fechaReserva DESC")
 	private Set<Billete> billetes;
 
-	@OneToOne
-	Payment payment;
-	
 	public Integer getVersion() {
 		return null;
 	}

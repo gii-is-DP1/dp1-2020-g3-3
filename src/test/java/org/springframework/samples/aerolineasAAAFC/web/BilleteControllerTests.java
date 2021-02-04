@@ -9,9 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +20,12 @@ import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfigu
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
-import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -41,7 +35,6 @@ excludeAutoConfiguration= SecurityConfiguration.class)
 public class BilleteControllerTests {
 
 	private static final int TEST_BILLETE_ID = 2;
-	private static final String TEST_USUARIOCLIENTE_ID = "01446551N";
 
 	@Autowired
 	private BilleteController billeteController;
@@ -66,9 +59,6 @@ public class BilleteControllerTests {
 
 	private Billete billetazo;
 	
-	private User defaultUserC = userService.findUser(TEST_USUARIOCLIENTE_ID).get();
-	
-	
 //	private Menu wrongMenu;
 //	
 //	private Set<Menu> wrongMenus = new HashSet<Menu>();
@@ -77,10 +67,6 @@ public class BilleteControllerTests {
 	@BeforeEach
 	void setup() {
 
-		given(this.userService.findUser(defaultUserC.getUsername()).get()).willReturn(defaultUserC);
-		Logger.getLogger(ClienteControllerTests.class.getName()).log(Level.INFO, "defaultUser: " + defaultUserC);
-
-		
 		billetazo = new Billete();
 		billetazo.setId(TEST_BILLETE_ID);
 //		billetazo.setAsiento("A34");
