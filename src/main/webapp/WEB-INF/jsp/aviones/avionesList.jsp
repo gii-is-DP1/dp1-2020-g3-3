@@ -20,7 +20,7 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
             <th>Fecha de fabricación</th>
             <th>Última revisión</th>
             <th>Disponibilidad</th>
-            <th> </th>
+            <th>Opciones</th>
         </tr>
         </thead>
         <tbody>

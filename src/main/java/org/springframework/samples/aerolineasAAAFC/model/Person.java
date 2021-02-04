@@ -13,11 +13,13 @@ import javax.validation.constraints.Pattern;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.NifConstraint;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.UsuarioConstraint;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @UsuarioConstraint
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
 public class Person extends BaseEntity{

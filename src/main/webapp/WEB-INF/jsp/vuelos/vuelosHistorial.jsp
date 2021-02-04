@@ -23,9 +23,9 @@
         <thead>
         <tr>
         	<th width="3%">ID</th>
+        	<th width="10%">Ruta</th>
             <th width="13%">Fecha de Salida</th>
             <th width="13%">Fecha de Llegada</th>
-            <th width="10%">Ruta</th>
             <th width="20%">Tipo de Avión</th>
             <th width="35%">Personal de Control</th>
             
@@ -36,12 +36,12 @@
         <c:forEach items="${vuelos}" var="vuelo">
             <tr>
             	<td onclick="javascript:location.href='/vuelos/${vuelo.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${vuelo.id}"/></b></td>
-				<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm"/></td>
-                <td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm"/></td>
-				<td>
+            	<td>
 		            <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoOrigen.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}"/></b> -
 		            <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoDestino.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoDestino.codigoIATA}"/></b>
 		       	</td>
+				<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm"/></td>
+                <td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm"/></td>
                 <td><c:out value="${vuelo.avion.tipoAvion}"/></td>
                 <td>
                 	<c:forEach var="pControl" items="${vuelo.personalControl}" varStatus="loop">

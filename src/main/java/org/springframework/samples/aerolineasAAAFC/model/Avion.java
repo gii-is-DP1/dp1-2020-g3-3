@@ -13,19 +13,19 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-import org.hibernate.validator.constraints.Range;
-import org.springframework.core.annotation.Order;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
 * Entidad simple que representa un avion
 */
 
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "aviones")

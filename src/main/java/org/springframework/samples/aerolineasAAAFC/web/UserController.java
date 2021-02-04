@@ -104,7 +104,7 @@ public class UserController {
 			PersonalControl resultado = this.personalControlService.findPersonalControlByNif(usuario);
 			return "redirect:/controladores/" + resultado.getId();
 		}else if(rol.equals("personalOficina")) {
-			PersonalOficina resultado = this.personalOficinaService.findPersonalControlByNif(usuario);
+			PersonalOficina resultado = this.personalOficinaService.findPersonalOficinaByNif(usuario);
 			return "redirect:/personalOficina/" + resultado.getId();
 		}
 		

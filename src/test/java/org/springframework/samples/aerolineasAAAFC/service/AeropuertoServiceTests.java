@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Collection;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -31,17 +32,17 @@ public class AeropuertoServiceTests {
 	//TEST DE CONSULTA
 	@Test
 	void getNombreAeropuertoSuccessful() {
-		Aeropuerto aero = aeropuertoService.findAeropuertoById(1);
+		Aeropuerto aero = this.aeropuertoService.findAeropuertoById(1);
 		
 		//NOMBRE
 		assertThat(aero.getNombre())
 		.isNotEmpty()
-		.hasToString("Aeropuerto de São Paulo Guarulhos");
+		.hasToString("Aeropuerto de Sao Paulo Guarulhos");
 		
 		//LOCALIZACION
 		assertThat(aero.getLocalizacion())
 		.isNotEmpty()
-		.hasToString("São Paulo, Brasil");
+		.hasToString("Sao Paulo, Brasil");
 		
 		//CODIGO IATA
 		assertThat(aero.getCodigoIATA())
@@ -101,6 +102,7 @@ public class AeropuertoServiceTests {
 		aero.setTelefono("12 345 678 910");
 		
 		assertThrows(TelefonoErroneoException.class, ()->{ this.aeropuertoService.saveAeropuerto(aero); });
+		
 		aeros = this.aeropuertoService.findAeropuertos();
 		assertThat(aeros.size()).isEqualTo(found);
 	}
@@ -108,11 +110,14 @@ public class AeropuertoServiceTests {
 	
 	//TEST DE ACTUALIZACIÓN
 	@Test
-	void shouldUpdateNombreAeropuerto() {
+	void shouldUpdateNombreAeropuerto() throws TelefonoErroneoException {
 		Aeropuerto aero = aeropuertoService.findAeropuertoById(1);
 		
 		aero.setNombre("Aeropuerto Internacional de São Paulo Guarulhos");
 		
+		this.aeropuertoService.saveAeropuerto(aero);
+		
+		aero = this.aeropuertoService.findAeropuertoById(1);
 		assertThat(aero.getNombre())
 		.isNotEmpty()
 		.isEqualTo("Aeropuerto Internacional de São Paulo Guarulhos");
@@ -125,7 +130,7 @@ public class AeropuertoServiceTests {
 		Collection<Aeropuerto> aeros = this.aeropuertoService.findAeropuertos();
 		int found = aeros.size();
 		
-		aeropuertoService.eliminarAeropuerto(1);
+		this.aeropuertoService.eliminarAeropuerto(1);
 		
 		aeros = this.aeropuertoService.findAeropuertos();
 		assertThat(aeros.size()).isEqualTo(found - 1);

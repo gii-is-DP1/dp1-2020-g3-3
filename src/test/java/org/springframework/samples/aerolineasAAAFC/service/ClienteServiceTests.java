@@ -5,34 +5,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
-import org.springframework.samples.aerolineasAAAFC.model.Authorities;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.User;
-import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class ClienteServiceTests {
 
@@ -47,46 +38,33 @@ public class ClienteServiceTests {
 		//NOMBRE
 		assertThat(cliente.getNombre())
 		.isNotEmpty();
+		
 		//APELLIDOS
 		assertThat(cliente.getApellidos())
 		.isNotEmpty();
+		
 		//IBAN
 		assertThat(cliente.getIban())
 		.isNotEmpty()
 		.containsPattern("^ES\\s\\d{22}$");
+		
 		//NIF
 		assertThat(cliente.getNif())
 		.isNotEmpty()
 		.containsPattern("^\\d{8}[a-zA-Z]$");
+		
 		//FECHA DE NACIMIENTO
 		assertThat(cliente.getFechaNacimiento())
 		.isBefore(LocalDate.now().minusYears(18));
+		
 		//EMAIL
 		assertThat(cliente.getEmail())
 		.isNotEmpty();
+		
 		//BILLETES
 		assertThat(cliente.getBilletes())
 		.isNotEmpty();
 		
-	}
-
-	@Test
-	void shouldAddBillete() {
-		Billete billete = new Billete();
-		billete.setAsiento(new Asiento());
-		Cliente cliente = clienteService.findClienteById(1);
-		int found = cliente.getBilletes().size();
-		
-		billete.setId(2);
-		billete.setCoste(80);
-//		billete.setAsiento("F5");
-		billete.setFechaReserva(LocalDate.of(2020, 04, 06));
-		billete.getAsiento().setClase(Clase.ECONOMICA);
-		cliente.getBilletes().add(billete);
-		
-		assertThat(cliente.getBilletes().size())
-		.isEqualTo(found+1);
-
 	}
 	
 	@Test
@@ -117,6 +95,7 @@ public class ClienteServiceTests {
 		Collection<Cliente> clientes = this.clienteService.findClientes();
 		int found = clientes.size();
 
+		//CREACIÓN DEL CLIENTE
 		Cliente cliente = new Cliente();
 		cliente.setNombre("Juan Jesús");
 		cliente.setApellidos("Ferrero Gutiérrez");
@@ -127,16 +106,14 @@ public class ClienteServiceTests {
 		cliente.setFechaNacimiento(fecha);
 		cliente.setEmail("juanjeferrero@outlook.com");
 
+		//ESTABLECEMOS SU USUARIO
 		User user = new User();
 		user.setUsername("28976897W");
 		user.setPassword("*Fly_High14&");
 		user.setMatchingPassword("*Fly_High14&");
-			
-		
 		cliente.setUser(user);                
 
 		this.clienteService.saveCliente(cliente);
-		
 
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
@@ -148,6 +125,7 @@ public class ClienteServiceTests {
 	@Transactional
 	public void shouldNotInsertClienteRepetido(){
 
+		//CREACIÓN DEL CLIENTE
 		Cliente cliente = new Cliente();
 		cliente.setNombre("María");
 		cliente.setApellidos("Soto Ramírez");
@@ -158,6 +136,7 @@ public class ClienteServiceTests {
 		cliente.setFechaNacimiento(fecha);     
 		cliente.setEmail("marisotoram@hotmail.com");
 		
+		//ESTABLECEMOS SU USUARIO
 		User user = new User();
 		user.setUsername("01446551N");
 		user.setPassword("*Fly_Low14&");
@@ -168,10 +147,16 @@ public class ClienteServiceTests {
 		
 	}
 	
-	@Test
+	@ParameterizedTest
+	@CsvSource({
+		"*Fly_Low14&, 65801218N, *Fly_Low15&, 65801218N",
+		"*Fly_Low14&, 65801218N, *Fly_Low14&, jusoto"
+			})
 	@Transactional
-	public void shouldNotInsertClienteContraseña(){
+	public void shouldNotInsertClienteContraseñaYUsuario(String contraseña, String usuario, 
+														String contraseñaMal, String usuarioMal){
 
+		//CREACIÓN DEL CLIENTE
 		Cliente cliente = new Cliente();
 		cliente.setNombre("Juan");
 		cliente.setApellidos("Soto Ramírez");
@@ -182,6 +167,7 @@ public class ClienteServiceTests {
 		cliente.setFechaNacimiento(fecha);     
 		cliente.setEmail("juansotoram@hotmail.com");
 		
+		//ESTABLECEMOS SU USUARIO
 		User user = new User();
 		user.setUsername("65801218N");
 		user.setPassword("*Fly_Low14&");
@@ -190,32 +176,27 @@ public class ClienteServiceTests {
 		
 		Assertions.assertThrows(ConstraintViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
 		
-	}
+	}	
 	
-	@Test
-	@Transactional
-	public void shouldNotInsertClienteUsuario(){
 
-		Cliente cliente = new Cliente();
-		cliente.setNombre("Juan");
-		cliente.setApellidos("Soto Ramírez");
-		cliente.setNif("47595315N");
-		cliente.setDireccionFacturacion("C/Enladrillada,2 1ºB Sevilla");
-		cliente.setIban("ES 7771056418401234568893");
-		LocalDate fecha = LocalDate.parse("1995-03-08", DateTimeFormatter.ISO_DATE);
-		cliente.setFechaNacimiento(fecha);     
-		cliente.setEmail("juansotoram@hotmail.com");
+	@Test
+	void shouldAddBillete() {
+		Billete billete = new Billete();
+		billete.setAsiento(new Asiento());
+		Cliente cliente = this.clienteService.findClienteById(1);
+		int found = cliente.getBilletes().size();
 		
-		User user = new User();
-		user.setUsername("jsoto");
-		user.setPassword("*Fly_Low14&");
-		user.setMatchingPassword("*Fly_Low14&");
-		cliente.setUser(user);
+		billete.setId(2);
+		billete.setCoste(80);
+//		billete.setAsiento("F5");
+		billete.setFechaReserva(LocalDate.of(2020, 04, 06));
+		billete.getAsiento().setClase(Clase.ECONOMICA);
+		cliente.getBilletes().add(billete);
 		
-		Assertions.assertThrows(ConstraintViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
-		
+		assertThat(cliente.getBilletes().size())
+		.isEqualTo(found+1);
+
 	}
-	
 
 	//Tests Actualizar
 
@@ -225,6 +206,9 @@ public class ClienteServiceTests {
 
 		cliente.setDireccionFacturacion("Calle Almira, 17 3ºC Segovia");
 
+		this.clienteService.saveCliente(cliente);
+		
+		cliente = this.clienteService.findClienteById(1);
 		assertThat(cliente.getDireccionFacturacion())
 		.isNotEmpty()
 		.isEqualTo("Calle Almira, 17 3ºC Segovia");

@@ -2,11 +2,7 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.Collection;
-import javax.validation.ConstraintViolationException;
-
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +13,7 @@ import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class UserServiceTests {
 	
@@ -28,9 +22,11 @@ public class UserServiceTests {
 	
 	private static final BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 	
+	
+	//TEST DE CONSULTA
 	@Test
 	void getUserSuccessful() {
-		User user = userService.findUser("01446551N").get();
+		User user = this.userService.findUser("01446551N").get();
 		
 		//USUARIO
 		assertThat(user.getUsername()).isEqualTo("01446551N");
@@ -47,6 +43,8 @@ public class UserServiceTests {
 		assertThat(rol).isEqualTo("cliente");
 	}
 	
+	
+	//TEST DE INSERCIÓN
 	@Test
 	void shouldInsertUser() {
 		User user = new User();
@@ -54,20 +52,11 @@ public class UserServiceTests {
 		user.setPassword("C0ntr4s3ñ4T3$t");
 		user.setMatchingPassword("C0ntr4s3ñ4T3$t");
 
-		userService.saveUser(user);
+		this.userService.saveUser(user);
 		
-		User usuario = userService.findUser("28845479Y").get();
+		User usuario = this.userService.findUser("28845479Y").get();
 		
 		assertThat(usuario).isNotNull();
-	}
-	
-	@Test
-	void shouldNotInsertUser() {
-		User user = new User();
-		user.setUsername("28845479Y");
-		user.setPassword("C0ntr4s3ñ4T3$t");
-
-		assertThrows( ConstraintViolationException.class, () -> { userService.saveUser(user); } );
 	}
 
 }
