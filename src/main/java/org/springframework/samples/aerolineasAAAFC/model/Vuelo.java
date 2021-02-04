@@ -1,8 +1,10 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -79,9 +81,9 @@ public class Vuelo extends BaseEntity{
 //	@EqualsAndHashCode.Exclude
 //	private Set<Billete> billetes;
 	
-	@OneToMany(mappedBy="vuelo") 
+	@OneToMany(mappedBy="vuelo", cascade = CascadeType.ALL) 
 	@EqualsAndHashCode.Exclude
-	private Set<Asiento> asientos;
+	private List<Asiento> asientos;
 	
 //	-- Aeropuertos y avión
 	@ManyToOne(optional=false)
@@ -104,6 +106,9 @@ public class Vuelo extends BaseEntity{
 	        a.getVuelos().remove(this);
 	    }	   
 	    for (PersonalControl p: personalControl) {
+	        p.getVuelos().remove(this);
+	    }	
+	    for (PersonalOficina p: personalOficina) {
 	        p.getVuelos().remove(this);
 	    }	
 	}

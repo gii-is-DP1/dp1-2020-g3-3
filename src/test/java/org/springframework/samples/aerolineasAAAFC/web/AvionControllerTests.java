@@ -66,7 +66,6 @@ public class AvionControllerTests {
 	
 		apache.setHorasAcumuladas(12);
 //		apache.setPersonalControl(new HashSet<>());
-		apache.setPesoMaximoEquipaje(21);
 		apache.setPlazasEconomica(3);
 		apache.setPlazasEjecutiva(3);
 		apache.setPlazasPrimera(65);
@@ -173,15 +172,4 @@ public class AvionControllerTests {
 				.andExpect(view().name("aviones/createOrUpdateAvionForm"));
 	}
 
-
-
-
 }
-
-
-
-
-
-
-
-

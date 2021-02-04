@@ -34,10 +34,9 @@ public class VueloService {
 	
 	@Autowired
 	private BilleteService billeteService;
-	
 
-//	@Autowired
-//	private AsientoService asientoService;
+	@Autowired
+	private AsientoService asientoService;
 	 
 	@Transactional
 	public void saveVuelo(Vuelo vuelo) throws DataAccessException, HorasImposiblesException, HorasMaximasVueloException, DisponibilidadAvionException{
@@ -60,7 +59,7 @@ public class VueloService {
 			vuelo.getAvion().setHorasAcumuladas(horasAcum);
 			vueloRepository.save(vuelo);
 			
-//			asientoService.saveManyAsiento(vuelo.getAvion().getCapacidadPasajero(),vuelo);
+//			asientoService.saveManyAsientos(vuelo);
 
 			
 		}
@@ -164,14 +163,9 @@ public class VueloService {
 
 	 */
 		
+	@Transactional
 	public void eliminarVuelo(int id) throws DataAccessException {
 		vueloRepository.deleteById(id);
 	}
 	
 }
-
-
-
-
-
-

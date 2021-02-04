@@ -39,10 +39,6 @@ public class Avion extends BaseEntity{
 	@Column(name = "capacidad_pasajero")
 	private Integer capacidadPasajero;
 	
-	@Column(name = "peso_maximo_equipaje")
-	@Range(min=0,max=32)
-	private Integer pesoMaximoEquipaje;
-	
 	@Column(name = "horas_acumuladas")
 	@PositiveOrZero
 	private Integer horasAcumuladas;

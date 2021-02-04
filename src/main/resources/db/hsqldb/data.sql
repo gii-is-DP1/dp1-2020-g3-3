@@ -81,17 +81,17 @@ INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
 VALUES ('Aeropuerto de Berlin-Brandeburgo Willy Brandt','Berlin, Alemania' , 'BER', '+4930609160910');
 
 --Aviones
-INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
-VALUES ('Airbus A320', 300, 2, 400, '2015-09-24', true, '2017-09-24', 200, 80, 20);
+INSERT INTO aviones(tipo_avion,capacidad_pasajero, horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
+VALUES ('Airbus A320', 300, 400, '2015-09-24', true, '2017-09-24', 200, 80, 20);
 
-INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
-VALUES ('Airbus A220', 130, 2, 100, '2019-10-24', true, '2020-01-24', 100, 25, 5);
+INSERT INTO aviones(tipo_avion,capacidad_pasajero,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
+VALUES ('Airbus A220', 130, 100, '2019-10-24', true, '2020-01-24', 100, 25, 5);
 
-INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
-VALUES ('Airbus A350', 350, 2, 0, '2016-05-05', true, '2020-12-23', 250, 80, 20);
+INSERT INTO aviones(tipo_avion,capacidad_pasajero,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
+VALUES ('Airbus A350', 350, 0, '2016-05-05', true, '2020-12-23', 250, 80, 20);
 
-INSERT INTO aviones(tipo_avion,capacidad_pasajero,peso_maximo_equipaje,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
-VALUES ('Airbus A330', 335 , 2, 300, '2015-01-20', true, '2020-03-10', 250, 75, 10);
+INSERT INTO aviones(tipo_avion,capacidad_pasajero,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
+VALUES ('Airbus A330', 335 , 300, '2015-01-20', true, '2020-03-10', 250, 75, 10);
 
 --Vuelos
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
