@@ -40,7 +40,6 @@
     	<tr>
 			<th width="25%">Tipo de Avión</th>
 			<th width="25%">Capacidad de Pasajeros</th>
-			<th width="25%">Peso Máximo de Equipaje</th>
 			<th width="25%">Fecha Última Revisión</th>
 		</tr>
 	</thead>
@@ -50,7 +49,6 @@
 				<b><c:out value="${vuelo.avion.tipoAvion}"/></b>
 			</td>
 			<td><c:out value="${vuelo.avion.capacidadPasajero}"/></td>
-			<td><c:out value="${vuelo.avion.pesoMaximoEquipaje}"/></td>
 			<td><c:out value="${vuelo.avion.fechaRevision}"/></td>
 		</tr>
 	</tbody>
@@ -113,5 +111,8 @@
             </tr>
         </c:forEach>
     </table> 
+    
+    <spring:url value="/vuelos" var="url"></spring:url>
+    <a href="${fn:escapeXml(url)}" class="btn btn-default" style="float:right;">Volver</a>
     
 </aerolineasAAAFC:layout>
