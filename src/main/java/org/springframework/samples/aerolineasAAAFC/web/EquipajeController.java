@@ -42,7 +42,7 @@ public class EquipajeController {
 	
 	@ModelAttribute("equipajes")
 	public Collection<EquipajeBase> populateEquipajeTypes() {
-		return this.equipajeBaseService.findEquipamientosSize();
+		return this.equipajeBaseService.findEquipajesBase();
 	}
 	
 	@GetMapping(value = "/billetes/{billeteId}/equipajes/new")

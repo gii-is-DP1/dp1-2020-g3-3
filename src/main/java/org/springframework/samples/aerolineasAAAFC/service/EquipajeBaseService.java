@@ -28,9 +28,4 @@ public class EquipajeBaseService {
 	public Collection<EquipajeBase> findEquipajesBase() throws DataAccessException {
 		return equipajeBaseRepository.findEquipajesBase();
 	}
-	
-	@Transactional(readOnly = true)
-	public Collection<EquipajeBase> findEquipamientosSize() throws DataAccessException {
-		return equipajeBaseRepository.findEquipajesBase();
-	}
 }
