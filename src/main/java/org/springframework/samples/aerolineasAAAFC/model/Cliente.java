@@ -14,22 +14,22 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.MayoriaEdadConstraint;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Entidad simple que representa un cliente
  */
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Audited

@@ -10,7 +10,7 @@ public interface PersonalOficinaRepository extends CrudRepository<PersonalOficin
 	@Query("SELECT DISTINCT personalOficina FROM PersonalOficina personalOficina WHERE personalOficina.nif LIKE :nif%")
 	public PersonalOficina findByNif(@Param("nif") String nif);
 	
-	@Query("SELECT DISTINCT personalOficina FROM PersonalControl personalOficina WHERE personalOficina.iban LIKE :iban%")
+	@Query("SELECT DISTINCT personalOficina FROM PersonalOficina personalOficina WHERE personalOficina.iban LIKE :iban%")
 	public PersonalOficina findByIban(@Param("iban") String iban);
 	
 }

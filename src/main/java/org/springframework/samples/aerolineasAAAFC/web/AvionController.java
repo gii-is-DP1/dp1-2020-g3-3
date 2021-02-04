@@ -148,11 +148,13 @@ public class AvionController {
 
 	@GetMapping(value = "/controladores/rutaAviones")
 	public String showAvionesListPersonal(Map<String, Object> model) {
-		Aeropuerto aeropuerto = null;
-		List<Avion> aviones = this.avionService.findAviones();
-		Collection<Vuelo> todosVuelos = this.vueloService.findVuelos();
-		List<Aeropuerto> aeropuertosDestino = new ArrayList<Aeropuerto>();
-
+		
+		Aeropuerto aeropuerto = null; //Inicializa aeropuerto
+		List<Avion> aviones = this.avionService.findAviones(); //Almacena todos los aviones de la compañía
+		Collection<Vuelo> todosVuelos = this.vueloService.findVuelos(); //Almacena todos los vuelos de la compañía
+		List<Aeropuerto> aeropuertosDestino = new ArrayList<Aeropuerto>(); //Inicializa aeropuertosDestino
+		
+		//Recorre los vuelos y recoge su avión, si dicho avión es de la compañía establece como fechaFinal la fecha de llegada
 		for (Vuelo v : todosVuelos) {
 			LocalDateTime fechaFinal = LocalDateTime.of(1900, Month.JULY, 29, 19, 30, 40);
 			Avion avion = v.getAvion();
@@ -167,8 +169,8 @@ public class AvionController {
 				}
 			}
 
-			aeropuerto = this.vueloService.findVueloByFechaLLegada(fechaFinal).getAeropuertoDestino();
-			aeropuertosDestino.add(aeropuerto);
+			//aeropuerto = this.vueloService.findVueloByFechaLLegada(fechaFinal).; //Coge el aeropuerto
+			aeropuertosDestino.add(aeropuerto); //lo añade a la lista
 		}
 
 		model.put("aviones", aviones);
@@ -176,5 +178,7 @@ public class AvionController {
 
 		return "controladores/rutaAviones";
 	}
+	
+	
 
 }

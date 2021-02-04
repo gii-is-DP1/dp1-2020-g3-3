@@ -128,8 +128,8 @@ public class VueloController {
 			catch (ConstraintViolationException e) {
 				result.rejectValue("aeropuerto", "invalid", "El aeropuerto de salida y destino deben ser distintos");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
-				
 			}
+			
 			return "redirect:/vuelos";
 		}
 	}
@@ -139,38 +139,18 @@ public class VueloController {
 	@GetMapping(value = "/vuelos/{vueloId}/edit")
 	public String initUpdateVueloForm(@PathVariable("vueloId") int vueloId, ModelMap model) {
 		
-		List<Aeropuerto> aeropuertos = new ArrayList<>();
-		this.aeropuertoService.findAeropuertos().forEach(x->aeropuertos.add(x));
-		model.addAttribute("aeropuertos", aeropuertos);
+		model.addAttribute("aeropuertos", this.aeropuertoService.findAeropuertos());
 		
 //		List<Billete> billetes = new ArrayList<>();
 //		this.billeteService.findBilletes().forEach(x->aeropuertos.add(x));
 //		model.addAttribute("aeropuertos", aeropuertos);
 		
-		Vuelo vuelo = this.vueloService.findVueloById(vueloId);
-		model.addAttribute("vuelo",vuelo);
-		
-		
-		
-		List<Avion> aviones = new ArrayList<>();
-		this.avionService.findAviones().forEach(x->aviones.add(x));
-		model.addAttribute("aviones",aviones);
-		
-		List<PersonalOficina> pOficina = new ArrayList<>();
-		this.vueloService.findVueloById(vuelo.getId()).getPersonalOficina().forEach(x->pOficina.add(x));
-		model.addAttribute("pOficina", pOficina);
-		
-		List<PersonalOficina> todoPersonal = new ArrayList<>();
-		this.pOficinaService.findPersonal().forEach(x->todoPersonal.add(x));
-		model.addAttribute("todoPersonal",todoPersonal);
-		
-		List<PersonalControl> pControl = new ArrayList<>();
-		this.pControlService.findPersonalControl().forEach(x->pControl.add(x));
-		model.addAttribute("todoControl", pControl);
-		
-		List<Azafato> azafatos = new ArrayList<>();
-		this.azafatoService.findAzafatos().forEach(x->azafatos.add(x));
-		model.addAttribute("todoAzafato", azafatos);
+		model.addAttribute("vuelo",this.vueloService.findVueloById(vueloId));
+		model.addAttribute("aviones",this.avionService.findAviones());
+		model.addAttribute("pOficina", this.vueloService.findVueloById(vueloId).getPersonalOficina());
+		model.addAttribute("todoPersonal",this.pOficinaService.findPersonal());
+		model.addAttribute("todoControl", this.pControlService.findPersonalControl());
+		model.addAttribute("todoAzafato", this.azafatoService.findAzafatos());
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
@@ -184,6 +164,7 @@ public class VueloController {
 			model.put("message","Concurrent modification of Vuelo! Try again!");
 			return initUpdateVueloForm(vueloId,model);
 			}
+		
 		if(result.hasErrors()) {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 		}

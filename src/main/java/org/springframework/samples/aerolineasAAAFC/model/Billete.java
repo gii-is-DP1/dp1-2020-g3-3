@@ -15,15 +15,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import org.hibernate.envers.Audited;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper=true)
 @Entity
 @Table(name = "billetes")

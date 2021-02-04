@@ -20,13 +20,13 @@ public class EquipajeBaseServiceTests {
 	@Test
 	public void shouldNotSearchEquipajeNameNoValido() {
 		String prueba = "sisisisii";
-		Assertions.assertNull(equipajeBaseService.findEquipajeBaseByName(prueba));
+		Assertions.assertNull(this.equipajeBaseService.findEquipajeBaseByName(prueba));
 	}
 
 	@Test
 	public void shouldSearchEquipajeNameValido() {
 		String prueba = "Grande";
-		EquipajeBase e = equipajeBaseService.findEquipajeBaseByName(prueba);
+		EquipajeBase e = this.equipajeBaseService.findEquipajeBaseByName(prueba);
 		assertThat(e.getId()).isNotNull();
 	}
 	
@@ -34,7 +34,7 @@ public class EquipajeBaseServiceTests {
 	public void shouldSearchAllEquipajesBase() {
 		int numeroEquipajesBaseActual = 3;
 		
-		Collection<EquipajeBase> l = equipajeBaseService.findEquipajesBase();
+		Collection<EquipajeBase> l = this.equipajeBaseService.findEquipajesBase();
 		assertThat(l.size()).isEqualTo(numeroEquipajesBaseActual);
 	}
 	

@@ -8,10 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "idioma_types")
