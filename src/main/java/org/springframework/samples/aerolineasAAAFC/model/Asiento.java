@@ -24,7 +24,7 @@ public class Asiento extends BaseEntity{
 
 	@Column(name = "nombre")
 	@NotEmpty
-	@Pattern(regexp="^[A-I]\\d{2}$")
+	@Pattern(regexp="^[A-I]\\d{1}$")
 	private String nombre;
 	
 	@Column(name = "libre")
@@ -40,16 +40,4 @@ public class Asiento extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	@JoinColumn(name = "vuelo_id")
 	private Vuelo vuelo;
-	
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -119,11 +119,11 @@ public class VueloServiceTests {
 		assertThat(found).isEqualTo(1);
 		assertThat(found1).isEqualTo(3);
 		
-	}
-	
+  }
+  
 	@Test
 	@Transactional
-	public void shouldFindNumMenusByVuelo() {
+	public void shouldFindMenusByVuelo() {
 		int idVueloConMenu = 2;
 
 		Vuelo v = this.vueloService.findVueloById(idVueloConMenu);
@@ -363,9 +363,8 @@ public class VueloServiceTests {
 	public void shouldDeleteVueloById() {
 		Collection<Vuelo> vuelos = this.vueloService.findVuelos();
 		int found = vuelos.size();
-		
+
 		this.vueloService.eliminarVuelo(1);
-		
 		
 		int found2 = this.vueloService.findVuelos().size();
 		assertThat(found2).isEqualTo(found - 1);

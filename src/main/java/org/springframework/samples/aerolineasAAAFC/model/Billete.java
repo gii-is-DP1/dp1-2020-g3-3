@@ -13,6 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+import org.hibernate.envers.Audited;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
@@ -27,6 +30,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper=true)
 @Entity
 @Table(name = "billetes")
+@Audited
 public class Billete extends BaseEntity{
 
 	// Atributos:
@@ -41,7 +45,6 @@ public class Billete extends BaseEntity{
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate fechaReserva;
 	
-
 	// Relaciones de tabla:
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
@@ -60,17 +63,6 @@ public class Billete extends BaseEntity{
 	@OneToOne(optional=false) 
 	@JoinColumn(name = "asiento_id")
 	private Asiento asiento;
-
-
-//	@ManyToOne(optional = false)
-//	@JoinColumn(name = "vuelo_id")
-//	@EqualsAndHashCode.Exclude 
-//	private Vuelo vuelos;
-
-	public String toString() {
-		
-		return "Id de billete: " + this.getId();
-	}
 
 	public Integer getVersion() {
 		return null;
