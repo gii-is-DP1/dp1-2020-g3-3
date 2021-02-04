@@ -107,8 +107,7 @@ public class VueloController {
 		this.avionService.findAviones().forEach(x->aviones.add(x));
 		model.put("aviones", aviones);
 		
-		Long billetes=this.vueloService.findVueloById(vuelo.getId()).getAsientos().stream().
-		filter(x->!x.getBillete().equals(null)).count();
+		Long billetes=this.billeteService.findNumBilletesByVuelo(vuelo.getId());
 		model.put("billetes", billetes);
 		
 		List<PersonalOficina> pOficina = new ArrayList<>();

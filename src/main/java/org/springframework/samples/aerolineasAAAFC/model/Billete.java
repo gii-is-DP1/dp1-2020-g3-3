@@ -62,8 +62,8 @@ public class Billete extends BaseEntity{
 	
 	@OneToOne(optional=false) 
 	@JoinColumn(name = "asiento_id")
-	@NotEmpty
 	private Asiento asiento;
+
 
 //	@ManyToOne(optional = false)
 //	@JoinColumn(name = "vuelo_id")

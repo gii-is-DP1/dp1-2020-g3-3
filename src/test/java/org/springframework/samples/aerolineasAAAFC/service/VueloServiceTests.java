@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
 import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Assertions;
@@ -20,13 +20,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
-import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.DisponibilidadAvionException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
@@ -36,8 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class VueloServiceTests {
-	
-	
 	
 	@Autowired
 	protected VueloService vueloService;
@@ -53,6 +51,9 @@ public class VueloServiceTests {
 	
 	@Autowired
 	protected AzafatoService AzafatoService;
+	
+	@Autowired
+	protected BilleteService billeteService; 
 	
 	
 	//TEST DE CONSULTA
@@ -80,14 +81,13 @@ public class VueloServiceTests {
 		assertThat(codigoAeroDestino).isEqualTo("MAD");
 	}
 	
-	
 	@Test
 	void getBilletesSuccessful() {
 		Vuelo vuelo = vueloService.findVueloById(2);
-		Set<Billete> billetes = vuelo.getAsientos().stream().map(x->x.getBillete()).collect(Collectors.toSet());
+		List<Billete> billetes = this.billeteService.findBilletesByVuelo(vuelo.getId());
 		int found = billetes.size();
 		
-		assertThat(found).isEqualTo(1);
+		assertThat(found).isEqualTo(2);
 	}
 	
 	//TEST DE INSERCIÓN
@@ -156,9 +156,9 @@ public class VueloServiceTests {
 		}catch (DisponibilidadAvionException ex2) {
 			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex2);
 		}
-//		catch (DataIntegrityViolationException ex) {
-//			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-//		}
+		catch (DataIntegrityViolationException ex) {
+			Logger.getLogger(VueloServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		
 		assertThat(vuelo.getId().longValue()).isNotEqualTo(0);
 		
@@ -169,9 +169,6 @@ public class VueloServiceTests {
 	@Test
 	@Transactional(rollbackFor={ConstraintViolationException.class})
 	public void shouldNotInsertVueloAeropuertoIdenticos() {
-//		Collection<Vuelo> vuelos = this.vueloService.findVuelos();
-//		int found = vuelos.size();
-		
 		Vuelo vuelo = new Vuelo();
 		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
 		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 1, 20, 23));
@@ -210,14 +207,8 @@ public class VueloServiceTests {
 		azafatos.add(AzafatoService.findAzafatoById(7));
 		vuelo.setAzafatos(azafatos);
 		
-		
 		Assertions.assertThrows(ConstraintViolationException.class, ()->{ this.vueloService.saveVuelo(vuelo); });
-		
-
-		
-//		vuelos = this.vueloService.findVuelos();
-//		assertThat(vuelos.size()).isEqualTo(found);
-	}
+	}	
 	
 	@Test
 	@Transactional
@@ -303,7 +294,6 @@ public class VueloServiceTests {
 		assertThat(vuelos.size()).isEqualTo(found - 1);
 	}
 	
-	
 	@Test
 	@Transactional
 	public void shouldFindClientesByVuelo() {
@@ -311,8 +301,6 @@ public class VueloServiceTests {
 		Collection<Cliente> clientes=this.vueloService.findClientesPorVuelo(vuelo);
 		assertThat(!clientes.isEmpty());
 	}
-	
-	
 	
 	@Test
 	@Transactional
@@ -323,5 +311,22 @@ public class VueloServiceTests {
 		
 		assertThat(found).isEqualTo(1);
 		
+	}
+	
+	@Test
+	@Transactional
+	public void shouldFindNumMenusByVuelo() {
+		int idVueloConMenu = 2;
+
+		Vuelo v = this.vueloService.findVueloById(idVueloConMenu);
+		
+		int contadorMenus = this.billeteService.findBilletesByVuelo(v.getId())
+				.stream().mapToInt(x -> x.getMenus().size()).sum();
+		
+		Map<String, Long> mapaContador = this.vueloService.findMenusPorVuelo(v);
+		
+		// Dividimos por 3 ya que cada menu tiene 3 platos
+		assertThat(mapaContador.values().stream().mapToLong(x -> x).sum()
+				/3).isEqualTo(contadorMenus); 
 	}
 }

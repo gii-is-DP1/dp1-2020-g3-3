@@ -30,10 +30,10 @@ public class Asiento extends BaseEntity{
 	private String nombre;
 	
 	@Column(name = "libre")
+	@NotNull
 	private boolean libre;
 	
 	@Column(name = "clase")
-	//@NotEmpty
 	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private Clase clase;
@@ -41,13 +41,7 @@ public class Asiento extends BaseEntity{
 	@ManyToOne(optional=false)
 	@EqualsAndHashCode.Exclude
 	@JoinColumn(name = "vuelo_id")
-	private Vuelo vuelos;
-	
-	@OneToOne
-	@EqualsAndHashCode.Exclude
-	@JoinColumn(name = "billete_id")
-	private Billete billete;
-	
+	private Vuelo vuelo;
 	
 }
 

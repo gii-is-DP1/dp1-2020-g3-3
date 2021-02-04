@@ -1,6 +1,8 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.AsientoRepository;
 import org.springframework.stereotype.Service;
@@ -39,8 +42,8 @@ public class AsientoService {
 				.collect(Collectors.toList());
 	}
 	
-	@Transactional
-	public Collection<Asiento> findAsientosSinOcupar(Vuelo vuelo){
+	@Transactional(readOnly = true)
+	public List<Asiento> findAsientosSinOcupar(Vuelo vuelo){
 		return vuelo.getAsientos().stream().filter(x->x.isLibre()).collect(Collectors.toList());
 	}
 	

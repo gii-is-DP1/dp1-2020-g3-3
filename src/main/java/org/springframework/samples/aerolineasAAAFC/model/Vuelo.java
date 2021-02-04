@@ -75,7 +75,7 @@ public class Vuelo extends BaseEntity{
 //	@EqualsAndHashCode.Exclude
 //	private Set<Billete> billetes;
 	
-	@OneToMany(mappedBy="vuelos") 
+	@OneToMany(mappedBy="vuelo") 
 	@EqualsAndHashCode.Exclude
 	private Set<Asiento> asientos;
 	
