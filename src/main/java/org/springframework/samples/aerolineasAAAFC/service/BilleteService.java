@@ -2,7 +2,10 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -50,11 +53,7 @@ public class BilleteService {
 	@Transactional
 	public void saveMenu(Menu menu) throws DataAccessException, TooManyItemsBilleteException, PlatosNoValidosException {
 
-		if (menu.getBillete().getMenus().size() >= 3) {
-			throw new TooManyItemsBilleteException("Ya ha introducido el máximo de menús permitido.");
-		}
-
-		else if (menu.getPlato1() == null || menu.getPlato2() == null || menu.getPlato3() == null) {
+		if (menu.getPlato1() == null || menu.getPlato2() == null || menu.getPlato3() == null) {
 			throw new PlatosNoValidosException(1);
 		}
 
@@ -73,7 +72,8 @@ public class BilleteService {
 			if (aux1 == null || aux2 == null || aux3 == null)
 				throw new PlatosNoValidosException(2);
 
-			else {   //Esta comprobacion es solo necesaria si usamos el service directamente, se puede eliminar
+			else { // Esta comprobacion es solo necesaria si usamos el service directamente, se
+					// puede eliminar
 				if (aux1.getTipoPlato().getName().equals("primerPlato"))
 					cont1 = 1;
 
@@ -82,13 +82,25 @@ public class BilleteService {
 
 				if (aux3.getTipoPlato().getName().equals("postre"))
 					cont3 = 1;
-				
+
 				if (cont1 != 1 || cont2 != 1 || cont3 != 1)
 					throw new PlatosNoValidosException(3);
 
 				else {
-					menuRepository.save(menu);
-					menu.getBillete().getMenus().add(menu);
+
+					if (menu.getBillete().getMenus().equals(null)) {
+						menuRepository.save(menu);
+						Set<Menu> newSetMenus = new HashSet<Menu>();
+						newSetMenus.add(menu);
+						menu.getBillete().setMenus(newSetMenus);
+					} else {
+						if (menu.getBillete().getMenus().size() >= 3) {
+							throw new TooManyItemsBilleteException("Ya ha introducido el máximo de menús permitido.");
+						} else {
+							menuRepository.save(menu);
+							menu.getBillete().getMenus().add(menu);
+						}
+					}
 				}
 			}
 
@@ -99,13 +111,22 @@ public class BilleteService {
 	@Transactional
 	public void saveEquipaje(Equipaje equipaje) throws DataAccessException, TooManyItemsBilleteException {
 
-		if (equipaje.getBillete().getEquipajes().size() >= 3) {
-			throw new TooManyItemsBilleteException("Ya ha introducido el máximo de equipajes permitido.");
+		if (equipaje.getBillete().getEquipajes().equals(null)) {
+			equipajeRepository.save(equipaje);
+			Set<Equipaje> newSetEquipajes = new HashSet<Equipaje>();
+			newSetEquipajes.add(equipaje);
+			equipaje.getBillete().setEquipajes(newSetEquipajes);
 		}
 
 		else {
-			equipajeRepository.save(equipaje);
-			equipaje.getBillete().getEquipajes().add(equipaje);
+			if (equipaje.getBillete().getEquipajes().size() >= 3) {
+				throw new TooManyItemsBilleteException("Ya ha introducido el máximo de equipajes permitido.");
+			}
+
+			else {
+				equipajeRepository.save(equipaje);
+				equipaje.getBillete().getEquipajes().add(equipaje);
+			}
 		}
 
 	}
@@ -139,6 +160,36 @@ public class BilleteService {
 				.filter(x -> x.getCliente().getApellidos().equals(apellidos)).collect(Collectors.toList());
 	}
 
+	@Transactional(readOnly = true)
+	public Set<Cliente> findClientesBilletesByVuelo(int id) {
+		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
+				.filter(x -> x.getAsiento().getVuelo().getId().equals(id))
+				.map(x -> x.getCliente())
+				.collect(Collectors.toSet());
+	}
+	
+	@Transactional(readOnly = true)
+	public Long findNumBilletesByVuelo(int id) {
+		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
+				.filter(x -> x.getAsiento().getVuelo().getId().equals(id))
+				.collect(Collectors.counting());
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Billete> findBilletesByVuelo(int id) {
+		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
+				.filter(x -> x.getAsiento().getVuelo().getId().equals(id))
+				.collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public Set<Menu> findMenusByVuelo(int id) {
+		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
+				.filter(x -> x.getAsiento().getVuelo().getId().equals(id))
+				.flatMap(x -> x.getMenus().stream())
+				.collect(Collectors.toSet());
+	}
+	
 	@Transactional(readOnly = true)
 	public Collection<Menu> findMenus() {
 		return StreamSupport.stream(menuRepository.findAll().spliterator(), false).collect(Collectors.toList());

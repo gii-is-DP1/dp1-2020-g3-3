@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +47,9 @@ public class BilleteServiceTests {
 
 	@Autowired
 	protected BilleteService billeteService;
+	
+	@Autowired
+	protected AsientoService asientoService;
 
 	@Autowired
 	protected VueloService vueloService;
@@ -63,53 +67,27 @@ public class BilleteServiceTests {
 	@Transactional
 	public void shouldInsertBilleteIntoDatabaseAndGenerateId() throws ParseException, HorasMaximasVueloException, DisponibilidadAvionException {
 
-
-		Vuelo vuelo = this.vueloService.findVueloById(1);
-		Asiento asiento = vuelo.getAsientos().stream().
-				filter(x->x.getBillete().equals(null)).findFirst().get();
+		int idVuelo = 2;
+		Vuelo vuelo = this.vueloService.findVueloById(idVuelo);
 		
-		long nBilletes=vuelo.getAsientos().stream().
-				filter(x->!x.getBillete().equals(null)).count();
+		List<Asiento> asientos = this.asientoService.findAsientosSinOcupar(vuelo);
+		Asiento asiento = asientos.size()==0?null : asientos.get(0);
+		
+		long nBilletes=this.billeteService.findNumBilletesByVuelo(idVuelo);
 
 		Billete billete = new Billete();
 
-		Clase clase=Clase.ECONOMICA;
-		billete.getAsiento().setClase(clase);
-//		billete.setAsiento("A44");
+		billete.setAsiento(asiento);
 
 		billete.setCoste(12);
 		LocalDate reserva=LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE);
 		billete.setFechaReserva(reserva);
-
-		billete.setAsiento(asiento);
 		
-		//se comprueba que se añadio correctamente el billete
-		asiento.setBillete(billete);
-		vuelo.getAsientos().add(asiento);
-		assertThat(vuelo.getAsientos().stream().
-				filter(x->!x.getBillete().equals(null)).count()).isEqualTo(nBilletes + 1);
-
-
-		//se comprueba que se guarda exitosamente los cambios en vuelo
-
+		this.billeteService.saveBillete(billete);
 		
-		//this.billeteService.saveBillete(billete);
-
-//		this.vueloService.saveVuelo(vuelo); AHORA SE TIENE EN CUENTA LA EXCEPCION DE HORAS
-		try {
-			this.vueloService.saveVuelo(vuelo);
-		} catch (HorasImposiblesException ex) {
-			log.error("Horas imposibles", ex);
-		}
-
-		vuelo = this.vueloService.findVueloById(1);
-		assertThat(vuelo.getAsientos().stream().
-				filter(x->!x.getBillete().equals(null)).count()).isEqualTo(nBilletes + 1);
+		long nBilletes2=this.billeteService.findNumBilletesByVuelo(idVuelo);
 		
-		
-		//se comprueba que el id se añade correctamente
-		billete.setId(2);
-		assertThat(billete.getId()).isNotNull();
+		assertThat(nBilletes2).isEqualTo(nBilletes + 1);
 	}
 	
 	@Test
@@ -200,7 +178,7 @@ public class BilleteServiceTests {
 	@Transactional
 	public void shouldNotInsertSamePlatosTypes() {
 		
-		Billete b = this.billeteService.findBilleteById(1);
+		Billete b = this.billeteService.findBilleteById(2);
 		Plato p1 = new Plato();
 		p1.setPlatoBase(platoBaseService.findPlatoBaseByName("Sopa de miso"));
 		
@@ -209,7 +187,7 @@ public class BilleteServiceTests {
 		
 		Plato p3 = new Plato();
 		p3.setPlatoBase(platoBaseService.findPlatoBaseByName("Manzana"));
-		
+
 		Set<Plato> s = new HashSet<Plato>();
 		s.add(p1);
 		s.add(p2);

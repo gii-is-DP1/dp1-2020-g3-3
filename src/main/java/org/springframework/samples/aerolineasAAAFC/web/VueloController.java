@@ -94,9 +94,8 @@ public class VueloController {
 		model.put("aeropuertos",this.aeropuertoService.findAeropuertos());
 		model.put("aviones", this.avionService.findAviones());
 		
-//		Long billetes=this.vueloService.findVueloById(vuelo.getId()).getAsientos().stream().
-//		filter(x->!x.getBillete().equals(null)).count();
-//		model.put("billetes", billetes);
+		Long billetes=this.billeteService.findNumBilletesByVuelo(vuelo.getId());
+		model.put("billetes", billetes);
 		
 		model.put("pOficina", this.pOficinaService.findPersonal());
 		model.put("pControl", this.pControlService.findPersonalControl());

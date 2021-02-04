@@ -33,5 +33,4 @@ public class EquipajeBaseService {
 	public Collection<EquipajeBase> findEquipamientosSize() throws DataAccessException {
 		return equipajeBaseRepository.findEquipajesBase();
 	}
-
 }

@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,8 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class VueloService {
-	@Autowired
+
 	private VueloRepository vueloRepository;
+	
+	@Autowired
+	private BilleteService billeteService;
 	
 
 //	@Autowired
@@ -90,28 +94,19 @@ public class VueloService {
 		return vueloRepository.findAllByOrderByFechaSalidaDesc();
 	}
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Cliente> findClientesPorVuelo(Vuelo vuelo){
-		List<Cliente> res =vuelo.getAsientos().stream().
-				filter(x->!x.getBillete().equals(null)).
-				map(x->x.getBillete()).
-				filter(x->!x.getCliente().equals(null)).
-				map(x->x.getCliente()).
-				collect(Collectors.toList());
-		return res;
+		Set<Cliente> res = this.billeteService.findClientesBilletesByVuelo(vuelo.getId());
+		List<Cliente> l = res.stream().collect(Collectors.toList());
+		return l;
 	}
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	public Map<String, Long> findMenusPorVuelo(Vuelo vuelo){
-		
+		//Encuentra los platos + count de los mismos por vuelo
 		List<PlatoBase> lPlatoBase = new ArrayList<PlatoBase>();
 		
-		List<Menu> aux =vuelo.getAsientos().stream().
-				filter(x->!x.getBillete().equals(null)).
-				map(x->x.getBillete()).
-				filter(x->!x.getMenus().equals(null)).
-				flatMap(x->x.getMenus().stream()).
-				collect(Collectors.toList());
+		List<Menu> aux = this.billeteService.findMenusByVuelo(vuelo.getId()).stream().collect(Collectors.toList());
 		
 		
 		Map<String, Long> mapaMenuCountTotal = new HashMap<String,Long>();

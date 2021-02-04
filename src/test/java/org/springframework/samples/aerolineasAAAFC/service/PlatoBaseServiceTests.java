@@ -2,8 +2,9 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Collection;
+import java.util.Map;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,4 +42,14 @@ public class PlatoBaseServiceTests {
 		assertThat(testeo).isTrue();
 	}
 
+	@Test
+	public void shouldSearchPricing() {
+		String prueba = "Manzana";
+		
+		Map<String, Double> mapaPrecios = platoBaseService.findPlatosPricing();
+		assertThat(mapaPrecios).isNotNull();
+		
+		assertThat(mapaPrecios.get(prueba)).isEqualTo(platoBaseService.findPlatoBaseByName(prueba).getPrecio());
+	}
+	
 }
