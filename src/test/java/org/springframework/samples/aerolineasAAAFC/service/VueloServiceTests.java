@@ -318,7 +318,7 @@ public class VueloServiceTests {
 	
 	@Test
 	@Transactional
-	public void shouldFindNumMenusByVuelo() {
+	public void shouldFindMenusByVuelo() {
 		int idVueloConMenu = 2;
 
 		Vuelo v = this.vueloService.findVueloById(idVueloConMenu);
