@@ -56,21 +56,20 @@ public class BilleteController {
 	 */
 	@GetMapping(value = "/billetes/{vueloId}/new")
 	public String initCreationBilleteForm(@PathVariable("vueloId") int vueloId,
-			Map<String, Object> model) {
-		if( SecurityContextHolder.getContext().getAuthentication()!=null) {
+			Map<String, Object> model,Authentication authentication) {
+		if( authentication.isAuthenticated()) {
 			Billete billete = new Billete();
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String name = authentication.getName();//name corresponde al nif del usuario
-			model.put("billete", billete);
 			Vuelo vuelo=vueloService.findVueloById(vueloId);
 			List<Asiento> asientos=vuelo.getAsientos();
+			Cliente cliente=clienteService.findClienteByNif(name);
+			model.put("billete", billete);
 			model.put("asientos",asientos);
 			model.put("vuelo",vuelo);
-			Cliente cliente=clienteService.findClienteByNif(name);
 			model.put("cliente", cliente);
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		}else {
-			return "user/createClienteForm.jsp";
+			return "/user/createClienteForm.jsp";
 		}
 	}
 
