@@ -1,15 +1,11 @@
 package org.springframework.samples.aerolineasAAAFC.model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -26,7 +22,7 @@ public class Asiento extends BaseEntity{
 
 	@Column(name = "nombre")
 	@NotEmpty
-	@Pattern(regexp="^[A-I]\\d{2}$")
+	@Pattern(regexp="^[A-I]\\d{1}$")
 	private String nombre;
 	
 	@Column(name = "libre")
@@ -42,16 +38,4 @@ public class Asiento extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	@JoinColumn(name = "vuelo_id")
 	private Vuelo vuelo;
-	
 }
-
-
-
-
-
-
-
-
-
-
-
