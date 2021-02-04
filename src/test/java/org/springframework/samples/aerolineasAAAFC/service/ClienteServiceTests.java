@@ -43,7 +43,7 @@ public class ClienteServiceTests {
 
 	@Test
 	void getClienteSuccessful() {
-		Cliente cliente = clienteService.findClienteById(1);
+		Cliente cliente = this.clienteService.findClienteById(1);
 		//NOMBRE
 		assertThat(cliente.getNombre())
 		.isNotEmpty();
@@ -91,20 +91,20 @@ public class ClienteServiceTests {
 	
 	@Test
 	void shouldGetClienteByNif() {
-		Cliente cliente = clienteService.findClienteByNif("01446551N");
+		Cliente cliente = this.clienteService.findClienteByNif("01446551N");
 		assertThat(cliente.getId());
 	}
 	
 	@Test
 	void shouldGetClientePorNombre() {
-		Collection<Cliente> cliente = clienteService.findClientesPorNombre("Dolores", "Ramos Ceballos");
+		Collection<Cliente> cliente = this.clienteService.findClientesPorNombre("Dolores", "Ramos Ceballos");
 		int found = cliente.size();
 		assertThat(found == 1);
 	}
 	
 	@Test
 	void shouldGetBilleteByClienteId() {
-		Collection<Billete> billetes = clienteService.findBilletesByIdCliente(1);
+		Collection<Billete> billetes = this.clienteService.findBilletesByIdCliente(1);
 		int found = billetes.size();
 		assertThat(found == 1);
 	}
@@ -113,7 +113,7 @@ public class ClienteServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldInsertCliente() throws NifDuplicadoException{
+	public void shouldInsertCliente(){
 		Collection<Cliente> clientes = this.clienteService.findClientes();
 		int found = clientes.size();
 
@@ -221,7 +221,7 @@ public class ClienteServiceTests {
 
 	@Test
 	void shouldUpdateDirFacturacionSuccessful() {
-		Cliente cliente = clienteService.findClienteById(1);
+		Cliente cliente = this.clienteService.findClienteById(1);
 
 		cliente.setDireccionFacturacion("Calle Almira, 17 3ºC Segovia");
 
@@ -238,7 +238,7 @@ public class ClienteServiceTests {
 		Collection<Cliente> clientes = this.clienteService.findClientes();
 		int found = clientes.size();
 
-		clienteService.deleteClienteById(1);
+		this.clienteService.deleteClienteById(1);
 
 		clientes = this.clienteService.findClientes();
 		assertThat(clientes.size()).isEqualTo(found - 1);

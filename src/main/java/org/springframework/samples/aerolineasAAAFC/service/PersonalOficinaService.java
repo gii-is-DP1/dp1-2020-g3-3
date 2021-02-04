@@ -20,70 +20,45 @@ import org.springframework.transaction.annotation.Transactional;
 public class PersonalOficinaService {
 
 	private PersonalOficinaRepository pOficinaRepository;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AuthoritiesService authoritiesService;
-	
+
 	@Autowired
 	public PersonalOficinaService(PersonalOficinaRepository pOficinaRepository) {
 		this.pOficinaRepository = pOficinaRepository;
 	}
-	
+
 	public PersonalOficina findPersonalControlByNif(String nif) {
 		return pOficinaRepository.findByNif(nif);
 	}
-	
+
 	public PersonalOficina findPersonalControlByIban(String iban) {
 		return pOficinaRepository.findByIban(iban);
 	}
-	
-	@Transactional
-	public void savePersonalOficina(PersonalOficina pOficina) throws DataIntegrityViolationException, IbanDuplicadoException{
-		PersonalOficina pIban = pOficinaRepository.findByIban(pOficina.getIban());
-		
-		if(pIban != null && !pIban.getId().equals(pOficina.getId())){
-			throw new IbanDuplicadoException("");
-		}else {
-			pOficinaRepository.save(pOficina);
-			userService.saveUser(pOficina.getUser());
-			authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
-		}
-	}
-	
-//	//Prueba save
-//	@Transactional
-//	public void savePersonalOficina(PersonalOficina pOficina) throws DataIntegrityViolationException{
-//		
-//		pOficinaRepository.save(pOficina);
-//		userService.saveUser(pOficina.getUser());
-//		authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
-//		
-//	}
-	
-	//Prueba
-	@Transactional
-	public void updatePersonalOficina(PersonalOficina personalOficina) throws DataIntegrityViolationException{
 
-		pOficinaRepository.save(personalOficina);
-		userService.saveUser(personalOficina.getUser());
-		authoritiesService.saveAuthorities(personalOficina.getUser().getUsername(), "personalOficina");
+	@Transactional
+	public void savePersonalOficina(PersonalOficina pOficina) throws DataIntegrityViolationException{
 
+		pOficinaRepository.save(pOficina);
+		userService.saveUser(pOficina.getUser());
+		authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
 	}
 	
 	@Transactional(readOnly=true)
 	public PersonalOficina findPersonalOficinaById(int id) throws DataAccessException{
 		return pOficinaRepository.findById(id).get();
 	}
-	
+
 	@Transactional
 	public Collection<PersonalOficina> findPersonal(){
 		return StreamSupport.stream(pOficinaRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
 	}
-	
+
 	public void eliminarPersonalOficina(int id) throws DataAccessException {
 		pOficinaRepository.deleteById(id);
 	}

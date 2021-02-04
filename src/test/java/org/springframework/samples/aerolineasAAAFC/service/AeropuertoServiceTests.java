@@ -1,12 +1,9 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,44 +13,53 @@ import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoEr
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class AeropuertoServiceTests {
 
 	@Autowired
 	protected AeropuertoService aeropuertoService;
 	
+	@Autowired
+	protected VueloService vueloService;
+	
+	@Autowired
+	protected AvionService avionService;
 	
 	//TEST DE CONSULTA
 	@Test
 	void getNombreAeropuertoSuccessful() {
 		Aeropuerto aero = aeropuertoService.findAeropuertoById(1);
+		
+		//NOMBRE
 		assertThat(aero.getNombre())
 		.isNotEmpty()
 		.hasToString("Aeropuerto de São Paulo Guarulhos");
-	}
-	
-	@Test
-	void getLocalizacionAeropuertoSuccessful() {
-		Aeropuerto aero = aeropuertoService.findAeropuertoById(1);
+		
+		//LOCALIZACION
 		assertThat(aero.getLocalizacion())
 		.isNotEmpty()
 		.hasToString("São Paulo, Brasil");
-	}
-	
-	@Test
-	void getCodigoIATAAeropuertoSuccessful() {
-		Aeropuerto aero = aeropuertoService.findAeropuertoById(1);
+		
+		//CODIGO IATA
 		assertThat(aero.getCodigoIATA())
 		.isNotEmpty()
 		.hasToString("GRU");
-	}
-	
-	@Test
-	void getTelefonoAeropuertoSuccessful() {
-		Aeropuerto aero = aeropuertoService.findAeropuertoById(1);
+		
+		//TELEFONO
 		assertThat(aero.getTelefono())
 		.isNotEmpty()
 		.containsPattern("^(\\+|\\d)[0-9]{7,16}$");
+		
+		//AEROPUERTO LLEGADA
+		assertThat(aero.getVuelosLlegada())
+		.isNotEmpty();
+		
+		//AEROPUERTO SALIDA
+		assertThat(aero.getVuelosSalida())
+		.isNotEmpty();
 	}
 	
 	
@@ -73,7 +79,7 @@ public class AeropuertoServiceTests {
 		try {
 			this.aeropuertoService.saveAeropuerto(aero);
 		} catch(TelefonoErroneoException ex) {
-			Logger.getLogger(AeropuertoServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+			log.error("Teléfono erróneo",ex);
 		}
 		
 		assertThat(aero.getId()).isNotEqualTo(0);
@@ -94,7 +100,7 @@ public class AeropuertoServiceTests {
 		aero.setCodigoIATA("AGP");
 		aero.setTelefono("12 345 678 910");
 		
-		Assertions.assertThrows(TelefonoErroneoException.class, ()->{ this.aeropuertoService.saveAeropuerto(aero); });
+		assertThrows(TelefonoErroneoException.class, ()->{ this.aeropuertoService.saveAeropuerto(aero); });
 		aeros = this.aeropuertoService.findAeropuertos();
 		assertThat(aeros.size()).isEqualTo(found);
 	}

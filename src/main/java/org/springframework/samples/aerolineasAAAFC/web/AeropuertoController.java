@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AeropuertoController {
 	private static final String VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM = "aeropuertos/createOrUpdateAeropuertoForm";
@@ -112,6 +113,13 @@ public class AeropuertoController {
 	public String deleteAeropuerto(@PathVariable("aeropuertoId") int aeropuertoId) {
 		this.aeropuertoService.eliminarAeropuerto(aeropuertoId);
 		return "redirect:/aeropuertos";
+	}
+	
+	@GetMapping("/aeropuertos/{aeropuertoId}")
+	public ModelAndView showCliente(@PathVariable("aeropuertoId") int id) {
+		ModelAndView mav = new ModelAndView("aeropuertos/aeropuertoDetails");
+		mav.addObject(this.aeropuertoService.findAeropuertoById(id));
+		return mav;
 	}
 
 }

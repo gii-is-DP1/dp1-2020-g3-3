@@ -50,15 +50,8 @@ public class PersonalOficinaController {
 	}
 	
 	
-//	@ModelAttribute("pOficina")
-//	public PersonalOficina loadPersonalOficinaWithVisit() {
-//		PersonalOficina pOficina = new PersonalOficina();
-//		return pOficina;
-//	}
+	// Alta de un nuevo oficinista
 	
-	/*
-	 * Alta de un nuevo oficinista
-	 */
 	@GetMapping(value = "/personalOficina/new")
 	public String initCreationPersonalOficinaForm(Map<String, Object> model) {
 		PersonalOficina pOficina = new PersonalOficina();
@@ -77,18 +70,15 @@ public class PersonalOficinaController {
 			} catch (DataIntegrityViolationException e) {
 				result.rejectValue("nif", "duplicate", "already exists");
 				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
-			} catch (IbanDuplicadoException e) {
-				result.rejectValue("iban", "duplicate", "already exists");
-				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 			}
 			
 			return "redirect:/personalOficina/" + pOficina.getId() ;
 		}
 	}
 	
-	/*
-	 *  Update sobre un oficinista
-	 */
+	
+	// Update sobre un oficinista
+	
 	@GetMapping(value = "/personalOficina/{pOficinaId}/edit")
 	public String initUpdatePersonalOficinaForm(@PathVariable("pOficinaId") int pOficinaId, ModelMap model) {
 		PersonalOficina personalOficina = this.pOficinaService.findPersonalOficinaById(pOficinaId);
@@ -96,34 +86,11 @@ public class PersonalOficinaController {
 		return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 	}
 	
-//	@PostMapping(value = "/personalOficina/{pOficinaId}/edit")
-//	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina pOficina, BindingResult result, 
-//			@PathVariable("pOficinaId") int pOficinaId) {
-//		if(result.hasErrors()) {
-//			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
-//		}
-//		else {
-//			pOficina.setId(pOficinaId);
-//			PersonalOficina pOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
-//			BeanUtils.copyProperties(pOficina, pOficinaToUpdate, "id","nif","username");
-//			try {
-//				this.pOficinaService.savePersonalOficina(pOficina);
-//			
-//			} catch (IbanDuplicadoException e) {
-//				result.rejectValue("iban", "duplicate", "already exists");
-//				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
-//			} catch (DataIntegrityViolationException e) {
-//				result.rejectValue("nif", "duplicate", "already exists");
-//				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
-//			}
-//			return "redirect:/personalOficina/{pOficinaId}";
-//		}
-//	}
 	
-	// Prueba con metodo update
 	@PostMapping(value = "/personalOficina/{pOficinaId}/edit")
 	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina personalOficina, BindingResult result, @PathVariable("pOficinaId") int pOficinaId,
 			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+		
 		PersonalOficina personalOficinaToUpdate=this.pOficinaService.findPersonalOficinaById(pOficinaId);
 
 		if(personalOficinaToUpdate.getVersion()!=version) {
@@ -136,25 +103,21 @@ public class PersonalOficinaController {
 		else {
 			personalOficina.setId(pOficinaId);
 			PersonalOficina personalOficinaToUpdate2 = this.pOficinaService.findPersonalOficinaById(pOficinaId);
-			BeanUtils.copyProperties(personalOficina, personalOficinaToUpdate, "id","nif","username");
+			BeanUtils.copyProperties(personalOficina, personalOficinaToUpdate2, "id","nif","username");
+
 			try {
-				this.pOficinaService.updatePersonalOficina(personalOficina);
+				this.pOficinaService.savePersonalOficina(personalOficina);
 			} catch (DataIntegrityViolationException e) {
-				if(e.getMessage().contains("PUBLIC.PERSONAL_OFICINA(IBAN)")) {
-					result.rejectValue("iban", "duplicate", "already exists");
-				}else{
-					result.rejectValue("nif", "duplicate", "already exists");
-				}
-				return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
+				e.printStackTrace();
 			}
+
 			
 			return "redirect:/personalOficina/{pOficinaId}";
 		}
 	}
 	
-	/*
-	 * Vistas de consulta
-	 */
+	
+	// Vistas de consulta
 	
 	@GetMapping(value = "/personalOficina")
 	public String showPersonalOficinaList(Map<String, Object> model) {

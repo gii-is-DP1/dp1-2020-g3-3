@@ -35,11 +35,22 @@
 		<c:forEach var="dia" begin="1" end="${dias}" >
 			<c:forEach items="${diasV}" var="diaV">
 				<c:if test="${diaV == dia}">
-				<li id="${dias}">
-					<span class="active">
-						<c:out value="${dia}"/>
-					</span>
-				</li>
+					<c:choose>
+						<c:when test="${diaV < 10}">
+						<li id="${dias}" onclick="javascript:location.href='/controladores/${pControlId}/semana?fecha=${año}-${mesN}-0${diaV}'" onmouseover="" style="cursor: pointer;">
+							<span class="active">
+								<c:out value="${dia}"/>
+							</span>
+						</li>
+						</c:when>
+						<c:otherwise>
+						<li id="${dias}" onclick="javascript:location.href='/controladores/${pControlId}/semana?fecha=${año}-${mesN}-${diaV}'" onmouseover="" style="cursor: pointer;">
+							<span class="active">
+								<c:out value="${dia}"/>
+							</span>
+						</li>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 			</c:forEach>
 			<li id="${dias}">
@@ -48,5 +59,10 @@
 		</c:forEach>
 		</ul> 
 	</div>
-
+	
+	<spring:url value="/controladores/{pControlId}" var="editUrl">
+        <spring:param name="pControlId" value="${pControlId}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default" style="float:right;">Volver</a>
+    
 </aerolineasAAAFC:layout>

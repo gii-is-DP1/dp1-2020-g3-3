@@ -8,11 +8,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import org.hibernate.validator.constraints.Range;
+import org.springframework.core.annotation.Order;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
@@ -70,8 +72,9 @@ public class Avion extends BaseEntity{
 	
 	// Relaciones de tablas:
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="avion") 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="avion")
 	@EqualsAndHashCode.Exclude
+	@OrderBy("fechaSalida DESC")
 	private Set<Vuelo> vuelos;
 
 	public Integer getVersion() {

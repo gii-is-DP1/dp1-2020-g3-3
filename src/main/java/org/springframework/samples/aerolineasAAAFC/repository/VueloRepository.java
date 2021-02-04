@@ -20,6 +20,8 @@ public interface VueloRepository extends CrudRepository<Vuelo,Integer> {
 	public Collection<Vuelo> findVuelosByDate(@Param("mes") int mes, @Param("año") int año);
 	
 	public Collection<Vuelo> findAllByOrderByFechaSalidaDesc();
+	
+	public Vuelo findVueloByfechaLlegada(LocalDateTime fechaLLegada);
 
 	@Query("SELECT vuelo FROM Vuelo vuelo JOIN vuelo.personalControl p WHERE p.id = :pControlId AND MONTH(vuelo.fechaSalida) = :mes AND YEAR(vuelo.fechaSalida) = :año ORDER BY vuelo.fechaSalida ASC")
 	public Collection<Vuelo> findVuelosControl(@Param("pControlId") int pControlId, @Param("mes")  int mes, @Param("año")  int año);
