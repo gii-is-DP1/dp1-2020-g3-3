@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
@@ -74,7 +76,7 @@ public class VueloServiceTests {
 	
 		String nombreAeroOrigen = vuelo.getAeropuertoOrigen().getNombre();
 		
-		assertThat(nombreAeroOrigen).isEqualTo("Aeropuerto de São Paulo Guarulhos");
+		assertThat(nombreAeroOrigen).isEqualTo("Aeropuerto de Sao Paulo Guarulhos");
 
 		String codigoAeroDestino = vuelo.getAeropuertoDestino().getCodigoIATA();
 		
@@ -101,7 +103,7 @@ public class VueloServiceTests {
 		vuelo.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 23));
 		vuelo.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 1, 19, 23));
 		vuelo.setCoste(42.0);
-		vuelo.setAsientos(new HashSet<>());
+		vuelo.setAsientos(new ArrayList<Asiento>());
 		vuelo.setPersonalOficina(new HashSet<>());
 		vuelo.setAvion(avionService.findAvionById(1));
 		
@@ -288,10 +290,11 @@ public class VueloServiceTests {
 		Collection<Vuelo> vuelos = this.vueloService.findVuelos();
 		int found = vuelos.size();
 		
-		vueloService.eliminarVuelo(1);
+		this.vueloService.eliminarVuelo(1);
 		
-		vuelos = this.vueloService.findVuelos();
-		assertThat(vuelos.size()).isEqualTo(found - 1);
+		
+		int found2 = this.vueloService.findVuelos().size();
+		assertThat(found2).isEqualTo(found - 1);
 	}
 	
 	@Test

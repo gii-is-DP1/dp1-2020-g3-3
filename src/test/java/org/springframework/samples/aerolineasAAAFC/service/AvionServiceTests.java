@@ -49,12 +49,6 @@ public class AvionServiceTests {
 	}
 	
 	@Test
-	void getPesoMaximoAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
-		assertThat(a.getPesoMaximoEquipaje()).isEqualTo(2);
-	}
-	
-	@Test
 	void getHorasAcumuladasAvionSuccesful() {
 		Avion a = avionService.findAvionById(1);
 		assertThat(a.getHorasAcumuladas()).isEqualTo(400);
@@ -164,14 +158,6 @@ public class AvionServiceTests {
 
 	@Test
 	@Transactional
-	void updatePesoMaximoEquipajeAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		avion.setPesoMaximoEquipaje(32);
-		assertThat(avion.getPesoMaximoEquipaje()).isEqualTo(32);
-	}
-
-	@Test
-	@Transactional
 	void updatePlazasEconomicaAvionSuccessful() {
 		Avion avion=avionService.findAvionById(1);
 		avion.setPlazasEconomica(14);
@@ -219,7 +205,6 @@ public class AvionServiceTests {
 		Avion avi = new Avion();
 		avi.setTipoAvion("Airbus 420");
 		avi.setCapacidadPasajero(200);
-		avi.setPesoMaximoEquipaje(20);
 		avi.setHorasAcumuladas(1000);
 		avi.setFechaFabricacion(LocalDate.of(2019, 8, 20));
 		avi.setDisponibilidad(Boolean.TRUE);

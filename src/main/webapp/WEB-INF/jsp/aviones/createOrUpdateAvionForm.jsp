@@ -19,7 +19,6 @@
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Tipo de avión" name="tipoAvion"/>
             <aerolineasAAAFC:inputField label="Capacidad de pasajeros" name="capacidadPasajero"/>
-            <aerolineasAAAFC:inputField label="Peso máximo de equipaje" name="pesoMaximoEquipaje"/>
             <aerolineasAAAFC:inputField label="Horas acumuladas" name="horasAcumuladas"/>
             <aerolineasAAAFC:inputField label="Fecha de fabricación" type="date" name="fechaFabricacion"/>
             <aerolineasAAAFC:inputField label="Disponibilidad" name="disponibilidad"/>

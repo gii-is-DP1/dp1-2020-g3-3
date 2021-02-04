@@ -157,7 +157,7 @@ public class AzafatoServiceTests {
 	
 	@Test
 	@Transactional
-	public void shouldNotInsertAzafatoIbanDuplicado(){
+	public void shouldNotInsertAzafatoIbanDuplicado(){ //Este se puede quitar
 		
 		Azafato azafato = new Azafato();
 		azafato.setNombre("Rafael");

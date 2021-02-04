@@ -1,16 +1,15 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
-import org.springframework.samples.aerolineasAAAFC.model.Avion;
-import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.AsientoRepository;
 import org.springframework.stereotype.Service;
@@ -52,14 +51,90 @@ public class AsientoService {
 		asientoRepository.deleteById(id);
 	}
 	
-//	@Transactional
-//	public void saveManyAsiento(Integer total,Vuelo vuelo) {
-//		
-//		for(int i=0;i<total;i++) {
-//			Asiento asiento=new Asiento();
-//			asiento.setVuelos(vuelo);
-//			this.saveAsiento(asiento);
-//		}
-//		
-//	}
+	@Transactional
+	public Vuelo saveManyAsientos(Vuelo vuelo) {
+		Integer totalPlazas = vuelo.getAvion().getCapacidadPasajero();
+		Integer plazasEconomica = vuelo.getAvion().getPlazasEconomica();
+		Integer plazasEjecutiva = vuelo.getAvion().getPlazasEjecutiva();
+		Integer plazasPrimera = vuelo.getAvion().getPlazasPrimera();
+		
+		List<Asiento> asientos = new ArrayList<Asiento>();
+		
+		List<String> aux = new ArrayList<String>();
+		aux.add("A");aux.add("B");
+		aux.add("C");aux.add("D");
+		
+		Integer filasPrimera = (int) Math.ceil(plazasPrimera/4.0);
+		Integer filasEjecutiva = (int) Math.ceil(plazasEjecutiva/4.0);
+		Integer filasEconomica = (int) Math.ceil(plazasEconomica/4.0);
+		
+		Integer numColumnasPrimera = 4;
+		Integer numColumnasEjecutiva = 4;
+		Integer numColumnasEconomica = 4;
+		
+		if(totalPlazas <= 200 && totalPlazas > 100) {
+			aux.add("E");aux.add("F");
+			filasEconomica = (int) Math.ceil(plazasEconomica/6.0);
+			numColumnasEconomica = 6;
+		}
+		
+		else if(totalPlazas <= 300 && totalPlazas > 200) {
+			aux.add("E");aux.add("F");
+			aux.add("G");
+			filasEconomica = (int) Math.ceil(plazasEconomica/7.0);
+			numColumnasEconomica = 7;
+		}
+		
+		else if(totalPlazas > 300) {
+			aux.add("E");aux.add("F");
+			aux.add("G");aux.add("H");
+			aux.add("I");
+			numColumnasEconomica=9;
+			numColumnasEjecutiva=7;
+			filasEjecutiva = (int) Math.ceil(plazasEjecutiva/6.0);
+			filasEconomica = (int) Math.ceil(plazasEconomica/9.0);
+		}
+
+		Asiento asiento=null;
+		for(int i=0; i < filasPrimera; i++) {
+			for(int j=0; j < numColumnasPrimera; j++) {
+				asiento=new Asiento();
+				asiento.setLibre(true);
+				asiento.setVuelo(vuelo);
+				asiento.setClase(Clase.PRIMERACLASE);
+				asiento.setNombre(aux.get(j)+String.valueOf(j));
+				this.saveAsiento(asiento);
+				asientos.add(asiento);
+			}
+		}
+		
+		for(int i=0; i < filasEjecutiva; i++) {
+			for(int j=0; j < numColumnasEjecutiva; j++) {
+				asiento=new Asiento();
+				asiento.setLibre(true);
+				asiento.setVuelo(vuelo);
+				asiento.setClase(Clase.EJECUTIVA);
+				asiento.setNombre(aux.get(j)+String.valueOf(j));
+				this.saveAsiento(asiento);
+				asientos.add(asiento);
+			}
+		}
+		
+		for(int i=0; i < filasEconomica; i++) {
+			for(int j=0; j < numColumnasEconomica; j++) {
+				asiento=new Asiento();
+				asiento.setLibre(true);
+				asiento.setVuelo(vuelo);
+				asiento.setClase(Clase.EJECUTIVA);
+				asiento.setNombre(aux.get(j)+String.valueOf(j));
+				this.saveAsiento(asiento);
+				asientos.add(asiento);
+			}
+		}
+		
+		vuelo.setAsientos(asientos);
+		
+		return vuelo;
+		
+	}
 }

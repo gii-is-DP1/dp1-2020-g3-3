@@ -279,7 +279,7 @@ public class BilleteServiceTests {
 	
 	@Test
 	void shouldFindBilletesApellido() {
-		Collection<Billete> billetes = this.billeteService.findBilletePorApellido("Soto Ramírez");
+		Collection<Billete> billetes = this.billeteService.findBilletePorApellido("Soto Ramirez");
 		
 		assertThat(billetes).isNotEmpty();
 	}

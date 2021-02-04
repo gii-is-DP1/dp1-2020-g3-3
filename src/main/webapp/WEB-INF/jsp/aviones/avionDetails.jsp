@@ -19,10 +19,6 @@ edición y borrado en una vista u otra -->
             <td><b><c:out value="${avion.tipoAvion}"/></b></td>
         </tr>
         <tr>
-            <th>Peso máximo equipaje</th>
-            <td><c:out value="${avion.pesoMaximoEquipaje}"/></td>
-        </tr>
-        <tr>
             <th>Horas de vuelo acumuladas</th>
             <td><c:out value="${avion.horasAcumuladas}"/></td>
         </tr>
