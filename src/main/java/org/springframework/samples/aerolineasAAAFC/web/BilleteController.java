@@ -1,13 +1,21 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.User;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
+import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -29,11 +37,13 @@ public class BilleteController {
 
 	private final BilleteService billeteService;
 	private final ClienteService clienteService;
+	private final VueloService vueloService;
 
 	@Autowired
-	public BilleteController(BilleteService billeteService, ClienteService clienteService) {
+	public BilleteController(BilleteService billeteService, ClienteService clienteService,VueloService vueloService) {
 		this.billeteService = billeteService;
 		this.clienteService=  clienteService;
+		this.vueloService= vueloService;
 	}
 
 	@InitBinder
@@ -44,22 +54,29 @@ public class BilleteController {
 	/*
 	 * Alta de un nuevo billete
 	 */
-	@GetMapping(value = "/billetes/new")
-	public String initCreationBilleteForm(Map<String, Object> model) {
+	@GetMapping(value = "/billetes/{vueloId}/new")
+	public String initCreationBilleteForm(@PathVariable("vueloId") int vueloId,
+			Map<String, Object> model) {
 		if( SecurityContextHolder.getContext().getAuthentication()!=null) {
 			Billete billete = new Billete();
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String name = authentication.getName();//name corresponde al nif del usuario
 			model.put("billete", billete);
-			billete.setCliente(clienteService.findClienteByNif(name));
+			Vuelo vuelo=vueloService.findVueloById(vueloId);
+			List<Asiento> asientos=vuelo.getAsientos();
+			model.put("asientos",asientos);
+			model.put("vuelo",vuelo);
+			Cliente cliente=clienteService.findClienteByNif(name);
+			model.put("cliente", cliente);
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		}else {
 			return "user/createClienteForm.jsp";
 		}
 	}
 
-	@PostMapping(value = "/billetes/new")
-	public String processCreationBilleteForm(@Valid Billete billete, BindingResult result) {
+	@PostMapping(value = "/billetes/{vueloId}/new")
+	public String processCreationBilleteForm(@PathVariable("vueloId") int vueloId,
+			@Valid Billete billete, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		} else {

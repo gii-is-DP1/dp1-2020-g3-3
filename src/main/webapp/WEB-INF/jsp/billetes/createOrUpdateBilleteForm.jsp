@@ -17,8 +17,13 @@
     	<input type="hidden" name= "version" value= "${billete.version}"/>
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Precio de venta" name="coste"/>
-            <aerolineasAAAFC:inputField label="Asiento" name="asiento"/>
-            <aerolineasAAAFC:inputField label="Fecha de reserva" type="date" name="fechaReserva"/>
+            <%--<aerolineasAAAFC:inputField label="Asiento" name="asiento"/> --%>
+            <select name="asiento">
+            	<c:forEach items="${asientos}" var="asiento">
+            		<option value="${asiento.id}">${asiento.nombre}</option>
+            	</c:forEach>
+            </select>
+            <input type="hidden" name= "fechaReserva" value= "${vuelo.fechaSalida}"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

@@ -22,7 +22,9 @@ import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
+import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
+import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,6 +44,12 @@ public class BilleteControllerTests {
 
 	@MockBean
 	private UserService userService;
+	
+	@MockBean
+	private ClienteService clienteService;
+	
+	@MockBean
+	private VueloService vueloService;
 
 	@MockBean
 	private AuthoritiesService authoritiesService; 
@@ -88,7 +96,7 @@ public class BilleteControllerTests {
 	void testProcessCreationFormSuccess() throws Exception {
 		mockMvc.perform(post("/billetes/new")
 				.param("coste", "12.54")
-//				.param("asiento", "B72")
+				.param("asiento", "B72")
 				.with(csrf())
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
@@ -110,7 +118,7 @@ public class BilleteControllerTests {
 		//.param("menus",)
 		//.param("cliente",)
 		//.param("vuelos",))
-		.andExpect(view().name("redirect:/billetes/{billeteId}"));
+		.andExpect(view().name("redirect:/billetes/"+ billetazo.getId()));
 	}
 
 	@WithMockUser(value = "spring")
