@@ -113,7 +113,7 @@ public class AsientoService {
 					asiento.setLibre(true);
 					asiento.setVuelo(vuelo);
 					asiento.setClase(Clase.PRIMERACLASE);
-					asiento.setNombre(cont + String.valueOf(j));
+					asiento.setNombre(aux.get(j) + cont);
 					this.saveAsiento(asiento);
 					asientos.add(asiento);
 					plazasPrimera = plazasPrimera - 1;
@@ -130,7 +130,7 @@ public class AsientoService {
 					asiento.setLibre(true);
 					asiento.setVuelo(vuelo);
 					asiento.setClase(Clase.EJECUTIVA);
-					asiento.setNombre(cont + String.valueOf(j));
+					asiento.setNombre(aux.get(j) + cont);
 					this.saveAsiento(asiento);
 					asientos.add(asiento);
 					plazasEjecutiva = plazasEjecutiva - 1;
@@ -148,7 +148,7 @@ public class AsientoService {
 					asiento.setLibre(true);
 					asiento.setVuelo(vuelo);
 					asiento.setClase(Clase.ECONOMICA);
-					asiento.setNombre(cont + String.valueOf(j));
+					asiento.setNombre(aux.get(j) + cont);
 					this.saveAsiento(asiento);
 					asientos.add(asiento);
 					plazasEconomica = plazasEconomica - 1;
