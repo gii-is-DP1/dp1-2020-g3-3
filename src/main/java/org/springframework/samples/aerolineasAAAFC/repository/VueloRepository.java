@@ -29,50 +29,34 @@ public interface VueloRepository extends CrudRepository<Vuelo,Integer> {
 	@Query("SELECT vuelo FROM Vuelo vuelo JOIN vuelo.azafatos a WHERE a.id = :azafatoId AND MONTH(vuelo.fechaSalida) = :mes AND YEAR(vuelo.fechaSalida) = :año ORDER BY vuelo.fechaSalida ASC")
 	public Collection<Vuelo> findVuelosAzafato(@Param("azafatoId") int azafatoId, @Param("mes")  int mes, @Param("año")  int año);
 	
-	//Querys HOME:
-	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha ORDER BY vuelo.fechaSalida DESC")
+	
+	//QUERYS HOME (siempre hay que pasar fecha, ya que no tiene sentido obtener vuelos ya realizados en el portal de compra)
+	//1 atributo de filtro
+	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha ORDER BY vuelo.fechaSalida ASC")
 	public Collection<Vuelo> findVuelosConFecha(@Param("fecha") LocalDateTime fecha);
 	
-//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE min(vuelo.billetes.coste) <= :precio ORDER BY vuelo.fechaSalida DESC")
-//	public Collection<Vuelo> findVuelosConPrecio(@Param("precio") double precio);
-	
-	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida ORDER BY vuelo.fechaSalida DESC")
-	public Collection<Vuelo> findVuelosConOrigen(@Param("aeropuertoSalida") String aeropuertoSalida);
-	
-	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida DESC")
-	public Collection<Vuelo> findVuelosConDestino(@Param("aeropuertoDestino") String aeropuertoDestino);
-	
-//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND min(vuelo.billetes.coste) <= :precio ORDER BY vuelo.fechaSalida DESC")
+	//2 atributos de filtro
+//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND min(vuelo.billetes.coste) <= :precio ORDER BY vuelo.fechaSalida ASC")
 //	public Collection<Vuelo> findVuelosConFechaYPrecio(@Param("fecha") LocalDateTime fecha, @Param("precio") double precio);
 	
-	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida ORDER BY vuelo.fechaSalida DESC")
+	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida ORDER BY vuelo.fechaSalida ASC")
 	public Collection<Vuelo> findVuelosConFechaYOrigen(@Param("fecha") LocalDateTime fecha, @Param("aeropuertoSalida") String aeropuertoSalida);
 	
-	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida DESC")
+	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida ASC")
 	public Collection<Vuelo> findVuelosConFechaYDestino(@Param("fecha") LocalDateTime fecha, @Param("aeropuertoDestino") String aeropuertoDestino);
 	
-//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE min(vuelo.billetes.coste) <= :precio AND vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida ORDER BY vuelo.fechaSalida DESC")
-//	public Collection<Vuelo> findVuelosConPrecioYOrigen(@Param("precio") double precio, @Param("aeropuertoSalida") String aeropuertoSalida);
-	
-//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE min(vuelo.billetes.coste) <= :precio AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida DESC")
-//	public Collection<Vuelo> findVuelosConPrecioYDestino(@Param("precio") double precio, @Param("aeropuertoDestino") String aeropuertoDestino);
-	
-	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida DESC")
-	public Collection<Vuelo> findVuelosConOrigenYDestino(@Param("aeropuertoSalida") String aeropuertoSalida, @Param("aeropuertoDestino") String aeropuertoDestino);
-	
-//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND min(vuelo.billetes.coste) <= :precio AND vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida ORDER BY vuelo.fechaSalida DESC")
+	//3 atributos de filtro
+//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND min(vuelo.billetes.coste) <= :precio AND vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida ORDER BY vuelo.fechaSalida ASC")
 //	public Collection<Vuelo> findVuelosConFechaPrecioYOrigen(@Param("fecha") LocalDateTime fecha, @Param("precio") double precio, @Param("aeropuertoSalida") String aeropuertoSalida);
 	
-//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND min(vuelo.billetes.coste) <= :precio AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida DESC")
+//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND min(vuelo.billetes.coste) <= :precio AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida ASC")
 //	public Collection<Vuelo> findVuelosConFechaPrecioYDestino(@Param("fecha") LocalDateTime fecha, @Param("precio") double precio, @Param("aeropuertoDestino") String aeropuertoDestino);
 	
-	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida DESC")
+	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND (vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino) ORDER BY vuelo.fechaSalida ASC")
 	public Collection<Vuelo> findVuelosConFechaOrigenYDestino(@Param("fecha") LocalDateTime fecha, @Param("aeropuertoSalida") String aeropuertoSalida, @Param("aeropuertoDestino") String aeropuertoDestino);
 	
-//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE min(vuelo.billetes.coste) <= :precio AND vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida DESC")
-//	public Collection<Vuelo> findVuelosConPrecioOrigenYDestino(@Param("precio") double precio, @Param("aeropuertoSalida") String aeropuertoSalida, @Param("aeropuertoDestino") String aeropuertoDestino);
-//	
-//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND min(vuelo.billetes.coste) <= :precio AND vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida DESC")
+	//4 atributos de filtro
+//	@Query("SELECT vuelo FROM Vuelo vuelo WHERE vuelo.fechaSalida > :fecha AND min(vuelo.billetes.coste) <= :precio AND vuelo.aeropuertoOrigen.codigoIATA = :aeropuertoSalida AND vuelo.aeropuertoDestino.codigoIATA = :aeropuertoDestino ORDER BY vuelo.fechaSalida ASC")
 //	public Collection<Vuelo> findVuelosConTodo(@Param("fecha") LocalDateTime fecha, @Param("precio") double precio, @Param("aeropuertoSalida") String aeropuertoSalida, @Param("aeropuertoDestino") String aeropuertoDestino);
 }
 

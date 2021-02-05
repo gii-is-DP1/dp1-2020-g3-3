@@ -273,11 +273,14 @@ public class VueloController {
 		}else if(fecha != null && precio == null && origen == null && destino == null) {	//filtro por fecha 1
 			model.put("vuelos",this.vueloService.findVuelosConFecha(fecha));
 //		}else if(fecha == null && precio != null && origen == null && destino == null) {	//filtro por precio 2
-//			model.put("vuelos",this.vueloService.findVuelosConPrecio(precio));
+//			LocalDateTime ahora = LocalDateTime.now();
+//			model.put("vuelos",this.vueloService.findVuelosConFechaYPrecio(ahora,precio));
 		}else if(fecha == null && precio == null && origen != null && destino == null) {	//filtro por aeropuerto de salida 3
-			model.put("vuelos",this.vueloService.findVuelosConOrigen(origen));
+			LocalDateTime ahora = LocalDateTime.now();
+			model.put("vuelos",this.vueloService.findVuelosConFechaYOrigen(ahora,origen));
 		}else if(fecha == null && precio == null && origen == null && destino != null) {	//filtro por aeropuerto de destino 4
-			model.put("vuelos",this.vueloService.findVuelosConDestino(destino));
+			LocalDateTime ahora = LocalDateTime.now();
+			model.put("vuelos",this.vueloService.findVuelosConFechaYDestino(ahora,destino));
 //		}else if(fecha != null && precio != null && origen == null && destino == null) {	//filtro por fecha+precio 1,2
 //			model.put("vuelos",this.vueloService.findVuelosConFechaYPrecio(fecha, precio));
 		}else if(fecha != null && precio == null && origen != null && destino == null) {	//filtro por fecha+salida 1,3
@@ -285,11 +288,14 @@ public class VueloController {
 		}else if(fecha != null && precio == null && origen == null && destino != null) {	//filtro por fecha+destino 1,4
 			model.put("vuelos",this.vueloService.findVuelosConFechaYDestino(fecha, destino));
 //		}else if(fecha == null && precio != null && origen != null && destino == null) {	//filtro por precio+salida 2,3
-//			model.put("vuelos",this.vueloService.findVuelosConPrecioYOrigen(precio, origen));
+//			LocalDateTime ahora = LocalDateTime.now();
+//			model.put("vuelos",this.vueloService.findVuelosConFechaPrecioYOrigen(ahora, precio, origen));
 //		}else if(fecha == null && precio != null && origen == null && destino != null) {	//filtro por precio+destino 2,4
-//			model.put("vuelos",this.vueloService.findVuelosConPrecioYDestino(precio, destino));
+//			LocalDateTime ahora = LocalDateTime.now();			
+//			model.put("vuelos",this.vueloService.findVuelosConFechaPrecioYDestino(ahora, precio, destino));
 		}else if(fecha == null && precio == null && origen != null && destino != null) {	//filtro por salida+destino 3,4
-			model.put("vuelos",this.vueloService.findVuelosConOrigenYDestino(origen, destino));
+			LocalDateTime ahora = LocalDateTime.now();
+			model.put("vuelos",this.vueloService.findVuelosConFechaOrigenYDestino(ahora, origen, destino));
 //		}else if(fecha != null && precio != null && origen != null && destino == null) {	//filtro fecha+precio+salida 1,2,3
 //			model.put("vuelos",this.vueloService.findVuelosConFechaPrecioYOrigen(fecha, precio, origen));
 //		}else if(fecha != null && precio != null && origen == null && destino != null) {	//filtro fecha+precio+destino 1,2,4
@@ -297,7 +303,8 @@ public class VueloController {
 		}else if(fecha == null && precio != null && origen == null && destino == null) {	//filtro fecha+salida+destino 1,3,4
 			model.put("vuelos",this.vueloService.findVuelosConFechaOrigenYDestino(fecha, origen, destino));
 //		}else if(fecha == null && precio != null && origen != null && destino != null) {	//filtro precio+salida+destino 2,3,4
-//			model.put("vuelos",this.vueloService.findVuelosConPrecioOrigenYDestino(precio, origen, destino));
+//			LocalDateTime ahora = LocalDateTime.now();
+//			model.put("vuelos",this.vueloService.findVuelosConTodo(ahora, precio, origen, destino));
 //		}else{																									//filtro total 1,2,3,4
 //			model.put("vuelos",this.vueloService.findVuelosConTodo(fecha, precio, origen, destino));
 		}
