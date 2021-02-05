@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -8,7 +10,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.assertj.core.util.Lists;
@@ -64,10 +70,11 @@ public class AzafatoControllerTests {
 
 		Martina = new Azafato();
 		Martina.setId(TEST_AZAFATO_ID);
-		Martina.setApellidos("Perez");
 		Martina.setNombre("Martina");
-		Martina.setIban("ES 01225905418408934560815");
+		Martina.setApellidos("Perez");
 		Martina.setNif("11571749N");
+		Martina.setIban("ES 01225905418408934560815");
+		
 
 		IdiomaType lng = new IdiomaType();
 		lng.setIdioma("FR");
@@ -93,7 +100,7 @@ public class AzafatoControllerTests {
 
 
 
-
+	//TEST CREACIÓN
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
@@ -106,7 +113,7 @@ public class AzafatoControllerTests {
 
 	@WithMockUser(value = "spring")
 	@Test
-	void testProcessCreationFormSuccess() throws Exception {  //OJO que este no va por la redireccion
+	void testProcessCreationFormSuccess() throws Exception {
 		mockMvc.perform(post("/azafatos/new")
 				.param("nombre", "Gonzalo")
 				.param("apellidos", "Gonzalez")
@@ -117,8 +124,7 @@ public class AzafatoControllerTests {
 				.param("salario", "1400")
 				.param("user.username", "11571749N")
 				.param("user.password", "AAAAAAA"))
-		.andExpect(status().is3xxRedirection())
-		.andExpect(view().name("redirect:/azafatos/null")); //OJO, ESTO HAY QUE CAMBIARLO
+		.andExpect(status().is3xxRedirection());
 	}
 
 
@@ -142,6 +148,8 @@ public class AzafatoControllerTests {
 		.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
 	}
 
+	
+	//TEST ACTUALIZACIÓN
     @WithMockUser(value = "spring")
 	@Test
 	void testInitUpdateForm() throws Exception {
@@ -164,7 +172,6 @@ public class AzafatoControllerTests {
 				.param("user.username", "11571749N")
 				.param("user.password", "AAAAAAA"))
 		.andExpect(view().name("redirect:/azafatos/{azafatoId}"));
-		
 	}
 
 	@WithMockUser(value = "spring")
@@ -187,6 +194,51 @@ public class AzafatoControllerTests {
 		.andExpect(model().attributeHasFieldErrors("azafato", "idiomas"))
 		.andExpect(model().attributeHasFieldErrors("azafato", "salario"))
 		.andExpect(view().name("azafatos/createOrUpdateAzafatoForm"));
+	}
+	
+	//TEST DE ELIMINACIÓN
+	@WithMockUser(value = "spring")
+	@Test
+	void testDeleteCliente() throws Exception{
+		mockMvc.perform(get("/azafatos/{azafatoId}/delete", TEST_AZAFATO_ID))
+		.andExpect(status().isFound())
+		.andExpect(model().attributeDoesNotExist("azafato"))
+		.andExpect(view().name("redirect:/azafatosList"));
+	}
+	
+	//OTROS
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowAzafatosList() throws Exception{
+		mockMvc.perform(get("/azafatosList"))
+		.andExpect(model().attributeExists("azafatos"))
+		.andExpect(view().name("azafatos/azafatosList"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowAzafato() throws Exception {
+		mockMvc.perform(get("/azafatos/{azafatoId}", TEST_AZAFATO_ID))
+		.andExpect(model().attribute("azafato", hasProperty("nombre", is("Martina"))))
+		.andExpect(model().attribute("azafato", hasProperty("apellidos", is("Perez"))))
+		.andExpect(model().attribute("azafato", hasProperty("nif", is("11571749N"))))
+		.andExpect(model().attribute("azafato", hasProperty("iban", is("ES 01225905418408934560815"))))
+		.andExpect(model().attribute("azafato", hasProperty("salario", is(1200.))))
+		.andExpect(model().attributeExists("idioma_types"))
+		.andExpect(view().name("azafatos/azafatoDetails"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testshowVuelosList() throws Exception {
+		mockMvc.perform(get("/azafatos/{azafatoId}/horario", 1)
+				.param("fecha", LocalDate.of(2021, 01, 01).toString()))
+		.andExpect(model().attributeExists("vuelos"))
+		.andExpect(model().attribute("dias", 31))
+		.andExpect(model().attribute("mes", Month.JANUARY))
+		.andExpect(model().attribute("año", 2021))
+		.andExpect(model().attributeExists("diasV"))
+		.andExpect(view().name("azafatos/horario"));
 	}
 
 }

@@ -109,6 +109,9 @@ public class AeropuertoController {
 			return "redirect:/aeropuertos";
 		}
 	}
+	
+	
+	//ELIMINACIÓN
 	@GetMapping(value = "/aeropuertos/{aeropuertoId}/delete")
 	public String deleteAeropuerto(@PathVariable("aeropuertoId") int aeropuertoId) {
 		this.aeropuertoService.eliminarAeropuerto(aeropuertoId);
@@ -116,7 +119,7 @@ public class AeropuertoController {
 	}
 	
 	@GetMapping("/aeropuertos/{aeropuertoId}")
-	public ModelAndView showCliente(@PathVariable("aeropuertoId") int id) {
+	public ModelAndView showAeropuerto(@PathVariable("aeropuertoId") int id) {
 		ModelAndView mav = new ModelAndView("aeropuertos/aeropuertoDetails");
 		mav.addObject(this.aeropuertoService.findAeropuertoById(id));
 		return mav;

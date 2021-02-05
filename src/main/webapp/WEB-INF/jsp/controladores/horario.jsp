@@ -3,15 +3,17 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <aerolineasAAAFC:layout pageName="controladores">
 
 
 	<div style="padding: 5% 0% 0% 43%">
- 	<form action="/controladores/${pControlId}/horario" method="get">
-			<label for="fecha">Fecha: </label> <input name="fecha" id="fecha" type="date" />
+ 	<form:form action="/controladores/${pControlId}/horario" method="get">
+			<label for="fecha">Fecha: </label> 
+			<input name="fecha" id="fecha" type="date" />
 			<button type="submit" class="btn btn-default">Buscar</button>
-		</form>
+	</form:form>
 	</div>
 	
 	<div class="calendario">

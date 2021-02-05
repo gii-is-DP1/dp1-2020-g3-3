@@ -139,6 +139,13 @@ public class AzafatoController {
 		
 	}
 	
+	//ELIMINACIÓN
+	@GetMapping(value = "/azafatos/{azafatoId}/delete")
+	public String deleteAzafato(@PathVariable("azafatoId") int azafatoId) {
+		this.azafatoService.eliminarAzafato(azafatoId);
+		return "redirect:/azafatosList";
+	}
+	
 	@GetMapping(value =  "/azafatosList" )
 	public String showAzafatosList(Map<String, Object> model) {
 		List<Azafato> azafatos = new ArrayList<>();

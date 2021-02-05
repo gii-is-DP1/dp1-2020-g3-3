@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.samples.aerolineasAAAFC.service.businessrules.PasswordMatches;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,7 +19,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-@PasswordMatches
 @Getter
 @Setter
 @Entity
@@ -35,10 +33,6 @@ public class User implements UserDetails{
 	@NotNull
 	@NotEmpty
 	private String password;
-	
-	@NotNull
-	@NotEmpty
-	private String matchingPassword;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<Authorities> auth;

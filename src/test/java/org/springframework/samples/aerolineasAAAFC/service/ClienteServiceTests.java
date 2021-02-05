@@ -110,7 +110,6 @@ public class ClienteServiceTests {
 		User user = new User();
 		user.setUsername("28976897W");
 		user.setPassword("*Fly_High14&");
-		user.setMatchingPassword("*Fly_High14&");
 		cliente.setUser(user);                
 
 		this.clienteService.saveCliente(cliente);
@@ -140,21 +139,15 @@ public class ClienteServiceTests {
 		User user = new User();
 		user.setUsername("01446551N");
 		user.setPassword("*Fly_Low14&");
-		user.setMatchingPassword("*Fly_Low14&");
 		cliente.setUser(user);
 		
 		Assertions.assertThrows(DataIntegrityViolationException.class, () -> {this.clienteService.saveCliente(cliente);});
 		
 	}
 	
-	@ParameterizedTest
-	@CsvSource({
-		"*Fly_Low14&, 65801218N, *Fly_Low15&, 65801218N",
-		"*Fly_Low14&, 65801218N, *Fly_Low14&, jusoto"
-			})
+	@Test
 	@Transactional
-	public void shouldNotInsertClienteContraseñaYUsuario(String contraseña, String usuario, 
-														String contraseñaMal, String usuarioMal){
+	public void shouldNotInsertClienteContraseñaYUsuario(){
 
 		//CREACIÓN DEL CLIENTE
 		Cliente cliente = new Cliente();
@@ -169,9 +162,8 @@ public class ClienteServiceTests {
 		
 		//ESTABLECEMOS SU USUARIO
 		User user = new User();
-		user.setUsername("65801218N");
+		user.setUsername("jusoto");
 		user.setPassword("*Fly_Low14&");
-		user.setMatchingPassword("*Fly_Low15&");
 		cliente.setUser(user);
 		
 		Assertions.assertThrows(ConstraintViolationException.class, () -> {this.clienteService.saveCliente(cliente);});

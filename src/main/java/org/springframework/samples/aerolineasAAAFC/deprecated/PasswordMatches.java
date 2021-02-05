@@ -1,4 +1,4 @@
-package org.springframework.samples.aerolineasAAAFC.service.businessrules;
+package org.springframework.samples.aerolineasAAAFC.deprecated;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

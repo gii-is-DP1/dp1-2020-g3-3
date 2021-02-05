@@ -167,7 +167,7 @@ public class PersonalControlController {
 
 	@GetMapping(value = "/controladores/find")
 	public String initFindPersonalControlForm(Map<String, Object> model) {
-		model.put("pControl", new PersonalControl());
+		model.put("personalControl", new PersonalControl());
 		return "controladores/findPersonalControl";
 	}
 
@@ -217,13 +217,13 @@ public class PersonalControlController {
 	@GetMapping(value = "/controladores/{pControlId}/delete")
 	public String deletePersonalControl(@PathVariable("pControlId") int pControlId) {
 		this.pControlService.deletePersonalControlById(pControlId);
-		return "redirect:/personalControlList";
+		return "redirect:/controladoresList";
 	}
 	
 	//Horario del controlador
 	
 	@RequestMapping(value = { "/controladores/{pControlId}/horario" }, method = RequestMethod.GET)
-	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  
+	public String showHorario(Map<String, Object> model, @PathVariable("pControlId") int pControlId,  
 								@RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
 

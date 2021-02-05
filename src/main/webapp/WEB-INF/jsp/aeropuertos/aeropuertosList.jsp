@@ -49,9 +49,7 @@
 		        			<spring:param name="aeropuertoId" value="${aeropuerto.id}"/>
 		    				</spring:url>
 		    				<a href="${fn:escapeXml(aeropuertoUrl)}" class="btn btn-default">Editar</a>
-		    				<spring:url value="/aeropuertos/{aeropuertoId}/delete" var="aeropuertoUrl">
-		        			<spring:param name="aeropuertoId" value="${aeropuerto.id}"/>
-		    				</spring:url>
+		    				<spring:url value="/aeropuertos/${aeropuerto.id}/delete" var="aeropuertoUrl"></spring:url>
 		    				<a href="${fn:escapeXml(aeropuertoUrl)}" class="btn btn-default">Eliminar</a>
 					</td>
 				

@@ -43,7 +43,6 @@ public class AvionController {
 	private static final String VIEWS_AVION_CREATE_OR_UPDATE_FORM = "aviones/createOrUpdateAvionForm";
 
 	private final AvionService avionService;
-
 	private final VueloService vueloService;
 
 	@Autowired
@@ -109,6 +108,13 @@ public class AvionController {
 		}
 	}
 
+	//ELIMINACIÓN
+	@GetMapping(value = "/aviones/{avionId}/delete")
+	public String deleteAeropuerto(@PathVariable("avionId") int avionId) {
+		this.avionService.eliminarAvion(avionId);
+		return "redirect:/aviones";
+	}
+	
 	@GetMapping(value = "/aviones")
 	public String showAvionesList(Map<String, Object> model) {
 		List<Avion> aviones = new ArrayList<Avion>();

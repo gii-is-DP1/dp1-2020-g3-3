@@ -48,9 +48,7 @@
     				</spring:url>
     				<a href="${fn:escapeXml(personalControlUrl)}" class="btn btn-default">Editar</a>
     				
-    				<spring:url value="/controladores/{personalControlId}/delete" var="personalControlUrl">
-        				<spring:param name="personalControlId" value="${personalControl.id}"/>
-    				</spring:url>
+    				<spring:url value="/controladores/${personalControl.id}/delete" var="personalControlUrl"></spring:url>
     				<a href="${fn:escapeXml(personalControlUrl)}" class="btn btn-default">Eliminar</a>
                 </td>   
             </tr>
