@@ -56,7 +56,5 @@ public class Azafato extends Person{
 		return "Id azafato "+this.getId()+" User "+this.getNif()+" Id Idiomas " + this.getIdiomas();
 	}
 
-	public Integer getVersion() {
-		return this.getVersion();	}
 
 }

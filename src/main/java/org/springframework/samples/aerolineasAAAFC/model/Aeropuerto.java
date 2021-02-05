@@ -57,9 +57,6 @@ public class Aeropuerto extends BaseEntity{
 	@OrderBy("fechaLlegada DESC")
 	private Set<Vuelo> vuelosLlegada;
 
-	public Integer getVersion() {
-		return this.getVersion();
-	}
-	
+
 	
 }

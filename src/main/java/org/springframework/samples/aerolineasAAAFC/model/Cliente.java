@@ -55,7 +55,5 @@ public class Cliente extends Person{
 	@OrderBy("fechaReserva DESC")
 	private Set<Billete> billetes;
 
-	public Integer getVersion() {
-		return this.getVersion();	}
-	
+
 }

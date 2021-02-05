@@ -114,10 +114,5 @@ public class Vuelo extends BaseEntity{
 	    }	
 	}
 
-
-	public Integer getVersion() {
-		return this.getVersion();	}
-
-
 }
 

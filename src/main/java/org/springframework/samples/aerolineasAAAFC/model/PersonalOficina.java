@@ -44,8 +44,5 @@ public class PersonalOficina extends Person{
 	
 	private Collection<Vuelo> vuelos;
 
-	public Integer getVersion() {
-		return this.getVersion();
-	}
 	
 }

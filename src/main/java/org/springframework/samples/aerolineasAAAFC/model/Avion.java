@@ -74,8 +74,6 @@ public class Avion extends BaseEntity{
 	@OrderBy("fechaSalida DESC")
 	private List<Vuelo> vuelos;
 
-	public Integer getVersion() {
-		return this.getVersion();	}
-	
+
 
 }
