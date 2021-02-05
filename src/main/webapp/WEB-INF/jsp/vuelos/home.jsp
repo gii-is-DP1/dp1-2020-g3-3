@@ -7,15 +7,27 @@
 <aerolineasAAAFC:layout pageName="vuelos">
 	
 	<h1 style="text-align:center;">Portal de Vuelos</h1>
-<!-- 	<div style="padding: 5% 0% 0% 43%"> -->
-<!--  	<form action="/home" method="get"> -->
-<!-- 			<label for="fecha">Fecha: </label> <input name="fecha" id="fecha" type="date" /> -->
-<!-- 			<label for="precio">Precio: </label> <input name="precio" id="precio" type="number"/> -->
-<%-- 			<label for="origen">Origen: </label> <input name="origen" id="origen" type='<aerolineasAAAFC:selectField label="Origen" name="origen" names="${codigos}"></aerolineasAAAFC:selectField>'/> --%>
-<%-- 			<label for="destino">Destino: </label> <input name="destino" id="destino" type='<aerolineasAAAFC:selectField label="Destino" name="destino" names="${codigos}"></aerolineasAAAFC:selectField>'/> --%>
-<!-- 			<button type="submit" class="btn btn-default">Filtrar</button> -->
-<!-- 		</form> -->
-<!-- 	</div> -->
+	<div style="text-align:center;">
+ 	<form action="/home" method="get">
+			<label for="fecha">Fecha: </label> <input name="fecha" id="fecha" size="16" type="date" min="${hoy}" value="${hoy}"/>
+			<label for="precio">Precio: </label> <input name="precio" id="precio" type="number" min="0" max="9999" value="9999"/>
+			<label for="origen">Origen: </label>
+					<select name="origen" id="origen">
+						<option value=""> - </option>
+						<c:forEach items="${codigos}" var="codigo">
+							<option value="${codigo}"><c:out value="${codigo}"/></option>
+						</c:forEach>
+					</select>
+			<label for="destino">Destino: </label>
+					<select name="destino" id="destino">
+						<option value=""> - </option>
+						<c:forEach items="${codigos}" var="codigo">
+							<option value="${codigo}"><c:out value="${codigo}"/></option>
+						</c:forEach>
+					</select>
+			<button type="submit" class="btn btn-default">Filtrar</button>
+		</form>
+	</div>
 
 
 	<table id="tablaVuelos" class="table table-striped">
@@ -35,8 +47,8 @@
 					<td><c:out value="${vuelo.aeropuertoDestino.nombre} - ${vuelo.aeropuertoDestino.codigoIATA}" /></td>
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyyy HH:mm" /></td>
-					<td></td>
-<%-- 					<td><c:out value="${min(vuelo.billetes.coste)}" /></td> --%>
+					<td>A partir de <c:out value="${vuelo.coste}" /> euros</td>
+
 				</tr>
 			</c:forEach>
 		</tbody>
