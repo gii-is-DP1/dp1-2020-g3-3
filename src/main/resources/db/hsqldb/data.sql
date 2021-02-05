@@ -272,11 +272,36 @@ INSERT INTO platos_base(precio,plato_types_id,name) VALUES (1.74,3,'Macarons Sin
 
 --Plato
 INSERT INTO platos(platos_base_id) VALUES (1);
-INSERT INTO platos(platos_base_id) VALUES (12);
+INSERT INTO platos(platos_base_id) VALUES (13);
 INSERT INTO platos(platos_base_id) VALUES (27);
+
+INSERT INTO platos(platos_base_id) VALUES (1);
+INSERT INTO platos(platos_base_id) VALUES (14);
+INSERT INTO platos(platos_base_id) VALUES (28);
+
+INSERT INTO platos(platos_base_id) VALUES (4);
+INSERT INTO platos(platos_base_id) VALUES (14);
+INSERT INTO platos(platos_base_id) VALUES (29);
+
+INSERT INTO platos(platos_base_id) VALUES (4);
+INSERT INTO platos(platos_base_id) VALUES (16);
+INSERT INTO platos(platos_base_id) VALUES (30);
+
+INSERT INTO platos(platos_base_id) VALUES (1);
+INSERT INTO platos(platos_base_id) VALUES (14);
+INSERT INTO platos(platos_base_id) VALUES (31);
+
+INSERT INTO platos(platos_base_id) VALUES (6);
+INSERT INTO platos(platos_base_id) VALUES (18);
+INSERT INTO platos(platos_base_id) VALUES (31);
 
 --Menu
 INSERT INTO menus(billete_id,plato1_id,plato2_id,plato3_id) VALUES (1,1,2,3);
+INSERT INTO menus(billete_id,plato1_id,plato2_id,plato3_id) VALUES (1,4,5,6);
+INSERT INTO menus(billete_id,plato1_id,plato2_id,plato3_id) VALUES (1,7,8,9);
+INSERT INTO menus(billete_id,plato1_id,plato2_id,plato3_id) VALUES (2,10,11,12);
+INSERT INTO menus(billete_id,plato1_id,plato2_id,plato3_id) VALUES (2,13,14,15);
+INSERT INTO menus(billete_id,plato1_id,plato2_id,plato3_id) VALUES (2,16,17,18);
 
 --Equipaje Base
 INSERT INTO equipajes_base(name, dimensiones, precio) VALUES ('Grande','110x110x78',30.0);

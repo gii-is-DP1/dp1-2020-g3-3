@@ -241,7 +241,7 @@ public class VueloController {
 		model.put("numMenus", numMenus);
 		model.put("numeroPlatosInVuelo", numeroPlatosInVuelo);
 		
-		return "vuelos/URLAMIJSP";
+		return "vuelos/menusByVuelo";
 	}
 	
 	@GetMapping(value = "/vuelos/historial")

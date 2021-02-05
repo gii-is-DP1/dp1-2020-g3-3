@@ -124,7 +124,7 @@ public class VueloService {
 	
 	@Transactional(readOnly = true)
 	public int countMenusInVuelo(Map<String, Long> platosPorVuelo){
-		return (int) platosPorVuelo.values().stream().count()/3;
+		return (int) platosPorVuelo.values().stream().collect(Collectors.summingInt(x -> x.intValue()))/3;
 	}
 
 	@Transactional(readOnly = true)
