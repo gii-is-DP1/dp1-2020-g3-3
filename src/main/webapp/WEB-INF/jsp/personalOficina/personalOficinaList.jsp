@@ -8,16 +8,16 @@
 <!-- Archivo .jsp que muestra el listado de todos los oficinistas -->
 
 <aerolineasAAAFC:layout pageName="personalOficina">
-    <h2>Personal de oficina</h2>
+    <h2 class="centrado">Personal de oficina</h2>
 
-    <table id="tablaPersonalOficina" class="table table-striped">
+    <table id="tablaPersonalOficina" class="table table-striped centrado">
         <thead>
         <tr>
-        	<th>Nombre y apellidos</th>
-            <th>NIF</th>
-            <th>IBAN</th>
-            <th>Salario</th>
-            <th>Opciones</th>
+        	<th class="centrado">Nombre y apellidos</th>
+            <th class="centrado">NIF</th>
+            <th class="centrado">IBAN</th>
+            <th class="centrado">Salario</th>
+            <th class="centrado" width="15%">Opciones</th>
         </tr>
         </thead>
         <tbody>

@@ -8,23 +8,23 @@
 <!-- Pagina en la que se mostraran los aeropuertos y se permitira acceder a modificarlos -->
 
 <aerolineasAAAFC:layout pageName="aeropuertos">
-	<h2>Aeropuertos</h2>
+	<h2 class="centrado">Aeropuertos</h2>
 
 	<table id="tablaAeropuertos" class="table table-striped">
 		<thead>
 			<tr>
 				
-				<th width="24%">Nombre</th>
-				<th width="15%">Localización</th>
-				<th width="10%">códigoIATA</th>
-				<th width="10%">Teléfono</th>
-				<th width="10%">Vuelos Salida</th>
-				<th width="10%">Vuelos Llegada</th>
-				<th width="15%">Opciones</th>
+				<th width="24%" class="centrado">Nombre</th>
+				<th width="15%" class="centrado">Localización</th>
+				<th width="10%" class="centrado">códigoIATA</th>
+				<th width="10%" class="centrado">Teléfono</th>
+				<th width="10%" class="centrado">Vuelos Salida</th>
+				<th width="10%" class="centrado">Vuelos Llegada</th>
+				<th width="15%" class="centrado">Opciones</th>
 			</tr>
 		</thead>
 
-		<tbody>
+		<tbody class="centrado">
 			<c:forEach items="${aeropuertos}" var="aeropuerto">
 				<tr>
 					<td onclick="javascript:location.href='/aeropuertos/${aeropuerto.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${aeropuerto.nombre}" /></b></td>

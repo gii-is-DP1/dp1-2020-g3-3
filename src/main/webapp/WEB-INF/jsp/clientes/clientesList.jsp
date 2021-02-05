@@ -9,41 +9,34 @@
 <!-- Pagina en la que se mostraran los clientes y se permitirá eliminarlos -->
 
 <aerolineasAAAFC:layout pageName="clientes">
-	<h2>Clientes</h2>
+	<h2 class="centrado">Clientes</h2>
 	
-	<form:form action="/clientesfind" method="get" class="form-horizontal" id="search-cliente-form">
-        <div class="form-group">
-            <div class="control-group" id="nif">
-                <label class="col-sm-2 control-label">NIF </label>
-                <div class="col-sm-10">
-                    <input class="form-control" name="nif" pattern="^\d{8}[a-zA-Z]$" type="text"/>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Encontrar Cliente</button>
-            </div>
-        </div>
-    </form:form>
+	<div style="float:right; padding-bottom: 1%;" >
+	<form:form action="/clientesfind" method="get">
+           <label>NIF </label>
+           <input name="nif" pattern="^\d{8}[a-zA-Z]$" type="text"/>
+           <button type="submit" class="btn btn-default">Encontrar Cliente</button>
 
-	<table id="tablaClientes" class="table table-striped">
+    </form:form>
+    </div>
+
+	<table id="tablaClientes" class="table table-striped" >
 		<thead>
 			<tr>
 
-				<th>Nombre y apellidos</th>
-				<th>NIF</th>
-				<th>Dirección de Facturación</th>
-				<th>IBAN</th>
-				<th>Fecha de Nacimiento</th>
-				<th>Email</th>
-				<th width="15%">Opciones</th>
+				<th class="centrado">Nombre y apellidos</th>
+				<th class="centrado">NIF</th>
+				<th class="centrado">Dirección de Facturación</th>
+				<th class="centrado">IBAN</th>
+				<th class="centrado">Fecha de Nacimiento</th>
+				<th class="centrado">Email</th>
+				<th class="centrado" width="15%">Opciones</th>
 
 
 			</tr>
 		</thead>
 
-		<tbody>
+		<tbody class="centrado">
 			<c:forEach items="${clientes}" var="cliente">
 				<tr>
 				
