@@ -132,7 +132,7 @@ public class VueloControllerTests {
 				.param("aeropuertoOrigen", "1")
 				.param("aeropuertoDestino", "2")
 				.param("aeropuertoDestino", "2"))
-			
+			//ESPECIFICAR REDIRECCION CONCRETA MEJOR
 		.andExpect(status().is3xxRedirection());
 	}
 	
@@ -187,17 +187,26 @@ public class VueloControllerTests {
 	void testshowVuelosListInicial() throws Exception{
 		mockMvc.perform(get("/vuelos"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeExists("vuelo"))
+		.andExpect(model().attributeExists("vuelos"))
 		.andExpect(view().name("vuelos/vuelosList"));
 	}
 	
 	@WithMockUser(value = "spring")
 	@Test
 	void testshowVuelosListConFecha() throws Exception{
+		//Creo que habria que añadir un nuevo given() para devolver una lista de vuelos en esa fecha (?)
 		mockMvc.perform(get("/vuelos?fecha=2018-01"))
 		.andExpect(status().isOk())
-		.andExpect(model().attributeExists("vuelo"))
+		.andExpect(model().attributeExists("vuelos"))
 		.andExpect(view().name("vuelos/vuelosList"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowMenusByVuelo() throws Exception {
+		mockMvc.perform(get("/vuelos/{vueloId}/showMenusByVuelo", TEST_VUELO_ID))
+		.andExpect(status().isOk()).andExpect(model().attributeExists("vuelo"))
+		.andExpect(view().name("vuelos/URLAMIJSP"));
 	}
 
 }

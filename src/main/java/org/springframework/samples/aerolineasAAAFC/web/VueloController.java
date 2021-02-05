@@ -2,8 +2,6 @@ package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,33 +12,22 @@ import java.util.Set;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
-import org.springframework.samples.aerolineasAAAFC.model.Avion;
-import org.springframework.samples.aerolineasAAAFC.model.Azafato;
-import org.springframework.samples.aerolineasAAAFC.model.Cliente;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
-import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
-import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
-import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.DisponibilidadAvionException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -60,7 +47,6 @@ public class VueloController {
 	private final VueloService vueloService;
 	private final AeropuertoService aeropuertoService;
 	private final AvionService avionService;
-	private final BilleteService billeteService;
 	private final PersonalOficinaService pOficinaService;
 	private final PersonalControlService pControlService;
 	private final AzafatoService azafatoService;
@@ -68,13 +54,12 @@ public class VueloController {
 	
 	@Autowired
 	public VueloController(VueloService vueloService,AeropuertoService aeropuertoService,
-			AvionService avionService,BilleteService billeteService,PersonalOficinaService pOficinaService,
+			AvionService avionService,PersonalOficinaService pOficinaService,
 			PersonalControlService pControlService, AzafatoService azafatoService) {
 
 		this.vueloService = vueloService;
 		this.aeropuertoService = aeropuertoService;
 		this.avionService = avionService;
-		this.billeteService = billeteService;
 		this.pOficinaService = pOficinaService;
 		this.pControlService = pControlService;
 		this.azafatoService = azafatoService;
@@ -92,9 +77,6 @@ public class VueloController {
 		
 		model.put("aeropuertos",this.aeropuertoService.findAeropuertos());
 		model.put("aviones", this.avionService.findAviones());
-		
-		Long billetes=this.billeteService.findNumBilletesByVuelo(vuelo.getId());
-		model.put("billetes", billetes);
 		
 		model.put("pOficina", this.pOficinaService.findPersonal());
 		model.put("pControl", this.pControlService.findPersonalControl());
@@ -247,6 +229,18 @@ public class VueloController {
 		ModelAndView mav = new ModelAndView("vuelos/vueloDetails");
 		mav.addObject(this.vueloService.findVueloById(vueloId));
 		return mav;
+	}
+	
+	@GetMapping(value = "/vuelos/{vueloId}/showMenusByVuelo")
+	public String showMenusByVuelo(Map<String, Object> model, @PathVariable("vueloId") int vueloId) {
+		Vuelo vuelo = this.vueloService.findVueloById(vueloId);
+		Map<String, Long> numeroPlatosInVuelo = this.vueloService.findMenusPorVuelo(vuelo);
+		Integer numMenus = this.vueloService.countMenusInVuelo(numeroPlatosInVuelo);
+		model.put("vuelo", vuelo);
+		model.put("numMenus", numMenus);
+		model.put("numeroPlatosInVuelo", numeroPlatosInVuelo);
+		
+		return "vuelos/URLAMIJSP";
 	}
 	
 	@GetMapping(value = "/vuelos/historial")
