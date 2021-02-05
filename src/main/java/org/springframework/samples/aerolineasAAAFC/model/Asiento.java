@@ -24,7 +24,7 @@ public class Asiento extends BaseEntity{
 
 	@Column(name = "nombre")
 	@NotEmpty
-	@Pattern(regexp="^[A-I]\\d{1}$")
+	@Pattern(regexp="^[A-I]\\d{1,2}$")
 	private String nombre;
 	
 	@Column(name = "libre")

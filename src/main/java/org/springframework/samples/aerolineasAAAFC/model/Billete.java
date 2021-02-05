@@ -14,10 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-<<<<<<< HEAD
-import org.hibernate.envers.Audited;
-=======
->>>>>>> parent of c9af95a... He hecho lo de auditing, creo que está bien, pero...
+
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
