@@ -1,6 +1,5 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,8 +41,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
-
 @Controller
 public class VueloController {
 	private static final String VIEWS_VUELO_CREATE_OR_UPDATE_FORM = "vuelos/createOrUpdateVueloForm";
@@ -51,7 +48,6 @@ public class VueloController {
 	private final VueloService vueloService;
 	private final AeropuertoService aeropuertoService;
 	private final AvionService avionService;
-	private final BilleteService billeteService;
 	private final PersonalOficinaService pOficinaService;
 	private final PersonalControlService pControlService;
 	private final AzafatoService azafatoService;
@@ -65,7 +61,6 @@ public class VueloController {
 		this.vueloService = vueloService;
 		this.aeropuertoService = aeropuertoService;
 		this.avionService = avionService;
-		this.billeteService = billeteService;
 		this.pOficinaService = pOficinaService;
 		this.pControlService = pControlService;
 		this.azafatoService = azafatoService;
@@ -83,6 +78,7 @@ public class VueloController {
 		
 		model.put("aeropuertos",this.aeropuertoService.findAeropuertos());
 		model.put("aviones", this.avionService.findAviones());
+
 		model.put("pOficina", this.pOficinaService.findPersonal());
 		model.put("pControl", this.pControlService.findPersonalControl());
 		model.put("azafatos", this.azafatoService.findAzafatos());
@@ -234,6 +230,18 @@ public class VueloController {
 		ModelAndView mav = new ModelAndView("vuelos/vueloDetails");
 		mav.addObject(this.vueloService.findVueloById(vueloId));
 		return mav;
+	}
+	
+	@GetMapping(value = "/vuelos/{vueloId}/showMenusByVuelo")
+	public String showMenusByVuelo(Map<String, Object> model, @PathVariable("vueloId") int vueloId) {
+		Vuelo vuelo = this.vueloService.findVueloById(vueloId);
+		Map<String, Long> numeroPlatosInVuelo = this.vueloService.findMenusPorVuelo(vuelo);
+		Integer numMenus = this.vueloService.countMenusInVuelo(numeroPlatosInVuelo);
+		model.put("vuelo", vuelo);
+		model.put("numMenus", numMenus);
+		model.put("numeroPlatosInVuelo", numeroPlatosInVuelo);
+		
+		return "vuelos/URLAMIJSP";
 	}
 	
 	@GetMapping(value = "/vuelos/historial")

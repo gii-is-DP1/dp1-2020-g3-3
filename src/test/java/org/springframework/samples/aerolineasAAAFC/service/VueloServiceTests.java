@@ -96,13 +96,14 @@ public class VueloServiceTests {
 		assertThat(found).isEqualTo(2);
 	}
 	
-//	@Test
-//	@Transactional //TODO billete está comentado por lo que cuando vaya este test debería de ir
-//	public void shouldFindClientesByVuelo() {
-//		Vuelo vuelo = this.vueloService.findVueloById(1);
-//		Collection<Cliente> clientes = this.vueloService.findClientesPorVuelo(vuelo); 
-//		assertThat(clientes).isNotEmpty();
-//	}
+	@Test
+	@Transactional //TODO billete está comentado por lo que cuando vaya este test debería de ir
+	public void shouldFindClientesByVuelo() {
+		Vuelo vuelo = this.vueloService.findVueloById(2);
+		Collection<Cliente> clientes = this.vueloService.findClientesPorVuelo(vuelo); 
+		assertThat(clientes).isNotEmpty();
+	}
+
 	
 	@Test
 	@Transactional
@@ -136,6 +137,22 @@ public class VueloServiceTests {
 		// Dividimos por 3 ya que cada menu tiene 3 platos
 		assertThat(mapaContador.values().stream().mapToLong(x -> x).sum()
 				/3).isEqualTo(contadorMenus); 
+	}
+	
+	@Test
+	@Transactional
+	public void shouldCountMenusInVuelo() {
+		int idVueloConMenu = 2;
+
+		Vuelo v = this.vueloService.findVueloById(idVueloConMenu);
+		
+		int contadorMenus = this.billeteService.findBilletesByVuelo(v.getId())
+				.stream().mapToInt(x -> x.getMenus().size()).sum();
+		
+		Map<String, Long> mapaContador = this.vueloService.findMenusPorVuelo(v);
+		
+		// Dividimos por 3 ya que cada menu tiene 3 platos
+		assertThat(this.vueloService.countMenusInVuelo(mapaContador)).isEqualTo(contadorMenus); 
 	}
 	
 	

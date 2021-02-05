@@ -59,7 +59,7 @@ public class VueloService {
 			vuelo.getAvion().setHorasAcumuladas(horasAcum);
 			vueloRepository.save(vuelo);
 			
-//			asientoService.saveManyAsientos(vuelo);
+//			asientoService.saveManyAsientos(vuelo);  ->Felipe testea esto para que no casque ffs
 
 			
 		}
@@ -120,6 +120,11 @@ public class VueloService {
 				.collect(Collectors.groupingBy(PlatoBase::getName,Collectors.counting()));
 		
 		return mapaMenuCountTotal;
+	}
+	
+	@Transactional(readOnly = true)
+	public int countMenusInVuelo(Map<String, Long> platosPorVuelo){
+		return (int) platosPorVuelo.values().stream().count()/3;
 	}
 
 	@Transactional(readOnly = true)
