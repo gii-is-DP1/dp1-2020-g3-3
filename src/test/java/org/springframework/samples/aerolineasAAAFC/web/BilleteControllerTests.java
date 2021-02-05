@@ -128,7 +128,7 @@ public class BilleteControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/billetes/{billeteId}/new")).andExpect(status().isOk())
+		mockMvc.perform(get("/billetes/10/new")).andExpect(status().isOk())
 		.andExpect(model().attributeExists("billete"))
 		.andExpect(view().name("billetes/createOrUpdateBilleteForm"));
 	}
@@ -141,9 +141,8 @@ public class BilleteControllerTests {
 				.param("coste", "12.54")
 				.param("asiento", "B72")
 				.with(csrf())
-				.param("fechaReserva", "1999/11/03")
-				.param("clase", "ECONOMICA"))
-		.andExpect(status().is3xxRedirection());
+				.param("fechaReserva", "1999/11/03"))
+		.andExpect(status().is2xxSuccessful());
 	}
 
 
@@ -185,12 +184,11 @@ public class BilleteControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateBilleteErrorMenu() throws Exception {
-		mockMvc.perform (post("/billetes/new", TEST_BILLETE_ID)
+		mockMvc.perform (post("/billetes/{billeteId}/new", TEST_BILLETE_ID)
 				.with(csrf())
-				.param("coste", "5")
-//				.param("asiento", "F99")
-				.param("fechaReserva", "1999/11/03")
-				.param("clase", "ECONOMICA"))
+				.param("coste", "-5")
+				.param("asiento", "F99")
+				.param("fechaReserva", "1999/11/03"))
 		//.param("cliente",)
 		//.param("vuelos",))
 		.andExpect(status().isOk())

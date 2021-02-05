@@ -47,15 +47,15 @@ public class BilleteController {
 		this.asientoService = asientoService;
 	}
 
-	@ModelAttribute("asientos")
-	public List<Asiento> findAsientosByVuelo(@PathVariable("vueloId") int vueloId) {
-		return this.asientoService.findAsientosSinOcupar(this.vueloService.findVueloById(vueloId));
-	}
-	
-	@ModelAttribute("asientos")
-	public Vuelo findVuelo(@PathVariable("vueloId") int vueloId) {
-		return this.vueloService.findVueloById(vueloId);
-	}
+//	@ModelAttribute("asientos")
+//	public List<Asiento> findAsientosByVuelo(@PathVariable("vueloId") int vueloId) {
+//		return this.asientoService.findAsientosSinOcupar(this.vueloService.findVueloById(vueloId));
+//	}
+//	
+//	@ModelAttribute("vuelo")
+//	public Vuelo findVuelo(@PathVariable("vueloId") int vueloId) {
+//		return this.vueloService.findVueloById(vueloId);
+//	}
 	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
@@ -73,8 +73,8 @@ public class BilleteController {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String name = authentication.getName();//name corresponde al nif del usuario
 			model.put("billete", billete);
-			Vuelo vuelo=vueloService.findVueloById(vueloId);
-			List<Asiento> asientos=vuelo.getAsientos();
+			Vuelo vuelo=this.vueloService.findVueloById(vueloId);
+			List<Asiento> asientos=this.asientoService.findAsientosSinOcupar(vuelo);
 			model.put("asientos",asientos);
 			model.put("vuelo",vuelo);
 			Cliente cliente=clienteService.findClienteByNif(name);
@@ -124,7 +124,7 @@ public class BilleteController {
 			billete.setId(billeteId);
 			this.billeteService.saveBillete(billete);
 
-			return "redirect:/billetes/{billeteId}";
+			return "redirect:/billetes/" + billete.getId();
 		}
 	}
 
