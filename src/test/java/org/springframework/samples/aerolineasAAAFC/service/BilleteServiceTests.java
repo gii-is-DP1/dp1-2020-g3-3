@@ -16,8 +16,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
@@ -29,7 +32,11 @@ import org.springframework.samples.aerolineasAAAFC.service.exceptions.Disponibil
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
-
+import org.springframework.samples.aerolineasAAAFC.web.AsientoFormatter;
+import org.springframework.samples.aerolineasAAAFC.web.BilleteController;
+import org.springframework.samples.aerolineasAAAFC.web.MenuController;
+import org.springframework.samples.aerolineasAAAFC.web.PlatoFormatter;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

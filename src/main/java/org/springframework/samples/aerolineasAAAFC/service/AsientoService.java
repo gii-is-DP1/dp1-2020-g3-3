@@ -39,12 +39,12 @@ public class AsientoService {
 	}
 
 	@Transactional
-	public Collection<Asiento> findAsientos() {
+	public List<Asiento> findAsientos() {
 		return StreamSupport.stream(asientoRepository.findAll().spliterator(), false).collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<Asiento> findAllAsientosByVuelo(Vuelo vuelo) {
+	public List<Asiento> findAllAsientosByVuelo(Vuelo vuelo) {
 		return this.vueloService.findVueloById(vuelo.getId()).getAsientos();
 	}
 
@@ -102,6 +102,8 @@ public class AsientoService {
 			filasEjecutiva = (int) Math.ceil(plazasEjecutiva / 6.0);
 			filasEconomica = (int) Math.ceil(plazasEconomica / 9.0);
 		}
+		
+		int cont = 1;
 
 		Asiento asiento = null;
 		for (int i = 0; i < filasPrimera; i++) {
@@ -111,13 +113,14 @@ public class AsientoService {
 					asiento.setLibre(true);
 					asiento.setVuelo(vuelo);
 					asiento.setClase(Clase.PRIMERACLASE);
-					asiento.setNombre(aux.get(j) + String.valueOf(j));
+					asiento.setNombre(cont + String.valueOf(j));
 					this.saveAsiento(asiento);
 					asientos.add(asiento);
 					plazasPrimera = plazasPrimera - 1;
 				} else
 					break;
 			}
+			cont = cont + 1;
 		}
 
 		for (int i = 0; i < filasEjecutiva; i++) {
@@ -127,7 +130,7 @@ public class AsientoService {
 					asiento.setLibre(true);
 					asiento.setVuelo(vuelo);
 					asiento.setClase(Clase.EJECUTIVA);
-					asiento.setNombre(aux.get(j) + String.valueOf(j));
+					asiento.setNombre(cont + String.valueOf(j));
 					this.saveAsiento(asiento);
 					asientos.add(asiento);
 					plazasEjecutiva = plazasEjecutiva - 1;
@@ -135,6 +138,7 @@ public class AsientoService {
 					break;
 
 			}
+			cont = cont + 1;
 		}
 
 		for (int i = 0; i < filasEconomica; i++) {
@@ -144,13 +148,14 @@ public class AsientoService {
 					asiento.setLibre(true);
 					asiento.setVuelo(vuelo);
 					asiento.setClase(Clase.ECONOMICA);
-					asiento.setNombre(aux.get(j) + String.valueOf(j));
+					asiento.setNombre(cont + String.valueOf(j));
 					this.saveAsiento(asiento);
 					asientos.add(asiento);
 					plazasEconomica = plazasEconomica - 1;
 				} else
 					break;
 			}
+			cont = cont + 1;
 		}
 
 		vuelo.setAsientos(asientos);

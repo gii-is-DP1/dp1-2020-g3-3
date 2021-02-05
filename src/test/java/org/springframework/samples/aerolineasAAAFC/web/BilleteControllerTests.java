@@ -9,6 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +25,11 @@ import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfigu
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
+import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
+import org.springframework.samples.aerolineasAAAFC.service.AsientoService;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
+import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
@@ -28,6 +37,7 @@ import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
 
 @WebMvcTest(controllers=BilleteController.class,
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
@@ -41,6 +51,9 @@ public class BilleteControllerTests {
 
 	@MockBean
 	private BilleteService billeteService;
+	
+	@MockBean
+	private AsientoService asientoService;
 
 	@MockBean
 	private UserService userService;
@@ -50,6 +63,12 @@ public class BilleteControllerTests {
 	
 	@MockBean
 	private VueloService vueloService;
+	
+	@MockBean
+	private AvionService avionService;
+	
+	@MockBean
+	private AeropuertoService aeropuertoService;
 
 	@MockBean
 	private AuthoritiesService authoritiesService; 
@@ -59,34 +78,53 @@ public class BilleteControllerTests {
 
 	private Billete billetazo;
 	
-//	private Menu wrongMenu;
-//	
-//	private Set<Menu> wrongMenus = new HashSet<Menu>();
-
+	private Vuelo vuelol;
+	
+	private Asiento asiento;
 
 	@BeforeEach
 	void setup() {
 
 		billetazo = new Billete();
 		billetazo.setId(TEST_BILLETE_ID);
-//		billetazo.setAsiento("A34");
 		billetazo.setAsiento(new Asiento());
 		//billetazo.setCliente(cliente);
 		billetazo.setCoste(123.56);
 		
-		//billetazo.setEquipajes(equipajes);
+		asiento = new Asiento();
+		asiento.setLibre(true);
+		asiento.setNombre("A1");
 		
-		billetazo.setFechaReserva(LocalDate.of(2789, 12, 03));
-		//billetazo.setMenus(menus);
-		//billetazo.setVuelos(vuelos);
+		vuelol = new Vuelo();
+		vuelol.setId(0);
+		vuelol.setFechaSalida(LocalDateTime.of(2021, Month.DECEMBER, 10, 12, 23));
+		vuelol.setFechaLlegada(LocalDateTime.of(2021, Month.DECEMBER, 11, 12, 23));
+		vuelol.setCoste(100.0);
+		vuelol.setAeropuertoOrigen(aeropuertoService.findAeropuertoById(1));
+		vuelol.setAeropuertoDestino(aeropuertoService.findAeropuertoById(2));
+		vuelol.setAvion(avionService.findAvionById(2));
+		
+		asiento = new Asiento();
+		asiento.setLibre(true);
+		asiento.setNombre("A1");
+		asiento.setVuelo(vuelol);
+		asiento.setVuelo(vuelol);
+
+		List<Asiento> l = new ArrayList<Asiento>();
+		l.add(asiento);
+		vuelol.setAsientos(l);
+		
+		billetazo.setFechaReserva(LocalDate.of(2020, 12, 03));
 
 		given(this.billeteService.findBilleteById(TEST_BILLETE_ID)).willReturn(billetazo);
+		
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/billetes/new")).andExpect(status().isOk()).andExpect(model().attributeExists("billete"))
+		mockMvc.perform(get("/billetes/{billeteId}/new")).andExpect(status().isOk())
+		.andExpect(model().attributeExists("billete"))
 		.andExpect(view().name("billetes/createOrUpdateBilleteForm"));
 	}
 
@@ -94,7 +132,7 @@ public class BilleteControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/billetes/new")
+		mockMvc.perform(post("/billetes/{billeteId}/new", TEST_BILLETE_ID)
 				.param("coste", "12.54")
 				.param("asiento", "B72")
 				.with(csrf())

@@ -12,14 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-<<<<<<< HEAD
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-=======
-import javax.validation.constraints.Past;
 
->>>>>>> parent of c9af95a... He hecho lo de auditing, creo que está bien, pero...
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.service.businessrules.MayoriaEdadConstraint;
 
