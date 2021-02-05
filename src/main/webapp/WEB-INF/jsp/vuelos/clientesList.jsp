@@ -8,7 +8,6 @@
 
 <aerolineasAAAFC:layout pageName="clientes">
 	<h2>Clientes</h2>
-
 	<table id="tablaClientes" class="table table-striped">
 		<thead>
 			<tr>
@@ -29,8 +28,5 @@
 				</tr>
 			</c:forEach>
 		</tbody>
-
 	</table>
-
-				
 </aerolineasAAAFC:layout>
