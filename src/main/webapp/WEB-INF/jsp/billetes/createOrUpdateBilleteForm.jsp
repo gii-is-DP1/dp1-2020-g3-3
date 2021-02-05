@@ -19,9 +19,12 @@
             <aerolineasAAAFC:inputField label="Precio de venta" name="coste"/>
             <select name="asiento">
             	<c:forEach items="${asientos}" var="asiento">
-            		<option value="${vuelo.id},${asiento.id}">${asiento.nombre}</option>
+            		<option value="${asiento.id}">${asiento.nombre}</option>
             	</c:forEach>
             </select>
+            <input type="hidden" name= "equipajes" value= ""/>
+            <input type="hidden" name= "menus" value= ""/>
+            <input type="hidden" name= "cliente" value= "${cliente}"/>
             <input type="hidden" name= "fechaReserva" value= "${vuelo.fechaSalida}"/>
         </div>
         <div class="form-group">
