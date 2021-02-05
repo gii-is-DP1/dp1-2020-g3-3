@@ -18,6 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
+import org.springframework.samples.aerolineasAAAFC.service.AsientoService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
@@ -54,7 +55,7 @@ public class VueloController {
 	
 	@Autowired
 	public VueloController(VueloService vueloService,AeropuertoService aeropuertoService,
-			AvionService avionService,PersonalOficinaService pOficinaService,
+			AvionService avionService,BilleteService billeteService,PersonalOficinaService pOficinaService, 
 			PersonalControlService pControlService, AzafatoService azafatoService) {
 
 		this.vueloService = vueloService;
@@ -77,7 +78,7 @@ public class VueloController {
 		
 		model.put("aeropuertos",this.aeropuertoService.findAeropuertos());
 		model.put("aviones", this.avionService.findAviones());
-		
+
 		model.put("pOficina", this.pOficinaService.findPersonal());
 		model.put("pControl", this.pControlService.findPersonalControl());
 		model.put("azafatos", this.azafatoService.findAzafatos());

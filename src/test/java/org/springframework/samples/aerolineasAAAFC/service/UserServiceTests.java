@@ -33,7 +33,6 @@ public class UserServiceTests {
 		//CONTRASEÑA
 		assertThat(bCrypt.matches("Fly_High14&", user.getPassword()));
 		//CONFIRMAR CONTRASEÑA
-		assertThat(user.getPassword()).isEqualTo(user.getMatchingPassword());
 		//AUTORIDADES
 		String rol = "";
 		Collection<Authorities> autoridad = user.getAuth();
@@ -50,7 +49,6 @@ public class UserServiceTests {
 		User user = new User();
 		user.setUsername("28845479Y");
 		user.setPassword("C0ntr4s3ñ4T3$t");
-		user.setMatchingPassword("C0ntr4s3ñ4T3$t");
 
 		this.userService.saveUser(user);
 		

@@ -122,7 +122,6 @@ public class AzafatoServiceTests {
 		User user = new User();
 		user.setUsername("84493294B");
 		user.setPassword("*pepe_csfay");
-		user.setMatchingPassword("*pepe_csfay");
 		azafato.setUser(user);    
 
 		
@@ -196,7 +195,6 @@ public class AzafatoServiceTests {
 		User user = new User();
 		user.setUsername("84493294B");
 		user.setPassword("*pepe_csfay");
-		user.setMatchingPassword("*pepe_csfay");
 		azafato.setUser(user);    
 		
 		assertThrows(DataIntegrityViolationException.class, () -> { this.azafatoService.saveAzafato(azafato); });
@@ -213,25 +211,13 @@ public class AzafatoServiceTests {
 		Set<IdiomaType> idiomas = azafato.getIdiomas();
 		int found = idiomas.size();
 		
-		IdiomaType i = new IdiomaType();
-		i.setIdioma("JP");
-		idiomas.add(i);
+		IdiomaType idioma = new IdiomaType();
+		idioma.setIdioma("CH");
 		
-		this.azafatoService.saveAzafato(azafato);
+		idiomas.add(idioma);
 		
 		idiomas = this.azafatoService.findAzafatoById(1).getIdiomas();
-		assertThat(idiomas).isEqualTo(found+1);
-	}
-	
-	@Test
-	@Transactional
-	public void shouldNotUpdateAzafato() throws IdiomasNoSuficientesException{ 
-		Azafato azafato = this.azafatoService.findAzafatoById(1);
-		
-		Set<IdiomaType> idiomas = azafato.getIdiomas();
-		idiomas = new HashSet<IdiomaType>();
-		
-		assertThrows(IdiomasNoSuficientesException.class, () -> { this.azafatoService.saveAzafato(azafato); });
+		assertThat(idiomas.size()).isEqualTo(found+1);
 	}
 	
 	

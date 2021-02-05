@@ -24,7 +24,7 @@
             <aerolineasAAAFC:inputField label="Salario" name="salario"/>
 			<aerolineasAAAFC:inputField label="Usuario (debe ser igual al DNI)" name="user.username" />
 			<aerolineasAAAFC:inputField label="Contraseña" name="user.password" type="password" />
-			<aerolineasAAAFC:inputField label="Confirmar Contraseña" name="user.matchingPassword" type="password"></aerolineasAAAFC:inputField>
+			
            	
             <form:errors> </form:errors> 
         </div>

@@ -117,8 +117,15 @@ public class PersonalOficinaController {
 	}
 	
 	
-	// Vistas de consulta
+	//ELIMINACIÓN
+	@GetMapping(value = "/personalOficina/{pOficinaId}/delete")
+	public String deleteCliente(@PathVariable("pOficinaId") int id) {
+		this.pOficinaService.deletePersonalOficinaById(id);
+		return "redirect:/personalOficina";
+	}
 	
+	
+	// Vistas de consulta
 	@GetMapping(value = "/personalOficina")
 	public String showPersonalOficinaList(Map<String, Object> model) {
 		List<PersonalOficina> oficinistas = new ArrayList<PersonalOficina>();

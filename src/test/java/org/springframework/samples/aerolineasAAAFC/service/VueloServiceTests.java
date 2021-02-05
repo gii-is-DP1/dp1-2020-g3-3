@@ -103,6 +103,7 @@ public class VueloServiceTests {
 		Collection<Cliente> clientes = this.vueloService.findClientesPorVuelo(vuelo); 
 		assertThat(clientes).isNotEmpty();
 	}
+
 	
 	@Test
 	@Transactional

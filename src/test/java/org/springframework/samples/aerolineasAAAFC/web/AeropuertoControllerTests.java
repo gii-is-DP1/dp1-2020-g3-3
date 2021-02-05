@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -8,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import org.hamcrest.beans.HasProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +91,21 @@ public class AeropuertoControllerTests {
 		.andExpect(view().name("aeropuertos/createOrUpdateAeropuertoForm"));
 	}
 	
+	
 	//TEST DE ACTUALIZACION
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitUpdateForm() throws Exception{
+		mockMvc.perform(get("/aeropuertos/{aeropuertoId}/edit", TEST_AERO_ID))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("aeropuerto"))
+		.andExpect(model().attribute("aeropuerto", hasProperty("nombre", is("Aeropuerto Josep Tarradellas Barcelona-El Prat"))))
+		.andExpect(model().attribute("aeropuerto", hasProperty("localizacion", is("Barcelona, España"))))
+		.andExpect(model().attribute("aeropuerto", hasProperty("codigoIATA", is("BCN"))))
+		.andExpect(model().attribute("aeropuerto", hasProperty("telefono", is("+34913211000"))))
+		.andExpect(view().name("aeropuertos/createOrUpdateAeropuertoForm"));
+	}
+	
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateAeropuertoSuccess() throws Exception{
@@ -115,4 +132,37 @@ public class AeropuertoControllerTests {
 		.andExpect(model().attributeHasFieldErrors("aeropuerto", "telefono"))
 		.andExpect(view().name("aeropuertos/createOrUpdateAeropuertoForm"));
 	}
+	
+	
+	//TEST DE ELIMINACIÓN
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessDeleteAeropuerto() throws Exception{
+		mockMvc.perform(get("/aeropuertos/{aeropuertoId}/delete", TEST_AERO_ID))
+		.andExpect(status().isFound())
+		.andExpect(model().attributeDoesNotExist("aeropuerto"))
+		.andExpect(view().name("redirect:/aeropuertos"));
+	}
+	
+	
+	//OTROS
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowAeropuerto() throws Exception {
+		mockMvc.perform(get("/aeropuertos/{aeropuertoId}", TEST_AERO_ID))
+		.andExpect(model().attribute("aeropuerto", hasProperty("nombre", is("Aeropuerto Josep Tarradellas Barcelona-El Prat"))))
+		.andExpect(model().attribute("aeropuerto", hasProperty("localizacion", is("Barcelona, España"))))
+		.andExpect(model().attribute("aeropuerto", hasProperty("codigoIATA", is("BCN"))))
+		.andExpect(model().attribute("aeropuerto", hasProperty("telefono", is("+34913211000"))))
+		.andExpect(view().name("aeropuertos/aeropuertoDetails"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowAeropuertoList() throws Exception {
+		mockMvc.perform(get("/aeropuertos"))
+		.andExpect(model().attributeExists("aeropuertos"))
+		.andExpect(view().name("aeropuertos/aeropuertosList"));
+	}
+	
 }

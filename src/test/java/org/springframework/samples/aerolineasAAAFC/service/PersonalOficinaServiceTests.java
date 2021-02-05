@@ -87,7 +87,6 @@ public class PersonalOficinaServiceTests {
 		User poUser = new User();
 		poUser.setUsername("08493865B");
 		poUser.setPassword("juFerRo01");
-		poUser.setMatchingPassword("juFerRo01");
 		po.setUser(poUser);
 
 		this.personalOficinaService.savePersonalOficina(po);
