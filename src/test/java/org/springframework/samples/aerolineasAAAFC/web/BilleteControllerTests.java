@@ -118,6 +118,11 @@ public class BilleteControllerTests {
 
 		given(this.billeteService.findBilleteById(TEST_BILLETE_ID)).willReturn(billetazo);
 		
+		/*
+		 * Ángel, si pasas por aqui (y vas a retocar) aviso de que faltan hacer un par de given() y tal
+		 * Asiento se formatea usando "{idVuelo},{nameAsiento}" -> Te tengo que preguntar como se encripta y desencripta un string random
+		 */
+		
 	}
 
 	@WithMockUser(value = "spring")
