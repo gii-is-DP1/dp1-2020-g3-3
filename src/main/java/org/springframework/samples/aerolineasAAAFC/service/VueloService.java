@@ -151,10 +151,10 @@ public class VueloService {
 	}
 	
 	//2 atributos de filtro
-//	@Transactional(readOnly = true)
-//	public Collection<Vuelo> findVuelosConFechaYPrecio(LocalDateTime fecha, double precio){
-//		return vueloRepository.findVuelosConFechaYPrecio(fecha, precio);
-//	}
+	@Transactional(readOnly = true)
+	public Collection<Vuelo> findVuelosConFechaYPrecio(LocalDateTime fecha, double precio){
+		return vueloRepository.findVuelosConFechaYPrecio(fecha, precio);
+	}
 	
 	@Transactional(readOnly = true)
 	public Collection<Vuelo> findVuelosConFechaYOrigen(LocalDateTime fecha, String iataOrigen){
@@ -167,15 +167,15 @@ public class VueloService {
 	}
 	
 	//3 atributos de filtro
-//	@Transactional(readOnly = true)
-//	public Collection<Vuelo> findVuelosConFechaPrecioYOrigen(LocalDateTime fecha, double precio, String iataOrigen){
-//		return vueloRepository.findVuelosConFechaPrecioYOrigen(fecha, precio, iataOrigen);
-//	}
+	@Transactional(readOnly = true)
+	public Collection<Vuelo> findVuelosConFechaPrecioYOrigen(LocalDateTime fecha, double precio, String iataOrigen){
+		return vueloRepository.findVuelosConFechaPrecioYOrigen(fecha, precio, iataOrigen);
+	}
 	
-//	@Transactional(readOnly = true)
-//	public Collection<Vuelo> findVuelosConFechaPrecioYDestino(LocalDateTime fecha, double precio, String iataDestino){
-//		return vueloRepository.findVuelosConFechaPrecioYDestino(fecha, precio, iataDestino);
-//	}
+	@Transactional(readOnly = true)
+	public Collection<Vuelo> findVuelosConFechaPrecioYDestino(LocalDateTime fecha, double precio, String iataDestino){
+		return vueloRepository.findVuelosConFechaPrecioYDestino(fecha, precio, iataDestino);
+	}
 	
 	@Transactional(readOnly = true)
 	public Collection<Vuelo> findVuelosConFechaOrigenYDestino(LocalDateTime fecha, String iataOrigen, String iataDestino){
@@ -183,10 +183,10 @@ public class VueloService {
 	}
 	
 	//4 atributos de filtro
-//	@Transactional(readOnly = true)
-//	public Collection<Vuelo> findVuelosConTodo(LocalDateTime fecha, double precio, String iataOrigen, String iataDestino){
-//		return vueloRepository.findVuelosConTodo(fecha, precio, iataOrigen, iataDestino);
-//	}
+	@Transactional(readOnly = true)
+	public Collection<Vuelo> findVuelosConTodo(LocalDateTime fecha, double precio, String iataOrigen, String iataDestino){
+		return vueloRepository.findVuelosConTodo(fecha, precio, iataOrigen, iataDestino);
+	}
 	
 	
 
