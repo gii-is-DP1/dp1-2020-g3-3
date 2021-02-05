@@ -2,13 +2,17 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,175 +37,59 @@ public class AvionServiceTests {
 	protected PersonalControlService pControlService;
 	
 //TODO: testear con las entradas de la db + Tests de inserción y borrado
+	
 	// TEST DE CONSULTA:
 	@Test
 	void getTipoAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
+		Avion a = this.avionService.findAvionById(1);
+		
+		//TIPO DE AVIÓN
 		assertThat(a.getTipoAvion())
 		.isNotEmpty()
 		.hasToString("Airbus A320");
-	}
-	
-	@Test
-	void getCapacidadAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
-		assertThat(a.getCapacidadPasajero()).isEqualTo(300);
-	}
-	
-	@Test
-	void getHorasAcumuladasAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
-		assertThat(a.getHorasAcumuladas()).isEqualTo(400);
-	}
-	
-	@Test
-	void getFechaFabricacionAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
-		LocalDate fecha = LocalDate.of(2015, Month.SEPTEMBER, 24);
-		assertThat(a.getFechaFabricacion()).isEqualTo(fecha);
-	}
-	
-	@Test
-	void getDisponibilidadAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
-		assertThat(a.getDisponibilidad()).isEqualTo(true);
-	}
-	
-	@Test
-	void getFechaRevisionAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
-		LocalDate fecha = LocalDate.of(2017, Month.SEPTEMBER, 24);
-		assertThat(a.getFechaRevision()).isEqualTo(fecha);
-	}
-	
-	@Test
-	void getPlazasEconomicaAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
-		assertThat(a.getPlazasEconomica()).isEqualTo(200);
-	}
-	
-	@Test
-	void getPlazasEjecutivaAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
-		assertThat(a.getPlazasEjecutiva()).isEqualTo(80);
-	}
-	
-	@Test
-	void getPlazasPrimeraAvionSuccesful() {
-		Avion a = avionService.findAvionById(1);
-		assertThat(a.getPlazasPrimera()).isEqualTo(20);
-	}
-	
-	// TEST DE ACTUALIZACIÓN:
-	@Test
-	@Transactional
-	void updateCapacidadPasajeroAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		avion.setCapacidadPasajero(100);
-		assertThat(avion.getCapacidadPasajero()).isEqualTo(100);
+		
+		//CAPACIDAD
+		assertThat(a.getCapacidadPasajero())
+		.isEqualTo(300);
+		
+		//HORAS ACUMULADAS
+		assertThat(a.getHorasAcumuladas())
+		.isEqualTo(400);
+		
+		//FECHA DE FABRICACIÓN
+		assertThat(a.getFechaFabricacion())
+		.isEqualTo(LocalDate.of(2015, Month.SEPTEMBER, 24));
+		
+		//DISPONIBILIDAD
+		assertThat(a.getDisponibilidad())
+		.isEqualTo(true);
+		
+		//FECHA DE REVISIÓN
+		assertThat(a.getFechaRevision())
+		.isEqualTo(LocalDate.of(2017, Month.SEPTEMBER, 24));
+		
+		//PLAZAS ECONÓMICAS
+		assertThat(a.getPlazasEconomica())
+		.isEqualTo(200);
+		
+		//PLAZAS EJECUTIVA
+		assertThat(a.getPlazasEjecutiva())
+		.isEqualTo(80);
+		
+		//PLAZAS PRIMERA
+		assertThat(a.getPlazasPrimera())
+		.isEqualTo(20);
 	}
 
-//	@Test
-//	@Transactional
-//	void updateAzafatosAvionSuccessful() {
-//		Avion avion=avionService.findAvionById(1);
-//		Set<Azafato> azafatos=new HashSet<>();
-//		//azafatos.add(e);
-//		avion.setAzafatos(azafatos);
-//		assertThat(avion.getAzafatos()).isEqualTo(azafatos);
-//	}
-
-	@Test
-	@Transactional
-	void updateDisponibilidadAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		avion.setDisponibilidad(false);
-		assertThat(avion.getDisponibilidad()).isFalse();
-	}
-
-	@Test
-	@Transactional
-	void updateFechaFabricacionAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		LocalDate fecha = LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE); 
-		avion.setFechaFabricacion(fecha);
-		assertThat(avion.getFechaFabricacion()).isEqualTo(fecha);
-	}
-
-	@Test
-	@Transactional
-	void updateFechaRevisionAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-
-		LocalDate fecha = LocalDate.parse("2015-12-28", DateTimeFormatter.ISO_DATE);
-		avion.setFechaRevision(fecha);
-		assertThat(avion.getFechaRevision()).isEqualTo("2015-12-28");
-	}
-
-	@Test
-	@Transactional
-	void updateHorasAcumuladasAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		avion.setHorasAcumuladas(140);
-		assertThat(avion.getHorasAcumuladas()).isEqualTo(140);
-	}
 	
-//	@Test
-//	@Transactional
-//	void updatePersonalControlAvionSuccessful() {
-//		Avion avion=avionService.findAvionById(1);
-//		Set<PersonalControl> personal= new HashSet<>();
-//		//personal.add();
-//		avion.setPersonalControl(personal);
-//		assertThat(avion.getPersonalControl()).isEqualTo(personal);
-//	}
-
-	@Test
-	@Transactional
-	void updatePlazasEconomicaAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		avion.setPlazasEconomica(14);
-		assertThat(avion.getPlazasEconomica()).isEqualTo(14);
-	}
-
-	@Test
-	@Transactional
-	void updatePlazasPrimeraAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		avion.setPlazasPrimera(40);
-		assertThat(avion.getPlazasPrimera()).isEqualTo(40);
-	}
-
-	@Test
-	@Transactional
-	void updateVuelosAvionSuccessful() {
-		Avion avion=avionService.findAvionById(1);
-		Set<Vuelo> vuelos=new HashSet<>();
-		//vuelos.add(e);
-		avion.setVuelos(vuelos);
-		assertThat(avion.getVuelos()).isEqualTo(vuelos);
-	}
-	
-	// TEST DE INSERCIÓN:
+	//TEST INSERTAR:
 	@Test
 	@Transactional
 	public void shouldInsertAvion() {
 		Collection<Avion> aviones = this.avionService.findAviones();
 		int found = aviones.size();
-		
-//		Azafato aza = this.azafatoService.findAzafatoById(1);
-//		Set<Azafato> azas = new HashSet<Azafato>();
-//		azas.add(aza);
-		
-		Vuelo vue = this.vueloService.findVueloById(1);
-		Set<Vuelo> vues = new HashSet<Vuelo>();
-		vues.add(vue);
-		
-//		PersonalControl pCon = this.pControlService.findPersonalControlById(1);
-//		Set<PersonalControl> pCons = new HashSet<PersonalControl>();
-//		pCons.add(pCon);
-		
-		
+
+		//CREACIÓN DEL AVIÓN
 		Avion avi = new Avion();
 		avi.setTipoAvion("Airbus 420");
 		avi.setCapacidadPasajero(200);
@@ -213,17 +101,61 @@ public class AvionServiceTests {
 		avi.setPlazasEjecutiva(40);
 		avi.setPlazasPrimera(20);
 		
-//		avi.setAzafatos(azas);
+		//AÑADIMOS UN VUELO AL AVIÓN
+		Vuelo vue = this.vueloService.findVueloById(1);
+		List<Vuelo> vues = new ArrayList<Vuelo>();
+		vues.add(vue);
 		avi.setVuelos(vues);
-//		avi.setPersonalControl(pCons);
 		
-		// Por ahora no hay restricciones que puedan saltar por insercion de datos
 		this.avionService.saveAvion(avi);
 		
 		assertThat(avi.getId()).isNotEqualTo(0);
 		
 		aviones = this.avionService.findAviones();
 		assertThat(aviones.size()).isEqualTo(found+1);
+	}
+	
+	@Test
+	@Transactional
+	public void shouldNotInsertAvionNull() {
+
+		//CREACIÓN DEL AVIÓN
+		Avion avi = new Avion();
+		avi.setCapacidadPasajero(200);
+		avi.setHorasAcumuladas(1000);
+		avi.setFechaRevision(LocalDate.of(2020, 1, 20));
+		avi.setPlazasEconomica(140);
+		avi.setPlazasPrimera(20);
+		
+		//AÑADIMOS UN VUELO AL AVIÓN
+		Vuelo vue = this.vueloService.findVueloById(2);
+		List<Vuelo> vues = new ArrayList<Vuelo>();
+		vues.add(vue);
+		avi.setVuelos(vues);
+		
+		assertThrows(ConstraintViolationException.class, () -> { this.avionService.saveAvion(avi); });
+	}
+	
+	// TEST DE ACTUALIZACIÓN:
+	@Test
+	@Transactional
+	void updateAvionSuccessful() {
+		
+		Avion avion = this.avionService.findAvionById(1);
+		avion.setCapacidadPasajero(100);
+		avion.setDisponibilidad(false);
+		avion.setFechaFabricacion(LocalDate.of(2010, 5, 16));
+		avion.setFechaRevision(LocalDate.of(2010, 12, 28));
+		avion.setHorasAcumuladas(140);
+		
+		this.avionService.saveAvion(avion);
+		
+		avion = this.avionService.findAvionById(1);
+		assertThat(avion.getCapacidadPasajero()).isEqualTo(100);
+		assertThat(avion.getDisponibilidad()).isFalse();
+		assertThat(avion.getFechaFabricacion()).isEqualTo(LocalDate.of(2010, 5, 16));
+		assertThat(avion.getFechaRevision()).isEqualTo(LocalDate.of(2010, 12, 28));
+		assertThat(avion.getHorasAcumuladas()).isEqualTo(140);
 	}
 	
 	// TEST DE BORRADO:
@@ -233,7 +165,7 @@ public class AvionServiceTests {
 		Collection<Avion> aviones = this.avionService.findAviones();
 		int found = aviones.size();
 		
-		avionService.eliminarAvion(1);
+		this.avionService.eliminarAvion(1);
 		
 		aviones = this.avionService.findAviones();
 		assertThat(aviones.size()).isEqualTo(found-1);

@@ -146,35 +146,56 @@ public class AvionController {
 				//		return "controladores/estadoAviones";
 				//	}
 
+//	@GetMapping(value = "/controladores/rutaAviones")
+//	public String showAvionesListPersonal(Map<String, Object> model) {
+//		
+//		Aeropuerto aeropuerto = null; //Inicializa aeropuerto
+//		List<Avion> aviones = this.avionService.findAviones(); //Almacena todos los aviones de la compañía
+//		Collection<Vuelo> todosVuelos = this.vueloService.findVuelos(); //Almacena todos los vuelos de la compañía
+//		List<Aeropuerto> aeropuertosDestino = new ArrayList<Aeropuerto>(); //Inicializa aeropuertosDestino
+//		
+//		//Recorre los vuelos y recoge su avión, si dicho avión es de la compañía establece como fechaFinal la fecha de llegada
+//		for (Vuelo v : todosVuelos) {
+//			LocalDateTime fechaFinal = LocalDateTime.of(1900, Month.JULY, 29, 19, 30, 40);
+//			Avion avion = v.getAvion();
+//			
+//			for (int i = 0; i <= aviones.size()-1; i++) {
+//				if (avion.equals(aviones.get(i))) {
+//
+//					LocalDateTime fechaLlegada = v.getFechaLlegada();
+//					if (fechaLlegada.isAfter(fechaFinal)) {
+//						fechaFinal = fechaLlegada;
+//					}
+//				}
+//			}
+//
+//			//aeropuerto = this.vueloService.findVueloByFechaLLegada(fechaFinal).; //Coge el aeropuerto
+//			aeropuertosDestino.add(aeropuerto); //lo añade a la lista
+//		}
+//
+//		model.put("aviones", aviones);
+//		model.put("aeropuertosDestino", aeropuertosDestino);
+//
+//		return "controladores/rutaAviones";
+//	}
+	
 	@GetMapping(value = "/controladores/rutaAviones")
 	public String showAvionesListPersonal(Map<String, Object> model) {
-		Aeropuerto aeropuerto = null;
-		List<Avion> aviones = this.avionService.findAviones();
-		Collection<Vuelo> todosVuelos = this.vueloService.findVuelos();
+		
 		List<Aeropuerto> aeropuertosDestino = new ArrayList<Aeropuerto>();
-
-		for (Vuelo v : todosVuelos) {
-			LocalDateTime fechaFinal = LocalDateTime.of(1900, Month.JULY, 29, 19, 30, 40);
-			Avion avion = v.getAvion();
-			
-			for (int i = 0; i <= aviones.size()-1; i++) {
-				if (avion.equals(aviones.get(i))) {
-
-					LocalDateTime fechaLlegada = v.getFechaLlegada();
-					if (fechaLlegada.isAfter(fechaFinal)) {
-						fechaFinal = fechaLlegada;
-					}
-				}
-			}
-
-			aeropuerto = this.vueloService.findVueloByFechaLLegada(fechaFinal).getAeropuertoDestino();
-			aeropuertosDestino.add(aeropuerto);
+		List<Avion> aviones = this.avionService.findAviones();
+		
+		for(Avion a: aviones) {
+			Aeropuerto aer = a.getVuelos().get(0).getAeropuertoDestino();
+			aeropuertosDestino.add(aer);
 		}
-
+		
 		model.put("aviones", aviones);
 		model.put("aeropuertosDestino", aeropuertosDestino);
 
 		return "controladores/rutaAviones";
 	}
+	
+	
 
 }

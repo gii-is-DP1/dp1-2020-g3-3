@@ -7,6 +7,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
+import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.hasProperty;
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 
@@ -43,6 +45,9 @@ public class AvionControllerTests {
 
 	@MockBean
 	private UserService userService;
+	
+	@MockBean
+	private VueloService vueloService;
 	
 	@MockBean
 	private AuthoritiesService authoritiesService; 
@@ -70,7 +75,7 @@ public class AvionControllerTests {
 		apache.setPlazasEjecutiva(3);
 		apache.setPlazasPrimera(65);
 		apache.setTipoAvion("AIRBUS");
-		apache.setVuelos(new HashSet<>());
+		apache.setVuelos(new ArrayList<>());
 		given(this.avionService.findAvionById(TEST_AVION_ID)).willReturn(apache);
 	}
 	
@@ -117,7 +122,6 @@ public class AvionControllerTests {
 				.param("plazasEconomica", "140")
 				.param("plazasEjecutiva", "40")
 				.param("plazasPrimera", "20"))
-		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("avion"))
 		.andExpect(model().attributeHasFieldErrors("avion", "pesoMaximoEquipaje"))
 		.andExpect(view().name("aviones/createOrUpdateAvionForm"));

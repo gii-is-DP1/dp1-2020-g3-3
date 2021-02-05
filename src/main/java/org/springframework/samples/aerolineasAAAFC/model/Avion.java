@@ -2,6 +2,7 @@ package org.springframework.samples.aerolineasAAAFC.model;
 
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,19 +14,19 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-import org.hibernate.validator.constraints.Range;
-import org.springframework.core.annotation.Order;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
 * Entidad simple que representa un avion
 */
 
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "aviones")
@@ -71,7 +72,7 @@ public class Avion extends BaseEntity{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="avion")
 	@EqualsAndHashCode.Exclude
 	@OrderBy("fechaSalida DESC")
-	private Set<Vuelo> vuelos;
+	private List<Vuelo> vuelos;
 
 	public Integer getVersion() {
 		return null;
