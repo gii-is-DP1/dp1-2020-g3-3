@@ -49,7 +49,7 @@ public class AzafatoController {
 	}
 	
 	@ModelAttribute("idioma_types")
-	public Collection<IdiomaType> populatePetTypes() {
+	public Collection<IdiomaType> populateIdiomaTypes() {
 		return this.azafatoService.findIdiomaTypes();
 	}
 	

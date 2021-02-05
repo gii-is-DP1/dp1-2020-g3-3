@@ -106,7 +106,7 @@ public class AzafatoControllerTests {
 
 	@WithMockUser(value = "spring")
 	@Test
-	void testProcessCreationFormSuccess() throws Exception {  //OJO que este no va por la redireccion
+	void testProcessCreationFormSuccess() throws Exception {
 		mockMvc.perform(post("/azafatos/new")
 				.param("nombre", "Gonzalo")
 				.param("apellidos", "Gonzalez")
@@ -118,7 +118,7 @@ public class AzafatoControllerTests {
 				.param("user.username", "11571749N")
 				.param("user.password", "AAAAAAA"))
 		.andExpect(status().is3xxRedirection())
-		.andExpect(view().name("redirect:/azafatos/null")); //OJO, ESTO HAY QUE CAMBIARLO
+		.andExpect(view().name("redirect:/azafatos/null")); //OJO, ESTO HAY QUE CAMBIARLO -> en vez de null, ponemos un given que devuelva el id falso
 	}
 
 
