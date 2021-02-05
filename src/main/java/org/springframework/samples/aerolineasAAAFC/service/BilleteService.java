@@ -44,9 +44,10 @@ public class BilleteService {
 		this.menuRepository = menuRepository;
 		this.equipajeRepository = equipajeRepository;
 	}
-
+	
 	@Transactional
 	public void saveBillete(Billete billete) throws DataAccessException {
+		
 		billeteRepository.save(billete);
 	}
 

@@ -1,64 +1,64 @@
 --Usuarios
 --Admin
-INSERT INTO users(username, password, matching_Password) VALUES ('admin','$2a$10$gPaqVBo4waGhKlUgf60zM.NGMcH2G7aWETHK5TIfMy1jLJskbfW/G','$2a$10$gPaqVBo4waGhKlUgf60zM.NGMcH2G7aWETHK5TIfMy1jLJskbfW/G');--4dm1n
+INSERT INTO users(username, password) VALUES ('admin','$2a$10$gPaqVBo4waGhKlUgf60zM.NGMcH2G7aWETHK5TIfMy1jLJskbfW/G');--4dm1n
 INSERT INTO authorities(id,username,authority) VALUES (1,'admin','admin');
 
 --Clientes
-INSERT INTO users(username,password,matching_Password) VALUES ('01446551N','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO users(username,password) VALUES ('01446551N','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
 INSERT INTO authorities(id,username,authority) VALUES (2,'01446551N','cliente');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('29565800A','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO users(username,password) VALUES ('29565800A','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
 INSERT INTO authorities(id,username,authority) VALUES (3,'29565800A','cliente');
 
 --Personal Control
-INSERT INTO users(username,password,matching_Password) VALUES ('17579447H','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');--P9012%adsa
+INSERT INTO users(username,password) VALUES ('17579447H','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');--P9012%adsa
 INSERT INTO authorities(id,username,authority) VALUES (4,'17579447H','personalControl');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('12355435L','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
+INSERT INTO users(username,password) VALUES ('12355435L','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
 INSERT INTO authorities(id,username,authority) VALUES (5,'12355435L','personalControl');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('54425951Q','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
+INSERT INTO users(username,password) VALUES ('54425951Q','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
 INSERT INTO authorities(id,username,authority) VALUES (6,'54425951Q','personalControl');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('29353803F','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
+INSERT INTO users(username,password) VALUES ('29353803F','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
 INSERT INTO authorities(id,username,authority) VALUES (7,'29353803F','personalControl');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('31123210R','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
+INSERT INTO users(username,password) VALUES ('31123210R','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
 INSERT INTO authorities(id,username,authority) VALUES (8,'31123210R','personalControl');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('34109741M','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
+INSERT INTO users(username,password) VALUES ('34109741M','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');
 INSERT INTO authorities(id,username,authority) VALUES (9,'34109741M','personalControl');
 
 --Azafato
-INSERT INTO users(username,password,matching_Password) VALUES ('21333214R','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');--A1234%adsa
+INSERT INTO users(username,password) VALUES ('21333214R','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');--A1234%adsa
 INSERT INTO authorities(id,username,authority) VALUES (10,'21333214R','azafato');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('65519676J','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
+INSERT INTO users(username,password) VALUES ('65519676J','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
 INSERT INTO authorities(id,username,authority) VALUES (11,'65519676J','azafato');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('25416743H','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
+INSERT INTO users(username,password) VALUES ('25416743H','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
 INSERT INTO authorities(id,username,authority) VALUES (12,'25416743H','azafato');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('17479248F','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
+INSERT INTO users(username,password) VALUES ('17479248F','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
 INSERT INTO authorities(id,username,authority) VALUES (13,'17479248F','azafato');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('42693476W','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
+INSERT INTO users(username,password) VALUES ('42693476W','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
 INSERT INTO authorities(id,username,authority) VALUES (14,'42693476W','azafato');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('15637561E','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
+INSERT INTO users(username,password) VALUES ('15637561E','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
 INSERT INTO authorities(id,username,authority) VALUES (15,'15637561E','azafato');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('16199550Y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
+INSERT INTO users(username,password) VALUES ('16199550Y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
 INSERT INTO authorities(id,username,authority) VALUES (16,'16199550Y','azafato');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('51614708V','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
+INSERT INTO users(username,password) VALUES ('51614708V','$2a$10$/8LFKKoEqggJPTA5Q8KALuzwPfMoCG7kkI25KJrmGy94OT6ObXQ7y');
 INSERT INTO authorities(id,username,authority) VALUES (17,'51614708V','azafato');
 
 --Personal Oficina
-INSERT INTO users(username,password,matching_Password) VALUES ('76188332G','$2a$10$RZZrQPenMX1vtOkOBC9WxecSxjbWwKoU1SixOHyrgXqKMx7G9DL/S','$2a$10$RZZrQPenMX1vtOkOBC9WxecSxjbWwKoU1SixOHyrgXqKMx7G9DL/S');--F1234%adsa
+INSERT INTO users(username,password) VALUES ('76188332G','$2a$10$RZZrQPenMX1vtOkOBC9WxecSxjbWwKoU1SixOHyrgXqKMx7G9DL/S');--F1234%adsa
 INSERT INTO authorities(id,username,authority) VALUES (18,'76188332G','personalOficina');
 
-INSERT INTO users(username,password,matching_Password) VALUES ('39658948W','$2a$10$RZZrQPenMX1vtOkOBC9WxecSxjbWwKoU1SixOHyrgXqKMx7G9DL/S','$2a$10$RZZrQPenMX1vtOkOBC9WxecSxjbWwKoU1SixOHyrgXqKMx7G9DL/S');
+INSERT INTO users(username,password) VALUES ('39658948W','$2a$10$RZZrQPenMX1vtOkOBC9WxecSxjbWwKoU1SixOHyrgXqKMx7G9DL/S');
 INSERT INTO authorities(id,username,authority) VALUES (19,'39658948W','personalOficina');
 
 
@@ -95,19 +95,25 @@ VALUES ('Airbus A330', 335 , 300, '2015-01-20', true, '2020-03-10', 250, 75, 10)
 
 --Vuelos
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('11-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('11-01-2021 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
+VALUES (parsedatetime('11-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('11-01-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('20-01-2015 8:30','dd-MM-yyyy hh:mm'),parsedatetime('20-01-2015 10:55','dd-MM-yyyy hh:mm'),10000,2,3,2);
+VALUES (parsedatetime('20-01-2015 8:30','dd-MM-yyyy hh:mm'),parsedatetime('20-01-2015 10:55','dd-MM-yyyy hh:mm'),40,2,3,2);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('17-01-2018 23:30','dd-MM-yyyy hh:mm'),parsedatetime('18-01-2018 13:40','dd-MM-yyyy hh:mm'),25000,6,5,3);
+VALUES (parsedatetime('17-01-2018 23:30','dd-MM-yyyy hh:mm'),parsedatetime('18-01-2018 13:40','dd-MM-yyyy hh:mm'),250,6,5,3);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('03-06-2019 7:10','dd-MM-yyyy hh:mm'),parsedatetime('03-06-2019 13:20','dd-MM-yyyy hh:mm'),30000,6,7,4);
+VALUES (parsedatetime('03-06-2019 7:10','dd-MM-yyyy hh:mm'),parsedatetime('03-06-2019 13:20','dd-MM-yyyy hh:mm'),300,6,7,4);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('07-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-01-2021 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
+VALUES (parsedatetime('07-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-01-2021 21:30','dd-MM-yyyy hh:mm'),200,1,2,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('10-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-01-2021 21:30','dd-MM-yyyy hh:mm'),30000,1,2,1);
+VALUES (parsedatetime('10-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-01-2021 21:30','dd-MM-yyyy hh:mm'),150,1,2,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('05-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('05-02-2021 21:30','dd-MM-yyyy hh:mm'),30000,2,1,3);
+VALUES (parsedatetime('06-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('06-02-2021 21:30','dd-MM-yyyy hh:mm'),500,2,1,3);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,3);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),200,3,2,3);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('10-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-02-2021 21:30','dd-MM-yyyy hh:mm'),350,2,3,3);
 
 
 --PersonalControl

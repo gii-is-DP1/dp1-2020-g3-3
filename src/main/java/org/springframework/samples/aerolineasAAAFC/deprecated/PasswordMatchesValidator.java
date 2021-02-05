@@ -1,4 +1,4 @@
-package org.springframework.samples.aerolineasAAAFC.service.businessrules;
+package org.springframework.samples.aerolineasAAAFC.deprecated;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -13,7 +13,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
   @Override
   public boolean isValid(Object obj, ConstraintValidatorContext context){   
       User user = (User) obj;
-      return user.getPassword().equals(user.getMatchingPassword());    
+      return false; //user.getPassword().equals(user.getMatchingPassword());    
   }
 
 }

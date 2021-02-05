@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,7 +51,7 @@ public class ClienteControllerTests {
 
 	@MockBean
 	private AuthoritiesService authoritiesService; 
-	
+
 	@MockBean
 	private VueloService vueloService;
 
@@ -70,11 +73,11 @@ public class ClienteControllerTests {
 		dolores.setDireccionFacturacion("Calle Parera ,15 5ºA - 41011 Sevilla");
 		dolores.setIban("ES 4422000418403334567812");
 		dolores.setFechaNacimiento(LocalDate.of(1989, 12, 03));
+		dolores.setEmail("doloresram@gmail.com");
 
 		doloresUser = new User();
 		doloresUser.setUsername("29565800A");
 		doloresUser.setPassword("EEEEE");
-		doloresUser.setMatchingPassword("EEEEE");
 		dolores.setUser(doloresUser);
 
 
@@ -82,7 +85,6 @@ public class ClienteControllerTests {
 	}
 
 	//TESTS CREACIÓN
-
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
@@ -105,8 +107,7 @@ public class ClienteControllerTests {
 				.param("fechaNacimiento", "1995-03-08")
 				.param("email", "juanjeferrero@outlook.com")
 				.param("user.username", "28976897W")
-				.param("user.password", "AAAAAAA")
-				.param("user.matchingPassword", "AAAAAAA"))
+				.param("user.password", "AAAAAAA"))
 		.andExpect(status().is3xxRedirection());
 	}
 
@@ -131,35 +132,24 @@ public class ClienteControllerTests {
 		.andExpect(view().name("clientes/createOrUpdateClienteForm"));
 	}
 
-	//TESTS BÚSQUEDA
 
-	@WithMockUser(value = "spring")
-	@Test
-	void testInitFindForm() throws Exception {
-		mockMvc.perform(get("/clientes/find")).andExpect(status().isOk()).andExpect(model().attributeExists("cliente"))
-		.andExpect(view().name("clientes/findClientes"));
-	}
-
-	@WithMockUser(value = "spring")
-	@Test
-	void testProcessFindFormByNif() throws Exception {
-		given(this.clienteService.findClienteByNif(dolores.getNif())).willReturn(dolores);
-		Logger.getLogger(ClienteControllerTests.class.getName()).log(Level.INFO, "Dolores: " + dolores);
-
-		mockMvc.perform(get("/clientes").param("nif", "29565800A")).andExpect(status().is3xxRedirection())
-		.andExpect(view().name("redirect:/clientes/" + TEST_CLIENTE_ID));
-	}
-
-	@WithMockUser(value = "spring")
-	@Test
-	void testProcessFindFormNoClientesFound() throws Exception {
-		mockMvc.perform(get("/clientes").param("nif", "29565800A")).andExpect(status().isOk())
-		.andExpect(model().attributeHasFieldErrors("cliente", "nif"))
-		.andExpect(model().attributeHasFieldErrorCode("cliente", "nif", "notFound"))
-		.andExpect(view().name("clientes/findClientes"));
-	}
 
 	//TESTS ACTUALIZACIÓN
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitUpdateForm() throws Exception{
+		mockMvc.perform(get("/clientes/{clienteId}/edit", TEST_CLIENTE_ID))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("cliente"))
+		.andExpect(model().attribute("cliente", hasProperty("nombre", is("Dolores"))))
+		.andExpect(model().attribute("cliente", hasProperty("apellidos", is("Ramos Ceballos"))))
+		.andExpect(model().attribute("cliente", hasProperty("nif", is("29565800A"))))
+		.andExpect(model().attribute("cliente", hasProperty("direccionFacturacion", is("Calle Parera ,15 5ºA - 41011 Sevilla"))))
+		.andExpect(model().attribute("cliente", hasProperty("iban", is("ES 4422000418403334567812"))))
+		.andExpect(model().attribute("cliente", hasProperty("fechaNacimiento", is(LocalDate.of(1989, 12, 03)))))
+		.andExpect(model().attribute("cliente", hasProperty("email", is("doloresram@gmail.com"))))
+		.andExpect(view().name("clientes/createOrUpdateClienteForm"));
+	}
 
 	@WithMockUser(value = "spring")
 	@Test
@@ -191,7 +181,6 @@ public class ClienteControllerTests {
 				.param("fechaNacimiento", "1997-06-03")
 				.param("email", "juanjeferrero@outlook.com")
 				.param("user.username", "29565800A")
-				.param("user.password", "AAAAAAA")
 				.param("user.password", "AAAAAAA"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("cliente"))
@@ -199,5 +188,67 @@ public class ClienteControllerTests {
 		.andExpect(model().attributeHasFieldErrors("cliente", "iban"))
 		.andExpect(view().name("clientes/createOrUpdateClienteForm"));
 	}
+
+	//TEST ELIMINACIÓN
+	@WithMockUser(value = "spring")
+	@Test
+	void testDeleteCliente() throws Exception{
+		mockMvc.perform(get("/clientes/{clienteId}/delete", TEST_CLIENTE_ID))
+		.andExpect(status().isFound())
+		.andExpect(model().attributeDoesNotExist("cliente"))
+		.andExpect(view().name("redirect:/clientesList"));
+	}
+
+	//TESTS BÚSQUEDA
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessFindFormByNif() throws Exception {
+		given(this.clienteService.findClienteByNif(dolores.getNif())).willReturn(dolores);
+		Logger.getLogger(ClienteControllerTests.class.getName()).log(Level.INFO, "Dolores: " + dolores);
+
+		mockMvc.perform(get("/clientesfind").param("nif", "29565800A")).andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/clientes/" + TEST_CLIENTE_ID));
+	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessFindFormNoClientesFound() throws Exception {
+		mockMvc.perform(get("/clientesfind").param("nif", "29565800A")).andExpect(status().isOk())
+		.andExpect(model().attributeHasFieldErrors("cliente", "nif"))
+		.andExpect(model().attributeHasFieldErrorCode("cliente", "nif", "notFound"))
+		.andExpect(view().name("clientes/clientesList"));
+	}
+
+	//OTROS
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowClientesList() throws Exception{
+		mockMvc.perform(get("/clientesList"))
+		.andExpect(model().attributeExists("clientes"))
+		.andExpect(view().name("clientes/clientesList"));
+	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowCliente() throws Exception {
+		mockMvc.perform(get("/clientes/{clienteId}", TEST_CLIENTE_ID))
+		.andExpect(model().attribute("cliente", hasProperty("nombre", is("Dolores"))))
+		.andExpect(model().attribute("cliente", hasProperty("apellidos", is("Ramos Ceballos"))))
+		.andExpect(model().attribute("cliente", hasProperty("nif", is("29565800A"))))
+		.andExpect(model().attribute("cliente", hasProperty("direccionFacturacion", is("Calle Parera ,15 5ºA - 41011 Sevilla"))))
+		.andExpect(model().attribute("cliente", hasProperty("iban", is("ES 4422000418403334567812"))))
+		.andExpect(model().attribute("cliente", hasProperty("fechaNacimiento", is(LocalDate.of(1989, 12, 03)))))
+		.andExpect(model().attribute("cliente", hasProperty("email", is("doloresram@gmail.com"))))
+		.andExpect(view().name("clientes/clienteDetails"));
+	}
+
+	//	@WithMockUser(value = "spring")
+	//	@Test 								TODO 
+	//	void testShowClienteBilletes() throws Exception {
+	//		mockMvc.perform(get("/clientes/{clienteId}/compras", 1))
+	//		.andExpect(model().attributeExists("cliente"))
+	//		.andExpect(model().attributeExists("billetes"))
+	//		.andExpect(view().name("clientes/compras"));
+	//	}
 
 }

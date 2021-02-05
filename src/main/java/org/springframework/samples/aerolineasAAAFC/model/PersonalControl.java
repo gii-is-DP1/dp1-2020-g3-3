@@ -12,17 +12,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
 * Entidad simple que representa un personal de control
 */
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "personal_control")
@@ -49,7 +48,6 @@ public class PersonalControl extends Person{
 	private Set<Vuelo> vuelos;
 
 	public Integer getVersion() {
-		return null;
-	}
+		return this.getVersion();	}
 
 }

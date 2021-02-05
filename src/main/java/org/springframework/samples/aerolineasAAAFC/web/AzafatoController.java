@@ -49,7 +49,7 @@ public class AzafatoController {
 	}
 	
 	@ModelAttribute("idioma_types")
-	public Collection<IdiomaType> populatePetTypes() {
+	public Collection<IdiomaType> populateIdiomaTypes() {
 		return this.azafatoService.findIdiomaTypes();
 	}
 	
@@ -137,6 +137,13 @@ public class AzafatoController {
 			return "redirect:/azafatos/{azafatoId}";
 		}
 		
+	}
+	
+	//ELIMINACIÓN
+	@GetMapping(value = "/azafatos/{azafatoId}/delete")
+	public String deleteAzafato(@PathVariable("azafatoId") int azafatoId) {
+		this.azafatoService.eliminarAzafato(azafatoId);
+		return "redirect:/azafatosList";
 	}
 	
 	@GetMapping(value =  "/azafatosList" )

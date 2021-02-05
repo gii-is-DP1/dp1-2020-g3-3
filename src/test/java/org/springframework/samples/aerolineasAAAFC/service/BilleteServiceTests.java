@@ -10,31 +10,33 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
-import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.EquipajeBase;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Plato;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.DisponibilidadAvionException;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
-
+import org.springframework.samples.aerolineasAAAFC.web.AsientoFormatter;
+import org.springframework.samples.aerolineasAAAFC.web.BilleteController;
+import org.springframework.samples.aerolineasAAAFC.web.MenuController;
+import org.springframework.samples.aerolineasAAAFC.web.PlatoFormatter;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,19 +75,19 @@ public class BilleteServiceTests {
 		List<Asiento> asientos = this.asientoService.findAsientosSinOcupar(vuelo);
 		Asiento asiento = asientos.size()==0?null : asientos.get(0);
 		
-		long nBilletes=this.billeteService.findNumBilletesByVuelo(idVuelo);
+		long nBilletes = this.billeteService.findNumBilletesByVuelo(idVuelo);
 
 		Billete billete = new Billete();
 
 		billete.setAsiento(asiento);
 
 		billete.setCoste(12);
-		LocalDate reserva=LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE);
+		LocalDate reserva = LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE);
 		billete.setFechaReserva(reserva);
 		
 		this.billeteService.saveBillete(billete);
 		
-		long nBilletes2=this.billeteService.findNumBilletesByVuelo(idVuelo);
+		long nBilletes2 = this.billeteService.findNumBilletesByVuelo(idVuelo);
 		
 		assertThat(nBilletes2).isEqualTo(nBilletes + 1);
 	}
@@ -98,13 +100,13 @@ public class BilleteServiceTests {
 		
 		Billete b = this.billeteService.findBilleteById(1);
 		Plato p1 = new Plato();
-		p1.setPlatoBase(platoBaseService.findPlatoBaseByName("Sopa de miso"));
+		p1.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Sopa de miso"));
 		
 		Plato p2 = new Plato();
-		p2.setPlatoBase(platoBaseService.findPlatoBaseByName("Arroz con ternera al curry"));
+		p2.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Arroz con ternera al curry"));
 		
 		Plato p3 = new Plato();
-		p3.setPlatoBase(platoBaseService.findPlatoBaseByName("Manzana"));
+		p3.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Manzana"));
 		
 		Menu m = new Menu();
 		m.setPlato1(p1);
@@ -132,13 +134,13 @@ public class BilleteServiceTests {
 		
 		Billete b = this.billeteService.findBilleteById(1);
 		Plato p1 = new Plato();
-		p1.setPlatoBase(platoBaseService.findPlatoBaseByName("Sopa de miso"));
+		p1.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Sopa de miso"));
 		
 		Plato p2 = new Plato();
-		p2.setPlatoBase(platoBaseService.findPlatoBaseByName("Arroz con ternera al curry"));
+		p2.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Arroz con ternera al curry"));
 		
 		Plato p3 = new Plato();
-		p3.setPlatoBase(platoBaseService.findPlatoBaseByName("Manzana"));
+		p3.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Manzana"));
 		
 		Menu m = new Menu();
 		m.setPlato1(p1);
@@ -180,13 +182,13 @@ public class BilleteServiceTests {
 		
 		Billete b = this.billeteService.findBilleteById(2);
 		Plato p1 = new Plato();
-		p1.setPlatoBase(platoBaseService.findPlatoBaseByName("Sopa de miso"));
+		p1.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Sopa de miso"));
 		
 		Plato p2 = new Plato();
-		p2.setPlatoBase(platoBaseService.findPlatoBaseByName("Manzana"));
+		p2.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Manzana"));
 		
 		Plato p3 = new Plato();
-		p3.setPlatoBase(platoBaseService.findPlatoBaseByName("Manzana"));
+		p3.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Manzana"));
 
 		Set<Plato> s = new HashSet<Plato>();
 		s.add(p1);

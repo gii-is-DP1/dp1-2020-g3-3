@@ -3,16 +3,14 @@ package org.springframework.samples.aerolineasAAAFC.web;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
-import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
+import org.springframework.samples.aerolineasAAAFC.service.AsientoService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
@@ -24,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,14 +37,26 @@ public class BilleteController {
 	private final BilleteService billeteService;
 	private final ClienteService clienteService;
 	private final VueloService vueloService;
+	private final AsientoService asientoService;
 
 	@Autowired
-	public BilleteController(BilleteService billeteService, ClienteService clienteService,VueloService vueloService) {
+	public BilleteController(BilleteService billeteService, ClienteService clienteService,VueloService vueloService, AsientoService asientoService) {
 		this.billeteService = billeteService;
 		this.clienteService=  clienteService;
 		this.vueloService= vueloService;
+		this.asientoService = asientoService;
 	}
 
+//	@ModelAttribute("asientos")
+//	public List<Asiento> findAsientosByVuelo(@PathVariable("vueloId") int vueloId) {
+//		return this.asientoService.findAsientosSinOcupar(this.vueloService.findVueloById(vueloId));
+//	}
+//	
+//	@ModelAttribute("vuelo")
+//	public Vuelo findVuelo(@PathVariable("vueloId") int vueloId) {
+//		return this.vueloService.findVueloById(vueloId);
+//	}
+	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
@@ -62,8 +73,8 @@ public class BilleteController {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String name = authentication.getName();//name corresponde al nif del usuario
 			model.put("billete", billete);
-			Vuelo vuelo=vueloService.findVueloById(vueloId);
-			List<Asiento> asientos=vuelo.getAsientos();
+			Vuelo vuelo=this.vueloService.findVueloById(vueloId);
+			List<Asiento> asientos=this.asientoService.findAsientosSinOcupar(vuelo);
 			model.put("asientos",asientos);
 			model.put("vuelo",vuelo);
 			Cliente cliente=clienteService.findClienteByNif(name);
@@ -113,7 +124,7 @@ public class BilleteController {
 			billete.setId(billeteId);
 			this.billeteService.saveBillete(billete);
 
-			return "redirect:/billetes/{billeteId}";
+			return "redirect:/billetes/" + billete.getId();
 		}
 	}
 

@@ -20,7 +20,7 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
             <th>Fecha de fabricación</th>
             <th>Última revisión</th>
             <th>Disponibilidad</th>
-            <th> </th>
+            <th>Opciones</th>
         </tr>
         </thead>
         <tbody>
@@ -58,9 +58,7 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
         			<spring:param name="avionId" value="${avion.id}"/>
     				</spring:url>
     				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Editar</a>
-    				<spring:url value="/aviones/{avionId}/delete" var="avionUrl">
-        			<spring:param name="avionId" value="${avion.id}"/>
-    				</spring:url>
+    				<spring:url value="/aviones/${avion.id}/delete" var="avionUrl"></spring:url>
     				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Eliminar</a>
                 </td>     
             </tr>

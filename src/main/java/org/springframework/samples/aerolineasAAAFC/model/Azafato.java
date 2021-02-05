@@ -13,14 +13,16 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Entidad simple que representa un azafato
  */
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "azafatos")
@@ -55,7 +57,6 @@ public class Azafato extends Person{
 	}
 
 	public Integer getVersion() {
-		return null;
-	}
+		return this.getVersion();	}
 
 }

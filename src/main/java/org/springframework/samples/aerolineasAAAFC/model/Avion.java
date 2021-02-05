@@ -75,8 +75,7 @@ public class Avion extends BaseEntity{
 	private List<Vuelo> vuelos;
 
 	public Integer getVersion() {
-		return null;
-	}
+		return this.getVersion();	}
 	
 
 }

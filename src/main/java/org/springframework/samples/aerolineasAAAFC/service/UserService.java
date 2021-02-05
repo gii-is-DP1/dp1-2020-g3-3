@@ -36,17 +36,11 @@ public class UserService{
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
 		
-		log.info("Contraseña: {}", user.getPassword());
 		String BCrpytPss = bCryptPasswordEncoder.encode(user.getPassword());
-		
 		user.setPassword(BCrpytPss);
-		log.info("Contraseña con BCrypt: {}", user.getPassword());
-		user.setMatchingPassword(BCrpytPss);	
-		log.info("Contraseña confirmada con BCrypt: {}", user.getMatchingPassword());
-		
 		userRepository.save(user);
-		
 		log.info("Se ha creado un nuevo usuario: {}", user.getUsername());
+		
 	}
 	
 	public Optional<User> findUser(String username) {

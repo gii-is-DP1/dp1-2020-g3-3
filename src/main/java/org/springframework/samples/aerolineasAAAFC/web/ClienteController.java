@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
@@ -132,28 +133,28 @@ public class ClienteController {
 		return "clientes/clientesList";
 	}
 
-	@GetMapping(value = "/clientes/find")
-	public String initFindClienteForm(Map<String, Object> model) {
-		model.put("cliente", new Cliente());
-		return "clientes/findClientes";
-	}
 
-	@GetMapping(value = "/clientes")
-	public String processFindClienteForm(Cliente cliente, BindingResult result, Map<String, Object> model) {
+	@GetMapping(value = "/clientesfind")
+	public String processFindClienteForm(Cliente cliente,Map<String, Object> model, BindingResult result, @RequestParam(value = "nif", required=false) String nif) {
 
-		if (cliente.getNif() == null) {
-			cliente.setNif(""); 
-		}
-
-		Cliente resultado = this.clienteService.findClienteByNif(cliente.getNif());
+		Cliente resultado = this.clienteService.findClienteByNif(nif);
 
 		if (resultado == null) {
 			result.rejectValue("nif", "notFound", "nif no encontrado");
-			return "clientes/findClientes";
+			return "clientes/clientesList";
 		} else {
 			return "redirect:/clientes/" + resultado.getId();
 		}
 
+	}
+
+	// Metodo HU8
+	@GetMapping(value = "/clientes/{clienteId}/compras")
+	public String showBilletesPorCliente(Map<String, Object> model, @PathVariable("clienteId") int clienteId) {
+		model.put("cliente",this.clienteService.findClienteById(clienteId));
+		model.put("billetes", this.clienteService.findBilletesByIdCliente(clienteId));
+		
+		return "clientes/compras";
 	}
 
 
@@ -174,13 +175,5 @@ public class ClienteController {
 		this.clienteService.deleteClienteById(clienteId);
 		return "redirect:/clientesList";
 	}
-
-	// Metodo HU8
-	@GetMapping(value = "/clientes/{clienteId}/compras")
-	public String showBilletesPorCliente(Map<String, Object> model, @PathVariable("clienteId") int clienteId) {
-		model.put("cliente",this.clienteService.findClienteById(clienteId));
-		model.put("billetes", this.clienteService.findBilletesByIdCliente(clienteId));
-		
-		return "clientes/compras";
-	}
+	
 }

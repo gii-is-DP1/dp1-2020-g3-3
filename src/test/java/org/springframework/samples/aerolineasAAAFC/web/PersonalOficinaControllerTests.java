@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,6 +24,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
+import org.springframework.samples.aerolineasAAAFC.model.Rol;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
@@ -128,6 +131,19 @@ public class PersonalOficinaControllerTests {
 
 
 	//TEST ACTUALIZACIÓN
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitUpdateForm() throws Exception{
+		mockMvc.perform(get("/personalOficina/{pOficinaId}/edit", TEST_PERSONALOFICINA_ID))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("personalOficina"))
+		.andExpect(model().attribute("personalOficina", hasProperty("nombre", is("Carlos"))))
+		.andExpect(model().attribute("personalOficina", hasProperty("apellidos", is("Santana Hidalgo"))))
+		.andExpect(model().attribute("personalOficina", hasProperty("nif", is("70292959Z"))))
+		.andExpect(model().attribute("personalOficina", hasProperty("iban", is("ES 1804875866011781392136"))))
+		.andExpect(model().attribute("personalOficina", hasProperty("salario", is(1000.))))
+		.andExpect(view().name("personalOficina/createOrUpdatePersonalOficinaForm"));
+	}
 
 	@WithMockUser(value = "spring")
 	@Test
@@ -164,7 +180,39 @@ public class PersonalOficinaControllerTests {
 		.andExpect(view().name("personalOficina/createOrUpdatePersonalOficinaForm"));
 	}
 
-
+	
+	//TEST DE ELIMINACIÓN
+	@WithMockUser(value = "spring")
+	@Test
+	void testDeletePersonalOficina() throws Exception{
+		mockMvc.perform(get("/personalOficina/{pOficinaId}/delete", TEST_PERSONALOFICINA_ID))
+		.andExpect(status().isFound())
+		.andExpect(model().attributeDoesNotExist("personalOficina"))
+		.andExpect(view().name("redirect:/personalOficina"));
+	}
+	
+	
+	//OTROS
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowPersonalOificinaList() throws Exception{
+		mockMvc.perform(get("/personalOficina"))
+		.andExpect(model().attributeExists("personalOficina"))
+		.andExpect(view().name("personalOficina/personalOficinaList"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowPersonalControl() throws Exception {
+		mockMvc.perform(get("/personalOficina/{pOficinaId}", TEST_PERSONALOFICINA_ID))
+		.andExpect(model().attributeExists("personalOficina"))
+		.andExpect(model().attribute("personalOficina", hasProperty("nombre", is("Carlos"))))
+		.andExpect(model().attribute("personalOficina", hasProperty("apellidos", is("Santana Hidalgo"))))
+		.andExpect(model().attribute("personalOficina", hasProperty("nif", is("70292959Z"))))
+		.andExpect(model().attribute("personalOficina", hasProperty("iban", is("ES 1804875866011781392136"))))
+		.andExpect(model().attribute("personalOficina", hasProperty("salario", is(1000.))))
+		.andExpect(view().name("personalOficina/oficinistaDetails"));
+	}
 
 
 

@@ -42,9 +42,6 @@ public class AvionControllerTests {
 
 	@MockBean
 	private AvionService avionService;
-
-	@MockBean
-	private UserService userService;
 	
 	@MockBean
 	private VueloService vueloService;
@@ -62,21 +59,18 @@ public class AvionControllerTests {
 	void setup() {
 		apache =new Avion();
 		apache.setId(TEST_AVION_ID);
-//		apache.setAzafatos(new HashSet<>());
-		apache.setCapacidadPasajero(100);
-		
+		apache.setTipoAvion("AIRBUS");
+		apache.setCapacidadPasajero(100);	
+		apache.setHorasAcumuladas(12);
+		apache.setFechaFabricacion(LocalDate.of(2015, 12, 8));
 		apache.setDisponibilidad(false);
 		apache.setFechaRevision(LocalDate.of(2019, 12, 8));
-		apache.setFechaFabricacion(LocalDate.of(2015, 12, 8));
-	
-		apache.setHorasAcumuladas(12);
-//		apache.setPersonalControl(new HashSet<>());
 		apache.setPlazasEconomica(3);
 		apache.setPlazasEjecutiva(3);
 		apache.setPlazasPrimera(65);
 		apache.setTipoAvion("AIRBUS");
 		apache.setVuelos(new ArrayList<>());
-		given(this.avionService.findAvionById(TEST_AVION_ID)).willReturn(apache);
+				given(this.avionService.findAvionById(TEST_AVION_ID)).willReturn(apache);
 	}
 	
 	// TEST DE INSERCIÓN
@@ -96,7 +90,7 @@ public class AvionControllerTests {
 				.with(csrf())
 				.param("tipoAvion", "Airbus 420")
 				.param("capacidadPasajero", "200")
-				.param("pesoMaximoEquipaje", "25")
+//				.param("pesoMaximoEquipaje", "25")
 				.param("horasAcumuladas", "1000")
 				.param("fechaFabricacion", "2018/09/10")
 				.param("Disponibilidad", "true")
@@ -114,16 +108,16 @@ public class AvionControllerTests {
 				.with(csrf())
 				.param("tipoAvion", "Airbus 420")
 				.param("capacidadPasajero", "200")
-				.param("pesoMaximoEquipaje", "89302")
+//				.param("pesoMaximoEquipaje", "89302")
 				.param("horasAcumuladas", "1000")
 				.param("fechaFabricacion", "2018/09/10")
 				.param("Disponibilidad", "true")
 				.param("fechaRevision", "2020/07/10")
-				.param("plazasEconomica", "140")
+				.param("plazasEconomica", "")
 				.param("plazasEjecutiva", "40")
 				.param("plazasPrimera", "20"))
 		.andExpect(model().attributeHasErrors("avion"))
-		.andExpect(model().attributeHasFieldErrors("avion", "pesoMaximoEquipaje"))
+		.andExpect(model().attributeHasFieldErrors("avion", "plazasEconomica"))
 		.andExpect(view().name("aviones/createOrUpdateAvionForm"));
 	}
 	
@@ -131,11 +125,12 @@ public class AvionControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitUpdateAvionForm() throws Exception {
-		mockMvc.perform(get("/aviones/{avionId}/edit", TEST_AVION_ID)).andExpect(status().isOk())
+		mockMvc.perform(get("/aviones/{avionId}/edit", TEST_AVION_ID))
+		.andExpect(status().isOk())
 		.andExpect(model().attributeExists("avion"))
 		.andExpect(model().attribute("avion", hasProperty("tipoAvion", is("AIRBUS"))))
 		.andExpect(model().attribute("avion", hasProperty("capacidadPasajero", is(100))))
-		.andExpect(model().attribute("avion", hasProperty("pesoMaximoEquipaje", is(21))))
+//		.andExpect(model().attribute("avion", hasProperty("pesoMaximoEquipaje", is(25))))
 		.andExpect(model().attribute("avion", hasProperty("horasAcumuladas", is(12))))
 		.andExpect(model().attribute("avion", hasProperty("fechaFabricacion", is(LocalDate.of(2015, 12, 8)))))
 		.andExpect(model().attribute("avion", hasProperty("disponibilidad", is(false))))
@@ -152,7 +147,7 @@ public class AvionControllerTests {
 		mockMvc.perform (post("/aviones/{avionId}/edit", TEST_AVION_ID)
 				.with(csrf())
 				.param("tipoAvion", "TIPE3")
-				.param("pesoMaximoEquipaje", "12")
+//				.param("pesoMaximoEquipaje", "12")
 				.param("horasAcumuladas", "0")
 				.param("fechaFabricacion","2015/12/28")
 				.param("fechaRevision","2020/12/28")
@@ -174,6 +169,31 @@ public class AvionControllerTests {
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("avion"))
 				.andExpect(view().name("aviones/createOrUpdateAvionForm"));
+	}
+	
+	//OTROS
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowAvion() throws Exception {
+		mockMvc.perform(get("/aviones/{avionId}", TEST_AVION_ID))
+		.andExpect(model().attribute("avion", hasProperty("tipoAvion", is("AIRBUS"))))
+		.andExpect(model().attribute("avion", hasProperty("capacidadPasajero", is(100))))
+		.andExpect(model().attribute("avion", hasProperty("horasAcumuladas", is(12))))
+		.andExpect(model().attribute("avion", hasProperty("fechaFabricacion", is(LocalDate.of(2015, 12, 8)))))
+		.andExpect(model().attribute("avion", hasProperty("disponibilidad", is(false))))
+		.andExpect(model().attribute("avion", hasProperty("fechaRevision", is(LocalDate.of(2019, 12, 8)))))
+		.andExpect(model().attribute("avion", hasProperty("plazasEconomica", is(3))))
+		.andExpect(model().attribute("avion", hasProperty("plazasEjecutiva", is(3))))
+		.andExpect(model().attribute("avion", hasProperty("plazasPrimera", is(65))))
+		.andExpect(view().name("aviones/avionDetails"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowAeropuertoList() throws Exception {
+		mockMvc.perform(get("/aviones"))
+		.andExpect(model().attributeExists("aviones"))
+		.andExpect(view().name("aviones/avionesList"));
 	}
 
 }

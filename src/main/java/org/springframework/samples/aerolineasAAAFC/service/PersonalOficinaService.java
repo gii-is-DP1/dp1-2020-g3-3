@@ -7,12 +7,8 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
-import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,11 +28,13 @@ public class PersonalOficinaService {
 		this.pOficinaRepository = pOficinaRepository;
 	}
 
-	public PersonalOficina findPersonalControlByNif(String nif) {
+	
+	public PersonalOficina findPersonalOficinaByNif(String nif) {
 		return pOficinaRepository.findByNif(nif);
 	}
 
-	public PersonalOficina findPersonalControlByIban(String iban) {
+	@Transactional(readOnly = true)
+	public PersonalOficina findPersonalOficinaByIban(String iban) {
 		return pOficinaRepository.findByIban(iban);
 	}
 
@@ -48,18 +46,19 @@ public class PersonalOficinaService {
 		authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public PersonalOficina findPersonalOficinaById(int id) throws DataAccessException{
 		return pOficinaRepository.findById(id).get();
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<PersonalOficina> findPersonal(){
 		return StreamSupport.stream(pOficinaRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
 	}
 
-	public void eliminarPersonalOficina(int id) throws DataAccessException {
+	@Transactional
+	public void deletePersonalOficinaById(int id) throws DataAccessException {
 		pOficinaRepository.deleteById(id);
 	}
 }

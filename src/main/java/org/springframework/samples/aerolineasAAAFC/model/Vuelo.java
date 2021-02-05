@@ -56,7 +56,8 @@ public class Vuelo extends BaseEntity{
 	@NotNull
 	@Positive
 	@Column(name = "coste")
-	private double coste;
+	private double coste;	// este coste pasa a ser el precio base del billete asociado a un avión, lo que sería clase turista sin ningún extra
+							// de esta manera lo podemos usar para el filtro mediante precio, usando éste en lugar del de los billetes asociados, que no tienen coste fijo
 	
 	// Relaciones de tabla:
 	
@@ -115,8 +116,7 @@ public class Vuelo extends BaseEntity{
 
 
 	public Integer getVersion() {
-		return null;
-	}
+		return this.getVersion();	}
 
 
 }
