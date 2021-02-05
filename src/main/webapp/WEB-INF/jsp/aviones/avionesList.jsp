@@ -9,18 +9,18 @@
 puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
 
 <aerolineasAAAFC:layout pageName="aviones">
-    <h2>Aviones</h2>
+    <h2 class="centrado">Aviones</h2>
 
-    <table id="tablaAviones" class="table table-striped">
+    <table id="tablaAviones" class="table table-striped centrado">
         <thead>
         <tr>
-            <th>ID Avión</th>
-            <th>Tipo de avión</th>
-            <th>Horas de vuelo acumuladas</th>
-            <th>Fecha de fabricación</th>
-            <th>Última revisión</th>
-            <th>Disponibilidad</th>
-            <th>Opciones</th>
+            <th class="centrado">ID Avión</th>
+            <th class="centrado">Tipo de avión</th>
+            <th class="centrado">Horas de vuelo acumuladas</th>
+            <th class="centrado">Fecha de fabricación</th>
+            <th class="centrado">Última revisión</th>
+            <th class="centrado">Disponibilidad</th>
+            <th class="centrado" width="15%">Opciones</th>
         </tr>
         </thead>
         <tbody>

@@ -8,19 +8,18 @@
 <!-- Pagina en la que se mostraran los azafatos y se permitira acceder a modificarlos -->
 
 <aerolineasAAAFC:layout pageName="azafatos">
-	<h2>Azafatos</h2>
+	<h2 class="centrado">Azafatos</h2>
 
-	<table id="tablaAzafatos" class="table table-striped">
+	<table id="tablaAzafatos" class="table table-striped centrado">
 		<thead>
 			<tr>
-			<th></th>
-				<th>Nombre y Apellidos</th>
-				<th>NIF</th>
-				<th>IBAN</th>
-				<th>Idiomas</th>
-				<th>Salario</th>
-				<th>Usuario</th>
-				<th>Opciones</th>
+				<th class="centrado">Nombre y Apellidos</th>
+				<th class="centrado">NIF</th>
+				<th class="centrado">IBAN</th>
+				<th class="centrado">Idiomas</th>
+				<th class="centrado">Salario</th>
+				<th class="centrado">Usuario</th>
+				<th class="centrado" width="15%">Opciones</th>
 
 			</tr>
 		</thead>
@@ -28,8 +27,6 @@
 		<tbody>
 			<c:forEach items="${azafatos}" var="azafato">
 				<tr>
-					<td>
-					</td>
 					<td onclick="javascript:location.href='/azafatos/${azafato.id}'" onmouseover="" style="cursor: pointer;">
 						<b><c:out value="${azafato.nombre} ${azafato.apellidos}"/></b>
 					</td>

@@ -8,18 +8,18 @@
 <!-- .jsp para mostrar el listado de todos los controladores -->
 
 <aerolineasAAAFC:layout pageName="controladores">
-    <h2>Personal de Control</h2>
+    <h2 class="centrado">Personal de Control</h2>
 
-    <table id="tablaPersonalControl" class="table table-striped">
+    <table id="tablaPersonalControl" class="table table-striped centrado">
         <thead>
         <tr>
         
-            <th>Nombre y Apellidos</th>
-            <th>NIF</th>
-            <th>IBAN</th>
-            <th>Rol</th>
-            <th>Salario</th>
-            <th>Opciones</th>
+            <th class="centrado">Nombre y Apellidos</th>
+            <th class="centrado">NIF</th>
+            <th class="centrado">IBAN</th>
+            <th class="centrado">Rol</th>
+            <th class="centrado">Salario</th>
+            <th class="centrado" width="15%">Opciones</th>
             
         </tr>
         </thead>
@@ -37,7 +37,9 @@
                     <c:out value="${personalControl.iban}"/>
                 </td>
                  <td>
-                    <c:out value="${personalControl.rol}"/>
+                    <c:if test="${personalControl.rol eq 'PILOTO'}">Piloto</c:if>
+                    <c:if test="${personalControl.rol eq 'COPILOTO'}">Copiloto</c:if>
+                    <c:if test="${personalControl.rol eq 'INGENIERO_DE_VUELO'}">Ingenierio de vuelo</c:if>
                 </td>
                 <td>
                     <c:out value="${personalControl.salario}"/>
