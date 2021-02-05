@@ -7,8 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -257,6 +259,57 @@ public class VueloController {
 		model.put("vuelos", vuelos);
 		
 		return "vuelos/vuelosHistorial";
+	}
+	
+	// Página de vuelos (HOME)
+	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
+	public String showHome(Map<String,Object> model, @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fecha,
+			@RequestParam(name = "precio", required = false) Double precio, @RequestParam(name = "origen", required = false) String origen,
+			@RequestParam(name = "destino", required = false) String destino) {
+		
+		if(fecha==null && precio==null && origen==null && destino==null) {					//sin filtro
+			LocalDateTime ahora = LocalDateTime.now();
+			model.put("vuelos",this.vueloService.findVuelosConFecha(ahora));
+		}else if(fecha != null && precio == null && origen == null && destino == null) {	//filtro por fecha 1
+			model.put("vuelos",this.vueloService.findVuelosConFecha(fecha));
+//		}else if(fecha == null && precio != null && origen == null && destino == null) {	//filtro por precio 2
+//			model.put("vuelos",this.vueloService.findVuelosConPrecio(precio));
+		}else if(fecha == null && precio == null && origen != null && destino == null) {	//filtro por aeropuerto de salida 3
+			model.put("vuelos",this.vueloService.findVuelosConOrigen(origen));
+		}else if(fecha == null && precio == null && origen == null && destino != null) {	//filtro por aeropuerto de destino 4
+			model.put("vuelos",this.vueloService.findVuelosConDestino(destino));
+//		}else if(fecha != null && precio != null && origen == null && destino == null) {	//filtro por fecha+precio 1,2
+//			model.put("vuelos",this.vueloService.findVuelosConFechaYPrecio(fecha, precio));
+		}else if(fecha != null && precio == null && origen != null && destino == null) {	//filtro por fecha+salida 1,3
+			model.put("vuelos",this.vueloService.findVuelosConFechaYOrigen(fecha, origen));
+		}else if(fecha != null && precio == null && origen == null && destino != null) {	//filtro por fecha+destino 1,4
+			model.put("vuelos",this.vueloService.findVuelosConFechaYDestino(fecha, destino));
+//		}else if(fecha == null && precio != null && origen != null && destino == null) {	//filtro por precio+salida 2,3
+//			model.put("vuelos",this.vueloService.findVuelosConPrecioYOrigen(precio, origen));
+//		}else if(fecha == null && precio != null && origen == null && destino != null) {	//filtro por precio+destino 2,4
+//			model.put("vuelos",this.vueloService.findVuelosConPrecioYDestino(precio, destino));
+		}else if(fecha == null && precio == null && origen != null && destino != null) {	//filtro por salida+destino 3,4
+			model.put("vuelos",this.vueloService.findVuelosConOrigenYDestino(origen, destino));
+//		}else if(fecha != null && precio != null && origen != null && destino == null) {	//filtro fecha+precio+salida 1,2,3
+//			model.put("vuelos",this.vueloService.findVuelosConFechaPrecioYOrigen(fecha, precio, origen));
+//		}else if(fecha != null && precio != null && origen == null && destino != null) {	//filtro fecha+precio+destino 1,2,4
+//			model.put("vuelos",this.vueloService.findVuelosConFechaPrecioYDestino(fecha, precio, destino));
+		}else if(fecha == null && precio != null && origen == null && destino == null) {	//filtro fecha+salida+destino 1,3,4
+			model.put("vuelos",this.vueloService.findVuelosConFechaOrigenYDestino(fecha, origen, destino));
+//		}else if(fecha == null && precio != null && origen != null && destino != null) {	//filtro precio+salida+destino 2,3,4
+//			model.put("vuelos",this.vueloService.findVuelosConPrecioOrigenYDestino(precio, origen, destino));
+//		}else{																									//filtro total 1,2,3,4
+//			model.put("vuelos",this.vueloService.findVuelosConTodo(fecha, precio, origen, destino));
+		}
+		
+		Collection<Aeropuerto> aeropuertos = this.aeropuertoService.findAeropuertos();
+		Set<String> codigos = new HashSet<String>();
+		for(Aeropuerto a : aeropuertos) {
+			codigos.add(a.getCodigoIATA());
+		}
+		model.put("codigos", codigos);
+		
+		return "vuelos/home";
 	}
 
 	
