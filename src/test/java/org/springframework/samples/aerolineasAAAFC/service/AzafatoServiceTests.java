@@ -3,11 +3,14 @@ package org.springframework.samples.aerolineasAAAFC.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -91,6 +94,21 @@ public class AzafatoServiceTests {
 		assertThat(idiomas).isNotEmpty();
 	}
 	
+	@ParameterizedTest
+	@CsvSource ({
+		"2019-06-05, 1",
+		"2021-01-10, 1",
+		"2021-01-01, 0",
+		"2015-01-20, 1"
+	})
+	void getVuelosSemana(String fecha, int total) {
+		LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ISO_DATE);
+		Collection<Vuelo> vuelos = this.azafatoService.horarioSemanalConFecha(1, date.getDayOfWeek(), date.getDayOfYear(),date.getYear());
+		
+		int found = vuelos.size();
+		
+		assertThat(found).isEqualTo(total);
+	}
 	
 	//TEST DE INSERCIÓN
 	@Test

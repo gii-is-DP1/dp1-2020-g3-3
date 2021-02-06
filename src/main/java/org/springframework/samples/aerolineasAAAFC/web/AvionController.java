@@ -96,13 +96,13 @@ public class AvionController {
 		if (result.hasErrors()) {
 			return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
 		} else {
-			Avion avionBD = this.avionService.findAvionById(avionId);
-			if (avionBD.getVersion() != version) {
-				model.put("message", "Concurrent modification of avion! Try again!");
-				return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
-			}
+//			Avion avionBD = this.avionService.findAvionById(avionId);
+//			if (avionBD.getVersion() != version) {
+//				model.put("message", "Concurrent modification of avion! Try again!");
+//				return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
+//			}
 			avion.setId(avionId);
-			avion.incrementVersion();
+//			avion.incrementVersion();
 			this.avionService.saveAvion(avion);
 
 			return "redirect:/aviones/{avionId}";

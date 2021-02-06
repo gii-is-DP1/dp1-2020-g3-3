@@ -257,16 +257,15 @@ public class PersonalControlController {
 	}
 	
 	
-	//consulta de vuelos para conocer ruta (H9) 
-	
-	@GetMapping(value = { "/controladores/vuelos" })
-	public String consultaVuelosList(ModelMap model) {
-
-		List<Vuelo> vuelos = this.vueloService.findVuelos();
-		model.put("vuelos", vuelos);
-		
-		return "controladores/rutaVuelos";
-	}
+	//H9: Esta vista no se usa, se puede consultar en controladorDetails	
+//	@GetMapping(value = { "/controladores/vuelos" })
+//	public String consultaVuelosList(ModelMap model) {
+//
+//		List<Vuelo> vuelos = this.vueloService.findVuelos();
+//		model.put("vuelos", vuelos);
+//		
+//		return "controladores/rutaVuelos";
+//	}
 	
 	// Historia usuario 1:
 	@RequestMapping(value = { "/controladores/{pControlId}/semana" }, method = RequestMethod.GET)
