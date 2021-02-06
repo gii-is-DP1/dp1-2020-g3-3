@@ -16,15 +16,15 @@
 
 		<c:choose>
 			<c:when test="${nAsientos >0}">
-			<c:out value="Plaza Economica ${vuelo.coste} "></c:out>
+			<c:out value="Precio de plaza económica: ${vuelo.coste} "></c:out>
 			<br>
-			<c:out value="Plaza Ejecutiva ${vuelo.coste*1.25} "></c:out>
+			<c:out value="Precio de plaza ejecutiva: ${vuelo.coste*1.25} "></c:out>
 			<br>
-			<c:out value="Primera clase ${vuelo.coste*1.75}"></c:out>
+			<c:out value="Precio de plaza en primera clase: ${vuelo.coste*1.75}"></c:out>
 			<br>
 			<select name="asiento">
 				<c:forEach items="${asientos}" var="asiento">
-					<option value="${vuelo.id , asiento.nombre}">${asiento.nombre}${'  '}${asiento.clase}</option>
+					<option value="${vuelo.id},${asiento.nombre}">${asiento.nombre}${'  '}${asiento.clase}</option>
 				</c:forEach>
 			</select> 
 			</c:when>
