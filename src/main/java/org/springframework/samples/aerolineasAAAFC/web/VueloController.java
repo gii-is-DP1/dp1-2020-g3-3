@@ -144,12 +144,12 @@ public class VueloController {
 	@PostMapping(value = "/vuelos/{vueloId}/edit")
 	public String processUpdateVueloForm(@Valid Vuelo vuelo, BindingResult result, 
 			@PathVariable("vueloId") int vueloId, ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
-		Vuelo vueloToUpdate=this.vueloService.findVueloById(vueloId);
-
-		if(vueloToUpdate.getVersion()!=version) {
-			model.put("message","Concurrent modification of Vuelo! Try again!");
-			return initUpdateVueloForm(vueloId,model);
-		}
+//		Vuelo vueloToUpdate=this.vueloService.findVueloById(vueloId);
+//
+//		if(vueloToUpdate.getVersion()!=version) {
+//			model.put("message","Concurrent modification of Vuelo! Try again!");
+//			return initUpdateVueloForm(vueloId,model);
+//		}
 		
 		if(result.hasErrors()) {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;

@@ -13,6 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +25,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
@@ -87,6 +93,13 @@ public class PersonalControlControllerTests {
 		Juan.setUser(juanUser);
 
 		given(this.personalControlService.findPersonalControlById(TEST_PERSONALCONTROL_ID)).willReturn(Juan);
+	
+		List<PersonalControl> lista = new ArrayList<PersonalControl>();
+		lista.add(Juan);
+		Page pagina = new PageImpl<PersonalControl>(lista);
+		Pageable paging = PageRequest.of(0, 20);
+		
+		given(this.personalControlService.findPersonalControl(paging)).willReturn(pagina);
 	}
 
 
@@ -222,10 +235,8 @@ public class PersonalControlControllerTests {
 	void testProcessFindFormNoPersonalControlFound() throws Exception {
 		mockMvc.perform(get("/controladoresfind")
 				.param("nif", ""))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeHasFieldErrors("personalControl", "nif"))
-		.andExpect(model().attributeHasFieldErrorCode("personalControl", "nif", "notFound"))
-		.andExpect(view().name("controladores/findPersonalControl"));
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/controladores"));
 	}
 
 	
@@ -233,7 +244,7 @@ public class PersonalControlControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowPersonalControlList() throws Exception{
-		mockMvc.perform(get("/controladoresList"))
+		mockMvc.perform(get("/controladores"))
 		.andExpect(model().attributeExists("personalControl"))
 		.andExpect(view().name("controladores/personalControlList"));
 	}
