@@ -6,8 +6,13 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.repository.ClienteRepository;
@@ -18,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class ClienteService {
+public class ClienteService{
 
 	private ClienteRepository clienteRepository;
 
@@ -32,6 +37,8 @@ public class ClienteService {
 	public ClienteService(ClienteRepository clienteRepository) {
 		this.clienteRepository = clienteRepository;
 	}
+	
+	
 
 	@Transactional
 	public void saveCliente(Cliente cliente) throws DataIntegrityViolationException{
@@ -57,9 +64,8 @@ public class ClienteService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<Cliente> findClientes(){
-		return StreamSupport.stream(clienteRepository.findAll().spliterator(), false)
-				.collect(Collectors.toList());
+	public Page<Cliente> findClientes(Pageable pageable){
+		return clienteRepository.findAll(pageable);
 	}
 
 	@Transactional(readOnly = true)

@@ -64,5 +64,16 @@
 
 	</table>
 	<a href="<spring:url value="/clientes/new" htmlEscape="true"/>" class="btn btn-default">Nuevo Cliente</a>
+	 
+	 <div class="panel-footer centrado">
+	 <h3>Mostrando página ${number+1} de ${totalPages}</h3>
+            <ul class="pagination" style="margin: 0px;">
+                <c:forEach begin="0" end="${totalPages-1}" var="page">
+                    <li class="page-item">
+                        <a href="clientesList?page=${page}&size=${size}" class="page-link">${page+1}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
 				
 </aerolineasAAAFC:layout>
