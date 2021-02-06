@@ -19,12 +19,12 @@ public class AsientoService {
 
 	private AsientoRepository asientoRepository;
 
-	@Autowired
 	private VueloService vueloService;
 
 	@Autowired
-	public AsientoService(AsientoRepository asientoRepository) {
+	public AsientoService(AsientoRepository asientoRepository, VueloService vueloService) {
 		this.asientoRepository = asientoRepository;
+		this.vueloService = vueloService;
 	}
 
 	@Transactional
