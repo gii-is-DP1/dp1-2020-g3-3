@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class AsientoService {
 
 	private AsientoRepository asientoRepository;
-
 	private VueloRepository vueloRepository;
 
 	@Autowired

@@ -32,8 +32,7 @@ public class PlatoBaseService {
 	
 	@Transactional(readOnly = true)
 	public Collection<PlatoBase> findPlatosPorTipo(String tipoPlato) throws DataAccessException {
-		return platoBaseRepository.findPlatosBase().stream().filter(x -> x.getTipoPlato().getName().equals(tipoPlato))
-				.collect(Collectors.toList());
+		return platoBaseRepository.findPlatosPorTipo(tipoPlato);
 	}
 	
 	@Transactional(readOnly = true)

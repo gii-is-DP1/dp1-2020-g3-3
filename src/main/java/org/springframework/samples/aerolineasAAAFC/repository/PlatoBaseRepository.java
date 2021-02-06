@@ -1,5 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -15,4 +16,7 @@ public interface PlatoBaseRepository extends CrudRepository<PlatoBase, Integer>{
 	
 	@Query("SELECT pbase FROM PlatoBase pbase")
 	List<PlatoBase> findPlatosBase() throws DataAccessException;	
+	
+	@Query("SELECT pbase FROM PlatoBase pbase JOIN pbase.tipoPlato tipo WHERE tipo.name =: tipoPlato")
+	Collection<PlatoBase> findPlatosPorTipo(@Param("tipoPlato") String tipoPlato) throws DataAccessException;	
 }
