@@ -67,6 +67,7 @@ public class BilleteController {
 			Vuelo vuelo=this.vueloService.findVueloById(vueloId);
 			List<Asiento> asientos=this.asientoService.findAsientosSinOcupar(vuelo);
 			model.put("asientos",asientos);
+			model.put("nAsientos",asientos.size());
 			model.put("vuelo",vuelo);
 			Cliente cliente=clienteService.findClienteByNif(name);
 			model.put("cliente", cliente);
