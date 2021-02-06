@@ -54,7 +54,7 @@
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyyy HH:mm" /></td>
 					<td>A partir de <c:out value="${vuelo.coste}" /> euros</td>
-					<td><a href="<spring:url value="" htmlEscape="true"/>" class="btn btn-default">Comprar billete</a>
+					<td><a href="<spring:url value="javascript:location.href='/billetes/${vuelo.id}/new'" htmlEscape="true"/>" class="btn btn-default">Comprar billete</a>
 				</tr>
 			</c:forEach>
 		</tbody>
