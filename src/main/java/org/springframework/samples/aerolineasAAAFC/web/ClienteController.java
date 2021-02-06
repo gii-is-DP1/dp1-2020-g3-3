@@ -9,6 +9,9 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
@@ -126,10 +129,13 @@ public class ClienteController {
 	 */
 
 	@GetMapping(value =  "/clientesList" )
-	public String showClientesList(Map<String, Object> model) {
-		List<Cliente> clientes = new ArrayList<>();
-		this.clienteService.findClientes().forEach(x->clientes.add(x));
-		model.put("clientes", clientes);
+	public String showClientesList(Map<String, Object> model, @PageableDefault(value=20) Pageable paging) {
+		Page<Cliente> pages = clienteService.findClientes(paging);
+		model.put("number", pages.getNumber());
+		model.put("totalPages", pages.getTotalPages());
+		model.put("totalElements", pages.getTotalElements());
+		model.put("size", pages.getSize());
+		model.put("clientes",pages.getContent());
 		return "clientes/clientesList";
 	}
 

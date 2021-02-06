@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
@@ -92,8 +95,9 @@ public class ClienteServiceTests {
 	@Test
 	@Transactional
 	public void shouldInsertCliente(){
-		Collection<Cliente> clientes = this.clienteService.findClientes();
-		int found = clientes.size();
+		Pageable paging = PageRequest.of(1, 2);
+		Page<Cliente> clientes = this.clienteService.findClientes(paging);
+		int found = clientes.getSize();
 
 		//CREACIÓN DEL CLIENTE
 		Cliente cliente = new Cliente();
@@ -116,8 +120,8 @@ public class ClienteServiceTests {
 
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
-		clientes = this.clienteService.findClientes();
-		assertThat(clientes.size()).isEqualTo(found + 1);
+		clientes = this.clienteService.findClientes(paging);
+		assertThat(clientes.getSize()).isEqualTo(found + 1);
 	}
 
 	@Test
@@ -211,13 +215,14 @@ public class ClienteServiceTests {
 	@Test
 	@Transactional
 	public void shouldDeleteClienteById() {
-		Collection<Cliente> clientes = this.clienteService.findClientes();
-		int found = clientes.size();
+		Pageable paging = PageRequest.of(1, 2);
+		Page<Cliente> clientes = this.clienteService.findClientes(paging);
+		int found = clientes.getSize();
 
 		this.clienteService.deleteClienteById(1);
 
-		clientes = this.clienteService.findClientes();
-		assertThat(clientes.size()).isEqualTo(found - 1);
+		clientes = this.clienteService.findClientes(paging);
+		assertThat(clientes.getSize()).isEqualTo(found - 1);
 	}
 
 
