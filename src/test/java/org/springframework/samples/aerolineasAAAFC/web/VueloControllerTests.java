@@ -11,9 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,8 +22,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
-import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
-import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
@@ -41,7 +37,6 @@ import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers=VueloController.class,
@@ -231,7 +226,7 @@ public class VueloControllerTests {
 	void testShowMenusByVuelo() throws Exception {
 		mockMvc.perform(get("/vuelos/{vueloId}/showMenusByVuelo", TEST_VUELO_ID))
 		.andExpect(status().isOk()).andExpect(model().attributeExists("vuelo"))
-		.andExpect(view().name("vuelos/URLAMIJSP"));
+		.andExpect(view().name("vuelos/menusByVuelo"));
 	}
 
 }

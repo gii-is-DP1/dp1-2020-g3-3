@@ -220,7 +220,13 @@ INSERT INTO asientos(nombre,libre,clase,vuelo_id) VALUES
 				   ('F4',false,0,2),
 				   ('A4',false,2,2),
 				   ('A3',true,2,2),
-				   ('A2',false,2,2);
+				   ('A2',false,2,2),
+				   ('I3',true,1,2),
+				   ('B3',true,1,2),
+				   ('C3',true,1,2),
+				   ('C2',true,0,2),
+				   ('D1',true,0,2),
+				   ('D3',true,0,2);
 
 --Billetes
 INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id)

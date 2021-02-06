@@ -24,7 +24,7 @@ public class Asiento extends BaseEntity{
 
 	@Column(name = "nombre")
 	@NotEmpty
-	@Pattern(regexp="^[A-I]{1}\\d{1,2}$")
+	@Pattern(regexp="^[A-I]{1}\\d{1,2}$", message="El nombre de este asiento no tiene un formato válido.")
 	private String nombre;
 	
 	@Column(name = "libre")
