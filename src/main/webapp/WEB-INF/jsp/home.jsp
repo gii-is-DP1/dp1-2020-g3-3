@@ -47,16 +47,32 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${vuelos}" var="vuelo">
-				<tr>
-					<td><c:out value="${vuelo.aeropuertoOrigen.nombre} - ${vuelo.aeropuertoOrigen.codigoIATA}" /></td>
-					<td><c:out value="${vuelo.aeropuertoDestino.nombre} - ${vuelo.aeropuertoDestino.codigoIATA}" /></td>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
-					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyyy HH:mm" /></td>
-					<td>A partir de <c:out value="${vuelo.coste}" /> euros</td>
-					<td><a href="<spring:url value="javascript:location.href='/billetes/${vuelo.id}/new'" htmlEscape="true"/>" class="btn btn-default">Comprar billete</a>
-				</tr>
-			</c:forEach>
+		    <c:choose>
+				<c:when test="${vuelos.size() > 0 }">
+					<c:forEach items="${vuelos}" var="vuelo">
+						<tr>
+							<td><c:out
+									value="${vuelo.aeropuertoOrigen.nombre} - ${vuelo.aeropuertoOrigen.codigoIATA}" /></td>
+							<td><c:out
+									value="${vuelo.aeropuertoDestino.nombre} - ${vuelo.aeropuertoDestino.codigoIATA}" /></td>
+							<td><aerolineasAAAFC:localDateTime
+									date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
+							<td><aerolineasAAAFC:localDateTime
+									date="${vuelo.fechaLlegada}" pattern="dd-MM-yyyy HH:mm" /></td>
+							<td>A partir de <c:out value="${vuelo.coste}" /> euros
+							</td>
+							<td><a
+								href="<spring:url value="javascript:location.href='/billetes/${vuelo.id}/new'" htmlEscape="true"/>"
+								class="btn btn-default">Comprar billete</a>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr class="centrado">
+							<td colspan="10"><h3>¡Lo sentimos! No hay ningún vuelo para estas fechas.</h3></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 

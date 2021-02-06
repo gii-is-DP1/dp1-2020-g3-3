@@ -30,6 +30,7 @@ public class PersonalControlService {
 
 
 	private PersonalControlRepository pControlRepository;
+	private VueloRepository vueloRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -37,18 +38,18 @@ public class PersonalControlService {
 	@Autowired
 	private AuthoritiesService authoritiesService;
 
-	@Autowired
-	private VueloRepository vueloRepository;
 	
 	@Autowired
-	public PersonalControlService(PersonalControlRepository pControlRepository) {
+	public PersonalControlService(PersonalControlRepository pControlRepository, VueloRepository vueloRepository) {
 		this.pControlRepository = pControlRepository;
+		this.vueloRepository = vueloRepository;
 	}
 	
 	public PersonalControl findPersonalControlByNif(String nif) {
 		return pControlRepository.findByNif(nif);
 	}
 	
+	@Transactional(readOnly = true)
 	public PersonalControl findPersonalControlByIban(String iban) {
 		return pControlRepository.findByIban(iban);
 	}

@@ -39,18 +39,14 @@ public class BilleteService {
 
 	private EquipajeRepository equipajeRepository;
 
+	@Autowired
 	private PlatoBaseService platoBaseService;
-	
-	private VueloService vueloService;
 
 	@Autowired
-	public BilleteService(BilleteRepository billeteRepository, MenuRepository menuRepository,
-			EquipajeRepository equipajeRepository, PlatoBaseService platoBaseService, VueloService vueloService) {
+	public BilleteService(BilleteRepository billeteRepository, MenuRepository menuRepository, EquipajeRepository equipajeRepository) {
 		this.billeteRepository = billeteRepository;
 		this.menuRepository = menuRepository;
 		this.equipajeRepository = equipajeRepository;
-		this.platoBaseService = platoBaseService;
-		this.vueloService = vueloService;
 	}
 
 	@Transactional
