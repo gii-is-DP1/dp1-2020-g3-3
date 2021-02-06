@@ -24,7 +24,6 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
-import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.AsientoService;
@@ -40,11 +39,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 @WebMvcTest(controllers=BilleteController.class,
+includeFilters = @ComponentScan.Filter(value = AsientoFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
 public class BilleteControllerTests {
 
 	private static final int TEST_BILLETE_ID = 2;
+	private static final int TEST_VUELO_ID = 0;
 
 	@Autowired
 	private BilleteController billeteController;
@@ -88,15 +89,10 @@ public class BilleteControllerTests {
 		billetazo = new Billete();
 		billetazo.setId(TEST_BILLETE_ID);
 		billetazo.setAsiento(new Asiento());
-		//billetazo.setCliente(cliente);
 		billetazo.setCoste(123.56);
 		
-		asiento = new Asiento();
-		asiento.setLibre(true);
-		asiento.setNombre("A1");
-		
 		vuelol = new Vuelo();
-		vuelol.setId(0);
+		vuelol.setId(TEST_VUELO_ID);
 		vuelol.setFechaSalida(LocalDateTime.of(2021, Month.DECEMBER, 10, 12, 23));
 		vuelol.setFechaLlegada(LocalDateTime.of(2021, Month.DECEMBER, 11, 12, 23));
 		vuelol.setCoste(100.0);
@@ -108,7 +104,6 @@ public class BilleteControllerTests {
 		asiento.setLibre(true);
 		asiento.setNombre("A1");
 		asiento.setVuelo(vuelol);
-		asiento.setVuelo(vuelol);
 
 		List<Asiento> l = new ArrayList<Asiento>();
 		l.add(asiento);
@@ -117,11 +112,12 @@ public class BilleteControllerTests {
 		billetazo.setFechaReserva(LocalDate.of(2020, 12, 03));
 
 		given(this.billeteService.findBilleteById(TEST_BILLETE_ID)).willReturn(billetazo);
+		given(this.vueloService.findVueloById(TEST_VUELO_ID)).willReturn(vuelol);
 		
-		/*
-		 * Ángel, si pasas por aqui (y vas a retocar) aviso de que faltan hacer un par de given() y tal
-		 * Asiento se formatea usando "{idVuelo},{nameAsiento}" -> Te tengo que preguntar como se encripta y desencripta un string random
-		 */
+		List<Asiento> asientosSinOcupar = new ArrayList<Asiento>();
+		asientosSinOcupar.add(asiento);
+		given(this.asientoService.findAsientosSinOcupar(vuelol)).willReturn(asientosSinOcupar);
+		
 		
 	}
 
@@ -139,9 +135,9 @@ public class BilleteControllerTests {
 	void testProcessCreationFormSuccess() throws Exception {
 		mockMvc.perform(post("/billetes/{billeteId}/new", TEST_BILLETE_ID)
 				.param("coste", "12.54")
-				.param("asiento", "B72")
-				.with(csrf())
-				.param("fechaReserva", "1999/11/03"))
+				.param("asiento", "0,A1")
+				.param("fechaReserva", "1999/11/03")
+				.with(csrf()))
 		.andExpect(status().is3xxRedirection());
 	}
 
@@ -156,10 +152,6 @@ public class BilleteControllerTests {
 //				.param("asiento", "F99")
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
-		//.param("equipajes", equipajes)
-		//.param("menus",)
-		//.param("cliente",)
-		//.param("vuelos",))
 		.andExpect(view().name("redirect:/billetes/"+ billetazo.getId()));
 	}
 

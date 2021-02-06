@@ -36,5 +36,4 @@ public class Equipaje extends BaseEntity{
 	@EqualsAndHashCode.Exclude
 	private Billete billete;
 	
-	
 }

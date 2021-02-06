@@ -47,29 +47,29 @@ public class BilleteService {
 		this.menuRepository = menuRepository;
 		this.equipajeRepository = equipajeRepository;
 	}
-	
+
 	@Transactional
 	public void saveBillete(Billete billete) throws DataAccessException {
 		Asiento a = billete.getAsiento();
-		
-		if(a.getClase().equals(Clase.ECONOMICA)) {
+
+		if (a.getClase().equals(Clase.ECONOMICA)) {
 			billete.setCoste(a.getVuelo().getCoste());
 		}
-		
-		else if(a.getClase().equals(Clase.EJECUTIVA)) {
+
+		else if (a.getClase().equals(Clase.EJECUTIVA)) {
 			billete.setCoste(1.25 * a.getVuelo().getCoste());
 		}
-		
-		else if(a.getClase().equals(Clase.PRIMERACLASE)) {
+
+		else if (a.getClase().equals(Clase.PRIMERACLASE)) {
 			billete.setCoste(1.75 * a.getVuelo().getCoste());
 		}
-		
+
 		DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		LocalDate today = LocalDate.now();
 		String aux = today.format(d);
 		today = LocalDate.parse(aux, d);
 		billete.setFechaReserva(today);
-		
+
 		billeteRepository.save(billete);
 		a.setLibre(false);
 	}
@@ -96,7 +96,8 @@ public class BilleteService {
 			if (aux1 == null || aux2 == null || aux3 == null)
 				throw new PlatosNoValidosException(2);
 
-			else { // Esta comprobacion es solo necesaria si usamos el service directamente, se *****
+			else { // Esta comprobacion es solo necesaria si usamos el service directamente, se
+					// *****
 					// puede eliminar
 				if (aux1.getTipoPlato().getName().equals("primerPlato"))
 					cont1 = 1;
@@ -123,8 +124,9 @@ public class BilleteService {
 						} else {
 							menuRepository.save(menu);
 							menu.getBillete().getMenus().add(menu);
-							menu.getBillete().setCoste(menu.getBillete().getCoste() + aux1.getPrecio() + aux2.getPrecio() + aux3.getPrecio()); 
-							//Le añadimos el precio del menu
+							menu.getBillete().setCoste(menu.getBillete().getCoste() + aux1.getPrecio()
+									+ aux2.getPrecio() + aux3.getPrecio());
+							// Le añadimos el precio del menu
 						}
 					}
 				}
@@ -152,7 +154,8 @@ public class BilleteService {
 			else {
 				equipajeRepository.save(equipaje);
 				equipaje.getBillete().getEquipajes().add(equipaje);
-				equipaje.getBillete().setCoste(equipaje.getBillete().getCoste() + equipaje.getEquipajeBase().getPrecio());
+				equipaje.getBillete()
+						.setCoste(equipaje.getBillete().getCoste() + equipaje.getEquipajeBase().getPrecio());
 			}
 		}
 
@@ -190,33 +193,29 @@ public class BilleteService {
 	@Transactional(readOnly = true)
 	public Set<Cliente> findClientesBilletesByVuelo(int id) {
 		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id))
-				.map(x -> x.getCliente())
+				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).map(x -> x.getCliente())
 				.collect(Collectors.toSet());
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Long findNumBilletesByVuelo(int id) {
 		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id))
-				.collect(Collectors.counting());
+				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).collect(Collectors.counting());
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<Billete> findBilletesByVuelo(int id) {
 		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id))
-				.collect(Collectors.toList());
+				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).collect(Collectors.toList());
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Set<Menu> findMenusByVuelo(int id) {
 		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id))
-				.flatMap(x -> x.getMenus().stream())
+				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).flatMap(x -> x.getMenus().stream())
 				.collect(Collectors.toSet());
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Collection<Menu> findMenus() {
 		return StreamSupport.stream(menuRepository.findAll().spliterator(), false).collect(Collectors.toList());

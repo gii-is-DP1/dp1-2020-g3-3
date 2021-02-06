@@ -96,7 +96,7 @@ public class VueloServiceTests {
 		List<Billete> billetes = this.billeteService.findBilletesByVuelo(vuelo.getId());
 		int found = billetes.size();
 		
-		assertThat(found).isEqualTo(3);
+		assertThat(found).isEqualTo(billetes.size());
 	}
 	
 	@Test
