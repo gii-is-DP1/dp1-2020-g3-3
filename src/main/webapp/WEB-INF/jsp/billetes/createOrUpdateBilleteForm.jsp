@@ -12,28 +12,31 @@
 	<form:form modelAttribute="billete" class="form-horizontal"
 		id="add-billete-form">
 		<div class="form-group has-feedback">
+
+
 		<c:choose>
 			<c:when test="${nAsientos >0}">
+			<c:out value="Plaza Economica ${vuelo.coste} "></c:out>
+			<br>
+			<c:out value="Plaza Ejecutiva ${vuelo.coste*1.25} "></c:out>
+			<br>
+			<c:out value="Primera clase ${vuelo.coste*1.75}"></c:out>
+			<br>
 			<select name="asiento">
 				<c:forEach items="${asientos}" var="asiento">
-					<option value="${asiento.id}">${asiento.nombre}${'  '}${asiento.clase}</option>
+					<option value="${vuelo.id , asiento.nombre}">${asiento.nombre}${'  '}${asiento.clase}</option>
 				</c:forEach>
 			</select> 
 			</c:when>
 			<c:otherwise>
-				<c:out value="No quedan plazas disponibles">No quedan plazas disponibles</c:out>
+				<c:out value="No quedan plazas disponibles"></c:out>
 			</c:otherwise>
 		</c:choose>
 			<input type="hidden" name="coste" value="1.0" /> 
-			
-			<input type="hidden" 
-			name="equipajes" value="" /> 
-			<input type="hidden"
-			name="menus" value="" /> 
 			<input type="hidden" name="cliente"
-			value="${cliente}" /> 
+			value="${cliente.id}" /> 
 			<input type="hidden" name="fechaReserva"
-			value="${vuelo.fechaSalida}" />
+			value="${fechaReserva}" />
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
