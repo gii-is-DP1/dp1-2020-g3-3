@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class UserController {
 	
-	private static final String VIEWS_CLIENTE_CREATE_FORM = "users/createClienteForm";
+	private static final String VIEWS_CLIENTE_CREATE_FORM = "clientes/createOrUpdateClienteForm";
 	
 	private final UserService userService;
 	private final AzafatoService azafatoService;
