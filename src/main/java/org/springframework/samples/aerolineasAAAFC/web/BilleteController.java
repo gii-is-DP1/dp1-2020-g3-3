@@ -69,7 +69,7 @@ public class BilleteController {
 			model.put("asientos",asientos);
 			model.put("nAsientos",asientos.size());
 			model.put("vuelo",vuelo);
-			Cliente cliente=clienteService.findClienteByNif("01446551N");
+			Cliente cliente=clienteService.findClienteByNif(name);
 			model.put("cliente", cliente);
 			//Lo de abajo es posible que sea conflictivo
 			DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
