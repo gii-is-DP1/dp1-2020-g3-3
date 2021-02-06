@@ -127,11 +127,11 @@ public class PersonalControlController {
 	public String processUpdatePersonalControlForm(@Valid PersonalControl pControl, BindingResult result, @PathVariable("pControlId") int pControlId,
 			ModelMap model, Map<String, Object> roles, @RequestParam(value = "version", required=false) Integer version) {
 		
-		PersonalControl PersonalControlToUpdate = this.pControlService.findPersonalControlById(pControlId);		    
-		if(PersonalControlToUpdate.getVersion()!=version) {
-			model.put("message","Concurrent modification of Controller Try again!");
-			return initUpdatePersonalControlForm(pControlId,model,roles);
-			}
+//		PersonalControl PersonalControlToUpdate = this.pControlService.findPersonalControlById(pControlId);		    
+//		if(PersonalControlToUpdate.getVersion()!=version) {
+//			model.put("message","Concurrent modification of Controller Try again!");
+//			return initUpdatePersonalControlForm(pControlId,model,roles);
+//			}
 		
 		List<Rol> rol = new ArrayList<Rol>();
 	    rol.add(Rol.PILOTO);
@@ -145,7 +145,7 @@ public class PersonalControlController {
 		else {
 			pControl.setId(pControlId);
 			PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
-			pControl.incrementVersion();
+//			pControl.incrementVersion();
 			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","username");
 			try {
 				this.pControlService.savePersonalControl(pControl);
