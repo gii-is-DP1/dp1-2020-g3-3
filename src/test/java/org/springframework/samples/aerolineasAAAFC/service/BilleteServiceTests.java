@@ -16,11 +16,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
@@ -32,11 +29,6 @@ import org.springframework.samples.aerolineasAAAFC.service.exceptions.Disponibil
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasMaximasVueloException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
-import org.springframework.samples.aerolineasAAAFC.web.AsientoFormatter;
-import org.springframework.samples.aerolineasAAAFC.web.BilleteController;
-import org.springframework.samples.aerolineasAAAFC.web.MenuController;
-import org.springframework.samples.aerolineasAAAFC.web.PlatoFormatter;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,6 +82,8 @@ public class BilleteServiceTests {
 		long nBilletes2 = this.billeteService.findNumBilletesByVuelo(idVuelo);
 		
 		assertThat(nBilletes2).isEqualTo(nBilletes + 1);
+		//Probamos que el precio se actualiza
+		assertThat(billete.getCoste()).isEqualTo(vuelo.getCoste()*1.75);
 	}
 	
 	@Test
@@ -98,7 +92,9 @@ public class BilleteServiceTests {
 		Collection<Menu> menus = this.billeteService.findMenus();
 		int found = menus.size();
 		
-		Billete b = this.billeteService.findBilleteById(1);
+		Billete b = this.billeteService.findBilleteById(3);
+		double costeAntiguo = b.getCoste();
+		
 		Plato p1 = new Plato();
 		p1.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Sopa de miso"));
 		
@@ -125,6 +121,8 @@ public class BilleteServiceTests {
 		}
 		menus = this.billeteService.findMenus();
 		assertThat(menus.size()).isEqualTo(found + 1);
+		//Probamos que el precio se actualiza
+		assertThat(costeAntiguo + p1.getPlatoBase().getPrecio() + p2.getPlatoBase().getPrecio() + p3.getPlatoBase().getPrecio()).isEqualTo(b.getCoste());
 	
 	}
 	
@@ -132,7 +130,7 @@ public class BilleteServiceTests {
 	@Transactional
 	public void shouldNotInsertTooManyMenus() {
 		
-		Billete b = this.billeteService.findBilleteById(1);
+		Billete b = this.billeteService.findBilleteById(3);
 		Plato p1 = new Plato();
 		p1.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Sopa de miso"));
 		
@@ -180,7 +178,7 @@ public class BilleteServiceTests {
 	@Transactional
 	public void shouldNotInsertSamePlatosTypes() {
 		
-		Billete b = this.billeteService.findBilleteById(2);
+		Billete b = this.billeteService.findBilleteById(3);
 		Plato p1 = new Plato();
 		p1.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Sopa de miso"));
 		
@@ -213,6 +211,7 @@ public class BilleteServiceTests {
 		int found = equipajes.size();
 		
 		Billete b = this.billeteService.findBilleteById(1);
+		double costeAntiguo = b.getCoste();
 		EquipajeBase eb = this.equipajeBaseService.findEquipajeBaseByName("Grande");
 		
 		Equipaje e = new Equipaje();
@@ -230,6 +229,8 @@ public class BilleteServiceTests {
 		equipajes = this.billeteService.findEquipajes();
 		assertThat(equipajes.size()).isEqualTo(found + 1);
 		assertThat(e.getId()).isNotNull();
+		//Probamos que el precio se actualiza
+		assertThat(costeAntiguo + e.getEquipajeBase().getPrecio()).isEqualTo(b.getCoste());
 	}
 	
 	@Test

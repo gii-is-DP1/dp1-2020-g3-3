@@ -219,13 +219,16 @@ INSERT INTO idiomas_azafato VALUES (8, 6);
 INSERT INTO asientos(nombre,libre,clase,vuelo_id) VALUES
 				   ('F4',false,0,2),
 				   ('A4',false,2,2),
-				   ('A3',true,2,2);
+				   ('A3',true,2,2),
+				   ('A2',false,2,2);
 
 --Billetes
 INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id)
 VALUES (80,1,'2020-04-06',1);
 INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id)
 VALUES (300,2,'2020-04-06',2);
+INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id)
+VALUES (300,4,'2020-04-06',2);
 
 
 --PlatoType

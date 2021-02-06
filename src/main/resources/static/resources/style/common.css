@@ -166,7 +166,7 @@ body {
 }
 
 .radio-toolbar input[type="radio"]:checked + label {
-    background-color: #f56464;
+    background-color: #f88b8b;
     border-color: #383838;
     transition: 0.6s;
 }

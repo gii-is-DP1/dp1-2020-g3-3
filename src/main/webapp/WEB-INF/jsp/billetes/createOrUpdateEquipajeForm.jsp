@@ -7,13 +7,9 @@
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
 
 <aerolineasAAAFC:layout pageName="equipajes">
-	<h2>
-		<c:if test="${equipaje['new']}">Nuevo </c:if>
-		equipaje
-	</h2>
+	<h2 class="centrado">Nuevo equipaje</h2>
 	<form:form modelAttribute="equipaje" class="form-horizontal"
 		id="add-equipaje-form">
-		<input type="hidden" name= "id" value= "${equipaje.id}"/>
     	<input type="hidden" name= "version" value= "${equipaje.version}"/>
 		<div class="form-group has-feedback">
 			<aerolineasAAAFC:inputField label="Peso" name="peso" />

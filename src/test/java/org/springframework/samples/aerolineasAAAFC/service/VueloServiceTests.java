@@ -225,6 +225,7 @@ public class VueloServiceTests {
 			log.error("Error en la inserción de datos",ex3);
 		}
 		
+		assertThat(vuelo.getAsientos().size()).isEqualTo(vuelo.getAvion().getCapacidadPasajero());
 		assertThat(vuelo.getId().longValue()).isNotEqualTo(0);
 		
 		vuelos = this.vueloService.findVuelos();

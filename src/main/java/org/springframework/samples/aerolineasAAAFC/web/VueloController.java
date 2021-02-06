@@ -5,11 +5,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
@@ -19,7 +16,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
-import org.springframework.samples.aerolineasAAAFC.service.AsientoService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
@@ -149,7 +145,7 @@ public class VueloController {
 		if(vueloToUpdate.getVersion()!=version) {
 			model.put("message","Concurrent modification of Vuelo! Try again!");
 			return initUpdateVueloForm(vueloId,model);
-			}
+		}
 		
 		if(result.hasErrors()) {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
