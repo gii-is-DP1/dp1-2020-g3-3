@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
 
-<aerolineasAAAFC:layout pageName="controladores">
+<aerolineasAAAFC:layout pageName="azafatos">
 	<style>
 /*  	table#tablaVuelos th:nth-child(5){  */
 /*  		visibility: hidden;  */
@@ -56,7 +56,7 @@
 	
 	<h1 style="text-align:center;">Vuelos de la semana del <c:out value = "${diaS}"/> día <c:out value="${diaM}"/>/<c:out value="${mes}"/>/<c:out value="${anyo}"/></h1>
 	<div style="padding: 5% 0% 0% 43%">
- 	<form action="/controladores/${pControlId}/semana" method="get">
+ 	<form action="/azafatos/${azafatoId}/semana" method="get">
 			<label for="fecha">Fecha: </label> <input name="fecha" id="fecha" type="date" />
 			<button type="submit" class="btn btn-default">Buscar</button>
 		</form>

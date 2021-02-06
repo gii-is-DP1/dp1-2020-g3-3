@@ -112,27 +112,7 @@ public class PersonalControlService {
 			}
 
 
-	/*
-	 *  Historia de usuario 1
-	 */
-//	public List<String> sacaFecha(){
-//		List<String> res = new ArrayList<String>();
-//		
-//		LocalDate fecha = LocalDate.now();
-//			
-//		DayOfWeek diaSemana = fecha.getDayOfWeek();
-//		String diaS = diaSemana.toString();
-//		res.add(diaS);										//0
-//		String diaM = String.valueOf(fecha.getDayOfMonth());
-//		res.add(diaM);										//1
-//		String mes = String.valueOf(fecha.getMonthValue());
-//		res.add(mes);										//2
-//		String anyo = String.valueOf(fecha.getYear());
-//		res.add(anyo);										//3
-//				
-//		return res;
-//	}		
-			
+	//  Historia de usuario 1	
 	public Collection<Vuelo> horarioSemanalConFecha(int id, DayOfWeek diaSemana, int dia, int anyo){
 		PersonalControl control = pControlRepository.findById(id).get();
 		Set<Vuelo> vuelos = control.getVuelos();
