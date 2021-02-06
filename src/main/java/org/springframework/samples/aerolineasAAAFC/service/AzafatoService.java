@@ -32,19 +32,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class AzafatoService {
 
 	public AzafatoRepository azafatoRepository;
+	private VueloRepository vueloRepository;
 
 	@Autowired
 	private UserService userService;
 
 	@Autowired
 	private AuthoritiesService authoritiesService;
-	
-	@Autowired
-	private VueloRepository vueloRepository;
+
 
 	@Autowired
-	public AzafatoService(AzafatoRepository azafatoRepository) {
+	public AzafatoService(AzafatoRepository azafatoRepository, VueloRepository vueloRepository) {
 		this.azafatoRepository = azafatoRepository;
+		this.vueloRepository = vueloRepository;
 	}
 
 	@Transactional(readOnly = true)

@@ -10,6 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hamcrest.beans.HasProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +21,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
@@ -25,6 +32,9 @@ import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @WebMvcTest(controllers=AeropuertoController.class,
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration = SecurityConfiguration.class)
@@ -52,6 +62,13 @@ public class AeropuertoControllerTests {
 		ejemplo.setTelefono("+34913211000");
 		
 		given(this.aeropuertoService.findAeropuertoById(TEST_AERO_ID)).willReturn(ejemplo);
+		
+		List<Aeropuerto> lista = new ArrayList<Aeropuerto>();
+		lista.add(ejemplo);
+		Page pagina = new PageImpl<Aeropuerto>(lista);
+		Pageable paging = PageRequest.of(0, 20);
+		
+		given(this.aeropuertoService.findAeropuertos(paging)).willReturn(pagina);
 	}
 	
 	//TEST DE INSERCIÓN
@@ -161,7 +178,6 @@ public class AeropuertoControllerTests {
 	@Test
 	void testShowAeropuertoList() throws Exception {
 		mockMvc.perform(get("/aeropuertos"))
-		.andExpect(model().attributeExists("aeropuertos"))
 		.andExpect(view().name("aeropuertos/aeropuertosList"));
 	}
 	

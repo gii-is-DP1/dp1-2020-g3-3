@@ -12,6 +12,8 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
@@ -41,8 +43,7 @@ public class BilleteService {
 	private PlatoBaseService platoBaseService;
 
 	@Autowired
-	public BilleteService(BilleteRepository billeteRepository, MenuRepository menuRepository,
-			EquipajeRepository equipajeRepository) {
+	public BilleteService(BilleteRepository billeteRepository, MenuRepository menuRepository, EquipajeRepository equipajeRepository) {
 		this.billeteRepository = billeteRepository;
 		this.menuRepository = menuRepository;
 		this.equipajeRepository = equipajeRepository;
@@ -163,14 +164,12 @@ public class BilleteService {
 
 	@Transactional
 	public Collection<Billete> findBilletesPorFecha(LocalDate fecha) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getFechaReserva().equals(fecha)).collect(Collectors.toList());
+		return billeteRepository.findByFecha(fecha);
 	}
 
 	@Transactional
 	public Collection<Billete> findBilletesPorCliente(Cliente cliente) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getCliente().equals(cliente)).collect(Collectors.toList());
+		return billeteRepository.findByCliente(cliente);
 	}
 
 	@Transactional(readOnly = true)
@@ -179,15 +178,9 @@ public class BilleteService {
 		return b.get();
 	}
 
-	@Transactional
-	public Collection<Billete> findBilleteConCliente() {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> !x.getCliente().equals(null)).collect(Collectors.toList());
-	}
 
-	public Collection<Billete> findBilletePorApellido(String apellidos) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getCliente().getApellidos().equals(apellidos)).collect(Collectors.toList());
+	public Page<Billete> findBilletePorApellido(String apellidos, Pageable page) {
+		return billeteRepository.findByApellido(apellidos, page);
 	}
 
 	@Transactional(readOnly = true)
@@ -224,6 +217,10 @@ public class BilleteService {
 	@Transactional(readOnly = true)
 	public Collection<Equipaje> findEquipajes() {
 		return StreamSupport.stream(equipajeRepository.findAll().spliterator(), false).collect(Collectors.toList());
+	}
+
+	public Page<Billete> findBilletes(Pageable page) {
+		return billeteRepository.findAll(page);
 	}
 
 }

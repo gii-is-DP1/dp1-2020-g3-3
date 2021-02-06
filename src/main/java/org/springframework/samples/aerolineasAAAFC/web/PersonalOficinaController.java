@@ -95,12 +95,12 @@ public class PersonalOficinaController {
 	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina personalOficina, BindingResult result, @PathVariable("pOficinaId") int pOficinaId,
 			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
 		
-		PersonalOficina personalOficinaToUpdate=this.pOficinaService.findPersonalOficinaById(pOficinaId);
+//		PersonalOficina personalOficinaToUpdate=this.pOficinaService.findPersonalOficinaById(pOficinaId);
 
-		if(personalOficinaToUpdate.getVersion()!=version) {
-			model.put("message","Concurrent modification of Personal Oficina! Try again!");
-			return initUpdatePersonalOficinaForm(pOficinaId,model);
-			}
+//		if(personalOficinaToUpdate.getVersion()!=version) {
+//			model.put("message","Concurrent modification of Personal Oficina! Try again!");
+//			return initUpdatePersonalOficinaForm(pOficinaId,model);
+//			}
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 		}
@@ -148,8 +148,11 @@ public class PersonalOficinaController {
 		PersonalOficina resultado = this.pOficinaService.findPersonalOficinaByNif(nif);
 
 		if (resultado == null) {
-			result.rejectValue("nif", "notFound", "nif no encontrado");
-			return "redirect:/personalOficina";
+			model.put("number", 0);
+			model.put("totalPages", 1);
+			model.put("size", 1);
+			model.put("msg", "No existe ningún oficinista con dicho nif");
+			return "personalOficina/personalOficinaList";
 		} else {
 			return "redirect:/personalOficina/" + resultado.getId();
 		}

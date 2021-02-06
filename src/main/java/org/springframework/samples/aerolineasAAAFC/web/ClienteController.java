@@ -98,11 +98,11 @@ public class ClienteController {
 	public String processUpdateClienteForm(@Valid Cliente cliente, BindingResult result, 
 			@PathVariable("clienteId") int clienteId, ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
 		
-		Cliente clienteToUpdate2 = this.clienteService.findClienteById(clienteId);
-		if(clienteToUpdate2.getVersion()!=version) {
-			model.put("message","Concurrent modification of client! Try again!");
-			return initUpdateClienteForm(clienteId,model);
-			}
+//		Cliente clienteToUpdate2 = this.clienteService.findClienteById(clienteId);
+//		if(clienteToUpdate2.getVersion()!=version) {
+//			model.put("message","Concurrent modification of client! Try again!");
+//			return initUpdateClienteForm(clienteId,model);
+//			}
 		if(result.hasErrors()) {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}
@@ -144,8 +144,11 @@ public class ClienteController {
 		Cliente resultado = this.clienteService.findClienteByNif(nif);
 
 		if (resultado == null) {
-			result.rejectValue("nif", "notFound", "nif no encontrado");
-			return "redirect:/clientes";
+			model.put("number", 0);
+			model.put("totalPages", 1);
+			model.put("size", 1);
+			model.put("msg", "No existe ningún cliente con dicho nif");
+			return "clientes/clientesList";
 		} else {
 			return "redirect:/clientes/" + resultado.getId();
 		}

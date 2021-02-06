@@ -167,8 +167,11 @@ public class AzafatoController {
 		Azafato resultado = this.azafatoService.findAzafatoByNif(nif);
 
 		if (resultado == null) {
-			result.rejectValue("nif", "notFound", "nif no encontrado");
-			return "redirect:/azafatos";
+			model.put("number", 0);
+			model.put("totalPages", 1);
+			model.put("size", 1);
+			model.put("msg", "No existe ningún azafato con dicho nif");
+			return "azafatos/azafatosList";
 		} else {
 			return "redirect:/azafatos/" + resultado.getId();
 		}

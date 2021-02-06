@@ -25,41 +25,57 @@
 		</thead>
 
 		<tbody>
-			<c:forEach items="${aeropuertos}" var="aeropuerto">
-				<tr>
-					<td onclick="javascript:location.href='/aeropuertos/${aeropuerto.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${aeropuerto.nombre}" /></b></td>
-					<td><c:out value="${aeropuerto.localizacion}" /></td>
-					<td><c:out value="${aeropuerto.codigoIATA}" /></td>
-					<td><c:out value="${aeropuerto.telefono}" /></td>
-					<td>
-						<c:forEach items="${aeropuerto.vuelosSalida}" var="vuelo" varStatus="loop">
-							<c:out value="${vuelo.id}"/>
-							<c:if test="${!loop.last}">, </c:if>
-						</c:forEach>
-					</td>
-					<td>
-						<c:forEach items="${aeropuerto.vuelosLlegada}" var="vuelo" varStatus="loop">
-							<c:out value="${vuelo.id}"/>
-							<c:if test="${!loop.last}">, </c:if>
-						</c:forEach>
-					</td>
-					
-					<td>
-						<spring:url value="/aeropuertos/{aeropuertoId}/edit" var="aeropuertoUrl">
-		        			<spring:param name="aeropuertoId" value="${aeropuerto.id}"/>
-		    				</spring:url>
-		    				<a href="${fn:escapeXml(aeropuertoUrl)}" class="btn btn-default">Editar</a>
-		    				<spring:url value="/aeropuertos/${aeropuerto.id}/delete" var="aeropuertoUrl"></spring:url>
-		    				<a href="${fn:escapeXml(aeropuertoUrl)}" class="btn btn-default">Eliminar</a>
-					</td>
-				
-				</tr>
-				
-			</c:forEach>
-		</tbody>
+			<c:choose>
+				<c:when test="${aeropuertos.size() > 0 }">
+					<c:forEach items="${aeropuertos}" var="aeropuerto">
+						<tr>
+							<td
+								onclick="javascript:location.href='/aeropuertos/${aeropuerto.id}'"
+								onmouseover="" style="cursor: pointer;"><b><c:out
+										value="${aeropuerto.nombre}" /></b></td>
+							<td><c:out value="${aeropuerto.localizacion}" /></td>
+							<td><c:out value="${aeropuerto.codigoIATA}" /></td>
+							<td><c:out value="${aeropuerto.telefono}" /></td>
+							<td><c:forEach items="${aeropuerto.vuelosSalida}"
+									var="vuelo" varStatus="loop">
+									<c:out value="${vuelo.id}" />
+									<c:if test="${!loop.last}">, </c:if>
+								</c:forEach></td>
+							<td><c:forEach items="${aeropuerto.vuelosLlegada}"
+									var="vuelo" varStatus="loop">
+									<c:out value="${vuelo.id}" />
+									<c:if test="${!loop.last}">, </c:if>
+								</c:forEach></td>
 
+							<td><spring:url value="/aeropuertos/{aeropuertoId}/edit"
+									var="aeropuertoUrl">
+									<spring:param name="aeropuertoId" value="${aeropuerto.id}" />
+								</spring:url> <a href="${fn:escapeXml(aeropuertoUrl)}"
+								class="btn btn-default">Editar</a> <spring:url
+									value="/aeropuertos/${aeropuerto.id}/delete"
+									var="aeropuertoUrl"></spring:url> <a
+								href="${fn:escapeXml(aeropuertoUrl)}" class="btn btn-default">Eliminar</a>
+							</td>
+
+						</tr>
+
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr class="centrado">
+						<td colspan="10"><h3>¡Lo sentimos! No se encuentra ningún aeropuerto.</h3></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			<tr>
+				<td></td><td></td><td></td><td></td><td></td><td></td>
+				<td><a href="<spring:url value="/aeropuertos/new" htmlEscape="true"/>" class="btn btn-default">Nuevo aeropuerto</a></td>
+			</tr>
+		</tbody>
+		
+		
 	</table>
-	<a href="<spring:url value="/aeropuertos/new" htmlEscape="true"/>" class="btn btn-default">Nuevo aeropuerto</a>
+	
 	
 		 <div class="panel-footer centrado">
 	 <h3>Mostrando página ${number+1} de ${totalPages}</h3>

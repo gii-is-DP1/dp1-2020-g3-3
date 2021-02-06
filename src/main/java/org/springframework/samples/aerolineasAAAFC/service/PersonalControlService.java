@@ -27,6 +27,7 @@ public class PersonalControlService {
 
 
 	private PersonalControlRepository pControlRepository;
+	private VueloRepository vueloRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -34,18 +35,18 @@ public class PersonalControlService {
 	@Autowired
 	private AuthoritiesService authoritiesService;
 
-	@Autowired
-	private VueloRepository vueloRepository;
 	
 	@Autowired
-	public PersonalControlService(PersonalControlRepository pControlRepository) {
+	public PersonalControlService(PersonalControlRepository pControlRepository, VueloRepository vueloRepository) {
 		this.pControlRepository = pControlRepository;
+		this.vueloRepository = vueloRepository;
 	}
 	
 	public PersonalControl findPersonalControlByNif(String nif) {
 		return pControlRepository.findByNif(nif);
 	}
 	
+	@Transactional(readOnly = true)
 	public PersonalControl findPersonalControlByIban(String iban) {
 		return pControlRepository.findByIban(iban);
 	}
@@ -85,27 +86,6 @@ public class PersonalControlService {
 		
 		return this.vueloRepository.findVuelosControl(pControlId, mes, año);
 	}
-
-		
-	//HU-9: Esto como tal no sirve, ya se saca esto a partir del controladorDetails	
-//	public Collection<Vuelo> rutaVuelos(int id){ 
-//		PersonalControl personal = pControlRepository.findById(id).get();
-//		Set<Vuelo> vuelos = personal.getVuelos();		
-//				
-//		LocalDate date = LocalDate.now();
-//		int mes = date.getMonthValue();
-//		int año = date.getYear();
-//				
-//		Aeropuerto aeropuertoOrigen; //??
-//		Aeropuerto aeropuertoDestino; //??
-//						
-//		List<Vuelo> res = new ArrayList<Vuelo>();
-//				
-//		for(Vuelo v: vuelos) { //Recoge los vuelos de este mes y el siguiente
-//			if((v.getFechaSalida().getMonthValue() == mes && v.getFechaSalida().getYear() == año) || (v.getFechaSalida().getMonthValue() == (mes + 1)  && v.getFechaSalida().getYear() == año)) res.add(v);
-//		}
-//		return res;
-//	}
 
 
 	//  Historia de usuario 1	
