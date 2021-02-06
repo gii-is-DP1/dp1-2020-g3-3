@@ -107,10 +107,10 @@ public class AzafatoController {
 		
 		Azafato azToUpdate = this.azafatoService.findAzafatoById(azafatoId);
 
-		if(azToUpdate.getVersion() != version) {
-			model.put("message","Concurrent modification of azafato! Try again!");
-			return initUpdateAzafatoForm(azafatoId,model);
-			} 
+//		if(azToUpdate.getVersion() != version) {
+//			model.put("message","Concurrent modification of azafato! Try again!");
+//			return initUpdateAzafatoForm(azafatoId,model);
+//			} 
 		
 		
 		if(result.hasErrors()) {

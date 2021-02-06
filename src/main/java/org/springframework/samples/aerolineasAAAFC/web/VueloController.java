@@ -258,7 +258,7 @@ public class VueloController {
 	}
 	
 	// Página de vuelos (HOME)
-	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/" ,"/home" }, method = RequestMethod.GET)
 	public String showHome(Map<String,Object> model, @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
 			@RequestParam(name = "precio", required = false) Double precio, @RequestParam(name = "origen", required = false) String origen,
 			@RequestParam(name = "destino", required = false) String destino) {
@@ -331,7 +331,7 @@ public class VueloController {
 		}
 		model.put("codigos", codigos);
 		
-		return "vuelos/home";
+		return "home";
 	}
 
 	

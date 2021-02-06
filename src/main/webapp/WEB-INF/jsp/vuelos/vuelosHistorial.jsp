@@ -10,7 +10,7 @@
 
 <aerolineasAAAFC:layout pageName="vuelos">
     
-    <h2>Historial de Vuelos</h2>
+    <h2 class="centrado">Historial de Vuelos</h2>
     
 	<div style="float: right;">
 	<form action="/vuelos" method="get">
@@ -19,15 +19,15 @@
    		<button type="submit" class="btn btn-default">Buscar Vuelos</button>
    	</form>
 	</div>
-	<table id="tablaVuelos" class="table table-striped">
+	<table id="tablaVuelos" class="table table-striped centrado">
         <thead>
         <tr>
-        	<th width="3%">ID</th>
-        	<th width="10%">Ruta</th>
-            <th width="13%">Fecha de Salida</th>
-            <th width="13%">Fecha de Llegada</th>
-            <th width="20%">Tipo de Avión</th>
-            <th width="35%">Personal de Control</th>
+        	<th class="centrado" width="3%">ID</th>
+        	<th class="centrado" width="10%">Ruta</th>
+            <th class="centrado" width="13%">Fecha de Salida</th>
+            <th class="centrado" width="13%">Fecha de Llegada</th>
+            <th class="centrado" width="20%">Tipo de Avión</th>
+            <th class="centrado" width="35%">Personal de Control</th>
             
            
         </tr>
@@ -55,5 +55,5 @@
         </c:forEach>
         </tbody>
     </table>
-    <a href="<spring:url value="/vuelos/new" htmlEscape="true" />">Nuevo vuelo</a>
+    <a href="<spring:url value="/vuelos/new" htmlEscape="true" />" class="btn btn-default">Nuevo vuelo</a>
 </aerolineasAAAFC:layout>

@@ -10,7 +10,7 @@
 <aerolineasAAAFC:layout pageName="aeropuertos">
 	<h2 class="centrado">Aeropuertos</h2>
 
-	<table id="tablaAeropuertos" class="table table-striped">
+	<table id="tablaAeropuertos" class="table table-striped centrado">
 		<thead>
 			<tr>
 				
@@ -24,7 +24,7 @@
 			</tr>
 		</thead>
 
-		<tbody class="centrado">
+		<tbody>
 			<c:forEach items="${aeropuertos}" var="aeropuerto">
 				<tr>
 					<td onclick="javascript:location.href='/aeropuertos/${aeropuerto.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${aeropuerto.nombre}" /></b></td>
@@ -59,6 +59,6 @@
 		</tbody>
 
 	</table>
-	<a href="<spring:url value="/aeropuertos/new" htmlEscape="true" />">Nuevo aeropuerto</a>
+	<a href="<spring:url value="/aeropuertos/new" htmlEscape="true"/>" class="btn btn-default">Nuevo aeropuerto</a>
 				
 </aerolineasAAAFC:layout>

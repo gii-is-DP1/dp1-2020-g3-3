@@ -6,8 +6,14 @@
 
 <aerolineasAAAFC:layout pageName="vuelos">
 	
-	<h1 style="text-align:center;">Portal de Vuelos</h1>
-	<div style="text-align:center;">
+	<div class="centrado">
+		<img class="imagen" alt="AAAFC logo" src="/resources/images/logoT.png" style="width: 50%;">
+	</div>
+	
+	<h1 class="centrado">Portal de Vuelos</h1>
+	
+	<div class="centrado" style="padding-bottom: 1%">
+	
  	<form action="/home" method="get">
 			<label for="fecha">Fecha: </label> <input name="fecha" id="fecha" size="16" type="date" min="${hoy}" value="${hoy}"/>
 			<label for="precio">Precio: </label> <input name="precio" id="precio" type="number" min="0" max="9999" value="9999"/>
@@ -29,15 +35,15 @@
 		</form>
 	</div>
 
-
-	<table id="tablaVuelos" class="table table-striped">
+	<table id="tablaVuelos" class="table table-striped centrado">
 		<thead>
 			<tr>
-				<th>Origen</th>
-				<th>Destino</th>
-				<th>Fecha salida</th>
-				<th>Fecha llegada</th>
-				<th>Precio</th>
+				<th class="centrado">Origen</th>
+				<th class="centrado">Destino</th>
+				<th class="centrado">Fecha salida</th>
+				<th class="centrado">Fecha llegada</th>
+				<th class="centrado">Precio</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -48,7 +54,7 @@
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyyy HH:mm" /></td>
 					<td>A partir de <c:out value="${vuelo.coste}" /> euros</td>
-
+					<td><a href="<spring:url value="" htmlEscape="true"/>" class="btn btn-default">Comprar billete</a>
 				</tr>
 			</c:forEach>
 		</tbody>

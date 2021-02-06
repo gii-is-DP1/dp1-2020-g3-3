@@ -48,5 +48,5 @@
         </c:forEach>
         </tbody>
     </table>
-    <a href="<spring:url value="/personalOficina/new" htmlEscape="true" />">Nuevo oficinista</a>
+    <a href="<spring:url value="/personalOficina/new" htmlEscape="true"/>" class="btn btn-default">Nuevo oficinista</a>
 </aerolineasAAAFC:layout>
