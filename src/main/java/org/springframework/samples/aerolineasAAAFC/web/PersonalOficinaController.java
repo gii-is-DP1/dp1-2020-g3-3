@@ -148,8 +148,11 @@ public class PersonalOficinaController {
 		PersonalOficina resultado = this.pOficinaService.findPersonalOficinaByNif(nif);
 
 		if (resultado == null) {
-			result.rejectValue("nif", "notFound", "nif no encontrado");
-			return "redirect:/personalOficina";
+			model.put("number", 0);
+			model.put("totalPages", 1);
+			model.put("size", 1);
+			model.put("msg", "No existe ningún oficinista con dicho nif");
+			return "personalOficina/personalOficinaList";
 		} else {
 			return "redirect:/personalOficina/" + resultado.getId();
 		}

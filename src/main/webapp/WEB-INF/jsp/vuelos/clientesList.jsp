@@ -17,16 +17,25 @@
 		</thead>
 
 		<tbody>
-			<c:set var="count" value="1" scope="page" />
-			<c:forEach items="${clientes}" var="cliente">
-				<tr>
-					
-					<td><c:out value="${count}"/></td>
-					<c:set var="count" value="${count + 1}" scope="page"/>
-					<td onclick="javascript:location.href='/clientes/${cliente.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${cliente.nombre} ${cliente.apellidos}"/></b></td>
-				
-				</tr>
-			</c:forEach>
+		  	<c:choose>
+				<c:when test="${clientes.size() > 0 }">
+					<c:set var="count" value="1" scope="page" />
+					<c:forEach items="${clientes}" var="cliente">
+						<tr>
+							
+							<td><c:out value="${count}"/></td>
+							<c:set var="count" value="${count + 1}" scope="page"/>
+							<td onclick="javascript:location.href='/clientes/${cliente.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${cliente.nombre} ${cliente.apellidos}"/></b></td>
+						
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr class="centrado">
+						<c:if test="${empty msg}"><td colspan="10"><h3>¡Lo sentimos! No se encuentra ningún cliente.</h3></td></c:if>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 

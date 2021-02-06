@@ -24,57 +24,58 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${aviones}" var="avion">
-            <tr>
-                <td onclick="javascript:location.href='/aviones/${avion.id}'" onmouseover="" style="cursor: pointer;">
-                    <b><c:out value="${avion.id}"/></b>
-                </td>
-                <td>
-                    <c:out value="${avion.tipoAvion}"/>
-                </td>
-                <td>
-                    <c:out value="${avion.horasAcumuladas}"/>
-                </td>
-                <td>
-                    <c:out value="${avion.fechaFabricacion}"/>
-                </td>
-                <td>
-                    <c:out value="${avion.fechaRevision}"/>
-                </td>
-                <td>
-                    <c:choose>
-    					<c:when test="${avion.disponibilidad==true}">
+			<c:choose>
+				<c:when test="${aviones.size() > 0 }">
+					<c:forEach items="${aviones}" var="avion">
+						<tr>
+							<td onclick="javascript:location.href='/aviones/${avion.id}'"
+								onmouseover="" style="cursor: pointer;"><b><c:out
+										value="${avion.id}" /></b></td>
+							<td><c:out value="${avion.tipoAvion}" /></td>
+							<td><c:out value="${avion.horasAcumuladas}" /></td>
+							<td><c:out value="${avion.fechaFabricacion}" /></td>
+							<td><c:out value="${avion.fechaRevision}" /></td>
+							<td><c:choose>
+									<c:when test="${avion.disponibilidad==true}">
         					Sí 
         					<br />
-    					</c:when>    
-    					<c:otherwise>
+									</c:when>
+									<c:otherwise>
         					No 
         					<br />
-    					</c:otherwise>
-					</c:choose>
-                </td>
-                <td>
-                	<spring:url value="/aviones/{avionId}/edit" var="avionUrl">
-        			<spring:param name="avionId" value="${avion.id}"/>
-    				</spring:url>
-    				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Editar</a>
-    				<spring:url value="/aviones/${avion.id}/delete" var="avionUrl"></spring:url>
-    				<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Eliminar</a>
-                </td>     
-            </tr>
-        </c:forEach>
-        </tbody>
+									</c:otherwise>
+								</c:choose></td>
+							<td><spring:url value="/aviones/{avionId}/edit"
+									var="avionUrl">
+									<spring:param name="avionId" value="${avion.id}" />
+								</spring:url> <a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Editar</a>
+								<spring:url value="/aviones/${avion.id}/delete" var="avionUrl"></spring:url>
+								<a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Eliminar</a>
+							</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr class="centrado">
+						<td colspan="10"><h3>¡Lo sentimos! No se encuentra ningún avión.</h3></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			<tr>
+				<td></td><td></td><td></td><td></td><td></td><td></td>
+				<td><a href="<spring:url value="/aviones/new" htmlEscape="true"/>"class="btn btn-default">Nuevo Avión</a></td>
+			</tr>
+		</tbody>
     </table>
-    <a href="<spring:url value="/aviones/new" htmlEscape="true"/>" class="btn btn-default">Nuevo Avión</a>
-    
-    	 <div class="panel-footer centrado">
-	 <h3>Mostrando página ${number+1} de ${totalPages}</h3>
-            <ul class="pagination" style="margin: 0px;">
-                <c:forEach begin="0" end="${totalPages-1}" var="page">
-                    <li class="page-item">
-                        <a href="aviones?page=${page}&size=${size}" class="page-link">${page+1}</a>
-                    </li>
-                </c:forEach>
-            </ul>
-        </div>
+
+	<div class="panel-footer centrado">
+		<h3>Mostrando página ${number+1} de ${totalPages}</h3>
+		<ul class="pagination" style="margin: 0px;">
+			<c:forEach begin="0" end="${totalPages-1}" var="page">
+				<li class="page-item"><a
+					href="aviones?page=${page}&size=${size}" class="page-link">${page+1}</a>
+				</li>
+			</c:forEach>
+		</ul>
+	</div>
 </aerolineasAAAFC:layout>

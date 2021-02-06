@@ -194,11 +194,20 @@ public class VueloController {
 		}
 		
 		Page<Vuelo> pages =  this.vueloService.findVuelosByMes(mes, año, paging);
-		model.addAttribute("number", pages.getNumber());
-		model.addAttribute("totalPages", pages.getTotalPages());
-		model.addAttribute("totalElements", pages.getTotalElements());
-		model.addAttribute("size", pages.getSize());
-		model.put("vuelos", pages.getContent());
+		if(pages.getContent().isEmpty()) {
+			model.addAttribute("number",0);
+			model.addAttribute("totalPages", 1);
+			model.addAttribute("totalElements", 1);
+			model.addAttribute("size", 1);
+			model.put("vuelos", pages.getContent());
+		}else {
+			model.addAttribute("number", pages.getNumber());
+			model.addAttribute("totalPages", pages.getTotalPages());
+			model.addAttribute("totalElements", pages.getTotalElements());
+			model.addAttribute("size", pages.getSize());
+			model.put("vuelos", pages.getContent());
+		}
+		
 		
 		return "vuelos/vuelosList";
 	}
@@ -222,11 +231,20 @@ public class VueloController {
 		
 		
 		Page<Vuelo> pages = this.vueloService.findVuelosOfertadosByMes(mes, año, paging);
-		model.addAttribute("number", pages.getNumber());
-		model.addAttribute("totalPages", pages.getTotalPages());
-		model.addAttribute("totalElements", pages.getTotalElements());
-		model.addAttribute("size", pages.getSize());
-		model.put("vuelosOferta", pages.getContent());
+		
+		if(pages.getContent().isEmpty()) {
+			model.addAttribute("number",0);
+			model.addAttribute("totalPages", 1);
+			model.addAttribute("totalElements", 1);
+			model.addAttribute("size", 1);
+			model.put("vuelosOferta", pages.getContent());
+		}else {
+			model.addAttribute("number", pages.getNumber());
+			model.addAttribute("totalPages", pages.getTotalPages());
+			model.addAttribute("totalElements", pages.getTotalElements());
+			model.addAttribute("size", pages.getSize());
+			model.put("vuelosOferta", pages.getContent());
+		}
 		
 		return "vuelos/vuelosOfertadosList";
 	}
@@ -237,11 +255,19 @@ public class VueloController {
 		
 		Vuelo vuelo = this.vueloService.findVueloById(vueloId);
 		Page<Cliente> pages = this.vueloService.findClientesPorVuelo(vuelo,paging);
-		model.addAttribute("number", pages.getNumber());
-		model.addAttribute("totalPages", pages.getTotalPages());
-		model.addAttribute("totalElements", pages.getTotalElements());
-		model.addAttribute("size", pages.getSize());
-		model.addAttribute("clientes",pages.getContent());
+		if(pages.getContent().isEmpty()) {
+			model.addAttribute("number",0);
+			model.addAttribute("totalPages", 1);
+			model.addAttribute("totalElements", 1);
+			model.addAttribute("size", 1);
+			model.put("clientes", pages.getContent());
+		}else {
+			model.addAttribute("number", pages.getNumber());
+			model.addAttribute("totalPages", pages.getTotalPages());
+			model.addAttribute("totalElements", pages.getTotalElements());
+			model.addAttribute("size", pages.getSize());
+			model.put("clientes", pages.getContent());
+		}
 		
 		
 		return "vuelos/clientesList";
@@ -268,13 +294,22 @@ public class VueloController {
 	}
 	
 	@GetMapping(value = "/vuelos/historial")
-	public String showPersonalOficinaList(ModelMap model, @PageableDefault(value=20) Pageable paging) {
+	public String showHistorial(ModelMap model, @PageableDefault(value=20) Pageable paging) {
 		Page<Vuelo> pages = this.vueloService.findVuelosOrdered(paging);
-		model.addAttribute("number", pages.getNumber());
-		model.addAttribute("totalPages", pages.getTotalPages());
-		model.addAttribute("totalElements", pages.getTotalElements());
-		model.addAttribute("size", pages.getSize());
-		model.put("vuelos", pages.getContent());
+		
+		if(pages.getContent().isEmpty()) {
+			model.addAttribute("number",0);
+			model.addAttribute("totalPages", 1);
+			model.addAttribute("totalElements", 1);
+			model.addAttribute("size", 1);
+			model.put("vuelos", pages.getContent());
+		}else {
+			model.addAttribute("number", pages.getNumber());
+			model.addAttribute("totalPages", pages.getTotalPages());
+			model.addAttribute("totalElements", pages.getTotalElements());
+			model.addAttribute("size", pages.getSize());
+			model.put("vuelos", pages.getContent());
+		}
 		
 		return "vuelos/vuelosHistorial";
 	}
@@ -387,11 +422,19 @@ public class VueloController {
 		}
 		model.addAttribute("codigos", codigos);
 		
-		model.addAttribute("number", pages.getNumber());
-		model.addAttribute("totalPages", pages.getTotalPages());
-		model.addAttribute("totalElements", pages.getTotalElements());
-		model.addAttribute("size", pages.getSize());
-		model.addAttribute("vuelos",pages.getContent());
+		if(pages.getContent().isEmpty()) {
+			model.addAttribute("number",0);
+			model.addAttribute("totalPages", 1);
+			model.addAttribute("totalElements", 1);
+			model.addAttribute("size", 1);
+			model.put("vuelosOferta", pages.getContent());
+		}else {
+			model.addAttribute("number", pages.getNumber());
+			model.addAttribute("totalPages", pages.getTotalPages());
+			model.addAttribute("totalElements", pages.getTotalElements());
+			model.addAttribute("size", pages.getSize());
+			model.put("vuelosOferta", pages.getContent());
+		}
 		
 		return "home";
 	}

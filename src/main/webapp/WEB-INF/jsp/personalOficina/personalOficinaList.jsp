@@ -29,34 +29,48 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${personalOficina}" var="oficinista">
-            <tr>
-                <td onclick="javascript:location.href='/personalOficina/${oficinista.id}'" onmouseover="" style="cursor: pointer;">
-                	<b><c:out value="${oficinista.nombre} ${oficinista.apellidos}"/></b>
-                </td>
-                <td>
-                    <c:out value="${oficinista.nif}"/>
-                </td>
-                <td>
-                    <c:out value="${oficinista.iban}"/>
-                </td>
-                <td>
-                    <c:out value="${oficinista.salario}"/>
-                </td>
-                <td>
-                	<spring:url value="/personalOficina/{oficinistaId}/edit" var="url">
-        				<spring:param name="oficinistaId" value="${oficinista.id}"/>
-    				</spring:url>
-    				<a href="${fn:escapeXml(url)}" class="btn btn-default">Editar</a>
-    				
-    				<spring:url value="/personalOficina/${oficinista.id}/delete" var="personalOficinaUrl"></spring:url>
-    				<a href="${fn:escapeXml(personalOficinaUrl)}" class="btn btn-default">Eliminar</a>
-                </td>   
-            </tr>
-        </c:forEach>
+        	<c:choose>
+				<c:when test="${personalOficina.size() > 0 }">
+			        <c:forEach items="${personalOficina}" var="oficinista">
+			            <tr>
+			                <td onclick="javascript:location.href='/personalOficina/${oficinista.id}'" onmouseover="" style="cursor: pointer;">
+			                	<b><c:out value="${oficinista.nombre} ${oficinista.apellidos}"/></b>
+			                </td>
+			                <td>
+			                    <c:out value="${oficinista.nif}"/>
+			                </td>
+			                <td>
+			                    <c:out value="${oficinista.iban}"/>
+			                </td>
+			                <td>
+			                    <c:out value="${oficinista.salario}"/>
+			                </td>
+			                <td>
+			                	<spring:url value="/personalOficina/{oficinistaId}/edit" var="url">
+			        				<spring:param name="oficinistaId" value="${oficinista.id}"/>
+			    				</spring:url>
+			    				<a href="${fn:escapeXml(url)}" class="btn btn-default">Editar</a>
+			    				
+			    				<spring:url value="/personalOficina/${oficinista.id}/delete" var="personalOficinaUrl"></spring:url>
+			    				<a href="${fn:escapeXml(personalOficinaUrl)}" class="btn btn-default">Eliminar</a>
+			                </td>   
+			            </tr>
+			        </c:forEach>
+			    </c:when>
+				<c:otherwise>
+					<tr class="centrado">
+						<c:if test="${not empty msg}"><td colspan="10"><h3><c:out value="${msg} (${param.nif})"/></h3></td></c:if>
+						<c:if test="${empty msg}"><td colspan="10"><h3>¡Lo sentimos! No se encuentra ningún oficinista.</h3></td></c:if>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			<tr>
+				<td></td><td></td><td></td><td></td>
+				<td> <a href="<spring:url value="/personalOficina/new" htmlEscape="true"/>" class="btn btn-default">Nuevo oficinista</a></td>
+			</tr>
         </tbody>
     </table>
-    <a href="<spring:url value="/personalOficina/new" htmlEscape="true"/>" class="btn btn-default">Nuevo oficinista</a>
+   
 
 	<div class="panel-footer centrado">
 		<h3>Mostrando página ${number+1} de ${totalPages}</h3>

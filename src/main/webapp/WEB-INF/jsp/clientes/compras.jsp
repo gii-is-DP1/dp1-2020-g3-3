@@ -19,20 +19,29 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${billetes}" var="billete">
-				<tr>
-					<td><c:out value="${billete.id}" /></td>
-					<td><c:out value="${billete.coste}" /></td>
-					<td><c:out value="${billete.asiento.nombre}" /></td>
-					<td>
-						<c:set var="total" value="${0}"/>
-						<c:forEach items="${billete.equipajes}" var="equipaje">
-       						<c:set var="total" value="${total + 1}" />
-						</c:forEach>
-						<c:out value="${total}"/> piezas
-					</td>
+		<c:choose>
+			<c:when test="${billetes.size() > 0 }">
+				<c:forEach items="${billetes}" var="billete">
+					<tr>
+						<td><c:out value="${billete.id}" /></td>
+						<td><c:out value="${billete.coste}" /></td>
+						<td><c:out value="${billete.asiento.nombre}" /></td>
+						<td>
+							<c:set var="total" value="${0}"/>
+							<c:forEach items="${billete.equipajes}" var="equipaje">
+	       						<c:set var="total" value="${total + 1}" />
+							</c:forEach>
+							<c:out value="${total}"/> piezas
+						</td>
+					</tr>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr class="centrado">
+					<td colspan="10"><h3>¡Lo sentimos! No se encuentra ningún billete para el cliente ${cliente.nombre} ${cliente.apellidos}<c:out value=""/>.</h3></td>
 				</tr>
-			</c:forEach>
+			</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 
