@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
@@ -82,8 +85,9 @@ public class ClienteServiceTests {
 	
 	@Test
 	void shouldGetBilleteByClienteId() {
-		Collection<Billete> billetes = this.clienteService.findBilletesByIdCliente(1);
-		int found = billetes.size();
+		Pageable page = PageRequest.of(0, 20);
+		Page<Billete> billetes = this.clienteService.findBilletesByIdCliente(1, page);
+		int found = billetes.getContent().size();
 		assertThat(found == 1);
 	}
 
@@ -92,7 +96,7 @@ public class ClienteServiceTests {
 	@Test
 	@Transactional
 	public void shouldInsertCliente(){
-		Collection<Cliente> clientes = this.clienteService.findClientes();
+		Collection<Cliente> clientes = this.clienteService.findClientesNoPageable();
 		int found = clientes.size();
 
 		//CREACIÓN DEL CLIENTE
@@ -116,7 +120,7 @@ public class ClienteServiceTests {
 
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
-		clientes = this.clienteService.findClientes();
+		clientes = this.clienteService.findClientesNoPageable();
 		assertThat(clientes.size()).isEqualTo(found + 1);
 	}
 
@@ -211,12 +215,12 @@ public class ClienteServiceTests {
 	@Test
 	@Transactional
 	public void shouldDeleteClienteById() {
-		Collection<Cliente> clientes = this.clienteService.findClientes();
+		Collection<Cliente> clientes = this.clienteService.findClientesNoPageable();
 		int found = clientes.size();
 
 		this.clienteService.deleteClienteById(1);
 
-		clientes = this.clienteService.findClientes();
+		clientes = this.clienteService.findClientesNoPageable();
 		assertThat(clientes.size()).isEqualTo(found - 1);
 	}
 

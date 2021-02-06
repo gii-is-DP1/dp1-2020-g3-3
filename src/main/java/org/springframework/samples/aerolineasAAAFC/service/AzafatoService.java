@@ -14,7 +14,10 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
@@ -69,18 +72,24 @@ public class AzafatoService {
 		}
 	}
 	
-	public Collection<Azafato> findAzafatos() {
+	@Transactional(readOnly = true)
+	public Collection<Azafato> findAzafatosNoPageable() {
 		return StreamSupport.stream(azafatoRepository.findAll().spliterator(), false)
 			    .collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
+	public Page<Azafato> findAzafatos(Pageable pageable){
+		return azafatoRepository.findAll(pageable);
+	}
+	
+	@Transactional
 	public void eliminarAzafato(int id) throws DataAccessException {
 		azafatoRepository.deleteById(id);
 	}
 	
 	
 	public Collection<Vuelo> horario(int azafatoId, int mes, int año) {
-		
 		return this.vueloRepository.findVuelosAzafato(azafatoId, mes, año);
 	}
 

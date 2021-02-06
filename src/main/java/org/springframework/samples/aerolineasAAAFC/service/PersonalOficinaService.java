@@ -7,6 +7,9 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository;
 import org.springframework.stereotype.Service;
@@ -52,9 +55,14 @@ public class PersonalOficinaService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<PersonalOficina> findPersonal(){
+	public Collection<PersonalOficina> findPersonalNoPageable(){
 		return StreamSupport.stream(pOficinaRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<PersonalOficina> findPersonal(Pageable pageable){
+		return pOficinaRepository.findAll(pageable);
 	}
 
 	@Transactional

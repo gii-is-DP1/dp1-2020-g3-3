@@ -9,6 +9,9 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
@@ -121,15 +124,16 @@ public class ClienteController {
 		}
 	}
 
-	/*
-	 * BÚSQUEDA CLIENTE/S
-	 */
 
-	@GetMapping(value =  "/clientesList" )
-	public String showClientesList(Map<String, Object> model) {
-		List<Cliente> clientes = new ArrayList<>();
-		this.clienteService.findClientes().forEach(x->clientes.add(x));
-		model.put("clientes", clientes);
+	//CONSULTA
+	@GetMapping(value =  "/clientes" )
+	public String showClientesList(ModelMap model, @PageableDefault(value=20) Pageable paging) {
+		Page<Cliente> pages = clienteService.findClientes(paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("clientes",pages.getContent());
 		return "clientes/clientesList";
 	}
 
@@ -141,7 +145,7 @@ public class ClienteController {
 
 		if (resultado == null) {
 			result.rejectValue("nif", "notFound", "nif no encontrado");
-			return "clientes/clientesList";
+			return "redirect:/clientes";
 		} else {
 			return "redirect:/clientes/" + resultado.getId();
 		}
@@ -150,10 +154,14 @@ public class ClienteController {
 
 	// Metodo HU8
 	@GetMapping(value = "/clientes/{clienteId}/compras")
-	public String showBilletesPorCliente(Map<String, Object> model, @PathVariable("clienteId") int clienteId) {
-		model.put("cliente",this.clienteService.findClienteById(clienteId));
-		model.put("billetes", this.clienteService.findBilletesByIdCliente(clienteId));
-		
+	public String showBilletesPorCliente(ModelMap model, @PathVariable("clienteId") int clienteId, @PageableDefault(value=20) Pageable paging) {
+		model.addAttribute("cliente",this.clienteService.findClienteById(clienteId));
+		Page<Billete> pages = this.clienteService.findBilletesByIdCliente(clienteId,paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("billetes",pages.getContent());
 		return "clientes/compras";
 	}
 

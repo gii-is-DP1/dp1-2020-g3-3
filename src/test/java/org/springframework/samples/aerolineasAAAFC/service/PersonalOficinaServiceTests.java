@@ -74,7 +74,7 @@ public class PersonalOficinaServiceTests {
 	@Test
 	@Transactional
 	void insertarPersonal() {
-		Collection<PersonalOficina> pos = this.personalOficinaService.findPersonal();
+		Collection<PersonalOficina> pos = this.personalOficinaService.findPersonalNoPageable();
 		int found = pos.size();
 
 		PersonalOficina po = new PersonalOficina();
@@ -93,7 +93,7 @@ public class PersonalOficinaServiceTests {
 
 		assertThat(po.getId()).isNotNull();
 
-		pos = this.personalOficinaService.findPersonal();
+		pos = this.personalOficinaService.findPersonalNoPageable();
 		assertThat(pos.size()).isEqualTo(found + 1);
 	}
 
@@ -118,12 +118,12 @@ public class PersonalOficinaServiceTests {
 	@Test
 	@Transactional
 	void deletePersonalById() {
-		Collection<PersonalOficina> pos = this.personalOficinaService.findPersonal();
+		Collection<PersonalOficina> pos = this.personalOficinaService.findPersonalNoPageable();
 		int found = pos.size();
 		
 		this.personalOficinaService.deletePersonalOficinaById(2);
 		
-		pos = this.personalOficinaService.findPersonal();
+		pos = this.personalOficinaService.findPersonalNoPageable();
 		assertThat(pos.size()).isEqualTo(found - 1);
 	}
 

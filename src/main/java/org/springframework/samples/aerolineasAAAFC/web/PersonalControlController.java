@@ -19,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.logging.log4j2.Log4J2LoggingSystem;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
@@ -165,24 +168,16 @@ public class PersonalControlController {
 	 * BUSCAR CONTROLADOR
 	 */
 
-	@GetMapping(value = "/controladores/find")
-	public String initFindPersonalControlForm(Map<String, Object> model) {
-		model.put("personalControl", new PersonalControl());
-		return "controladores/findPersonalControl";
-	}
 
-	@GetMapping(value = "/controladores")
-	public String processFindPersonalControlForm(PersonalControl pControl, BindingResult result, Map<String, Object> model) {
 
-		if (pControl.getNif() == null) {
-			pControl.setNif(""); 
-		}
+	@GetMapping(value = "/controladoresfind")
+	public String processFindPersonalControlForm(PersonalControl pControl, BindingResult result, Map<String, Object> model, @RequestParam(value = "nif", required=false) String nif) {
 
 		PersonalControl resultado = this.pControlService.findPersonalControlByNif(pControl.getNif());
 
 		if (resultado == null) {
 			result.rejectValue("nif", "notFound", "nif no encontrado");
-			return "controladores/findPersonalControl";
+			return "redirect:/controladores";
 		} else {
 			return "redirect:/controladores/" + resultado.getId();
 		}
@@ -193,11 +188,15 @@ public class PersonalControlController {
 	 * Vistas de consulta de controladores
 	 */
 	
-	@GetMapping(value = "/controladoresList")
-	public String showPersonalControlList(Map<String, Object> model) {
+	@GetMapping(value = "/controladores")
+	public String showPersonalControlList(ModelMap model, @PageableDefault(value=20) Pageable paging) {
     
-		Collection<PersonalControl> controladores = this.pControlService.findPersonalControl();
-		model.put("personalControl", controladores);
+		Page<PersonalControl> pages = this.pControlService.findPersonalControl(paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("personalControl",pages.getContent());
 
 		return "controladores/personalControlList";
 	}
@@ -257,16 +256,15 @@ public class PersonalControlController {
 	}
 	
 	
-	//consulta de vuelos para conocer ruta (H9) 
-	
-	@GetMapping(value = { "/controladores/vuelos" })
-	public String consultaVuelosList(ModelMap model) {
-
-		List<Vuelo> vuelos = this.vueloService.findVuelos();
-		model.put("vuelos", vuelos);
-		
-		return "controladores/rutaVuelos";
-	}
+	//H9: Esta vista no se usa, se puede consultar en controladorDetails	
+//	@GetMapping(value = { "/controladores/vuelos" })
+//	public String consultaVuelosList(ModelMap model) {
+//
+//		List<Vuelo> vuelos = this.vueloService.findVuelos();
+//		model.put("vuelos", vuelos);
+//		
+//		return "controladores/rutaVuelos";
+//	}
 	
 	// Historia usuario 1:
 	@RequestMapping(value = { "/controladores/{pControlId}/semana" }, method = RequestMethod.GET)

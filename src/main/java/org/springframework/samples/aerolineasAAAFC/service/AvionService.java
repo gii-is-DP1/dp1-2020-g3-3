@@ -6,7 +6,10 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.repository.AvionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +35,14 @@ public class AvionService {
 	}
 	
 	@Transactional
-	public List<Avion> findAviones(){
+	public List<Avion> findAvionesNoPageable(){
 		return StreamSupport.stream(avionRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<Avion> findAviones(Pageable pageable){
+		return avionRepository.findAll(pageable);
 	}
 	
 	@Transactional
@@ -42,12 +50,4 @@ public class AvionService {
 		avionRepository.deleteById(id);
 	}
 	
-	
-	/* Una solución para la historia 4 
-	 * 
-	 * consultar las fechas de fabricación y las horas acumuladas de los aviones de la empresa,
-	 * además de su estacionamiento y disponibilidad.
-	 * 
-	 */
-
 }

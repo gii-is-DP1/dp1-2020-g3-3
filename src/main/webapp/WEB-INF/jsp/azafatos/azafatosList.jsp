@@ -3,13 +3,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
 
 <!-- Pagina en la que se mostraran los azafatos y se permitira acceder a modificarlos -->
 
 <aerolineasAAAFC:layout pageName="azafatos">
 	<h2 class="centrado">Azafatos</h2>
+	<div style="float:right; padding-bottom: 1%;" >
+	<form:form action="/azafatosfind" method="get">
+           <label>NIF </label>
+           <input name="nif" pattern="^\d{8}[a-zA-Z]$" type="text"/>
+           <button type="submit" class="btn btn-default">Encontrar Azafato</button>
 
+    </form:form>
+    </div>
 	<table id="tablaAzafatos" class="table table-striped centrado">
 		<thead>
 			<tr>
@@ -54,5 +62,14 @@
 
 	</table>
 	<a href="<spring:url value="/azafatos/new" htmlEscape="true"/>" class="btn btn-default">Nuevo azafato</a>
-				
+	<div class="panel-footer centrado">
+		<h3>Mostrando página ${number+1} de ${totalPages}</h3>
+		<ul class="pagination" style="margin: 0px;">
+			<c:forEach begin="0" end="${totalPages-1}" var="page">
+				<li class="page-item"><a
+					href="azafatos?page=${page}&size=${size}" class="page-link">${page+1}</a>
+				</li>
+			</c:forEach>
+		</ul>
+	</div>
 </aerolineasAAAFC:layout>
