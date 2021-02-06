@@ -33,29 +33,39 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${vuelos}" var="vuelo">
-            <tr>
-            	<td onclick="javascript:location.href='/vuelos/${vuelo.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${vuelo.id}"/></b></td>
-            	<td>
-		            <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoOrigen.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}"/></b> -
-		            <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoDestino.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoDestino.codigoIATA}"/></b>
-		       	</td>
-				<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm"/></td>
-                <td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm"/></td>
-                <td><c:out value="${vuelo.avion.tipoAvion}"/></td>
-                <td>
-                	<c:forEach var="pControl" items="${vuelo.personalControl}" varStatus="loop">
-                		<c:out value="${pControl.nombre} ${pControl.apellidos}"/>
-                		<c:if test="${!loop.last}">, </c:if>
-                	</c:forEach>
-                </td>
-            <tr>
-					
-			</tr>
-        </c:forEach>
+            <c:choose>
+				<c:when test="${vuelos.size() > 0 }">
+			        <c:forEach items="${vuelos}" var="vuelo">
+			            <tr>
+			            	<td onclick="javascript:location.href='/vuelos/${vuelo.id}'" onmouseover="" style="cursor: pointer;"><b><c:out value="${vuelo.id}"/></b></td>
+			            	<td>
+					            <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoOrigen.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}"/></b> -
+					            <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoDestino.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoDestino.codigoIATA}"/></b>
+					       	</td>
+							<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm"/></td>
+			                <td><aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm"/></td>
+			                <td><c:out value="${vuelo.avion.tipoAvion}"/></td>
+			                <td>
+			                	<c:forEach var="pControl" items="${vuelo.personalControl}" varStatus="loop">
+			                		<c:out value="${pControl.nombre} ${pControl.apellidos}"/>
+			                		<c:if test="${!loop.last}">, </c:if>
+			                	</c:forEach>
+			                </td>
+			            <tr>
+								
+						</tr>
+			        </c:forEach>
+		    	</c:when>
+	       		<c:otherwise>
+					<tr class="centrado">
+						<td colspan="10"><h3>¡Lo sentimos! No se encuentra ningún vuelo.</h3></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
         </tbody>
     </table>
     <a href="<spring:url value="/vuelos/new" htmlEscape="true" />" class="btn btn-default">Nuevo vuelo</a>
+    <a href="<spring:url value="/vuelos" htmlEscape="true" />" class="btn btn-default" style="float:right;">Volver</a>
 
 	<div class="panel-footer centrado">
 		<h3>Mostrando página ${number+1} de ${totalPages}</h3>

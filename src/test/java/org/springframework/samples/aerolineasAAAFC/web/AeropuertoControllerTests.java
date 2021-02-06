@@ -161,7 +161,6 @@ public class AeropuertoControllerTests {
 	@Test
 	void testShowAeropuertoList() throws Exception {
 		mockMvc.perform(get("/aeropuertos"))
-		.andExpect(model().attributeExists("aeropuertos"))
 		.andExpect(view().name("aeropuertos/aeropuertosList"));
 	}
 	

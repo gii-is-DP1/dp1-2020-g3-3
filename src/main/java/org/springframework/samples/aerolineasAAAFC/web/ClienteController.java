@@ -144,8 +144,11 @@ public class ClienteController {
 		Cliente resultado = this.clienteService.findClienteByNif(nif);
 
 		if (resultado == null) {
-			result.rejectValue("nif", "notFound", "nif no encontrado");
-			return "redirect:/clientes";
+			model.put("number", 0);
+			model.put("totalPages", 1);
+			model.put("size", 1);
+			model.put("msg", "No existe ningún cliente con dicho nif");
+			return "clientes/clientesList";
 		} else {
 			return "redirect:/clientes/" + resultado.getId();
 		}

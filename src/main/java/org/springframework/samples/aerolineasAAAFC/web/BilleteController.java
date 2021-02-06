@@ -8,6 +8,9 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
@@ -43,8 +46,8 @@ public class BilleteController {
 	@Autowired
 	public BilleteController(BilleteService billeteService, ClienteService clienteService,VueloService vueloService, AsientoService asientoService) {
 		this.billeteService = billeteService;
-		this.clienteService=  clienteService;
-		this.vueloService= vueloService;
+		this.clienteService =  clienteService;
+		this.vueloService = vueloService;
 		this.asientoService = asientoService;
 	}
 	
@@ -65,7 +68,7 @@ public class BilleteController {
 			String name = authentication.getName(); //name corresponde al nif del usuario
 			model.put("billete", billete);
 			Vuelo vuelo=this.vueloService.findVueloById(vueloId);
-			List<Asiento> asientos=this.asientoService.findAsientosSinOcupar(vuelo);
+			List<Asiento> asientos = this.asientoService.findAsientosSinOcupar(vuelo);
 			model.put("asientos",asientos);
 			model.put("nAsientos",asientos.size());
 			model.put("vuelo",vuelo);
@@ -124,14 +127,32 @@ public class BilleteController {
 	}
 
 	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)
-	public String ShowDatosBillete(Map<String, Object> model,
-			@RequestParam(name = "apellidos", defaultValue = "") String apellidos) {
-		if (apellidos.isEmpty()) {
-			Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
-			model.put("billetes", billetes);
+	public String ShowDatosBillete(ModelMap model,
+			@RequestParam(name = "apellidos", defaultValue = "") String apellidos, @PageableDefault(value=20) Pageable paging) {
+		
+		if (apellidos.trim().isEmpty()) {
+			Page<Billete> pages = this.billeteService.findBilletes(paging);
+			model.addAttribute("number", pages.getNumber());
+			model.addAttribute("totalPages", pages.getTotalPages());
+			model.addAttribute("totalElements", pages.getTotalElements());
+			model.addAttribute("size", pages.getSize());
+			model.addAttribute("billetes",pages.getContent());
 		} else {
-			Collection<Billete> billetes = this.billeteService.findBilletePorApellido(apellidos);
-			model.put("billetes", billetes);
+			Page<Billete> pages = this.billeteService.findBilletePorApellido(apellidos.toUpperCase(), paging);
+			
+			if(pages.getContent().isEmpty()) {
+				model.put("msg","No hay billetes para el cliente buscado.");
+				model.addAttribute("number",0);
+				model.addAttribute("totalPages", 1);
+				model.addAttribute("totalElements", 1);
+				model.addAttribute("size", 1);
+			}else {
+				model.addAttribute("number", pages.getNumber());
+				model.addAttribute("totalPages", pages.getTotalPages());
+				model.addAttribute("totalElements", pages.getTotalElements());
+				model.addAttribute("size", pages.getSize());
+				model.addAttribute("billetes",pages.getContent());
+			}
 		}
 		return "billetes/billetesDatosList";
 	}

@@ -176,8 +176,11 @@ public class PersonalControlController {
 		PersonalControl resultado = this.pControlService.findPersonalControlByNif(pControl.getNif());
 
 		if (resultado == null) {
-			result.rejectValue("nif", "notFound", "nif no encontrado");
-			return "redirect:/controladores";
+			model.put("number", 0);
+			model.put("totalPages", 1);
+			model.put("size", 1);
+			model.put("msg", "No existe ningún controlador con dicho nif");
+			return "controladores/personalControlList";
 		} else {
 			return "redirect:/controladores/" + resultado.getId();
 		}

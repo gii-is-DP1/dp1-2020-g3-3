@@ -18,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
@@ -282,9 +285,10 @@ public class BilleteServiceTests {
 	
 	@Test
 	void shouldFindBilletesApellido() {
-		Collection<Billete> billetes = this.billeteService.findBilletePorApellido("Soto Ramirez");
+		Pageable page = PageRequest.of(0, 20);
+		Page<Billete> billetes = this.billeteService.findBilletePorApellido("Soto Ramirez",page);
 		
-		assertThat(billetes).isNotEmpty();
+		assertThat(billetes.getContent()).isNotEmpty();
 	}
 	
 	@Test
@@ -297,13 +301,6 @@ public class BilleteServiceTests {
 	@Test
 	void shouldFindBilletesFecha() {
 		Collection<Billete> billetes = this.billeteService.findBilletesPorFecha(LocalDate.of(2020, 4, 6));
-		
-		assertThat(billetes).isNotEmpty();
-	}
-	
-	@Test
-	void shouldFindBilletesComprados() {
-		Collection<Billete> billetes = this.billeteService.findBilleteConCliente();
 		
 		assertThat(billetes).isNotEmpty();
 	}
