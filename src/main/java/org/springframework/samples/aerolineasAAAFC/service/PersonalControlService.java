@@ -14,7 +14,10 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
@@ -58,19 +61,24 @@ public class PersonalControlService {
 	
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public PersonalControl findPersonalControlById(int id) throws DataAccessException{
 		return pControlRepository.findById(id).get();
 	}
 	
 
-	@Transactional
-	public List<PersonalControl> findPersonalControl(){
+	@Transactional(readOnly = true)
+	public List<PersonalControl> findPersonalControlNoPageable(){
 		return StreamSupport.stream(pControlRepository.findAll().spliterator(), false)
 				.collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
+	public Page<PersonalControl> findPersonalControl(Pageable pageable){
+		return pControlRepository.findAll(pageable);
+	}
 
+	@Transactional
 	public void deletePersonalControlById(int id) throws DataAccessException {
 		pControlRepository.deleteById(id);
 	}

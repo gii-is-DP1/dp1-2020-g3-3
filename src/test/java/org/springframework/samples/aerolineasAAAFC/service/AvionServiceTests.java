@@ -86,7 +86,7 @@ public class AvionServiceTests {
 	@Test
 	@Transactional
 	public void shouldInsertAvion() {
-		Collection<Avion> aviones = this.avionService.findAviones();
+		Collection<Avion> aviones = this.avionService.findAvionesNoPageable();
 		int found = aviones.size();
 
 		//CREACIÓN DEL AVIÓN
@@ -111,7 +111,7 @@ public class AvionServiceTests {
 		
 		assertThat(avi.getId()).isNotEqualTo(0);
 		
-		aviones = this.avionService.findAviones();
+		aviones = this.avionService.findAvionesNoPageable();
 		assertThat(aviones.size()).isEqualTo(found+1);
 	}
 	
@@ -162,12 +162,12 @@ public class AvionServiceTests {
 	@Test
 	@Transactional
 	public void shouldDeleteAvionById() {
-		Collection<Avion> aviones = this.avionService.findAviones();
+		Collection<Avion> aviones = this.avionService.findAvionesNoPageable();
 		int found = aviones.size();
 		
 		this.avionService.eliminarAvion(1);
 		
-		aviones = this.avionService.findAviones();
+		aviones = this.avionService.findAvionesNoPageable();
 		assertThat(aviones.size()).isEqualTo(found-1);
 	}
 }

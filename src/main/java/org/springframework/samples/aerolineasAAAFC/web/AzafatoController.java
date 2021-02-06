@@ -13,8 +13,12 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
@@ -136,6 +140,7 @@ public class AzafatoController {
 		
 	}
 	
+	
 	//ELIMINACIÓN
 	@GetMapping(value = "/azafatos/{azafatoId}/delete")
 	public String deleteAzafato(@PathVariable("azafatoId") int azafatoId) {
@@ -143,12 +148,31 @@ public class AzafatoController {
 		return "redirect:/azafatosList";
 	}
 	
-	@GetMapping(value =  "/azafatosList" )
-	public String showAzafatosList(Map<String, Object> model) {
-		List<Azafato> azafatos = new ArrayList<>();
-		this.azafatoService.findAzafatos().forEach(x->azafatos.add(x));
-		model.put("azafatos", azafatos);
+	
+	//CONSULTA
+	@GetMapping(value =  "/azafatos" )
+	public String showAzafatosList(ModelMap model , @PageableDefault(value=20) Pageable paging) {
+		Page<Azafato> pages = azafatoService.findAzafatos(paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("azafatos",pages.getContent());
 		return "azafatos/azafatosList";
+	}
+	
+	@GetMapping(value = "/azafatosfind")
+	public String processFindAzafatoForm(Azafato azafato,Map<String, Object> model, BindingResult result, @RequestParam(value = "nif", required=false) String nif) {
+
+		Azafato resultado = this.azafatoService.findAzafatoByNif(nif);
+
+		if (resultado == null) {
+			result.rejectValue("nif", "notFound", "nif no encontrado");
+			return "redirect:/azafatos";
+		} else {
+			return "redirect:/azafatos/" + resultado.getId();
+		}
+
 	}
 	
 	@GetMapping("/azafatos/{azafatoId}")

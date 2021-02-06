@@ -11,9 +11,13 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
@@ -76,12 +80,12 @@ public class VueloController {
 		Vuelo vuelo = new Vuelo();
 		model.put("vuelo",vuelo);
 		
-		model.put("aeropuertos",this.aeropuertoService.findAeropuertos());
-		model.put("aviones", this.avionService.findAviones());
+		model.put("aeropuertos",this.aeropuertoService.findAeropuertosNoPageable());
+		model.put("aviones", this.avionService.findAvionesNoPageable());
 
-		model.put("pOficina", this.pOficinaService.findPersonal());
-		model.put("pControl", this.pControlService.findPersonalControl());
-		model.put("azafatos", this.azafatoService.findAzafatos());
+		model.put("pOficina", this.pOficinaService.findPersonalNoPageable());
+		model.put("pControl", this.pControlService.findPersonalControlNoPageable());
+		model.put("azafatos", this.azafatoService.findAzafatosNoPageable());
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
@@ -121,18 +125,18 @@ public class VueloController {
 	@GetMapping(value = "/vuelos/{vueloId}/edit")
 	public String initUpdateVueloForm(@PathVariable("vueloId") int vueloId, ModelMap model) {
 		
-		model.addAttribute("aeropuertos", this.aeropuertoService.findAeropuertos());
+		model.addAttribute("aeropuertos", this.aeropuertoService.findAeropuertosNoPageable());
 		
 //		List<Billete> billetes = new ArrayList<>();
 //		this.billeteService.findBilletes().forEach(x->aeropuertos.add(x));
 //		model.addAttribute("aeropuertos", aeropuertos);
 		
 		model.addAttribute("vuelo",this.vueloService.findVueloById(vueloId));
-		model.addAttribute("aviones",this.avionService.findAviones());
+		model.addAttribute("aviones",this.avionService.findAvionesNoPageable());
 		model.addAttribute("pOficina", this.vueloService.findVueloById(vueloId).getPersonalOficina());
-		model.addAttribute("todoPersonal",this.pOficinaService.findPersonal());
-		model.addAttribute("todoControl", this.pControlService.findPersonalControl());
-		model.addAttribute("todoAzafato", this.azafatoService.findAzafatos());
+		model.addAttribute("todoPersonal",this.pOficinaService.findPersonalNoPageable());
+		model.addAttribute("todoControl", this.pControlService.findPersonalControlNoPageable());
+		model.addAttribute("todoAzafato", this.azafatoService.findAzafatosNoPageable());
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
@@ -174,7 +178,8 @@ public class VueloController {
 	}
 	
 	@RequestMapping(value = { "/vuelos" }, method = RequestMethod.GET)
-	public String showVuelosList(Map<String, Object> model,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+	public String showVuelosList(ModelMap model,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha, 
+								@PageableDefault(value=20) Pageable paging) {
 
 		int mes = 0;
 		int año = 0;
@@ -188,14 +193,20 @@ public class VueloController {
 			año = fecha.getYear();	
 		}
 		
-		model.put("vuelos", this.vueloService.findVuelosByMes(mes, año));
+		Page<Vuelo> pages =  this.vueloService.findVuelosByMes(mes, año, paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.put("vuelos", pages.getContent());
 		
 		return "vuelos/vuelosList";
 	}
 	
 	
 	@RequestMapping(value = { "/vuelos/ofertas" }, method = RequestMethod.GET)
-	public String showVuelosOfertadosList(Map<String, Object> model,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+	public String showVuelosOfertadosList(ModelMap model,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha, 
+										 @PageableDefault(value=20) Pageable paging) {
 
 		int mes = 0;
 		int año = 0;
@@ -209,17 +220,29 @@ public class VueloController {
 			año = fecha.getYear();	
 		}			
 		
-		model.put("vuelosOferta", this.vueloService.findVuelosOfertadosByMes(mes, año));
+		
+		Page<Vuelo> pages = this.vueloService.findVuelosOfertadosByMes(mes, año, paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.put("vuelosOferta", pages.getContent());
 		
 		return "vuelos/vuelosOfertadosList";
 	}
 	
 	
 	@RequestMapping(value = { "/vuelos/{vueloId}/clientes" }, method = RequestMethod.GET)
-	public String showClientes(Map<String, Object> model,@PathVariable("vueloId") int vueloId) {
+	public String showClientes(ModelMap model,@PathVariable("vueloId") int vueloId, @PageableDefault(value=20) Pageable paging) {
 		
-		Vuelo vuelo=this.vueloService.findVueloById(vueloId);
-		model.put("clientes",this.vueloService.findClientesPorVuelo(vuelo));
+		Vuelo vuelo = this.vueloService.findVueloById(vueloId);
+		Page<Cliente> pages = this.vueloService.findClientesPorVuelo(vuelo,paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("clientes",pages.getContent());
+		
 		
 		return "vuelos/clientesList";
 	}
@@ -245,87 +268,130 @@ public class VueloController {
 	}
 	
 	@GetMapping(value = "/vuelos/historial")
-	public String showPersonalOficinaList(Map<String, Object> model) {
-		List<Vuelo> vuelos = new ArrayList<Vuelo>();
-		vuelos.addAll(this.vueloService.findVuelosOrdered());
-		model.put("vuelos", vuelos);
+	public String showPersonalOficinaList(ModelMap model, @PageableDefault(value=20) Pageable paging) {
+		Page<Vuelo> pages = this.vueloService.findVuelosOrdered(paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.put("vuelos", pages.getContent());
 		
 		return "vuelos/vuelosHistorial";
 	}
 	
 	// Página de vuelos (HOME)
 	@RequestMapping(value = { "/" ,"/home" }, method = RequestMethod.GET)
-	public String showHome(Map<String,Object> model, @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+	public String showHome(ModelMap model, @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
 			@RequestParam(name = "precio", required = false) Double precio, @RequestParam(name = "origen", required = false) String origen,
-			@RequestParam(name = "destino", required = false) String destino) {
+			@RequestParam(name = "destino", required = false) String destino, @PageableDefault(value=20) Pageable paging) {
+		
 		log.info("fecha: {}, precio: {}, origen: {}, destino: {}", fecha,precio,origen,destino);
 		LocalDateTime ahora = LocalDateTime.now();
 		LocalDate ahoraA = LocalDate.now();
-		model.put("hoy", ahoraA);
+		model.addAttribute("hoy", ahoraA);
+		Page<Vuelo> pages = new PageImpl<Vuelo>(new ArrayList<Vuelo>());
 		if((fecha == null && precio == null && origen == null && destino == null) || (fecha.equals(ahoraA) && precio == 9999.0 && origen == "" && destino == "")) {							//sin filtro
-			log.info("soy el filtro nulo");
-			model.put("vuelos",this.vueloService.findVuelosConFecha(ahora));
+			
+			log.info("se ha accedido al filtro nulo");
+			pages = this.vueloService.findVuelosConFecha(ahora,paging);
+					
 		}else if(!fecha.equals(ahoraA) && precio == 9999.0 && origen == "" && destino == "") {			//filtro por fecha 1
-			log.info("soy el filtro por fecha");
+			
+			log.info("se ha accedido al filtro por fecha");
 			LocalDateTime horas = LocalDateTime.of(fecha, LocalTime.MIN);
-			model.put("vuelos",this.vueloService.findVuelosConFecha(horas));
+			pages = this.vueloService.findVuelosConFecha(horas,paging);
+			
 		}else if(fecha.equals(ahoraA) && precio != 9999.0 && origen == "" && destino == "") {			//filtro por precio 2
-			log.info("soy el filtro por precio");
-			model.put("vuelos",this.vueloService.findVuelosConFechaYPrecio(ahora,precio));
+			
+			log.info("se ha accedido al filtro por precio");
+			pages = this.vueloService.findVuelosConFechaYPrecio(ahora,precio, paging);
+			
 		}else if(fecha.equals(ahoraA) && precio == 9999.0 && origen != "" && destino == "") {			//filtro por aeropuerto de salida 3
-			log.info("soy el filtro aeropuerto de salida");
-			model.put("vuelos",this.vueloService.findVuelosConFechaYOrigen(ahora,origen));
+			
+			log.info("se ha accedido al filtro aeropuerto de salida");
+			pages = this.vueloService.findVuelosConFechaYOrigen(ahora,origen, paging);
+			
 		}else if(fecha.equals(ahoraA) && precio == 9999.0 && origen == "" && destino != "") {			//filtro por aeropuerto de destino 4
-			log.info("soy el filtro aeropuerto de destino");
-			model.put("vuelos",this.vueloService.findVuelosConFechaYDestino(ahora,destino));
+			
+			log.info("se ha accedido al filtro aeropuerto de destino");
+			pages = this.vueloService.findVuelosConFechaYDestino(ahora,destino, paging);
+			
 		}else if(!fecha.equals(ahoraA) && precio != 9999.0 && origen == "" && destino == "") {			//filtro por fecha+precio 1,2
-			log.info("soy el filtro fecha+precio");
+			
+			log.info("se ha accedido al filtro fecha+precio");
 			LocalDateTime horas = LocalDateTime.of(fecha, LocalTime.MIN);
-			model.put("vuelos",this.vueloService.findVuelosConFechaYPrecio(horas, precio));
+			pages = this.vueloService.findVuelosConFechaYPrecio(horas, precio, paging);
+			
 		}else if(!fecha.equals(ahoraA) && precio == 9999.0 && origen != "" && destino == "") {			//filtro por fecha+salida 1,3
-			log.info("soy el filtro por fecha+salida");
+			
+			log.info("se ha accedido al filtro por fecha+salida");
 			LocalDateTime horas = LocalDateTime.of(fecha, LocalTime.MIN);
-			model.put("vuelos",this.vueloService.findVuelosConFechaYOrigen(horas, origen));
+			pages = this.vueloService.findVuelosConFechaYOrigen(horas, origen, paging);
+			
 		}else if(!fecha.equals(ahoraA) && precio == 9999.0 && origen == "" && destino != "") {			//filtro por fecha+destino 1,4
-			log.info("soy el filtro fecha+destino");
+			
+			log.info("se ha accedido al filtro fecha+destino");
 			LocalDateTime horas = LocalDateTime.of(fecha, LocalTime.MIN);
-			model.put("vuelos",this.vueloService.findVuelosConFechaYDestino(horas, destino));
+			pages = this.vueloService.findVuelosConFechaYDestino(horas, destino, paging);
+			
 		}else if(fecha.equals(ahoraA) && precio != 9999.0 && origen != "" && destino == "") {			//filtro por precio+salida 2,3
-			log.info("soy el filtro precio+salida");
-			model.put("vuelos",this.vueloService.findVuelosConFechaPrecioYOrigen(ahora, precio, origen));
+			
+			log.info("se ha accedido al filtro precio+salida");
+			pages = this.vueloService.findVuelosConFechaPrecioYOrigen(ahora, precio, origen, paging);
+			
 		}else if(fecha.equals(ahoraA) && precio != 9999.0 && origen == "" && destino != "") {			//filtro por precio+destino 2,4		
-			log.info("soy el filtro precio+destino ");
-			model.put("vuelos",this.vueloService.findVuelosConFechaPrecioYDestino(ahora, precio, destino));
+			
+			log.info("se ha accedido al filtro precio+destino ");
+			pages = this.vueloService.findVuelosConFechaPrecioYDestino(ahora, precio, destino, paging);
+			
 		}else if(fecha.equals(ahoraA) && precio == 9999.0 && origen != "" && destino != "") {			//filtro por salida+destino 3,4
-			log.info("soy el filtro salida+destino");
-			model.put("vuelos",this.vueloService.findVuelosConFechaOrigenYDestino(ahora, origen, destino));
+			
+			log.info("se ha accedido al filtro salida+destino");
+			pages = this.vueloService.findVuelosConFechaOrigenYDestino(ahora, origen, destino, paging);
+			
 		}else if(!fecha.equals(ahoraA) && precio != 9999.0 && origen != "" && destino == "") {			//filtro fecha+precio+salida 1,2,3
-			log.info("soy el filtro filtro fecha+precio+salida");
+			
+			log.info("se ha accedido al filtro filtro fecha+precio+salida");
 			LocalDateTime horas = LocalDateTime.of(fecha, LocalTime.MIN);
-			model.put("vuelos",this.vueloService.findVuelosConFechaPrecioYOrigen(horas, precio, origen));
+			pages = this.vueloService.findVuelosConFechaPrecioYOrigen(horas, precio, origen, paging);
+			
 		}else if(!fecha.equals(ahoraA) && precio != 9999.0 && origen == "" && destino != "") {			//filtro fecha+precio+destino 1,2,4
-			log.info("soy el filtro fecha+precio+destino");
+			
+			log.info("se ha accedido al filtro fecha+precio+destino");
 			LocalDateTime horas = LocalDateTime.of(fecha, LocalTime.MIN);
-			model.put("vuelos",this.vueloService.findVuelosConFechaPrecioYDestino(horas, precio, destino));
+			pages = this.vueloService.findVuelosConFechaPrecioYDestino(horas, precio, destino, paging);
+			
 		}else if(fecha.equals(ahoraA) && precio == 9999.0 && origen != "" && destino != "") {			//filtro fecha+salida+destino 1,3,4
-			log.info("soy el filtro fecha+salida+destino");
+			
+			log.info("se ha accedido al filtro fecha+salida+destino");
 			LocalDateTime horas = LocalDateTime.of(fecha, LocalTime.MIN);
-			model.put("vuelos",this.vueloService.findVuelosConFechaOrigenYDestino(horas, origen, destino));
+			pages = this.vueloService.findVuelosConFechaOrigenYDestino(horas, origen, destino, paging);
+			
 		}else if(fecha.equals(ahoraA) && precio != 9999.0 && origen != "" && destino != "") {			//filtro precio+salida+destino 2,3,4
-			log.info("soy el filtro precio+salida+destino");
-			model.put("vuelos",this.vueloService.findVuelosConTodo(ahora, precio, origen, destino));
+			
+			log.info("se ha accedido al filtro precio+salida+destino");
+			pages = this.vueloService.findVuelosConTodo(ahora, precio, origen, destino, paging);
+			
 		}else{																							//filtro total 1,2,3,4
-			log.info("soy el filtro total");
+			
+			log.info("se ha accedido al filtro total");
 			LocalDateTime horas = LocalDateTime.of(fecha, LocalTime.MIN);
-			model.put("vuelos",this.vueloService.findVuelosConTodo(horas, precio, origen, destino));
+			pages = this.vueloService.findVuelosConTodo(horas, precio, origen, destino, paging);
+			
 		}
 		
-		Collection<Aeropuerto> aeropuertos = this.aeropuertoService.findAeropuertos();
+		Collection<Aeropuerto> aeropuertos = this.aeropuertoService.findAeropuertosNoPageable();
 		List<String> codigos = new ArrayList<String>();
 		for(Aeropuerto a : aeropuertos) {
 			codigos.add(a.getCodigoIATA());
 		}
-		model.put("codigos", codigos);
+		model.addAttribute("codigos", codigos);
+		
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("vuelos",pages.getContent());
 		
 		return "home";
 	}

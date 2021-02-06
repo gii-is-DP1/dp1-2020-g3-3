@@ -22,6 +22,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
@@ -93,14 +96,15 @@ public class VueloServiceTests {
 		List<Billete> billetes = this.billeteService.findBilletesByVuelo(vuelo.getId());
 		int found = billetes.size();
 		
-		assertThat(found).isEqualTo(2);
+		assertThat(found).isEqualTo(3);
 	}
 	
 	@Test
-	@Transactional //TODO billete está comentado por lo que cuando vaya este test debería de ir
+	@Transactional 
 	public void shouldFindClientesByVuelo() {
+		Pageable page =  PageRequest.of(0, 20);
 		Vuelo vuelo = this.vueloService.findVueloById(2);
-		Collection<Cliente> clientes = this.vueloService.findClientesPorVuelo(vuelo); 
+		Page<Cliente> clientes = this.vueloService.findClientesPorVuelo(vuelo,page); 
 		assertThat(clientes).isNotEmpty();
 	}
 
@@ -110,12 +114,13 @@ public class VueloServiceTests {
 	public void shouldFindVueloByDate() {
 		
 		//POR MES
-		Collection<Vuelo> vuelos = this.vueloService.findVuelosByMes(01, 2018);
-		int found = vuelos.size();
+		Pageable page =  PageRequest.of(0, 20);
+		Page<Vuelo> vuelos = this.vueloService.findVuelosByMes(01, 2018,page);
+		int found = vuelos.getContent().size();
 		
 		//OFERTADOS
-		Collection<Vuelo> vuelos1 = this.vueloService.findVuelosOfertadosByMes(01, 2021);
-		int found1 = vuelos1.size();
+		Page<Vuelo> vuelos1 = this.vueloService.findVuelosOfertadosByMes(01, 2021,page);
+		int found1 = vuelos1.getContent().size();
 		
 		assertThat(found).isEqualTo(1);
 		assertThat(found1).isEqualTo(3);
@@ -280,8 +285,9 @@ public class VueloServiceTests {
 	@Test
 	@Transactional
 	public void shouldNotInsertVueloHorasInvalidas() throws TelefonoErroneoException {
-		Collection<Vuelo> vuelos = this.vueloService.findVuelosOrdered();
-		int found = vuelos.size();
+		Pageable page =  PageRequest.of(0, 20);
+		Page<Vuelo> vuelos = this.vueloService.findVuelosOrdered(page);
+		int found = vuelos.getContent().size();
 		
 		//CREACIÓN DEL VUELO
 		Vuelo vuelo = new Vuelo();
@@ -331,8 +337,8 @@ public class VueloServiceTests {
 		vuelo.setAzafatos(azafatos);
 		
 		Assertions.assertThrows(HorasImposiblesException.class, ()->{ this.vueloService.saveVuelo(vuelo); });
-		vuelos = this.vueloService.findVuelos();
-		assertThat(vuelos.size()).isEqualTo(found);
+		vuelos = this.vueloService.findVuelosOrdered(page);
+		assertThat(vuelos.getContent().size()).isEqualTo(found);
 	}
 	
 	

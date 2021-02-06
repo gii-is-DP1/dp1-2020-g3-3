@@ -207,20 +207,11 @@ public class PersonalControlControllerTests {
 	//TESTS BÚSQUEDA
 	@WithMockUser(value = "spring")
 	@Test
-	void testInitFindForm() throws Exception {
-		mockMvc.perform(get("/controladores/find"))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeExists("personalControl"))
-		.andExpect(view().name("controladores/findPersonalControl"));
-	}
-
-	@WithMockUser(value = "spring")
-	@Test
 	void testProcessFindFormByNif() throws Exception {
 		given(this.personalControlService.findPersonalControlByNif(Juan.getNif())).willReturn(Juan);
 		Logger.getLogger(PersonalControlControllerTests.class.getName()).log(Level.INFO, "Juan: " + Juan);
 
-		mockMvc.perform(get("/controladores")
+		mockMvc.perform(get("/controladoresfind")
 				.param("nif", "08493865B"))
 		.andExpect(status().is3xxRedirection())
 		.andExpect(view().name("redirect:/controladores/" + TEST_PERSONALCONTROL_ID));
@@ -229,7 +220,7 @@ public class PersonalControlControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessFindFormNoPersonalControlFound() throws Exception {
-		mockMvc.perform(get("/controladores")
+		mockMvc.perform(get("/controladoresfind")
 				.param("nif", ""))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasFieldErrors("personalControl", "nif"))

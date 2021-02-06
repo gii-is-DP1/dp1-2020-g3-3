@@ -2,6 +2,7 @@ package org.springframework.samples.aerolineasAAAFC.service;
 
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.repository.ClienteRepository;
@@ -67,6 +70,11 @@ public class ClienteService{
 	public Page<Cliente> findClientes(Pageable pageable){
 		return clienteRepository.findAll(pageable);
 	}
+	
+	public Collection<Cliente> findClientesNoPageable() {
+		return StreamSupport.stream(clienteRepository.findAll().spliterator(), false)
+	    .collect(Collectors.toList());
+	}
 
 	@Transactional(readOnly = true)
 	public Collection<Cliente> findClientesPorNombre(String nombre,String apellidos){
@@ -84,7 +92,9 @@ public class ClienteService{
 	
 	// Historia 8: Sacar billetes comprados
 	@Transactional
-	public Collection<Billete> findBilletesByIdCliente(int idCliente){
-		return clienteRepository.findById(idCliente).get().getBilletes();
+	public Page<Billete> findBilletesByIdCliente(int idCliente, Pageable pageable){
+		Set<Billete> billetes = clienteRepository.findById(idCliente).get().getBilletes();
+		Page<Billete> res = new PageImpl<Billete>(billetes.stream().collect(Collectors.toList()));
+		return res;
 	}
 }

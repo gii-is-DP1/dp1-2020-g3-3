@@ -109,7 +109,7 @@ public class PersonalControlServiceTests {
 	@Test
 	@Transactional
 	void shouldInsertPersonal(){
-		Collection<PersonalControl> pcs = this.personalControlService.findPersonalControl();
+		Collection<PersonalControl> pcs = this.personalControlService.findPersonalControlNoPageable();
 		int found = pcs.size();
 		
 		PersonalControl pc = new PersonalControl();
@@ -129,7 +129,7 @@ public class PersonalControlServiceTests {
 		
 		assertThat(pc.getId()).isNotNull();
 		
-		pcs = this.personalControlService.findPersonalControl();
+		pcs = this.personalControlService.findPersonalControlNoPageable();
 		assertThat(pcs.size()).isEqualTo(found + 1);
 	}
 	
@@ -173,12 +173,12 @@ public class PersonalControlServiceTests {
 	@Test
 	@Transactional
 	void deletePersonalById() {
-		Collection<PersonalControl> pc = this.personalControlService.findPersonalControl();
+		Collection<PersonalControl> pc = this.personalControlService.findPersonalControlNoPageable();
 		int found = pc.size();
 		
 		this.personalControlService.deletePersonalControlById(1);
 		
-		pc = this.personalControlService.findPersonalControl();
+		pc = this.personalControlService.findPersonalControlNoPageable();
 		assertThat(pc.size()).isEqualTo(found-1);
 	}
 	
