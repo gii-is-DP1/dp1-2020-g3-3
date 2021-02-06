@@ -1,5 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -45,16 +47,6 @@ public class BilleteController {
 		this.vueloService= vueloService;
 		this.asientoService = asientoService;
 	}
-
-//	@ModelAttribute("asientos")
-//	public List<Asiento> findAsientosByVuelo(@PathVariable("vueloId") int vueloId) {
-//		return this.asientoService.findAsientosSinOcupar(this.vueloService.findVueloById(vueloId));
-//	}
-//	
-//	@ModelAttribute("vuelo")
-//	public Vuelo findVuelo(@PathVariable("vueloId") int vueloId) {
-//		return this.vueloService.findVueloById(vueloId);
-//	}
 	
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
@@ -78,6 +70,12 @@ public class BilleteController {
 			model.put("vuelo",vuelo);
 			Cliente cliente=clienteService.findClienteByNif(name);
 			model.put("cliente", cliente);
+			
+			//Lo de abajo es posible que sea conflictivo
+			DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDate today = LocalDate.now();
+			String aux = today.format(d);
+			model.put("fechaReserva",aux);
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		}else {
 			return "user/createClienteForm.jsp";
