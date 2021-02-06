@@ -71,6 +71,7 @@ public class BilleteService {
 		billete.setFechaReserva(today);
 		
 		billeteRepository.save(billete);
+		a.setLibre(false);
 	}
 
 	@Transactional

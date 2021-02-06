@@ -192,6 +192,10 @@ ul.ks-cboxtags li label::before {
     transition: transform .3s ease-in-out;
 }
 
+.centrado{
+	text-align:center;
+}
+
 @media screen and (max-width: 500px) {
   .main_header a {
     float: none;

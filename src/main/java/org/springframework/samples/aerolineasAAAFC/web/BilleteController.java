@@ -69,9 +69,8 @@ public class BilleteController {
 			model.put("asientos",asientos);
 			model.put("nAsientos",asientos.size());
 			model.put("vuelo",vuelo);
-			Cliente cliente=clienteService.findClienteByNif("01446551N");
+			Cliente cliente=clienteService.findClienteByNif(name);
 			model.put("cliente", cliente);
-			//Lo de abajo es posible que sea conflictivo
 			DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 			LocalDate today = LocalDate.now();
 			String aux = today.format(d);
@@ -85,13 +84,6 @@ public class BilleteController {
 	@PostMapping(value = "/billetes/{vueloId}/new")
 	public String processCreationBilleteForm(@PathVariable("vueloId") int vueloId,
 			@Valid Billete billete, BindingResult result,Map<String, Object> model) {
-		Vuelo vuelo=this.vueloService.findVueloById(vueloId);
-		List<Asiento> asientos=this.asientoService.findAsientosSinOcupar(vuelo);
-		model.put("asientos",asientos);
-		model.put("nAsientos",asientos.size());
-		model.put("vuelo",vuelo);
-		Cliente cliente=clienteService.findClienteByNif("01446551N");
-		model.put("cliente", cliente);
 		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		} else {
