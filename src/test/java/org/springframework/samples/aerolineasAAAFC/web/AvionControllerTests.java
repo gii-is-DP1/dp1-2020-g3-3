@@ -3,6 +3,7 @@ package org.springframework.samples.aerolineasAAAFC.web;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
@@ -17,6 +18,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -26,6 +31,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 
 
@@ -70,7 +76,15 @@ public class AvionControllerTests {
 		apache.setPlazasPrimera(65);
 		apache.setTipoAvion("AIRBUS");
 		apache.setVuelos(new ArrayList<>());
-				given(this.avionService.findAvionById(TEST_AVION_ID)).willReturn(apache);
+			
+		given(this.avionService.findAvionById(TEST_AVION_ID)).willReturn(apache);
+		
+		List<Avion> lista = new ArrayList<Avion>();
+		lista.add(apache);
+		Page pagina = new PageImpl<Avion>(lista);
+		Pageable paging = PageRequest.of(0, 20);
+		
+		given(this.avionService.findAviones(paging)).willReturn(pagina);
 	}
 	
 	// TEST DE INSERCIÓN
@@ -190,7 +204,7 @@ public class AvionControllerTests {
 	
 	@WithMockUser(value = "spring")
 	@Test
-	void testShowAeropuertoList() throws Exception {
+	void testShowAvionesList() throws Exception {
 		mockMvc.perform(get("/aviones"))
 		.andExpect(model().attributeExists("aviones"))
 		.andExpect(view().name("aviones/avionesList"));

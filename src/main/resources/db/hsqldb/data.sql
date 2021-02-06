@@ -82,7 +82,7 @@ VALUES ('Aeropuerto de Berlin-Brandeburgo Willy Brandt','Berlin, Alemania' , 'BE
 
 --Aviones
 INSERT INTO aviones(tipo_avion,capacidad_pasajero, horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
-VALUES ('Airbus A320', 300, 400, '2015-09-24', true, '2017-09-24', 200, 80, 20);
+VALUES ('Airbus A320', 300, 400, '2015-09-24', true, '2020-09-24', 200, 80, 20);
 
 INSERT INTO aviones(tipo_avion,capacidad_pasajero,horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera)
 VALUES ('Airbus A220', 130, 100, '2019-10-24', true, '2020-01-24', 100, 25, 5);

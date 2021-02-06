@@ -11,7 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +23,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
+import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
@@ -117,6 +124,16 @@ public class VueloControllerTests {
 		vuelol.setAvion(this.avionService.findAvionById(2));
 		
 		given(this.vueloService.findVueloById(TEST_VUELO_ID)).willReturn(vuelol);
+		
+		List<Vuelo> lista = new ArrayList<Vuelo>();
+		lista.add(vuelol);
+		Page pagina = new PageImpl<Vuelo>(lista);
+		Pageable paging = PageRequest.of(0, 20);
+		
+		given(this.vueloService.findVuelosConFecha(null, paging)).willReturn(pagina);
+		
+		LocalDateTime fechita = LocalDateTime.of(2020, 12, 10, 0, 0);
+		given(this.vueloService.findVuelosConFecha(fechita, paging)).willReturn(pagina);
 	}
 	
 	//TESTS DE INSERCION
@@ -143,17 +160,14 @@ public class VueloControllerTests {
 				.with(csrf())
 				.param("fechaSalida", LocalDateTime.of(2020,01,24,10,00).toString())
 				.param("fechaLlegada", LocalDateTime.of(2020,01,24,15,00).toString())
-				.param("coste", "6000.0")
+				.param("coste", "350.0")
 				.param("aeropuertoOrigen", "1")
 				.param("aeropuertoDestino", "2")
 				.param("avion", "1")
 				.param("personalOficina", "1")
-				.param("personalControl", "1")
-				.param("personalControl", "2")
-				.param("azafatos", "1")
-				.param("azafatos", "2")
-				.param("azafatos", "3"))
-		.andExpect(status().is3xxRedirection());
+				.param("personalControl", "1", "2")
+				.param("azafatos", "1", "2", "3", "4", "5", "6"))
+		.andExpect(view().name("redirect:/vuelos"));
 	}
 	
 	@WithMockUser(value = "spring")
@@ -215,7 +229,7 @@ public class VueloControllerTests {
 	@Test
 	void testshowVuelosListConFecha() throws Exception{
 		//Creo que habria que añadir un nuevo given() para devolver una lista de vuelos en esa fecha (?)
-		mockMvc.perform(get("/vuelos?fecha=2018-01"))
+		mockMvc.perform(get("/vuelos?fecha=2020-12-10"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeExists("vuelos"))
 		.andExpect(view().name("vuelos/vuelosList"));

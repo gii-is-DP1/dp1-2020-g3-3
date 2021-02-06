@@ -11,6 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +23,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
@@ -78,6 +84,13 @@ public class PersonalOficinaControllerTests {
 		carlos.setUser(carlosUser);
 
 		given(this.personalOficinaService.findPersonalOficinaById(TEST_PERSONALOFICINA_ID)).willReturn(carlos);
+	
+		List<PersonalOficina> lista = new ArrayList<PersonalOficina>();
+		lista.add(carlos);
+		Page pagina = new PageImpl<PersonalOficina>(lista);
+		Pageable paging = PageRequest.of(0, 20);
+		
+		given(this.personalOficinaService.findPersonal(paging)).willReturn(pagina);
 	}
 
 

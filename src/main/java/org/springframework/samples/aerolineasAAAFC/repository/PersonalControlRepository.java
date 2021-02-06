@@ -2,6 +2,8 @@ package org.springframework.samples.aerolineasAAAFC.repository;
 
 import java.util.Collection;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +17,7 @@ public interface PersonalControlRepository extends CrudRepository<PersonalContro
 	
 	@Query("SELECT DISTINCT personalControl FROM PersonalControl personalControl WHERE personalControl.iban LIKE :iban%")
 	public PersonalControl findByIban(@Param("iban") String iban);
+	
+	public Page<PersonalControl> findAll(Pageable pageable);
 
 }

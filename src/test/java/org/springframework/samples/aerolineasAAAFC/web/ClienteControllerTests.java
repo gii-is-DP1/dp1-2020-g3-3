@@ -12,6 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +24,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
+import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
@@ -82,6 +89,13 @@ public class ClienteControllerTests {
 
 
 		given(this.clienteService.findClienteById(TEST_CLIENTE_ID)).willReturn(dolores);
+		
+		List<Cliente> lista = new ArrayList<Cliente>();
+		lista.add(dolores);
+		Page pagina = new PageImpl<Cliente>(lista);
+		Pageable paging = PageRequest.of(0, 20);
+		
+		given(this.clienteService.findClientes(paging)).willReturn(pagina);
 	}
 
 	//TESTS CREACIÓN
@@ -213,10 +227,8 @@ public class ClienteControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessFindFormNoClientesFound() throws Exception {
-		mockMvc.perform(get("/clientesfind").param("nif", "29565800A")).andExpect(status().isOk())
-		.andExpect(model().attributeHasFieldErrors("cliente", "nif"))
-		.andExpect(model().attributeHasFieldErrorCode("cliente", "nif", "notFound"))
-		.andExpect(view().name("clientes/clientesList"));
+		mockMvc.perform(get("/clientesfind").param("nif", "")).andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/clientes"));
 	}
 
 	//OTROS

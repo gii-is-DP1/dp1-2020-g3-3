@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 public class AeropuertoController {
 	private static final String VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM = "aeropuertos/createOrUpdateAeropuertoForm";
@@ -114,11 +116,11 @@ public class AeropuertoController {
 	@GetMapping(value = { "/aeropuertos" })
 	public String showAeropuertosList(ModelMap model, @PageableDefault(value=20) Pageable paging) {
 		Page<Aeropuerto> pages = aeropuertoService.findAeropuertos(paging);
-		model.addAttribute("number", pages.getNumber());
-		model.addAttribute("totalPages", pages.getTotalPages());
-		model.addAttribute("totalElements", pages.getTotalElements());
-		model.addAttribute("size", pages.getSize());
-		model.addAttribute("aeropuertos",pages.getContent());
+		model.put("number", pages.getNumber());
+		model.put("totalPages", pages.getTotalPages());
+		model.put("totalElements", pages.getTotalElements());
+		model.put("size", pages.getSize());
+		model.put("aeropuertos",pages.getContent());
 		return "aeropuertos/aeropuertosList";
 	}
 	
