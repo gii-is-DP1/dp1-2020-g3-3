@@ -59,9 +59,11 @@ public class VueloService {
 			vuelo.getAvion().setHorasAcumuladas(horasAcum);
 			vueloRepository.save(vuelo);
 			
-//			asientoService.saveManyAsientos(vuelo);  ->Felipe testea esto para que no casque ffs
-
-			
+			//Si es un vuelo nuevo, genera los asientos
+			//Si viene de un update, los dejara tal cual
+			if(vuelo.getAsientos().size()==0) { 
+				asientoService.saveManyAsientos(vuelo);
+			}
 		}
 	}
 	 

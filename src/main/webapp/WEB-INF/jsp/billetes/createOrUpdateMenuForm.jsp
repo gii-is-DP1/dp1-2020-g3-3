@@ -7,10 +7,9 @@
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
 
 <aerolineasAAAFC:layout pageName="menus">
-	<h2>Nuevo menú</h2>
+	<h2 class="centrado">Nuevo menú</h2>
 	<form:form modelAttribute="menu" class="form-horizontal"
 		id="add-menu-form">
-		<input type="hidden" name= "id" value= "${menu.id}"/>
     	<input type="hidden" name= "version" value= "${menu.version}"/>
 		<div class="form-group has-feedback">
 			<div class="container">

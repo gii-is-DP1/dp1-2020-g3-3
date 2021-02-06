@@ -35,11 +35,6 @@ public class EquipajeController {
 		this.equipajeBaseService = equipajeBaseService;
 	}
 	
-	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
-	}
-	
 	@ModelAttribute("equipajes")
 	public Collection<EquipajeBase> populateEquipajeTypes() {
 		return this.equipajeBaseService.findEquipajesBase();

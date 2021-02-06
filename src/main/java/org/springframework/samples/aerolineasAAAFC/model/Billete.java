@@ -13,9 +13,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
-
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
@@ -32,23 +29,19 @@ import lombok.Setter;
 @Table(name = "billetes")
 public class Billete extends BaseEntity{
 
-	// Atributos:
-	
+	//Atributos
 	@Column(name = "coste")
 	@Positive
 	private double coste;
 	
 	@Column(name = "fecha_reserva")
-	//@NotEmpty
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate fechaReserva;
 	
 	// Relaciones de tabla:
-
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")
 	@EqualsAndHashCode.Exclude
-	//@Size(min = 0, max = 3) Actualmente se usan excepciones
 	private Set<Equipaje> equipajes;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "billete")

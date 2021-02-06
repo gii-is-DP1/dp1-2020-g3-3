@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +12,9 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
@@ -47,6 +50,25 @@ public class BilleteService {
 	
 	@Transactional
 	public void saveBillete(Billete billete) throws DataAccessException {
+		Asiento a = billete.getAsiento();
+		
+		if(a.getClase().equals(Clase.ECONOMICA)) {
+			billete.setCoste(a.getVuelo().getCoste());
+		}
+		
+		else if(a.getClase().equals(Clase.EJECUTIVA)) {
+			billete.setCoste(1.25 * a.getVuelo().getCoste());
+		}
+		
+		else if(a.getClase().equals(Clase.PRIMERACLASE)) {
+			billete.setCoste(1.75 * a.getVuelo().getCoste());
+		}
+		
+		DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate today = LocalDate.now();
+		String aux = today.format(d);
+		today = LocalDate.parse(aux, d);
+		billete.setFechaReserva(today);
 		
 		billeteRepository.save(billete);
 	}
@@ -73,7 +95,7 @@ public class BilleteService {
 			if (aux1 == null || aux2 == null || aux3 == null)
 				throw new PlatosNoValidosException(2);
 
-			else { // Esta comprobacion es solo necesaria si usamos el service directamente, se
+			else { // Esta comprobacion es solo necesaria si usamos el service directamente, se *****
 					// puede eliminar
 				if (aux1.getTipoPlato().getName().equals("primerPlato"))
 					cont1 = 1;
@@ -100,6 +122,8 @@ public class BilleteService {
 						} else {
 							menuRepository.save(menu);
 							menu.getBillete().getMenus().add(menu);
+							menu.getBillete().setCoste(menu.getBillete().getCoste() + aux1.getPrecio() + aux2.getPrecio() + aux3.getPrecio()); 
+							//Le añadimos el precio del menu
 						}
 					}
 				}
@@ -127,6 +151,7 @@ public class BilleteService {
 			else {
 				equipajeRepository.save(equipaje);
 				equipaje.getBillete().getEquipajes().add(equipaje);
+				equipaje.getBillete().setCoste(equipaje.getBillete().getCoste() + equipaje.getEquipajeBase().getPrecio());
 			}
 		}
 

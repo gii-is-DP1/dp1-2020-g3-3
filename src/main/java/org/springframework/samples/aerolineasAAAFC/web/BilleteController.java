@@ -22,7 +22,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,7 +90,6 @@ public class BilleteController {
 		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		} else {
-
 			this.billeteService.saveBillete(billete);
 
 			return "redirect:/billetes/" + billete.getId();
@@ -140,14 +138,4 @@ public class BilleteController {
 		}
 		return "billetes/billetesDatosList";
 	}
-
-//	@RequestMapping(value = { "/billetes/{billeteId}/datos" }, method = RequestMethod.GET)  ESTO ES PARA REMATAR LAS HISTORIAS DE BILLETE
-//	public String ShowDatosBilleteParticular(@PathVariable("billeteId") int billeteId, Map<String, Object> model) {
-//		if(this.billeteService.findBilleteById(billeteId).equals(null)) {
-//			
-//		}
-//
-//		return "billetes/billetesDatosList";
-//	}
-
 }
