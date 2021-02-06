@@ -179,21 +179,13 @@ public class AvionController {
 //		return "controladores/rutaAviones";
 //	}
 	
-	@GetMapping(value = "/controladores/rutaAviones")
+	@GetMapping(value = "/aviones/rutaAviones")
 	public String showAvionesListPersonal(Map<String, Object> model) {
 		
-		List<Aeropuerto> aeropuertosDestino = new ArrayList<Aeropuerto>();
 		List<Avion> aviones = this.avionService.findAviones();
-		
-		for(Avion a: aviones) {
-			Aeropuerto aer = a.getVuelos().get(0).getAeropuertoDestino();
-			aeropuertosDestino.add(aer);
-		}
-		
 		model.put("aviones", aviones);
-		model.put("aeropuertosDestino", aeropuertosDestino);
 
-		return "controladores/rutaAviones";
+		return "aviones/rutaAviones";
 	}
 	
 	

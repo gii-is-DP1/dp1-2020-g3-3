@@ -105,13 +105,13 @@ VALUES (parsedatetime('03-06-2019 7:10','dd-MM-yyyy hh:mm'),parsedatetime('03-06
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
 VALUES (parsedatetime('07-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-01-2021 21:30','dd-MM-yyyy hh:mm'),200,1,2,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('10-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-01-2021 21:30','dd-MM-yyyy hh:mm'),150,1,2,1);
+VALUES (parsedatetime('10-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-01-2021 21:30','dd-MM-yyyy hh:mm'),150,1,6,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
 VALUES (parsedatetime('06-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('06-02-2021 21:30','dd-MM-yyyy hh:mm'),500,2,1,3);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,3);
+VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,4);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),200,3,2,3);
+VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),200,3,4,2);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
 VALUES (parsedatetime('10-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-02-2021 21:30','dd-MM-yyyy hh:mm'),350,2,3,3);
 

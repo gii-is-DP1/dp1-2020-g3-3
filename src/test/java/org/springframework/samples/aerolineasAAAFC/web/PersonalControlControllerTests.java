@@ -200,7 +200,7 @@ public class PersonalControlControllerTests {
 		mockMvc.perform(get("/controladores/{pControlId}/delete", TEST_PERSONALCONTROL_ID))
 		.andExpect(status().isFound())
 		.andExpect(model().attributeDoesNotExist("personalControl"))
-		.andExpect(view().name("redirect:/personalControlList"));
+		.andExpect(view().name("redirect:/controladoresList"));
 	}
 
 	

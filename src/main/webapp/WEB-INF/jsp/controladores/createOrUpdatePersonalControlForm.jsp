@@ -13,13 +13,14 @@
     <form:form modelAttribute="personalControl" class="form-horizontal" id="add-controlador-form">
     	<input type="hidden" name= "pControlId" value= "${personalControl.id}"/>
     	<input type="hidden" name= "version" value= "${personalControl.version}"/>
+    	
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Nombre" name="nombre"/>
             <aerolineasAAAFC:inputField label="Apellidos" name="apellidos"/>
             <aerolineasAAAFC:inputField label="NIF" name="nif"/>
             <aerolineasAAAFC:inputField label="IBAN" name="iban"/>
 
-            	<aerolineasAAAFC:selectField label="Rol" name="rol" names="${roles}"/>
+            <aerolineasAAAFC:selectFieldN label="Rol" name="rol" names="${roles}"/>
 
             <aerolineasAAAFC:inputField label="Salario" name="salario"/>
 			<aerolineasAAAFC:inputField label="Usuario (debe ser igual al DNI)" name="user.username" />
