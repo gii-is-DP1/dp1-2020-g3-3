@@ -7,7 +7,11 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoErroneoException;
 import org.springframework.stereotype.Controller;
@@ -37,14 +41,8 @@ public class AeropuertoController {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	@GetMapping(value = { "/aeropuertos" })
-	public String showAeropuertosList(Map<String, Object> model) {
-		List<Aeropuerto> aeropuertos = new ArrayList<>();
-		this.aeropuertoService.findAeropuertos().forEach(x -> aeropuertos.add(x));
-		model.put("aeropuertos", aeropuertos);
-		return "aeropuertos/aeropuertosList";
-	}
 
+	//INSERCIÓN
 	@GetMapping(value = "/aeropuertos/new")
 	public String initCreationAeropuertoForm(Map<String, Object> model) {
 		Aeropuerto aeropuerto = new Aeropuerto();
@@ -70,7 +68,6 @@ public class AeropuertoController {
 	}
 
 	// MODIFICACION
-
 	@GetMapping(value = "/aeropuertos/{aeropuertoId}/edit")
 	public String initUpdateAeropuertoForm(@PathVariable("aeropuertoId") int aeropuertoId, ModelMap model) {
 		Aeropuerto aeropuerto = this.aeropuertoService.findAeropuertoById(aeropuertoId);
@@ -104,8 +101,6 @@ public class AeropuertoController {
 		}
 	}
 
-
-	
 	
 	//ELIMINACIÓN
 	@GetMapping(value = "/aeropuertos/{aeropuertoId}/delete")
@@ -114,6 +109,19 @@ public class AeropuertoController {
 		return "redirect:/aeropuertos";
 	}
 
+	
+	//CONSULTA
+	@GetMapping(value = { "/aeropuertos" })
+	public String showAeropuertosList(ModelMap model, @PageableDefault(value=20) Pageable paging) {
+		Page<Aeropuerto> pages = aeropuertoService.findAeropuertos(paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("aeropuertos",pages.getContent());
+		return "aeropuertos/aeropuertosList";
+	}
+	
 	@GetMapping("/aeropuertos/{aeropuertoId}")
 	public ModelAndView showAeropuerto(@PathVariable("aeropuertoId") int id) {
 		ModelAndView mav = new ModelAndView("aeropuertos/aeropuertoDetails");

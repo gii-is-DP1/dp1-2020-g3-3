@@ -85,8 +85,9 @@ public class ClienteServiceTests {
 	
 	@Test
 	void shouldGetBilleteByClienteId() {
-		Collection<Billete> billetes = this.clienteService.findBilletesByIdCliente(1);
-		int found = billetes.size();
+		Pageable page = PageRequest.of(0, 20);
+		Page<Billete> billetes = this.clienteService.findBilletesByIdCliente(1, page);
+		int found = billetes.getContent().size();
 		assertThat(found == 1);
 	}
 
@@ -95,9 +96,8 @@ public class ClienteServiceTests {
 	@Test
 	@Transactional
 	public void shouldInsertCliente(){
-		Pageable paging = PageRequest.of(1, 2);
-		Page<Cliente> clientes = this.clienteService.findClientes(paging);
-		int found = clientes.getSize();
+		Collection<Cliente> clientes = this.clienteService.findClientesNoPageable();
+		int found = clientes.size();
 
 		//CREACIÓN DEL CLIENTE
 		Cliente cliente = new Cliente();
@@ -120,8 +120,8 @@ public class ClienteServiceTests {
 
 		assertThat(cliente.getId().longValue()).isNotEqualTo(0);
 
-		clientes = this.clienteService.findClientes(paging);
-		assertThat(clientes.getSize()).isEqualTo(found + 1);
+		clientes = this.clienteService.findClientesNoPageable();
+		assertThat(clientes.size()).isEqualTo(found + 1);
 	}
 
 	@Test
@@ -215,14 +215,13 @@ public class ClienteServiceTests {
 	@Test
 	@Transactional
 	public void shouldDeleteClienteById() {
-		Pageable paging = PageRequest.of(1, 2);
-		Page<Cliente> clientes = this.clienteService.findClientes(paging);
-		int found = clientes.getSize();
+		Collection<Cliente> clientes = this.clienteService.findClientesNoPageable();
+		int found = clientes.size();
 
 		this.clienteService.deleteClienteById(1);
 
-		clientes = this.clienteService.findClientes(paging);
-		assertThat(clientes.getSize()).isEqualTo(found - 1);
+		clientes = this.clienteService.findClientesNoPageable();
+		assertThat(clientes.size()).isEqualTo(found - 1);
 	}
 
 

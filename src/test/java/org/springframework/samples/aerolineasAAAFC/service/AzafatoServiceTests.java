@@ -115,7 +115,7 @@ public class AzafatoServiceTests {
 	@Transactional
 	public void shouldInsertAzafato2Idiomas() throws IbanDuplicadoException, IdiomasNoSuficientesException {
 
-		Collection<Azafato> azafatos = this.azafatoService.findAzafatos();
+		Collection<Azafato> azafatos = this.azafatoService.findAzafatosNoPageable();
 		int found = azafatos.size();
 		
 		//CREACIÓN AZAFATO
@@ -146,7 +146,7 @@ public class AzafatoServiceTests {
 		this.azafatoService.saveAzafato(azafato);
 		
 
-		azafatos = this.azafatoService.findAzafatos();
+		azafatos = this.azafatoService.findAzafatosNoPageable();
 		assertThat(azafatos.size()).isEqualTo(found + 1);
 		
 
@@ -156,7 +156,7 @@ public class AzafatoServiceTests {
 	@Transactional
 	public void shouldNotInsertAzafato1Idioma() {
 
-		Collection<Azafato> azafatos = this.azafatoService.findAzafatos();
+		Collection<Azafato> azafatos = this.azafatoService.findAzafatosNoPageable();
 		int found = azafatos.size();
 		
 		//CREACIÓN AZAFATO
@@ -182,7 +182,7 @@ public class AzafatoServiceTests {
 		
 		assertThrows(IdiomasNoSuficientesException.class, () -> {this.azafatoService.saveAzafato(azafato);});
 
-		azafatos = this.azafatoService.findAzafatos();
+		azafatos = this.azafatoService.findAzafatosNoPageable();
 		assertThat(azafatos.size()).isEqualTo(found);
 
 	}
@@ -242,12 +242,12 @@ public class AzafatoServiceTests {
 	//TEST DE BORRADO
 	@Test
 	void shouldDeleteAzafatoById() {
-		Collection<Azafato> azafatos = this.azafatoService.findAzafatos();
+		Collection<Azafato> azafatos = this.azafatoService.findAzafatosNoPageable();
 		int found = azafatos.size();
 		
 		this.azafatoService.eliminarAzafato(1);
 		
-		azafatos = this.azafatoService.findAzafatos();
+		azafatos = this.azafatoService.findAzafatosNoPageable();
 		assertThat(azafatos.size()).isEqualTo(found-1);
 	}
 	

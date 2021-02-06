@@ -3,13 +3,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
 
 <!-- Archivo .jsp que muestra el listado de todos los oficinistas -->
 
 <aerolineasAAAFC:layout pageName="personalOficina">
     <h2 class="centrado">Personal de oficina</h2>
+	<div style="float:right; padding-bottom: 1%;" >
+	<form:form action="/personalOficinafind" method="get">
+           <label>NIF </label>
+           <input name="nif" pattern="^\d{8}[a-zA-Z]$" type="text"/>
+           <button type="submit" class="btn btn-default">Encontrar Oficinista</button>
 
+    </form:form>
+    </div>
     <table id="tablaPersonalOficina" class="table table-striped centrado">
         <thead>
         <tr>
@@ -49,4 +57,15 @@
         </tbody>
     </table>
     <a href="<spring:url value="/personalOficina/new" htmlEscape="true"/>" class="btn btn-default">Nuevo oficinista</a>
+
+	<div class="panel-footer centrado">
+		<h3>Mostrando página ${number+1} de ${totalPages}</h3>
+		<ul class="pagination" style="margin: 0px;">
+			<c:forEach begin="0" end="${totalPages-1}" var="page">
+				<li class="page-item"><a
+					href="personalOficina?page=${page}&size=${size}" class="page-link">${page+1}</a>
+				</li>
+			</c:forEach>
+		</ul>
+	</div>
 </aerolineasAAAFC:layout>

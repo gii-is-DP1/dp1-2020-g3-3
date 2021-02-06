@@ -6,6 +6,8 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.repository.AeropuertoRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TelefonoErroneoException;
@@ -39,14 +41,18 @@ public class AeropuertoService {
 	}
 	
 	@Transactional
-	public Collection<Aeropuerto> findAeropuertos(){
-		return StreamSupport.stream(aeropuertoRepository.findAll().spliterator(), false)
-				.collect(Collectors.toList());
+	public Page<Aeropuerto> findAeropuertos(Pageable pageable){
+		return aeropuertoRepository.findAll(pageable);
 	}
 	
 	
 
 	public void eliminarAeropuerto(int id) throws DataAccessException {
 		aeropuertoRepository.deleteById(id);
+	}
+
+	public Collection<Aeropuerto> findAeropuertosNoPageable() {
+		return StreamSupport.stream(aeropuertoRepository.findAll().spliterator(), false)
+	    .collect(Collectors.toList());
 	}
 }

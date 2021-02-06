@@ -68,7 +68,7 @@ public class AeropuertoServiceTests {
 	@Test
 	@Transactional
 	public void shouldInsertAeropuerto() {
-		Collection<Aeropuerto> aeros = this.aeropuertoService.findAeropuertos();
+		Collection<Aeropuerto> aeros = this.aeropuertoService.findAeropuertosNoPageable();
 		int found = aeros.size();
 		
 		Aeropuerto aero = new Aeropuerto();
@@ -85,14 +85,14 @@ public class AeropuertoServiceTests {
 		
 		assertThat(aero.getId()).isNotEqualTo(0);
 		
-		aeros = this.aeropuertoService.findAeropuertos();
+		aeros = this.aeropuertoService.findAeropuertosNoPageable();
 		assertThat(aeros.size()).isEqualTo(found + 1);
 	}
 	
 	@Test
 	@Transactional
 	public void shoulNotInsertAeropuertoTelefonoInvalido() {
-		Collection<Aeropuerto> aeros = this.aeropuertoService.findAeropuertos();
+		Collection<Aeropuerto> aeros = this.aeropuertoService.findAeropuertosNoPageable();
 		int found = aeros.size();
 		
 		Aeropuerto aero = new Aeropuerto();
@@ -103,7 +103,7 @@ public class AeropuertoServiceTests {
 		
 		assertThrows(TelefonoErroneoException.class, ()->{ this.aeropuertoService.saveAeropuerto(aero); });
 		
-		aeros = this.aeropuertoService.findAeropuertos();
+		aeros = this.aeropuertoService.findAeropuertosNoPageable();
 		assertThat(aeros.size()).isEqualTo(found);
 	}
 	
@@ -127,12 +127,12 @@ public class AeropuertoServiceTests {
 	@Test
 	@Transactional
 	public void shouldDeleteAeropuertoById() {
-		Collection<Aeropuerto> aeros = this.aeropuertoService.findAeropuertos();
+		Collection<Aeropuerto> aeros = this.aeropuertoService.findAeropuertosNoPageable();
 		int found = aeros.size();
 		
 		this.aeropuertoService.eliminarAeropuerto(1);
 		
-		aeros = this.aeropuertoService.findAeropuertos();
+		aeros = this.aeropuertoService.findAeropuertosNoPageable();
 		assertThat(aeros.size()).isEqualTo(found - 1);
 	}
 }

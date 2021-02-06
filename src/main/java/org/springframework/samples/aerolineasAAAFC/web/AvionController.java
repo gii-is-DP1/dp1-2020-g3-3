@@ -15,9 +15,13 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
@@ -108,13 +112,23 @@ public class AvionController {
 			return "redirect:/aviones/{avionId}";
 		}
 	}
-
+	
+	//ELIMINACIÓN
+	@GetMapping(value = "/aviones/{avionId}/delete")
+	public String deleteCliente(@PathVariable("avionId") int avionId) {
+		this.avionService.eliminarAvion(avionId);
+		return "redirect:/aviones";
+	}
+	
+	//CONSULTA
 	@GetMapping(value = "/aviones")
-	public String showAvionesList(Map<String, Object> model) {
-		List<Avion> aviones = new ArrayList<Avion>();
-		aviones.addAll(this.avionService.findAviones());
-		model.put("aviones", aviones);
-
+	public String showAvionesList(ModelMap model, @PageableDefault(value=20) Pageable paging) {
+		Page<Avion> pages = avionService.findAviones(paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("aviones",pages.getContent());
 		return "aviones/avionesList";
 	}
 
@@ -124,66 +138,16 @@ public class AvionController {
 		mav.addObject(this.avionService.findAvionById(avionId));
 		return mav;
 	}
-
-	// estadoAviones (H4)
-
-				//	@RequestMapping(value = { "/controladores/{pControlId}/estadoAviones" }, method = RequestMethod.GET)
-				//	public String showVuelosList(Map<String, Object> model, @PathVariable("pControlId") int pControlId,
-				//			@RequestParam(name = "fecha", defaultValue = "") String fecha) {
-				//
-				//		if (fecha.isEmpty()) {
-				//			model.put("vuelos", this.avionService.estadoAviones(pControlId));
-				//		} else {
-				//			fecha += "-01";
-				//			LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				//			int mes = date.getMonthValue();
-				//			int año = date.getYear();
-				//			Boolean disponibilidad; // ??
-				//			Integer horasAcumuladas; // ??
-				//			LocalDate fechaFabricacion; // ??
-				//			model.put("vuelos", this.avionService.findAviones());
-				//		}
-				//		return "controladores/estadoAviones";
-				//	}
-
-//	@GetMapping(value = "/controladores/rutaAviones")
-//	public String showAvionesListPersonal(Map<String, Object> model) {
-//		
-//		Aeropuerto aeropuerto = null; //Inicializa aeropuerto
-//		List<Avion> aviones = this.avionService.findAviones(); //Almacena todos los aviones de la compañía
-//		Collection<Vuelo> todosVuelos = this.vueloService.findVuelos(); //Almacena todos los vuelos de la compañía
-//		List<Aeropuerto> aeropuertosDestino = new ArrayList<Aeropuerto>(); //Inicializa aeropuertosDestino
-//		
-//		//Recorre los vuelos y recoge su avión, si dicho avión es de la compañía establece como fechaFinal la fecha de llegada
-//		for (Vuelo v : todosVuelos) {
-//			LocalDateTime fechaFinal = LocalDateTime.of(1900, Month.JULY, 29, 19, 30, 40);
-//			Avion avion = v.getAvion();
-//			
-//			for (int i = 0; i <= aviones.size()-1; i++) {
-//				if (avion.equals(aviones.get(i))) {
-//
-//					LocalDateTime fechaLlegada = v.getFechaLlegada();
-//					if (fechaLlegada.isAfter(fechaFinal)) {
-//						fechaFinal = fechaLlegada;
-//					}
-//				}
-//			}
-//
-//			//aeropuerto = this.vueloService.findVueloByFechaLLegada(fechaFinal).; //Coge el aeropuerto
-//			aeropuertosDestino.add(aeropuerto); //lo añade a la lista
-//		}
-//
-//		model.put("aviones", aviones);
-//		model.put("aeropuertosDestino", aeropuertosDestino);
-//
-//		return "controladores/rutaAviones";
-//	}
 	
 	@GetMapping(value = "/aviones/rutaAviones")
-	public String showAvionesListPersonal(Map<String, Object> model) {
+	public String showAvionesListPersonal(Map<String, Object> model, @PageableDefault(value=20) Pageable paging) {
 		
-		List<Avion> aviones = this.avionService.findAviones();
-		model.put("aviones", aviones);
+		Page<Avion> pages = avionService.findAviones(paging);
+		model.put("number", pages.getNumber());
+		model.put("totalPages", pages.getTotalPages());
+		model.put("totalElements", pages.getTotalElements());
+		model.put("size", pages.getSize());
+		model.put("aviones",pages.getContent());
 
 		return "aviones/rutaAviones";
 	}

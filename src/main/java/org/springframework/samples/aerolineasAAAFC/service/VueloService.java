@@ -13,6 +13,9 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
@@ -91,14 +94,14 @@ public class VueloService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosOrdered(){
-		return vueloRepository.findAllByOrderByFechaSalidaDesc();
+	public Page<Vuelo> findVuelosOrdered(Pageable pageable){
+		return vueloRepository.findAllByOrderByFechaSalidaDesc(pageable);
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Cliente> findClientesPorVuelo(Vuelo vuelo){
+	public Page<Cliente> findClientesPorVuelo(Vuelo vuelo, Pageable pageable){
 		Set<Cliente> res = this.billeteService.findClientesBilletesByVuelo(vuelo.getId());
-		List<Cliente> l = res.stream().collect(Collectors.toList());
+		Page<Cliente> l = new PageImpl<Cliente>(res.stream().collect(Collectors.toList()));	
 		return l;
 	}
 	
@@ -130,17 +133,17 @@ public class VueloService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosByMes(int mes, int año){
-		return vueloRepository.findVuelosByDate(mes, año);
+	public Page<Vuelo> findVuelosByMes(int mes, int año,  Pageable pageable){
+		return vueloRepository.findVuelosByDate(mes, año, pageable);
 	}
 	
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosOfertadosByMes(int mes, int año){
+	public Page<Vuelo> findVuelosOfertadosByMes(int mes, int año, Pageable pageable){
 		
-		Collection<Vuelo> res=new ArrayList<>();
+		Page<Vuelo> res = new PageImpl<Vuelo>(new ArrayList<Vuelo>());
 		if(LocalDate.of(año, mes, 1).isBefore(LocalDate.now()))
 		{
-			res=vueloRepository.findVuelosByDate(mes, año);
+			res = vueloRepository.findVuelosByDate(mes, año, pageable);
 		}
 		return res;
 	}
@@ -148,74 +151,47 @@ public class VueloService {
 	//Métodos para la vista HOME
 	//1 atributo de filtro
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosConFecha(LocalDateTime fecha){
-		return vueloRepository.findVuelosConFecha(fecha);
+	public Page<Vuelo> findVuelosConFecha(LocalDateTime fecha, Pageable pageable){
+		return vueloRepository.findVuelosConFecha(fecha,pageable);
 	}
 	
 	//2 atributos de filtro
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosConFechaYPrecio(LocalDateTime fecha, double precio){
-		return vueloRepository.findVuelosConFechaYPrecio(fecha, precio);
+	public Page<Vuelo> findVuelosConFechaYPrecio(LocalDateTime fecha, double precio, Pageable pageable){
+		return vueloRepository.findVuelosConFechaYPrecio(fecha, precio, pageable);
 	}
 	
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosConFechaYOrigen(LocalDateTime fecha, String iataOrigen){
-		return vueloRepository.findVuelosConFechaYOrigen(fecha, iataOrigen);
+	public Page<Vuelo> findVuelosConFechaYOrigen(LocalDateTime fecha, String iataOrigen, Pageable pageable){
+		return vueloRepository.findVuelosConFechaYOrigen(fecha, iataOrigen, pageable);
 	}
 	
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosConFechaYDestino(LocalDateTime fecha, String iataDestino){
-		return vueloRepository.findVuelosConFechaYDestino(fecha, iataDestino);
+	public Page<Vuelo> findVuelosConFechaYDestino(LocalDateTime fecha, String iataDestino, Pageable pageable){
+		return vueloRepository.findVuelosConFechaYDestino(fecha, iataDestino, pageable);
 	}
 	
 	//3 atributos de filtro
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosConFechaPrecioYOrigen(LocalDateTime fecha, double precio, String iataOrigen){
-		return vueloRepository.findVuelosConFechaPrecioYOrigen(fecha, precio, iataOrigen);
+	public Page<Vuelo> findVuelosConFechaPrecioYOrigen(LocalDateTime fecha, double precio, String iataOrigen, Pageable pageable){
+		return vueloRepository.findVuelosConFechaPrecioYOrigen(fecha, precio, iataOrigen, pageable);
 	}
 	
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosConFechaPrecioYDestino(LocalDateTime fecha, double precio, String iataDestino){
-		return vueloRepository.findVuelosConFechaPrecioYDestino(fecha, precio, iataDestino);
+	public Page<Vuelo> findVuelosConFechaPrecioYDestino(LocalDateTime fecha, double precio, String iataDestino, Pageable pageable){
+		return vueloRepository.findVuelosConFechaPrecioYDestino(fecha, precio, iataDestino, pageable);
 	}
 	
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosConFechaOrigenYDestino(LocalDateTime fecha, String iataOrigen, String iataDestino){
-		return vueloRepository.findVuelosConFechaOrigenYDestino(fecha, iataOrigen, iataDestino);
+	public Page<Vuelo> findVuelosConFechaOrigenYDestino(LocalDateTime fecha, String iataOrigen, String iataDestino, Pageable pageable){
+		return vueloRepository.findVuelosConFechaOrigenYDestino(fecha, iataOrigen, iataDestino, pageable);
 	}
 	
 	//4 atributos de filtro
 	@Transactional(readOnly = true)
-	public Collection<Vuelo> findVuelosConTodo(LocalDateTime fecha, double precio, String iataOrigen, String iataDestino){
-		return vueloRepository.findVuelosConTodo(fecha, precio, iataOrigen, iataDestino);
+	public Page<Vuelo> findVuelosConTodo(LocalDateTime fecha, double precio, String iataOrigen, String iataDestino, Pageable pageable){
+		return vueloRepository.findVuelosConTodo(fecha, precio, iataOrigen, iataDestino, pageable);
 	}
-	
-	
-
-	 /*
-	 @Transactional(readOnly = true)
-		public Optional<Vuelo> findVueloById(int id) throws DataAccessException {
-			return vueloRepository.findById(id);
-		}
-	 
-	 @Transactional(readOnly = false)
-		public Vuelo modificarFechaVuelo(Date date,int id) throws DataAccessException {
-			return vueloRepository.modificarFecha(date, id);
-		}
-	 @Transactional(readOnly = false)
-		public Vuelo modificarHoraSalidaVuelo(Date hora,int id) throws DataAccessException {
-			return vueloRepository.modificarHoraSalida(hora, id);
-		}
-	 @Transactional(readOnly = false)
-		public Vuelo modificarHoraLlegadaVuelo(Date hora,int id) throws DataAccessException {
-			return vueloRepository.modificarHoraLlegada(hora, id);
-		}
-	 @Transactional(readOnly = false)
-		public Vuelo modificarPrecioVuelo(Double precio,int id) throws DataAccessException {
-			return vueloRepository.modificarPrecio(precio, id);
-		}
-
-	 */
 		
 	@Transactional
 	public void eliminarVuelo(int id) throws DataAccessException {

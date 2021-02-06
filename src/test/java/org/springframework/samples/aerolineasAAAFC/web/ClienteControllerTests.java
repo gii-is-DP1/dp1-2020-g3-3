@@ -223,7 +223,7 @@ public class ClienteControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowClientesList() throws Exception{
-		mockMvc.perform(get("/clientesList"))
+		mockMvc.perform(get("/clientes"))
 		.andExpect(model().attributeExists("clientes"))
 		.andExpect(view().name("clientes/clientesList"));
 	}

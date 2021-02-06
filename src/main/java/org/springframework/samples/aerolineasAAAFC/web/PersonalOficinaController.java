@@ -10,8 +10,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
@@ -127,12 +131,29 @@ public class PersonalOficinaController {
 	
 	// Vistas de consulta
 	@GetMapping(value = "/personalOficina")
-	public String showPersonalOficinaList(Map<String, Object> model) {
-		List<PersonalOficina> oficinistas = new ArrayList<PersonalOficina>();
-		oficinistas.addAll(this.pOficinaService.findPersonal());
-		model.put("personalOficina", oficinistas);
+	public String showPersonalOficinaList(ModelMap model, @PageableDefault(value=20) Pageable paging) {
+		Page<PersonalOficina> pages = this.pOficinaService.findPersonal(paging);
+		model.addAttribute("number", pages.getNumber());
+		model.addAttribute("totalPages", pages.getTotalPages());
+		model.addAttribute("totalElements", pages.getTotalElements());
+		model.addAttribute("size", pages.getSize());
+		model.addAttribute("personalOficina",pages.getContent());
 		
 		return "personalOficina/personalOficinaList";
+	}
+	
+	@GetMapping(value = "/personalOficinafind")
+	public String processFindPersonalOficinaForm(PersonalOficina pOficina, Map<String, Object> model, BindingResult result, @RequestParam(value = "nif", required=false) String nif) {
+
+		PersonalOficina resultado = this.pOficinaService.findPersonalOficinaByNif(nif);
+
+		if (resultado == null) {
+			result.rejectValue("nif", "notFound", "nif no encontrado");
+			return "redirect:/personalOficina";
+		} else {
+			return "redirect:/personalOficina/" + resultado.getId();
+		}
+
 	}
 	
 	@GetMapping("/personalOficina/{pOficinaId}")
