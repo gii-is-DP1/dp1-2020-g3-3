@@ -1,5 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class AzafatoController {
 	public String processUpdateAzafatoForm(@Valid Azafato azafato, BindingResult result, @PathVariable("azafatoId") int azafatoId,
 											ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
 		
-		Azafato azToUpdate = this.azafatoService.findAzafatoById(azafatoId);
+//		Azafato azToUpdate = this.azafatoService.findAzafatoById(azafatoId);
 
 //		if(azToUpdate.getVersion() != version) {
 //			model.put("message","Concurrent modification of azafato! Try again!");
@@ -166,37 +167,54 @@ public class AzafatoController {
 								@RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
 
-			int mes = 0;
-			int año = 0;
-			Month mesn = null;
-			int dias = 0;
-			
-			if(fecha == null) {
-				fecha = LocalDate.now();
-				mes = fecha.getMonthValue();
-				año = fecha.getYear();
-				mesn = fecha.getMonth();
-				dias = fecha.lengthOfMonth();
-			}else {
-				mes = fecha.getMonthValue();
-				año = fecha.getYear();
-				mesn = fecha.getMonth();
-				dias = fecha.lengthOfMonth();
-			}	
-			
-			Collection<Vuelo> vuelos = this.azafatoService.horario(azafatoId, mes, año);
-			
-			List<Integer> diasV = new ArrayList<>();
-			for(Vuelo v: vuelos) {
-				diasV.add(v.getFechaSalida().getDayOfMonth());
-			}
-			
-			model.put("vuelos", vuelos);
-			model.put("dias", dias);
-			model.put("mes", mesn);
-			model.put("año", año);
-			model.put("diasV", diasV);
-
+		if(fecha == null) {
+			fecha = LocalDate.now();
+		}
+		
+		int mes = fecha.getMonthValue();
+		int año = fecha.getYear();
+		Month mesn = fecha.getMonth();
+		int dias = fecha.lengthOfMonth();
+		
+		Collection<Vuelo> vuelos = this.azafatoService.horario(azafatoId, mes, año);
+		
+		List<Integer> diasV = new ArrayList<>();
+		for(Vuelo v: vuelos) {
+			diasV.add(v.getFechaSalida().getDayOfMonth());
+		}
+		
+		model.put("vuelos", vuelos);
+		model.put("dias", dias);
+		model.put("mes", mesn);
+		model.put("año", año);
+		if(mes>=10) {
+			model.put("mesN", mes);
+		}else {
+			model.put("mesN", "0"+mes);
+		}
+		model.put("diasV", diasV);
 		return "azafatos/horario";
+	}
+	
+	// Historia usuario 1:
+	@RequestMapping(value = { "/azafatos/{azafatoId}/semana" }, method = RequestMethod.GET)
+	public String showHorarioSemanalAzafato(Map<String, Object> model, @PathVariable("azafatoId") int azafatoId,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+
+		LocalDate date = LocalDate.now();
+			
+		if(fecha != null) {
+			date = fecha;
+		}
+		
+		DayOfWeek diaSemana = date.getDayOfWeek();
+		int dia = date.getDayOfYear();
+		int anyo = date.getYear();
+		model.put("vuelos", this.azafatoService.horarioSemanalConFecha(azafatoId, diaSemana, dia, anyo));
+		String diaS = diaSemana.toString();
+		model.put("diaS", diaS);
+		model.put("diaM", date.getDayOfMonth());
+		model.put("mes", date.getMonthValue());
+		model.put("anyo", date.getYear());
+		return "azafatos/horarioSemanal";
 	}
 }
