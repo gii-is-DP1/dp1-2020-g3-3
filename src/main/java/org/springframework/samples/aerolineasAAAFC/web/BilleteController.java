@@ -71,7 +71,7 @@ public class BilleteController {
 		if( SecurityContextHolder.getContext().getAuthentication()!=null) {
 			Billete billete = new Billete();
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String name = authentication.getName();//name corresponde al nif del usuario
+			String name = authentication.getName(); //name corresponde al nif del usuario
 			model.put("billete", billete);
 			Vuelo vuelo=this.vueloService.findVueloById(vueloId);
 			List<Asiento> asientos=this.asientoService.findAsientosSinOcupar(vuelo);

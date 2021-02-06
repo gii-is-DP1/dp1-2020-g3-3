@@ -63,6 +63,6 @@
 		</tbody>
 
 	</table>
-	<a href="<spring:url value="/clientes/new" htmlEscape="true" />">Nuevo Cliente</a>
+	<a href="<spring:url value="/clientes/new" htmlEscape="true"/>" class="btn btn-default">Nuevo Cliente</a>
 				
 </aerolineasAAAFC:layout>

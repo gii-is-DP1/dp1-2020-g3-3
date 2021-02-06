@@ -65,5 +65,5 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
         </c:forEach>
         </tbody>
     </table>
-    <a href="<spring:url value="/aviones/new" htmlEscape="true" />">Nuevo Avión</a>
+    <a href="<spring:url value="/aviones/new" htmlEscape="true"/>" class="btn btn-default">Nuevo Avión</a>
 </aerolineasAAAFC:layout>

@@ -142,7 +142,7 @@ public class BilleteControllerTests {
 				.param("asiento", "B72")
 				.with(csrf())
 				.param("fechaReserva", "1999/11/03"))
-		.andExpect(status().is2xxSuccessful());
+		.andExpect(status().is3xxRedirection());
 	}
 
 

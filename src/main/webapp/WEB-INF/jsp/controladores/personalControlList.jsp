@@ -57,6 +57,6 @@
         </c:forEach>
         </tbody>
     </table>
-        <a href="<spring:url value="/controladores/new" htmlEscape="true" />">Nuevo controlador</a>
+        <a href="<spring:url value="/controladores/new" htmlEscape="true"/>" class="btn btn-default">Nuevo controlador</a>
     
 </aerolineasAAAFC:layout>

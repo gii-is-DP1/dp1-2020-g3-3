@@ -53,6 +53,6 @@
 		</tbody>
 
 	</table>
-	<a href="<spring:url value="/azafatos/new" htmlEscape="true" />">Nuevo azafato</a>
+	<a href="<spring:url value="/azafatos/new" htmlEscape="true"/>" class="btn btn-default">Nuevo azafato</a>
 				
 </aerolineasAAAFC:layout>

@@ -12,14 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class WelcomeController {
 
 
-	@GetMapping({"/","/welcome"})
-	public String welcome(Map<String, Object> model) {	    
-
-		model.put("title", "AEROLINEAS AAAFC");
-		model.put("group", "G3-03");
-		return "welcome";
-	}
-	
 
     @GetMapping(value = "/login")
     public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
