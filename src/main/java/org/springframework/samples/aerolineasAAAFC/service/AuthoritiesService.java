@@ -15,12 +15,13 @@ public class AuthoritiesService {
 
 
 	private AuthoritiesRepository authoritiesRepository;
+	
+	@Autowired
 	private UserService userService;
 
 	@Autowired
-	public AuthoritiesService(AuthoritiesRepository authoritiesRepository,UserService userService) {
+	public AuthoritiesService(AuthoritiesRepository authoritiesRepository) {
 		this.authoritiesRepository = authoritiesRepository;
-		this.userService = userService;
 	}
 
 	@Transactional

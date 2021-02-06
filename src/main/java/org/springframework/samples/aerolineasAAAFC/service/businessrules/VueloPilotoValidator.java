@@ -39,7 +39,7 @@ ConstraintValidator<VueloPilotoConstraint, Vuelo>{
 			Integer pilotos = 0;
 
 			for(PersonalControl p: pControl) {
-				if(p.getRol() == Rol.PILOTO) pilotos++;
+				if(p.getRol() == Rol.PILOTO || p.getRol() == Rol.COPILOTO) pilotos++;
 			}
 
 			boolean res= true;

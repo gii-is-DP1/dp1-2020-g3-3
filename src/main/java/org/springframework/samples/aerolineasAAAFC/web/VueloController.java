@@ -91,27 +91,31 @@ public class VueloController {
 	}
 	
 	@PostMapping(value = "/vuelos/new")
-	public String processCreationVueloForm(@Valid Vuelo vuelo, BindingResult result) {
+	public String processCreationVueloForm(@Valid Vuelo vuelo, BindingResult result, Map<String, Object> model) {
+		
+		model.put("aeropuertos",this.aeropuertoService.findAeropuertosNoPageable());
+		model.put("aviones", this.avionService.findAvionesNoPageable());
+
+		model.put("pOficina", this.pOficinaService.findPersonalNoPageable());
+		model.put("pControl", this.pControlService.findPersonalControlNoPageable());
+		model.put("azafatos", this.azafatoService.findAzafatosNoPageable());
+		
 		if(result.hasErrors()) {
+			log.info("vuelo tiene errores");
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
-		}
-		else {
+		}else {
 			try {
 				this.vueloService.saveVuelo(vuelo);
 			} catch (HorasImposiblesException e) {
 				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
-			} 
-			catch (HorasMaximasVueloException e) {
+			} catch (HorasMaximasVueloException e) {
 				result.rejectValue("horaLlegada", "invalid", "Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
-				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
-				
-			}
-			catch (DisponibilidadAvionException e) {
+				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;	
+			} catch (DisponibilidadAvionException e) {
 				result.rejectValue("avion", "invalid", "El avión no está disponible porque debe pasar una revisión");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
-			}
-			catch (ConstraintViolationException e) {
+			} catch (ConstraintViolationException e) {
 				result.rejectValue("aeropuerto", "invalid", "El aeropuerto de salida y destino deben ser distintos");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 			}
@@ -427,13 +431,13 @@ public class VueloController {
 			model.addAttribute("totalPages", 1);
 			model.addAttribute("totalElements", 1);
 			model.addAttribute("size", 1);
-			model.put("vuelosOferta", pages.getContent());
+			model.put("vuelos", pages.getContent());
 		}else {
 			model.addAttribute("number", pages.getNumber());
 			model.addAttribute("totalPages", pages.getTotalPages());
 			model.addAttribute("totalElements", pages.getTotalElements());
 			model.addAttribute("size", pages.getSize());
-			model.put("vuelosOferta", pages.getContent());
+			model.put("vuelos", pages.getContent());
 		}
 		
 		return "home";
