@@ -53,8 +53,7 @@
 							<td><aerolineasAAAFC:localDateTime
 									date="${vuelo.fechaLlegada}" pattern="dd-MM-yyy HH:mm" /></td>
 							<td><c:out value="${vuelo.avion.tipoAvion}" /></td>
-							<td><c:forEach var="pControl"
-									items="${vuelo.personalControl}" varStatus="loop">
+							<td><c:forEach var="pControl" items="${vuelo.personalControl}" varStatus="loop">
 									<c:out value="${pControl.nombre} ${pControl.apellidos}" />
 									<c:if test="${!loop.last}">, </c:if>
 								</c:forEach></td>
