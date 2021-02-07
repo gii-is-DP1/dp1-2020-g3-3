@@ -32,19 +32,18 @@ public class BilleteService {
 
 	private BilleteRepository billeteRepository;
 
+	@Autowired
 	private MenuService menuService;
 
+	@Autowired
 	private EquipajeService equipajeService;
-
+	
+	@Autowired
 	private PlatoBaseService platoBaseService;
 
 	@Autowired
-	public BilleteService(BilleteRepository billeteRepository, MenuService menuService, 
-			EquipajeService equipajeService, PlatoBaseService platoBaseService) {
+	public BilleteService(BilleteRepository billeteRepository) {
 		this.billeteRepository = billeteRepository;
-		this.menuService= menuService;
-		this.equipajeService = equipajeService;
-		this.platoBaseService = platoBaseService;
 	}
 
 	@Transactional

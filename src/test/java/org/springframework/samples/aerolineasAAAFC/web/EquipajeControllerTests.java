@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.EquipajeBase;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.EquipajeBaseService;
@@ -45,6 +46,8 @@ public class EquipajeControllerTests {
 	private Billete aSevillaVamos;
 	
 	private EquipajeBase ebAux;
+	
+	private Cliente cliente;
 
 	@BeforeEach
 	void setup() {
@@ -55,7 +58,12 @@ public class EquipajeControllerTests {
 		
 		given(this.equipajeBaseService.findEquipajesBase()).willReturn(Lists.newArrayList(ebAux));
 
-		aSevillaVamos = this.billeteService.findBilleteById(TEST_BILLETE_ID);
+		cliente = new Cliente();
+		cliente.setNif("spring");
+		
+		aSevillaVamos = new Billete();
+		aSevillaVamos.setCliente(cliente);
+		aSevillaVamos.setId(TEST_BILLETE_ID);
 		given(this.billeteService.findBilleteById(TEST_BILLETE_ID)).willReturn(aSevillaVamos);
 	}
 
@@ -68,6 +76,14 @@ public class EquipajeControllerTests {
 		.andExpect(status().isOk())
 		.andExpect(view().name("billetes/createOrUpdateEquipajeForm"));
 	}
+	
+	@WithMockUser(value = "el_mas_hacker") //Test con usuario malicioso
+	@Test
+	void testInitCreationFormErrorUser() throws Exception {
+		mockMvc.perform(get("/billetes/{billeteId}/equipajes/new",TEST_BILLETE_ID))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/exception"));
+	}
 
 	@WithMockUser(value = "spring")
 	@Test
@@ -77,7 +93,7 @@ public class EquipajeControllerTests {
 				.param("peso", "22")
 				.param("equipajeBase", "Micro"))
 		.andExpect(status().is3xxRedirection())
-		.andExpect(view().name("redirect:/billetes/datos"));
+		.andExpect(view().name("redirect:/billetes/"+TEST_BILLETE_ID));
 		
 	}
 
@@ -92,5 +108,16 @@ public class EquipajeControllerTests {
 		.andExpect(model().attributeHasFieldErrors("equipaje", "equipajeBase"))
 		.andExpect(view().name("billetes/createOrUpdateEquipajeForm"));
 	}
-
+	
+	@WithMockUser(value = "el_mas_hacker")  //User malicioso
+	@Test
+	void testProcessCreationFormErrorUser() throws Exception {
+		mockMvc.perform(post("/billetes/{billeteId}/equipajes/new",TEST_BILLETE_ID)
+				.with(csrf())
+				.param("peso", "22")
+				.param("equipajeBase", "Micro"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/exception"));
+		
+	}
 }

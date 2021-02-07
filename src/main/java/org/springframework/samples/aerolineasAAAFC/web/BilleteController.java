@@ -103,7 +103,8 @@ public class BilleteController {
 		Billete billete = this.billeteService.findBilleteById(billeteId);
 
 		if (billete == null) {
-			return "/oups"; // Vista de error
+			model.put("message", "Parece que ha accedido a un billete no registrado...");
+			return "redirect:/exception"; // Vista de error
 		}
 
 		else if (SecurityContextHolder.getContext().getAuthentication() != null) {
@@ -117,44 +118,14 @@ public class BilleteController {
 			}
 			
 			else {
-				return "user/createClienteForm.jsp";
+				return "redirect:/exception";
 			}
 			
 		} else {
-			return "user/createClienteForm.jsp";
+			return "login";
 		}
 
 		return "billetes/billetePreview";
-	}
-
-	/*
-	 * Modificacion de un billete
-	 */
-	@GetMapping(value = "/billetes/{billeteId}/edit") //DEPRECATED
-	public String initUpdateBilleteForm(@PathVariable("billeteId") int billeteId, ModelMap model) {
-		Billete billete = this.billeteService.findBilleteById(billeteId);
-		model.addAttribute(billete);
-		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-	}
-
-	@PostMapping(value = "/billetes/{billeteId}/edit") //DEPRECATED
-	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result,
-			@PathVariable("billeteId") int billeteId, ModelMap model,
-			@RequestParam(value = "version", required = false) Integer version) {
-		Billete billeteToUpdate = this.billeteService.findBilleteById(billeteId);
-
-		if (billeteToUpdate.getVersion() != version) {
-			model.put("message", "Concurrent modification of billete! Try again!");
-			return initUpdateBilleteForm(billeteId, model);
-		}
-		if (result.hasErrors()) {
-			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		} else {
-			billete.setId(billeteId);
-			this.billeteService.saveBillete(billete);
-
-			return "redirect:/billetes/" + billete.getId();
-		}
 	}
 
 	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)

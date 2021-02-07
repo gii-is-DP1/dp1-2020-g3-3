@@ -4,7 +4,7 @@
 
 <aerolineasAAAFC:layout pageName="error">
 
-    <h2>Something happened...</h2>
+    <h2 class="centrado">Parece que ha habido un problema...</h2>
 
     <p>${exception.message}</p>
 
