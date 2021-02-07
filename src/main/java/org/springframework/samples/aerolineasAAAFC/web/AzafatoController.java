@@ -20,9 +20,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -41,24 +44,24 @@ import org.springframework.web.servlet.ModelAndView;
 public class AzafatoController {
 
 	private static final String VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM = "azafatos/createOrUpdateAzafatoForm";
-	
+
 	private final AzafatoService azafatoService;
-	
+
 	@Autowired
 	public AzafatoController(AzafatoService azafatoService) {
 		this.azafatoService = azafatoService;
 	}
-	
+
 	@ModelAttribute("idioma_types")
 	public Collection<IdiomaType> populateIdiomaTypes() {
 		return this.azafatoService.findIdiomaTypes();
 	}
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
+
 	/*
 	 * Alta de un nuevo azafato
 	 */
@@ -68,10 +71,10 @@ public class AzafatoController {
 		model.put("azafato", azafato);
 		return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	@PostMapping(value = "/azafatos/new")
 	public String processCreationAzafatoForm(@Valid Azafato azafato, BindingResult result) {
-		
+
 		if(result.hasErrors()) {
 			return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 		}
@@ -85,34 +88,34 @@ public class AzafatoController {
 				result.rejectValue("idiomas", "not enough", "not enough languages");
 				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			}
-			
+
 			return "redirect:/azafatos/" + azafato.getId();
 		}
-		
+
 	}
-	
+
 	/*
 	 *  Update sobre un azafato
 	 */
 	@GetMapping(value = "/azafatos/{azafatoId}/edit")
 	public String initUpdateAzafatoForm(@PathVariable("azafatoId") int azafatoId, ModelMap model) {
-		
+
 		Azafato azafato = this.azafatoService.findAzafatoById(azafatoId);
 		model.addAttribute(azafato);
 		return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 	}
-	
+
 	@PostMapping(value = "/azafatos/{azafatoId}/edit")
 	public String processUpdateAzafatoForm(@Valid Azafato azafato, BindingResult result,
 			@PathVariable("azafatoId") int azafatoId,ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
-		
+
 		Azafato azToUpdate = this.azafatoService.findAzafatoById(azafatoId);
 
 		if(azToUpdate.getVersion() != version) {
 			model.put("message","Modificación de azafato ya existente. ¡Prueba de nuevo!");
 			return initUpdateAzafatoForm(azafatoId,model);
-			} 
-		
+		} 
+
 		Azafato azafatoToUpdate = this.azafatoService.findAzafatoById(azafatoId);
 		BeanUtils.copyProperties(azafato, azafatoToUpdate, "id","nif","user.username");  
 		if(result.hasErrors()) {
@@ -135,21 +138,21 @@ public class AzafatoController {
 				result.rejectValue("idiomas", "not enough", "not enough languages");
 				return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 			}
-			
+
 			return "redirect:/azafatos/{azafatoId}";
 		}
-		
+
 	}
-	
-	
+
+
 	//ELIMINACIÓN
 	@GetMapping(value = "/azafatos/{azafatoId}/delete")
 	public String deleteAzafato(@PathVariable("azafatoId") int azafatoId) {
 		this.azafatoService.eliminarAzafato(azafatoId);
 		return "redirect:/azafatosList";
 	}
-	
-	
+
+
 	//CONSULTA
 	@GetMapping(value =  "/azafatos" )
 	public String showAzafatosList(ModelMap model , @PageableDefault(value=20) Pageable paging) {
@@ -169,7 +172,7 @@ public class AzafatoController {
 		}
 		return "azafatos/azafatosList";
 	}
-	
+
 	@GetMapping(value = "/azafatosfind")
 	public String processFindAzafatoForm(Azafato azafato,Map<String, Object> model, BindingResult result, @RequestParam(value = "nif", required=false) String nif) {
 
@@ -186,39 +189,56 @@ public class AzafatoController {
 		}
 
 	}
-	
+
 	@GetMapping("/azafatos/{azafatoId}")
-	public ModelAndView showAzafato(@PathVariable("azafatoId") int azafatoId, @PageableDefault(value=3) Pageable paging) {
+	public ModelAndView showAzafato(@PathVariable("azafatoId") int azafatoId, Authentication authentication) {
+
+		//Evita que otros oficinistas entren a perfiles de otros
+		String usuario = authentication.getName();
+		Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
+		String rol = "";
+		for(GrantedAuthority auth: autoridad) {
+			rol = auth.getAuthority();
+		}
+		if(rol.equals("azafato")) {
+			Azafato azaC = this.azafatoService.findAzafatoByNif(usuario);
+			int azaCID = azaC.getId();
+			if(azafatoId != azaCID) {
+				ModelAndView mav = new ModelAndView("azafatos/azafatoDetails");
+				mav.addObject(this.azafatoService.findAzafatoById(azaCID));
+				return mav;
+			}
+		}
 		ModelAndView mav = new ModelAndView("azafatos/azafatoDetails");
 		mav.addObject(this.azafatoService.findAzafatoById(azafatoId));
 		return mav;
 	}
-	
+
 	/*
 	 *  Horario de un azafato
 	 */
-	
+
 	@RequestMapping(value = { "/azafatos/{azafatoId}/horario" }, method = RequestMethod.GET)
 	public String showVuelosList(Map<String, Object> model, @PathVariable("azafatoId") int azafatoId,  
-								@RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+			@RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
 
 		if(fecha == null) {
 			fecha = LocalDate.now();
 		}
-		
+
 		int mes = fecha.getMonthValue();
 		int año = fecha.getYear();
 		Month mesn = fecha.getMonth();
 		int dias = fecha.lengthOfMonth();
-		
+
 		Collection<Vuelo> vuelos = this.azafatoService.horario(azafatoId, mes, año);
-		
+
 		List<Integer> diasV = new ArrayList<>();
 		for(Vuelo v: vuelos) {
 			diasV.add(v.getFechaSalida().getDayOfMonth());
 		}
-		
+
 		model.put("vuelos", vuelos);
 		model.put("dias", dias);
 		model.put("mes", mesn);
@@ -231,17 +251,17 @@ public class AzafatoController {
 		model.put("diasV", diasV);
 		return "azafatos/horario";
 	}
-	
+
 	// Historia usuario 1:
 	@RequestMapping(value = { "/azafatos/{azafatoId}/semana" }, method = RequestMethod.GET)
 	public String showHorarioSemanalAzafato(Map<String, Object> model, @PathVariable("azafatoId") int azafatoId,  @RequestParam(name = "fecha", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
 
 		LocalDate date = LocalDate.now();
-			
+
 		if(fecha != null) {
 			date = fecha;
 		}
-		
+
 		DayOfWeek diaSemana = date.getDayOfWeek();
 		int dia = date.getDayOfYear();
 		int anyo = date.getYear();

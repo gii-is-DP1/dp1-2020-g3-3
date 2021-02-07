@@ -24,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
@@ -34,6 +35,8 @@ import org.springframework.samples.aerolineasAAAFC.service.PersonalControlServic
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -205,7 +208,24 @@ public class PersonalControlController {
 	
 	
 	@GetMapping("/controladores/{pControlId}")
-	public ModelAndView showControlador(@PathVariable("pControlId") int pControlId) {
+	public ModelAndView showControlador(@PathVariable("pControlId") int pControlId, Authentication authentication) {
+		
+		//Evita que otros oficinistas entren a perfiles de otros
+		String usuario = authentication.getName();
+		Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
+		String rol = "";
+		for(GrantedAuthority auth: autoridad) {
+			rol = auth.getAuthority();
+		}
+		if(rol.equals("personalControl")) {
+			PersonalControl pControlC = this.pControlService.findPersonalControlByNif(usuario);
+			int pControlCID = pControlC.getId();
+			if(pControlId != pControlCID) {
+				ModelAndView mav = new ModelAndView("controladores/controladorDetails");
+				mav.addObject(this.pControlService.findPersonalControlById(pControlCID));
+				return mav;
+			}
+		}
 		ModelAndView mav = new ModelAndView("controladores/controladorDetails");
 		mav.addObject(this.pControlService.findPersonalControlById(pControlId));
 		return mav;

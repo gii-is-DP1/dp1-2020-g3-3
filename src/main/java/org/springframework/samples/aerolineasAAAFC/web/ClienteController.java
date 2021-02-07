@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,8 @@ import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -173,7 +176,25 @@ public class ClienteController {
 
 	
 	@GetMapping("/clientes/{clienteId}")
-	public ModelAndView showCliente(@PathVariable("clienteId") int clienteId) {
+	public ModelAndView showCliente(@PathVariable("clienteId") int clienteId, Authentication authentication) {
+		
+		//Evita que otros clientes entren a perfiles de otros
+		String usuario = authentication.getName();
+		Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
+		String rol = "";
+		for(GrantedAuthority auth: autoridad) {
+			rol = auth.getAuthority();
+		}
+		if(rol.equals("cliente")) {
+			Cliente clienteC = this.clienteService.findClienteByNif(usuario);
+			int clienteCID = clienteC.getId();
+			if(clienteId != clienteCID) {
+				ModelAndView mav = new ModelAndView("clientes/clienteDetails");
+				mav.addObject(this.clienteService.findClienteById(clienteCID));
+				return mav;
+			}
+		}
+		
 		ModelAndView mav = new ModelAndView("clientes/clienteDetails");
 		mav.addObject(this.clienteService.findClienteById(clienteId));
 		return mav;

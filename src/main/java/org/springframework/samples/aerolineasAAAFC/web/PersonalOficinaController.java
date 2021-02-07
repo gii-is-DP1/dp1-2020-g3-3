@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplic
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -160,7 +163,24 @@ public class PersonalOficinaController {
 	}
 	
 	@GetMapping("/personalOficina/{pOficinaId}")
-	public ModelAndView showAvion(@PathVariable("pOficinaId") int pOficinaId) {
+	public ModelAndView showAvion(@PathVariable("pOficinaId") int pOficinaId, Authentication authentication) {
+		
+		//Evita que otros oficinistas entren a perfiles de otros
+		String usuario = authentication.getName();
+		Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
+		String rol = "";
+		for(GrantedAuthority auth: autoridad) {
+			rol = auth.getAuthority();
+		}
+		if(rol.equals("personalOficina")) {
+			PersonalOficina pOfiC = this.pOficinaService.findPersonalOficinaByNif(usuario);
+			int pOfiCID = pOfiC.getId();
+			if(pOficinaId != pOfiCID) {
+				ModelAndView mav = new ModelAndView("personalOficina/oficinistaDetails");
+				mav.addObject(this.pOficinaService.findPersonalOficinaById(pOfiCID));
+				return mav;
+			}
+		}
 		ModelAndView mav = new ModelAndView("personalOficina/oficinistaDetails");
 		mav.addObject(this.pOficinaService.findPersonalOficinaById(pOficinaId));
 		return mav;
