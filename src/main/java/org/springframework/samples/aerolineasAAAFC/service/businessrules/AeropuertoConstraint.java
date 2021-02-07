@@ -16,5 +16,4 @@ public @interface AeropuertoConstraint {
 	String message() default "El aeropuerto origen y destino deben ser diferentes";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
-	String[] value();
 }

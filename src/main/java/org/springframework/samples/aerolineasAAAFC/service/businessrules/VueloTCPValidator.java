@@ -1,20 +1,12 @@
 package org.springframework.samples.aerolineasAAAFC.service.businessrules;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
-import org.springframework.samples.aerolineasAAAFC.model.Rol;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
-
-import com.sun.jmx.mbeanserver.Introspector;
 
 public class VueloTCPValidator implements 
 ConstraintValidator<VueloTCPConstraint, Vuelo>{

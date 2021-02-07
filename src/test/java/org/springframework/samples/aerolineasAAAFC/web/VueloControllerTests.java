@@ -100,7 +100,9 @@ public class VueloControllerTests {
 		
 		//PERSONAL OFICINA
 		Set<PersonalOficina> pOficina = new HashSet<PersonalOficina>();
+		//PersonalOficina pOficina = new PersonalOficina();
 		pOficina.add(this.personalOficinaService.findPersonalOficinaById(1));
+		vuelol.setPersonalOficina(pOficina);
 		
 		//AZAFATOS
 		Set<Azafato> azafatos = new HashSet<Azafato>();
@@ -108,6 +110,7 @@ public class VueloControllerTests {
 		azafatos.add(this.azafatoService.findAzafatoById(2));
 		azafatos.add(this.azafatoService.findAzafatoById(3));
 		azafatos.add(this.azafatoService.findAzafatoById(4));
+		vuelol.setAzafatos(azafatos);
 		
 		//CONTROLADORES
 		Set<PersonalControl> pControl = new HashSet<PersonalControl>();
@@ -115,6 +118,7 @@ public class VueloControllerTests {
 		pControl.add(this.personalControlService.findPersonalControlById(2));
 		pControl.add(this.personalControlService.findPersonalControlById(4));
 		pControl.add(this.personalControlService.findPersonalControlById(5));
+		vuelol.setPersonalControl(pControl);
 		
 		//AEROPUERTOS
 		vuelol.setAeropuertoOrigen(this.aeropuertoService.findAeropuertoById(1));

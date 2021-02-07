@@ -99,9 +99,6 @@ public class BilleteControllerTests {
 		vuelol.setFechaSalida(LocalDateTime.of(2021, Month.DECEMBER, 10, 12, 23));
 		vuelol.setFechaLlegada(LocalDateTime.of(2021, Month.DECEMBER, 11, 12, 23));
 		vuelol.setCoste(100.0);
-		vuelol.setAeropuertoOrigen(aeropuertoService.findAeropuertoById(1));
-		vuelol.setAeropuertoDestino(aeropuertoService.findAeropuertoById(2));
-		vuelol.setAvion(avionService.findAvionById(2));
 		
 		asiento = new Asiento();
 		asiento.setLibre(true);
