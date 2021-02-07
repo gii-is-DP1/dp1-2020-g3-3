@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -127,47 +128,37 @@ public class VueloController {
 	//MODIFICACION
 	
 	@GetMapping(value = "/vuelos/{vueloId}/edit")
-	public String initUpdateVueloForm(@PathVariable("vueloId") int vueloId, ModelMap model) {
-		
-		model.addAttribute("aeropuertos", this.aeropuertoService.findAeropuertosNoPageable());
+	public String initUpdateVueloForm(@PathVariable("vueloId") int vueloId, Map<String,Object> model) {
 		
 //		List<Billete> billetes = new ArrayList<>();
 //		this.billeteService.findBilletes().forEach(x->aeropuertos.add(x));
-//		model.addAttribute("aeropuertos", aeropuertos);
 		
-		model.addAttribute("vuelo",this.vueloService.findVueloById(vueloId));
-		model.addAttribute("aviones",this.avionService.findAvionesNoPageable());
-		model.addAttribute("personalOficina",this.pOficinaService.findPersonalNoPageable());
-		model.addAttribute("personalControl", this.pControlService.findPersonalControlNoPageable());
-		model.addAttribute("azafatos", this.azafatoService.findAzafatosNoPageable());
+		model.put("vuelo",this.vueloService.findVueloById(vueloId));
+		model.put("aviones",this.avionService.findAvionesNoPageable());
+		model.put("personalOficina",this.pOficinaService.findPersonalNoPageable());
+		model.put("personalControl", this.pControlService.findPersonalControlNoPageable());
+		model.put("azafatos", this.azafatoService.findAzafatosNoPageable());
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/vuelos/{vueloId}/edit")
 	public String processUpdateVueloForm(@Valid Vuelo vuelo, BindingResult result, 
-			@PathVariable("vueloId") int vueloId, ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
-		Vuelo vueloToUpdate=this.vueloService.findVueloById(vueloId);
+			@PathVariable("vueloId") int vueloId, Map<String,Object> model, @RequestParam(value = "version", required=false) Integer version) {
 
-		if(vueloToUpdate.getVersion()!=version) {
-			model.put("message","Modificación de vuelo ya existente. ¡Prueba de nuevo!");
-			return initUpdateVueloForm(vueloId,model);
-		}
-
-		model.addAttribute("aeropuertoD", this.vueloService.findVueloById(vueloId).getAeropuertoDestino());
-		model.addAttribute("aeropuertoO", this.vueloService.findVueloById(vueloId).getAeropuertoOrigen());
-		model.addAttribute("vuelo",this.vueloService.findVueloById(vueloId));
-		model.addAttribute("aviones",this.avionService.findAvionesNoPageable());
-		model.addAttribute("personalOficina",this.pOficinaService.findPersonalNoPageable());
-		model.addAttribute("personalControl", this.pControlService.findPersonalControlNoPageable());
-		model.addAttribute("azafatos", this.azafatoService.findAzafatosNoPageable());
+		model.put("vuelo",this.vueloService.findVueloById(vueloId));
+		model.put("aviones",this.avionService.findAvionesNoPageable());
+		model.put("personalOficina",this.pOficinaService.findPersonalNoPageable());
+		model.put("personalControl", this.pControlService.findPersonalControlNoPageable());
+		model.put("azafatos", this.azafatoService.findAzafatosNoPageable());
 		
-				
+		
+		Vuelo vueloToUpdate = this.vueloService.findVueloById(vueloId);
+		BeanUtils.copyProperties(vuelo, vueloToUpdate, "id","aeropuertoOrigen","aeropuertoDestino","coste"); 
 		if(result.hasErrors()) {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			vuelo.incrementVersion();
 			vuelo.setId(vueloId);
 			try {
 				this.vueloService.saveVuelo(vuelo);

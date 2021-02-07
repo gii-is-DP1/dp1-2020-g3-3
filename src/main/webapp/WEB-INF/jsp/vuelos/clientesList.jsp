@@ -38,7 +38,11 @@
 			</c:choose>
 		</tbody>
 	</table>
-
+    <spring:url value="/vuelos/${vueloId}" var="url"></spring:url>
+    <a href="${fn:escapeXml(url)}" class="btn btn-default" style="float:right;">Volver</a>
+    <br>
+	<br>
+	<br>
 	<div class="panel-footer centrado">
 		<h3>Mostrando página ${number+1} de ${totalPages}</h3>
 		<ul class="pagination" style="margin: 0px;">

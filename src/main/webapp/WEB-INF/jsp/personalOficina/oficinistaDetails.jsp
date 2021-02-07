@@ -8,7 +8,11 @@
 <aerolineasAAAFC:layout pageName="personalOficina">
 
     <h2>Información del Personal de Oficina</h2>
-
+	<sec:authorize 	access="hasAnyAuthority('admin')">
+		<div style="float:right; padding-bottom: 1%;">
+   	 	<a href="/personalOficina" class="btn btn-default" >Volver</a>
+   	 	</div>
+	</sec:authorize>
 
     <table class="table table-striped">
         <tr>
