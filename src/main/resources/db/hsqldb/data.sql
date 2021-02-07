@@ -107,7 +107,7 @@ VALUES (parsedatetime('15-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('15-0
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
 VALUES (parsedatetime('20-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('20-01-2021 21:30','dd-MM-yyyy hh:mm'),150,1,6,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('06-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('06-02-2021 21:30','dd-MM-yyyy hh:mm'),500,2,1,3);
+VALUES (parsedatetime('06-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('06-02-2021 18:30','dd-MM-yyyy hh:mm'),500,2,1,3);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
 VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,4);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
@@ -130,13 +130,18 @@ VALUES ('Henry','Dalgliesh Cavill','31123210R','ES 6623200418401234567892',0,600
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username)
 VALUES ('Giancarlo','Fisichella','34109741M','ES 4131901222458149879764',0,5400,'34109741M');
 
-INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3), 
-																(2, 1), (2, 2), (2, 3), 
-																(3, 1), (3, 2), (3, 3),
-																(4, 1), (4, 2), (4, 3),
-																(5, 1), (5, 2), (5, 3),
-																(6, 1), (6, 2), (6, 3),
-																(1, 5), (1, 6), (1, 7);
+INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1,1),(2,1),(3,1),
+																(4,2),(5,2),
+																(6,3),(1,3),
+																(2,4),(3,4),
+																(4,5),(5,5),(6,5),
+																(1,6),(2,6),(3,6),
+																(4,7),(5,7),(6,7),
+																(1,8),(2,8),(3,8),
+																(4,9),(5,9),(6,9),
+																(1,10),(3,10),(5,10);
+																
+																
 --Azafatos
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username)
 VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R');

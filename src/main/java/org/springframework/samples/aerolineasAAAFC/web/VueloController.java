@@ -83,8 +83,8 @@ public class VueloController {
 		model.put("aeropuertos",this.aeropuertoService.findAeropuertosNoPageable());
 		model.put("aviones", this.avionService.findAvionesNoPageable());
 
-		model.put("pOficina", this.pOficinaService.findPersonalNoPageable());
-		model.put("pControl", this.pControlService.findPersonalControlNoPageable());
+		model.put("personalOficina", this.pOficinaService.findPersonalNoPageable());
+		model.put("personalControl", this.pControlService.findPersonalControlNoPageable());
 		model.put("azafatos", this.azafatoService.findAzafatosNoPageable());
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
@@ -96,8 +96,8 @@ public class VueloController {
 		model.put("aeropuertos",this.aeropuertoService.findAeropuertosNoPageable());
 		model.put("aviones", this.avionService.findAvionesNoPageable());
 
-		model.put("pOficina", this.pOficinaService.findPersonalNoPageable());
-		model.put("pControl", this.pControlService.findPersonalControlNoPageable());
+		model.put("personalOficina", this.pOficinaService.findPersonalNoPageable());
+		model.put("personalControl", this.pControlService.findPersonalControlNoPageable());
 		model.put("azafatos", this.azafatoService.findAzafatosNoPageable());
 		
 		if(result.hasErrors()) {
@@ -137,10 +137,9 @@ public class VueloController {
 		
 		model.addAttribute("vuelo",this.vueloService.findVueloById(vueloId));
 		model.addAttribute("aviones",this.avionService.findAvionesNoPageable());
-		model.addAttribute("pOficina", this.vueloService.findVueloById(vueloId).getPersonalOficina());
-		model.addAttribute("todoPersonal",this.pOficinaService.findPersonalNoPageable());
-		model.addAttribute("todoControl", this.pControlService.findPersonalControlNoPageable());
-		model.addAttribute("todoAzafato", this.azafatoService.findAzafatosNoPageable());
+		model.addAttribute("personalOficina",this.pOficinaService.findPersonalNoPageable());
+		model.addAttribute("personalControl", this.pControlService.findPersonalControlNoPageable());
+		model.addAttribute("azafatos", this.azafatoService.findAzafatosNoPageable());
 		
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
@@ -148,12 +147,16 @@ public class VueloController {
 	@PostMapping(value = "/vuelos/{vueloId}/edit")
 	public String processUpdateVueloForm(@Valid Vuelo vuelo, BindingResult result, 
 			@PathVariable("vueloId") int vueloId, ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
-//		Vuelo vueloToUpdate=this.vueloService.findVueloById(vueloId);
-//
-//		if(vueloToUpdate.getVersion()!=version) {
-//			model.put("message","Concurrent modification of Vuelo! Try again!");
-//			return initUpdateVueloForm(vueloId,model);
-//		}
+
+		model.addAttribute("aeropuertoD", this.vueloService.findVueloById(vueloId).getAeropuertoDestino());
+		model.addAttribute("aeropuertoO", this.vueloService.findVueloById(vueloId).getAeropuertoOrigen());
+		model.addAttribute("vuelo",this.vueloService.findVueloById(vueloId));
+		model.addAttribute("aviones",this.avionService.findAvionesNoPageable());
+		model.addAttribute("personalOficina",this.pOficinaService.findPersonalNoPageable());
+		model.addAttribute("personalControl", this.pControlService.findPersonalControlNoPageable());
+		model.addAttribute("azafatos", this.azafatoService.findAzafatosNoPageable());
+		
+		
 		
 		if(result.hasErrors()) {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;

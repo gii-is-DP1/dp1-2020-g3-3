@@ -64,8 +64,4 @@ public class Billete extends AuditableEntity{
 	@JoinColumn(name = "asiento_id")
 	private Asiento asiento;
 
-	public Integer getVersion() {
-		return null;
-	}
-
 }
