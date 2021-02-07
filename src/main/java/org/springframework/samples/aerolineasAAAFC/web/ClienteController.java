@@ -113,7 +113,6 @@ public class ClienteController {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			cliente.incrementVersion();
 			cliente.setId(clienteId);
 			try {
 				this.clienteService.saveCliente(cliente);

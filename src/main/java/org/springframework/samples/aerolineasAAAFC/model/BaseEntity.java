@@ -39,10 +39,6 @@ public class BaseEntity {
 		this.version = version;
 	}
 	
-	public void incrementVersion() {
-		this.version = this.version + 1;
-	}
-	
 	public boolean isNew() {
 		return this.id == null;
 	}

@@ -110,7 +110,6 @@ public class PersonalOficinaController {
 			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			personalOficina.incrementVersion();
 			personalOficina.setId(pOficinaId);
 			try {
 				this.pOficinaService.savePersonalOficina(personalOficina);

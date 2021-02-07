@@ -57,6 +57,7 @@ public class ClienteService{
 			log.info("Autoridad establecida: {}", cliente.getUser().getAuth());
 			
 		}else {
+			cliente.setVersion(cliente.getVersion()+1);
 			clienteRepository.save(cliente);
 			String cl = cliente.getApellidos() + ", " + cliente.getNombre();
 			log.info("Cliente actualizado: {}", cl);

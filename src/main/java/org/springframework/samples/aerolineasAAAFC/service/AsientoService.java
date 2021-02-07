@@ -54,6 +54,7 @@ public class AsientoService {
 
 	@Transactional
 	public Vuelo saveManyAsientos(Vuelo vuelo) {
+		
 		Integer totalPlazas = vuelo.getAvion().getCapacidadPasajero();
 		Integer plazasEconomica = vuelo.getAvion().getPlazasEconomica();
 		Integer plazasEjecutiva = vuelo.getAvion().getPlazasEjecutiva();

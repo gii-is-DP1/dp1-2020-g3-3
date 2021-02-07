@@ -144,14 +144,12 @@ public class PersonalControlController {
 	    rol.add(Rol.COPILOTO);
 	    rol.add(Rol.INGENIERO_DE_VUELO);
 	    roles.put("roles", rol);
-		
+	    BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","user.username");
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			pControl.incrementVersion();
 			pControl.setId(pControlId);
-			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","user.username");
 			try {
 				this.pControlService.savePersonalControl(pControl);
 			} catch (DataIntegrityViolationException e) {

@@ -60,6 +60,7 @@ public class PersonalControlService {
 			userService.saveUser(pControl.getUser());
 			authoritiesService.saveAuthorities(pControl.getUser().getUsername(), "personalControl");
 		}else {
+			pControl.setVersion(pControl.getVersion()+1);
 			pControlRepository.save(pControl);
 		}
 	
