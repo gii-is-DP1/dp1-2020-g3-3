@@ -17,6 +17,6 @@ public interface PlatoBaseRepository extends CrudRepository<PlatoBase, Integer>{
 	@Query("SELECT pbase FROM PlatoBase pbase")
 	List<PlatoBase> findPlatosBase() throws DataAccessException;	
 	
-	@Query("SELECT pbase FROM PlatoBase pbase LEFT JOIN FETCH pbase.tipoPlato tipo WHERE tipo.name LIKE :tipoPlato%")
+	@Query("SELECT pbase FROM PlatoBase pbase LEFT JOIN FETCH pbase.tipoPlato tipo WHERE tipo.name LIKE :tipoPlato")
 	Collection<PlatoBase> findPlatosPorTipo(@Param("tipoPlato") String tipoPlato) throws DataAccessException;	
 }

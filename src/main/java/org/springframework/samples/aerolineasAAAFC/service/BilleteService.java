@@ -5,11 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -74,6 +70,7 @@ public class BilleteService {
 		billete.setFechaReserva(today);
 
 		billeteRepository.save(billete);
+		//Ocupamos el asiento
 		a.setLibre(false);
 	}
 
@@ -100,7 +97,6 @@ public class BilleteService {
 				throw new PlatosNoValidosException(2);
 
 			else { // Esta comprobacion es solo necesaria si usamos el service directamente, se
-					// *****
 					// puede eliminar
 				if (aux1.getTipoPlato().getName().equals("primerPlato"))
 					cont1 = 1;
@@ -176,8 +172,7 @@ public class BilleteService {
 
 	@Transactional(readOnly = true)
 	public Billete findBilleteById(int id) throws DataAccessException {
-		Optional<Billete> b = billeteRepository.findById(id);
-		return b.get();
+		return billeteRepository.findById(id).get();
 	}
 
 
@@ -187,38 +182,27 @@ public class BilleteService {
 
 	@Transactional(readOnly = true)
 	public Set<Cliente> findClientesBilletesByVuelo(int id) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).map(x -> x.getCliente())
-				.collect(Collectors.toSet());
-	}
-
-	@Transactional(readOnly = true)
-	public Long findNumBilletesByVuelo(int id) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).collect(Collectors.counting());
+		return billeteRepository.findClientesBilletesByVuelo(id);
 	}
 
 	@Transactional(readOnly = true)
 	public List<Billete> findBilletesByVuelo(int id) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).collect(Collectors.toList());
+		return billeteRepository.findBilletesByVuelo(id);
 	}
 
 	@Transactional(readOnly = true)
 	public Set<Menu> findMenusByVuelo(int id) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).flatMap(x -> x.getMenus().stream())
-				.collect(Collectors.toSet());
+		return billeteRepository.findMenusByVuelo(id);
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<Menu> findMenus() {
-		return StreamSupport.stream(menuService.findMenus().spliterator(), false).collect(Collectors.toList());
+		return menuService.findMenus();
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<Equipaje> findEquipajes() {
-		return StreamSupport.stream(equipajeService.findEquipajes().spliterator(), false).collect(Collectors.toList());
+		return equipajeService.findEquipajes();
 	}
 
 	public Page<Billete> findBilletes(Pageable page) {
