@@ -21,7 +21,7 @@ public class BaseEntity {
 	protected Integer id;
 	
 	@Version
-	private Integer version = 1;
+	private Integer version;
 	
 	public Integer getId() {
 		return id;

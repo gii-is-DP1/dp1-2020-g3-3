@@ -47,7 +47,7 @@ public class ClienteService{
 	public void saveCliente(Cliente cliente) throws DataIntegrityViolationException{
 		
 		if(cliente.getId() == null) {
-			
+			cliente.setVersion(1);
 			clienteRepository.save(cliente);
 			String cl = cliente.getApellidos() + ", " + cliente.getNombre();
 			log.info("Cliente guardado: {}", cl);

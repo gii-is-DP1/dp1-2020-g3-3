@@ -13,6 +13,7 @@
 	
 	<form:form modelAttribute="vuelo" class="form-horizontal" id="add-vuelo-form">
 		<input type="hidden" name= "id" value= "${vuelo.id}"/>
+		 <input type="hidden" name= "version" value= "${vuelo.version}"/>
 		
 		<div class="form-group has-feedback">
 			<aerolineasAAAFC:inputField label="Fecha de Salida" name="fechaSalida" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$" />

@@ -44,6 +44,7 @@ public class PersonalOficinaService {
 	@Transactional
 	public void savePersonalOficina(PersonalOficina pOficina) throws DataIntegrityViolationException{
 		if(pOficina.getId() == null) {
+			pOficina.setVersion(1);
 			pOficinaRepository.save(pOficina);
 			userService.saveUser(pOficina.getUser());
 			authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");

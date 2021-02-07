@@ -89,6 +89,10 @@ public class VueloService {
 			if(vuelo.getAsientos().isEmpty()) { 
 				asientoService.saveManyAsientos(vuelo);
 			}
+			if(vuelo.getId()==null)
+				vuelo.setVersion(1);
+			
+			
 		}
 	}
 

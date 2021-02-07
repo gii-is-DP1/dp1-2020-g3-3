@@ -60,6 +60,7 @@ public class AeropuertoControllerTests {
 		ejemplo.setLocalizacion("Barcelona, España");
 		ejemplo.setCodigoIATA("BCN");
 		ejemplo.setTelefono("+34913211000");
+		ejemplo.setVersion(1);
 		
 		given(this.aeropuertoService.findAeropuertoById(TEST_AERO_ID)).willReturn(ejemplo);
 		

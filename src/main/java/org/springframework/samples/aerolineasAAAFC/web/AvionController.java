@@ -95,17 +95,17 @@ public class AvionController {
 	@PostMapping(value = "/aviones/{avionId}/edit")
 	public String processUpdateAvionForm(@Valid Avion avion, BindingResult result, @PathVariable("avionId") int avionId,
 			ModelMap model, @RequestParam(value = "version", required = false) Integer version) {
+		Avion avionBD = this.avionService.findAvionById(avionId);
 
 		if (result.hasErrors()) {
 			return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
 		} else {
-//			Avion avionBD = this.avionService.findAvionById(avionId);
-//			if (avionBD.getVersion() != version) {
-//				model.put("message", "Concurrent modification of avion! Try again!");
-//				return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
-//			}
+			if (avionBD.getVersion() != version) {
+				model.put("message", "Modificación de avión ya existente. ¡Prueba de nuevo!");
+				return initUpdateAvionForm(avionId, model);
+			}
+			avion.incrementVersion();
 			avion.setId(avionId);
-//			avion.incrementVersion();
 			this.avionService.saveAvion(avion);
 
 			return "redirect:/aviones/{avionId}";

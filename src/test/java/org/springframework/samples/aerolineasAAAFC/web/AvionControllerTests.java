@@ -76,6 +76,8 @@ public class AvionControllerTests {
 		apache.setPlazasPrimera(65);
 		apache.setTipoAvion("AIRBUS");
 		apache.setVuelos(new ArrayList<>());
+		apache.setVersion(1);
+
 			
 		given(this.avionService.findAvionById(TEST_AVION_ID)).willReturn(apache);
 		

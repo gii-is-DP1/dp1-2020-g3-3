@@ -86,6 +86,7 @@ public class PersonalControlControllerTests {
 		Juan.setIban("ES 0159480518801639865810");
 		Juan.setRol(Rol.COPILOTO);
 		Juan.setSalario(2000.);
+		Juan.setVersion(1);
 
 		juanUser = new User();
 		juanUser.setUsername("08493865B");

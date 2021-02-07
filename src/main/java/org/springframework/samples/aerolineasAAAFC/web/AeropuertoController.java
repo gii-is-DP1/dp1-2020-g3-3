@@ -81,16 +81,16 @@ public class AeropuertoController {
 	public String processUpdateAeropuertoForm(@Valid Aeropuerto aeropuerto, BindingResult result,
 			@PathVariable("aeropuertoId") int aeropuertoId, ModelMap model,
 			@RequestParam(value = "version", required = false) Integer version) {
-//		Aeropuerto aeropuertoToUpdate = this.aeropuertoService.findAeropuertoById(aeropuertoId);
+		Aeropuerto aeropuertoToUpdate = this.aeropuertoService.findAeropuertoById(aeropuertoId);
 
 		if (result.hasErrors()) {
 			return VIEWS_AEROPUERTO_CREATE_OR_UPDATE_FORM;
 		} else {
-//			if (aeropuertoToUpdate.getVersion() != version) {
-//				model.put("message", "Concurrent modification of airport! Try again!");
-//				return initUpdateAeropuertoForm(aeropuertoId, model);
-//			}
-//			aeropuerto.incrementVersion();
+			if (aeropuertoToUpdate.getVersion() != version) {
+				model.put("message", "Modificación de aeropuerto ya existente. ¡Prueba de nuevo!");
+				return initUpdateAeropuertoForm(aeropuertoId, model);
+			}
+			aeropuerto.incrementVersion();
 			aeropuerto.setId(aeropuertoId);
 			try {
 				this.aeropuertoService.saveAeropuerto(aeropuerto);
