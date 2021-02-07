@@ -32,6 +32,7 @@ import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.DisponibilidadAvionException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.HorasImposiblesException;
@@ -57,6 +58,9 @@ public class VueloServiceTests {
 	
 	@Autowired
 	protected PersonalControlService pControlService;
+	
+	@Autowired
+	protected PersonalOficinaService pOficinaService;
 	
 	@Autowired
 	protected AzafatoService AzafatoService;
@@ -262,14 +266,14 @@ public class VueloServiceTests {
 		vuelo.setAvion(this.avionService.findAvionById(1));
 		
 		//AÑADIMOS CONTROLADORES AL VUELO
-		Set<PersonalControl> personalControl = new HashSet<>();
+		Set<PersonalControl> personalControl = new HashSet<PersonalControl>();
 		personalControl.add(this.pControlService.findPersonalControlById(1));
 		personalControl.add(this.pControlService.findPersonalControlById(4));
 		personalControl.add(this.pControlService.findPersonalControlById(5));
 		vuelo.setPersonalControl(personalControl);
 		
 		//AÑADIMOS AZAFATOS AL VUELO
-		Set<Azafato> azafatos = new HashSet<>();
+		Set<Azafato> azafatos = new HashSet<Azafato>();
 		azafatos.add(this.AzafatoService.findAzafatoById(1));
 		azafatos.add(this.AzafatoService.findAzafatoById(2));
 		azafatos.add(this.AzafatoService.findAzafatoById(3));
@@ -278,6 +282,12 @@ public class VueloServiceTests {
 		azafatos.add(this.AzafatoService.findAzafatoById(6));
 		azafatos.add(this.AzafatoService.findAzafatoById(7));
 		vuelo.setAzafatos(azafatos);
+		
+		//AÑADIMOS EL PERSONAL DE OFICINA AL VUELO
+		Set<PersonalOficina> personalOficina = new HashSet<PersonalOficina>();
+		personalOficina.add(this.pOficinaService.findPersonalOficinaById(1));
+		personalOficina.add(this.pOficinaService.findPersonalOficinaById(2));
+		vuelo.setPersonalOficina(personalOficina);
 		
 		Assertions.assertThrows(ConstraintViolationException.class, ()->{ this.vueloService.saveVuelo(vuelo); });
 	}	

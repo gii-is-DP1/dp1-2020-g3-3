@@ -40,8 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class BilleteServiceTests {
-
-
+	
 	@Autowired
 	protected BilleteService billeteService;
 	
@@ -224,9 +223,7 @@ public class BilleteServiceTests {
 			
 		try {
 			this.billeteService.saveEquipaje(e);
-		} catch (DataAccessException e1) {
-			e1.printStackTrace();
-		} catch (TooManyItemsBilleteException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		equipajes = this.billeteService.findEquipajes();
@@ -259,9 +256,7 @@ public class BilleteServiceTests {
 		try {
 			this.billeteService.saveEquipaje(e1);
 			this.billeteService.saveEquipaje(e2);
-		} catch (DataAccessException ex) {
-			ex.printStackTrace();
-		} catch (TooManyItemsBilleteException ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		Assertions.assertThrows(TooManyItemsBilleteException.class, () ->{
@@ -289,7 +284,7 @@ public class BilleteServiceTests {
 		Page<Billete> billetes = this.billeteService.findBilletePorApellido("Soto Ramirez",page);
 		
 		assertThat(billetes.getContent()).isNotEmpty();
-	}
+	}	
 	
 	@Test
 	void shouldFindBilletesCliente() {
