@@ -11,15 +11,17 @@
 
 	<div class="main_container">
 		<div class="main_header">
-
+	
 			<div id="mySidenav" class="sidenav">
 				<a href="javascript:void(0)" class="closebtn"
-					onclick="close3BarMenu()">&times;</a> <a href="#">Cosa11</a> <a
-					href="#">Cosa33</a> <a href="#">Cosa22</a> <a href="#">Cosa11</a>
+					onclick="close3BarMenu()">&times;</a> 
+					<a href="/aeropuertos">Aeropuertos</a> 
+					<a href="/aviones">Aviones</a> 
+					<a href="/vuelos">Vuelos</a> 
 			</div>
-
-			<span class=burger_button onclick="open3BarMenu()">&#9776;</span>
-
+			<sec:authorize access="hasAnyAuthority('admin','azafato','personalControl','personalOficina')">
+				<span class=burger_button onclick="open3BarMenu()">&#9776;</span>
+			</sec:authorize>
 			<spring:url value="/resources/images/logo.png" var="logo" />
 			<a class="logo" href="<spring:url value="/" htmlEscape="true" />"><span>
 					<img class="imagen" alt="AAAFC logo" src="${logo}" width="55"
@@ -27,7 +29,23 @@
 			</span></a>
 
 			<div class="header-left">
-				<a href="#">Cosa1</a> <a href="#">Cosa2</a> <a href="#">Cosa3</a>
+				<sec:authorize access="!isAuthenticated()">
+					<a href="/">Sobre Nosotros</a> 
+				</sec:authorize>
+				<sec:authorize access="hasAnyAuthority('admin','azafato','personalControl','personalOficina')">
+					<a href="/clientes">Clientes</a>
+					<a href="/billetes/datos">Billetes</a>
+				</sec:authorize>
+				<sec:authorize access="hasAnyAuthority('admin','personalOficina')">
+					<a href="/azafatos">Azafatos</a>
+					<a href="/controladores">Controladores</a>
+				</sec:authorize>
+				<sec:authorize access="hasAnyAuthority('admin')">
+					<a href="/personalOficina">Personal de Oficina</a>
+				</sec:authorize>
+				<sec:authorize access="hasAnyAuthority('cliente','azafato','personalControl','personalOficina')">
+					<a href="/users/miPerfil">Mi perfil</a>
+				</sec:authorize>	
 			</div>
 
 			<div class="header-right">
@@ -38,8 +56,8 @@
 
 				<sec:authorize access="isAuthenticated()">
 					<a href="/users/miPerfil"> <span
-						class="glyphicon glyphicon-user"></span>  <sec:authentication
-							property="name" />
+						class="glyphicon glyphicon-user"></span>  
+				<sec:authentication property="name" />
 					</a>
 
 					<a href="<c:url value="/logout" />"> <span
