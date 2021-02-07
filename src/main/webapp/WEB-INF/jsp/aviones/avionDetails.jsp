@@ -3,10 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
-
-<!-- ¿Queremos hacer una muestra individual de cada avión o sirve el
-display de todas juntas? Dependiendo de esto se ponen los botones de
-edición y borrado en una vista u otra -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <aerolineasAAAFC:layout pageName="aviones">
 
@@ -66,12 +63,12 @@ edición y borrado en una vista u otra -->
             <td><c:out value="${avion.plazasPrimera}"/></td>
         </tr>
     </table>
-
-    <spring:url value="/aviones/{avionId}/edit" var="avionUrl">
-        <spring:param name="avionId" value="${avion.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(avionUrl)}" class="btn btn-default">Editar avión</a>
-
+	<sec:authorize 	access="hasAnyAuthority('admin','personalOficina')">
+	    <spring:url value="/aviones/{avionId}/edit" var="avionUrl">
+	        <spring:param name="avionId" value="${avion.id}"/>
+	    </spring:url>
+	    <a href="${fn:escapeXml(avionUrl)}" class="btn btn-default" style="float: right;">Editar avión</a>
+	</sec:authorize>
 
     <br/>
     <br/>

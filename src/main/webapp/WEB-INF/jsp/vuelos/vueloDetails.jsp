@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!-- Pagina en la que se mostraran un vuelo en concreto-->
 
@@ -25,12 +25,14 @@
             <td><c:out value="${vuelo.coste}"/></td>
         </tr>
     </table>
-    
-     <spring:url value="{vueloId}/edit" var="editUrl">
-        <spring:param name="vueloId" value="${vuelo.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Vuelo</a>
-    
+    <spring:url value="/vuelos/${vueloId}/clientes" var="url"></spring:url>
+    <a href="${fn:escapeXml(url)}" class="btn btn-default" style="float:left; ">Pasajeros</a>
+    <sec:authorize 	access="hasAnyAuthority('admin','personalOficina')">
+	     <spring:url value="{vueloId}/edit" var="editUrl">
+	        <spring:param name="vueloId" value="${vuelo.id}"/>
+	    </spring:url>
+	    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default" style="float: right;">Editar Vuelo</a>
+    </sec:authorize>
     <br/>
     <br/>
     
@@ -53,7 +55,7 @@
 		</tr>
 	</tbody>
 	</table>
-	
+
     <h2>Personal de Control</h2>
     <table class="table table-striped">
     <thead>

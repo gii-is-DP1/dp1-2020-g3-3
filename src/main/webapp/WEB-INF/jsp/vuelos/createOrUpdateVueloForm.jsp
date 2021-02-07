@@ -9,36 +9,38 @@
 
 <aerolineasAAAFC:layout pageName="vuelos">
 	
-	<h2> <c:if test="${vuelo['new']}">Nuevo </c:if> Vuelo </h2>
+	<h2> <c:if test="${vuelo['new']}">Nuevo </c:if> Vuelo <c:if test="${not vuelo['new']}"><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}"/> - <c:out value="${vuelo.aeropuertoDestino.codigoIATA}"/>. Con coste base de <c:out value="${vuelo.coste}"/></c:if>
+	</h2>
 	
 	<form:form modelAttribute="vuelo" class="form-horizontal" id="add-vuelo-form">
 		<input type="hidden" name= "id" value= "${vuelo.id}"/>
-		 <input type="hidden" name= "version" value= "${vuelo.version}"/>
 		
 		<div class="form-group has-feedback">
 			<aerolineasAAAFC:inputField label="Fecha de Salida" name="fechaSalida" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$" />
 
 			<aerolineasAAAFC:inputField label="Fecha de Llegada" name="fechaLlegada" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$"/>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Aeropuerto de Salida</label>
-				<div class="col-sm-10">
-					<select name="aeropuertoOrigen" id="aeropuertoOrigen">
-						<c:forEach items="${aeropuertos}" var="codigo">
-							<option value="${codigo.id}"><c:out value="${codigo.codigoIATA}"/></option>
-						</c:forEach>
-					</select>
+			<c:if test="${vuelo['new']}">	
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Aeropuerto de Salida</label>
+					<div class="col-sm-10">
+						<select name="aeropuertoOrigen" id="aeropuertoOrigen">
+							<c:forEach items="${aeropuertos}" var="codigo">
+								<option value="${codigo.id}"><c:out value="${codigo.codigoIATA}"/></option>
+							</c:forEach>
+						</select>
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Aeropuerto de Llegada</label>
-				<div class="col-sm-10">
-					<select name="aeropuertoDestino" id="aeropuertoDestino">
-						<c:forEach items="${aeropuertos}" var="codigo">
-							<option value="${codigo.id}"><c:out value="${codigo.codigoIATA}"/></option>
-						</c:forEach>
-					</select>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Aeropuerto de Llegada</label>
+					<div class="col-sm-10">
+						<select name="aeropuertoDestino" id="aeropuertoDestino">
+							<c:forEach items="${aeropuertos}" var="codigo">
+								<option value="${codigo.id}"><c:out value="${codigo.codigoIATA}"/></option>
+							</c:forEach>
+						</select>
+					</div>
 				</div>
-			</div>
+			</c:if>		
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Avión (Capacidad de pasajeros)</label>
 				<div class="col-sm-10">
@@ -70,8 +72,8 @@
 				<div class="col-sm-10">
 					<select name="personalControl" id="personalControl" multiple>
 						<c:forEach items="${personalControl}" var="personalControl">
-							<option value="${personalControl.id}"><c:out
-									value="${personalControl.nombre} ${personalControl.apellidos} - ${personalControl.rol}" /></option>
+							<option value="${personalControl.id}" >
+							<c:out value="${personalControl.nombre} ${personalControl.apellidos} - ${personalControl.rol}" /></option>
 						</c:forEach>
 					</select>
 				</div>
@@ -81,15 +83,16 @@
 				<div class="col-sm-10">
 					<select name="azafatos" id="azafatos" multiple>
 						<c:forEach items="${azafatos}" var="azafatos">
-							<option value="${azafatos.id}"><c:out
-									value="${azafatos.nombre} ${azafatos.apellidos}" /></option>
+								<option value="${azafatos.id}" id="${azafatos.id}" >
+									<c:out value="${azafatos.nombre} ${azafatos.apellidos}" />
+								</option>								
 						</c:forEach>
 					</select>
 				</div>
 			</div>
 
 			<br/> 
-			<aerolineasAAAFC:inputField label="Coste" name="coste" />
+			<c:if test="${vuelo['new']}"><aerolineasAAAFC:inputField label="Coste" name="coste" /></c:if>
 			
 			<form:errors></form:errors>
 		</div>

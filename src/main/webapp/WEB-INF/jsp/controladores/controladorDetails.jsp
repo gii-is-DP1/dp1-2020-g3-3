@@ -8,7 +8,11 @@
 <aerolineasAAAFC:layout pageName="controladores">
 
     <h2>Información del Personal de Control</h2>
-
+	<sec:authorize 	access="hasAnyAuthority('admin','personalOficina')">
+		<div style="float:right; padding-bottom: 1%;">
+   	 	<a href="/controladores" class="btn btn-default" >Volver</a>
+   	 	</div>
+	</sec:authorize>
 
     <table class="table table-striped">
         <tr>

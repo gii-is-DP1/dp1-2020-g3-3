@@ -8,7 +8,12 @@
 <aerolineasAAAFC:layout pageName="azafatos">
 
     <h2>Información del Azafato</h2>
-
+	
+	<sec:authorize 	access="hasAnyAuthority('admin','personalOficina')">
+		<div style="float:right; padding-bottom: 1%;">
+   	 	<a href="/azafatos" class="btn btn-default" >Volver</a>
+   	 	</div>
+	</sec:authorize>
 
     <table class="table table-striped">
         <tr>
@@ -52,7 +57,6 @@
     <br/>
   
   	<h2>Vuelos en los que formó parte de la tripulación</h2>
-	<div>
 	    <table class="table table-striped">
 	        <thead>
 		        <tr>
