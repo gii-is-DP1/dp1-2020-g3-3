@@ -77,16 +77,17 @@ public class VueloService {
 		}else{
 			vuelo.getAvion().setHorasAcumuladas((int) horasTotal);
 			log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion().getTipoAvion(), horasTotal);
-			log.info("Vuelo {}, con fecha de Salida {} y Llegada {}, con origen {} y destino {}.\n"
+			log.info("Vuelo {}, con fecha de Salida {} y Llegada {}.\n"
 					+ "Asociado al avión {}, a los azafatos {}, oficinistas {} y controladores {}, con un coste base de {}.", 
-					vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), vuelo.getFechaSalida(), vuelo.getFechaLlegada(), vuelo.getAeropuertoOrigen().getCodigoIATA(), vuelo.getAeropuertoDestino().getCodigoIATA(),
+					vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), vuelo.getFechaSalida(), vuelo.getFechaLlegada(),
 					vuelo.getAvion().getTipoAvion(), vuelo.getAzafatos().size(), vuelo.getPersonalOficina().size(), vuelo.getPersonalControl().size(), vuelo.getCoste());
 
 			this.vueloRepository.save(vuelo);
-
+			log.info("vuelo guardado {}.", vuelo.getId());
+			Vuelo vueloa = this.findVueloById(vuelo.getId());
 			//Si es un vuelo nuevo, genera los asientos
 			//Si viene de un update, los dejara tal cual
-			if(vuelo.getAsientos().isEmpty()) { 
+			if(vuelo.getAsientos() == null) { 
 				asientoService.saveManyAsientos(vuelo);
 			}
 			if(vuelo.getId()==null)

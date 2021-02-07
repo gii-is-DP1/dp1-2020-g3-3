@@ -94,6 +94,7 @@ INSERT INTO aviones(tipo_avion,capacidad_pasajero,horas_acumuladas,fecha_fabrica
 VALUES ('Airbus A330', 335 , 300, '2015-01-20', true, '2020-03-10', 250, 75, 10, 1);
 
 --Vuelos
+<<<<<<< HEAD
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
 VALUES (parsedatetime('11-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('11-01-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,1,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
@@ -114,6 +115,28 @@ INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropue
 VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),200,3,4,2,1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
 VALUES (parsedatetime('10-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-02-2021 21:30','dd-MM-yyyy hh:mm'),350,2,3,3,1);
+=======
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('11-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('11-01-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('24-05-2021 8:30','dd-MM-yyyy hh:mm'),parsedatetime('24-05-2021 10:55','dd-MM-yyyy hh:mm'),40,2,3,2);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('17-01-2021 23:30','dd-MM-yyyy hh:mm'),parsedatetime('18-01-2021 03:40','dd-MM-yyyy hh:mm'),250,6,5,3);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('03-06-2019 7:10','dd-MM-yyyy hh:mm'),parsedatetime('03-06-2019 13:20','dd-MM-yyyy hh:mm'),300,6,7,4);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('15-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('15-02-2021 21:30','dd-MM-yyyy hh:mm'),200,1,2,1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('20-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('20-01-2021 21:30','dd-MM-yyyy hh:mm'),150,1,6,1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('06-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('06-02-2021 18:30','dd-MM-yyyy hh:mm'),500,2,1,3);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,4);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),200,3,4,2);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
+VALUES (parsedatetime('10-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-02-2021 21:30','dd-MM-yyyy hh:mm'),350,2,3,3);
+>>>>>>> branch 'master' of https://github.com/gii-is-DP1/dp1-2020-g3-3.git
 
 
 --PersonalControl
@@ -130,13 +153,18 @@ VALUES ('Henry','Dalgliesh Cavill','31123210R','ES 6623200418401234567892',0,600
 INSERT INTO personal_control(nombre,apellidos,nif,iban,rol,salario,username,version)
 VALUES ('Giancarlo','Fisichella','34109741M','ES 4131901222458149879764',0,5400,'34109741M',1);
 
-INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1, 1), (1, 2), (1, 3), 
-																(2, 1), (2, 2), (2, 3), 
-																(3, 1), (3, 2), (3, 3),
-																(4, 1), (4, 2), (4, 3),
-																(5, 1), (5, 2), (5, 3),
-																(6, 1), (6, 2), (6, 3),
-																(1, 5), (1, 6), (1, 7);
+INSERT INTO control_vuelo(personal_control_id,vuelos_id) VALUES (1,1),(2,1),(3,1),
+																(4,2),(5,2),
+																(6,3),(1,3),
+																(2,4),(3,4),
+																(4,5),(5,5),(6,5),
+																(1,6),(2,6),(3,6),
+																(4,7),(5,7),(6,7),
+																(1,8),(2,8),(3,8),
+																(4,9),(5,9),(6,9),
+																(1,10),(3,10),(5,10);
+																
+																
 --Azafatos
 INSERT INTO azafatos(nombre,apellidos,nif,iban,salario,username,version)
 VALUES ('Ana', 'Silfes Guerrero', '21333214R', 'ES 8721000893201234567892', 2500, '21333214R',1);
