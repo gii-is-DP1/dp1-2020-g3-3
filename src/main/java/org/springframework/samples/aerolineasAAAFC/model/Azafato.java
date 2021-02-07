@@ -50,11 +50,5 @@ public class Azafato extends Person{
 			   inverseJoinColumns = @JoinColumn(name= "vuelos_id"))
 	@EqualsAndHashCode.Exclude 
 	private Set<Vuelo> vuelos;
-	
-	public String toString() {
-		
-		return "Id azafato "+this.getId()+" User "+this.getNif()+" Id Idiomas " + this.getIdiomas();
-	}
-
 
 }

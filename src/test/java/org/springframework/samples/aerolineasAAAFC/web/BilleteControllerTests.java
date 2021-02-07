@@ -142,33 +142,6 @@ public class BilleteControllerTests {
 				.with(csrf()))
 		.andExpect(status().is3xxRedirection());
 	}
-
-
-
-	@WithMockUser(value = "spring")
-	@Test
-	void testProcessUpdateBilleteSuccess() throws Exception {
-		mockMvc.perform (post("/billetes/{billeteId}/edit", TEST_BILLETE_ID)
-				.with(csrf())
-				.param("coste", "5")
-				.param("fechaReserva", "1999/11/03")
-				.param("clase", "ECONOMICA"))
-		.andExpect(view().name("redirect:/billetes/"+ billetazo.getId()));
-	}
-
-	@WithMockUser(value = "spring")
-	@Test
-	void testProcessUpdateBilleteError() throws Exception {
-		mockMvc.perform (post("/billetes/{billeteId}/edit", TEST_BILLETE_ID)
-				.with(csrf())
-				.param("coste", "DireStraits")
-				.param("fechaReserva", "1999/11/03")
-				.param("clase", "ECONOMICA"))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("billete"))
-		.andExpect(model().attributeHasFieldErrors("billete", "coste"))
-		.andExpect(view().name("billetes/createOrUpdateBilleteForm"));
-	}
 	
 	@WithMockUser(value = "spring")
 	@Test
@@ -197,13 +170,13 @@ public class BilleteControllerTests {
 	@Test
 	void testShowPreviewBilleteErrorUser() throws Exception {
 		mockMvc.perform (get("/billetes/{billeteId}", TEST_BILLETE_ID))
-		.andExpect(view().name("user/createClienteForm.jsp"));
+		.andExpect(view().name("redirect:/exception"));
 	}
 	
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowPreviewBilleteErrorBilleteInexistente() throws Exception {
 		mockMvc.perform (get("/billetes/{billeteId}", 128391))
-		.andExpect(view().name("/oups"));
+		.andExpect(view().name("redirect:/exception"));
 	}
 }

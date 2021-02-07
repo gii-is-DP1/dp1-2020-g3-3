@@ -65,21 +65,13 @@ public class MenuController {
 			try {
 				menu.setBillete(this.billeteService.findBilleteById(billeteId));
 				this.billeteService.saveMenu(menu);
-			} catch (DataAccessException e) {
-				e.printStackTrace();
-				return VIEWS_MENU_CREATE_FORM;
-			} catch (TooManyItemsBilleteException e) {
-				result.reject(e.getMessage());
-				e.printStackTrace();
-				return VIEWS_MENU_CREATE_FORM;
-			} catch (PlatosNoValidosException e) {
-				result.reject(e.getMessage());
+			} catch (DataAccessException | TooManyItemsBilleteException | PlatosNoValidosException e) {
 				e.printStackTrace();
 				return VIEWS_MENU_CREATE_FORM;
 			} catch (Exception e) {
 				result.reject(e.getMessage());
 				e.printStackTrace();
-				return "oups";
+				return "redirect:/exception";
 			}
 			return "redirect:/billetes/datos";
 		}

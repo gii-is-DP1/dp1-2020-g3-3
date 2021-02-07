@@ -119,7 +119,7 @@ public class VueloServiceTests {
 		
 		//POR MES
 		Pageable page =  PageRequest.of(0, 20);
-		Page<Vuelo> vuelos = this.vueloService.findVuelosByMes(01, 2018,page);
+		Page<Vuelo> vuelos = this.vueloService.findVuelosByMes(06, 2019,page);
 		int found = vuelos.getContent().size();
 		
 		//OFERTADOS
