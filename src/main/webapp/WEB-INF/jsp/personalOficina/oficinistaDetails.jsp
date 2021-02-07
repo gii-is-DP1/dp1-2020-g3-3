@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <aerolineasAAAFC:layout pageName="personalOficina">
 
@@ -30,12 +31,12 @@
         </tr>
         
     </table>
-
-  	<spring:url value="/personalOficina/{pOficinaId}/edit" var="editUrl">
-        <spring:param name="pOficinaId" value="${personalOficina.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Oficinista</a>
-
+	<sec:authorize 	access="hasAuthority('admin')">
+	  	<spring:url value="/personalOficina/{pOficinaId}/edit" var="editUrl">
+	        <spring:param name="pOficinaId" value="${personalOficina.id}"/>
+	    </spring:url>
+	    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Editar Oficinista</a>
+	</sec:authorize>
     <br/>
     <br/>
     <h2>Vuelos gestionados</h2>

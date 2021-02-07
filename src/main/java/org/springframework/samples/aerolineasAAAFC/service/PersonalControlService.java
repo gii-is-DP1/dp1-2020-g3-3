@@ -39,7 +39,7 @@ public class PersonalControlService {
 
 	
 	@Autowired
-	public PersonalControlService(PersonalControlRepository pControlRepository, VueloRepository vueloRepository) {
+	public PersonalControlService(PersonalControlRepository pControlRepository) {
 		this.pControlRepository = pControlRepository;
 	}
 	

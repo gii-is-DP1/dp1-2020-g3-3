@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!-- Pagina en la que se mostraran los azafatos y se permitira acceder a modificarlos -->
 
@@ -54,8 +55,10 @@
 	        			<spring:param name="azafatoId" value="${azafato.id}"/>
 	    				</spring:url>
 	    				<a href="${fn:escapeXml(azafatoUrl)}" class="btn btn-default">Editar</a>
-	    				<spring:url value="/azafatos/${azafato.id}/delete" var="azafatoUrl"></spring:url>
-	    				<a href="${fn:escapeXml(azafatoUrl)}" class="btn btn-default">Eliminar</a>
+	    				<sec:authorize 	access="hasAuthority('admin')">
+		    				<spring:url value="/azafatos/${azafato.id}/delete" var="azafatoUrl"></spring:url>
+		    				<a href="${fn:escapeXml(azafatoUrl)}" class="btn btn-default">Eliminar</a>
+	    				</sec:authorize>
 						</td>
 					</tr>
 					

@@ -113,14 +113,14 @@ public class AzafatoController {
 //			return initUpdateAzafatoForm(azafatoId,model);
 //			} 
 		
-		
+		Azafato azafatoToUpdate = this.azafatoService.findAzafatoById(azafatoId);
+		BeanUtils.copyProperties(azafato, azafatoToUpdate, "id","nif","user.username");  
 		if(result.hasErrors()) {
 			return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			azafato.setId(azafatoId);
-			Azafato azafatoToUpdate = this.azafatoService.findAzafatoById(azafatoId);
-			BeanUtils.copyProperties(azafato, azafatoToUpdate, "id","nif","username");  
+			
 			try {
 				this.azafatoService.saveAzafato(azafato);
 			} catch (DataIntegrityViolationException e) {
@@ -153,11 +153,19 @@ public class AzafatoController {
 	@GetMapping(value =  "/azafatos" )
 	public String showAzafatosList(ModelMap model , @PageableDefault(value=20) Pageable paging) {
 		Page<Azafato> pages = azafatoService.findAzafatos(paging);
-		model.addAttribute("number", pages.getNumber());
-		model.addAttribute("totalPages", pages.getTotalPages());
-		model.addAttribute("totalElements", pages.getTotalElements());
-		model.addAttribute("size", pages.getSize());
-		model.addAttribute("azafatos",pages.getContent());
+		if(pages.getContent().isEmpty()) {
+			model.addAttribute("number",0);
+			model.addAttribute("totalPages", 1);
+			model.addAttribute("totalElements", 1);
+			model.addAttribute("size", 1);
+			model.put("azafatos", pages.getContent());
+		}else {
+			model.addAttribute("number", pages.getNumber());
+			model.addAttribute("totalPages", pages.getTotalPages());
+			model.addAttribute("totalElements", pages.getTotalElements());
+			model.addAttribute("size", pages.getSize());
+			model.put("azafatos", pages.getContent());
+		}
 		return "azafatos/azafatosList";
 	}
 	
@@ -179,7 +187,7 @@ public class AzafatoController {
 	}
 	
 	@GetMapping("/azafatos/{azafatoId}")
-	public ModelAndView showAzafato(@PathVariable("azafatoId") int azafatoId) {
+	public ModelAndView showAzafato(@PathVariable("azafatoId") int azafatoId, @PageableDefault(value=3) Pageable paging) {
 		ModelAndView mav = new ModelAndView("azafatos/azafatoDetails");
 		mav.addObject(this.azafatoService.findAzafatoById(azafatoId));
 		return mav;

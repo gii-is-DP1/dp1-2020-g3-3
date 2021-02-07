@@ -26,4 +26,5 @@ public interface AzafatoRepository extends CrudRepository<Azafato, Integer>{
 	List<IdiomaType> findIdiomaTypes() throws DataAccessException;
 	
 	public Page<Azafato> findAll(Pageable pageable);
+
 }

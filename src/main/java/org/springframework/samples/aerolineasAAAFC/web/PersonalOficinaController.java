@@ -101,14 +101,13 @@ public class PersonalOficinaController {
 //			model.put("message","Concurrent modification of Personal Oficina! Try again!");
 //			return initUpdatePersonalOficinaForm(pOficinaId,model);
 //			}
+		PersonalOficina personalOficinaToUpdate2 = this.pOficinaService.findPersonalOficinaById(pOficinaId);
+		BeanUtils.copyProperties(personalOficina, personalOficinaToUpdate2, "id","nif","user.username");
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			personalOficina.setId(pOficinaId);
-			PersonalOficina personalOficinaToUpdate2 = this.pOficinaService.findPersonalOficinaById(pOficinaId);
-			BeanUtils.copyProperties(personalOficina, personalOficinaToUpdate2, "id","nif","username");
-
 			try {
 				this.pOficinaService.savePersonalOficina(personalOficina);
 			} catch (DataIntegrityViolationException e) {

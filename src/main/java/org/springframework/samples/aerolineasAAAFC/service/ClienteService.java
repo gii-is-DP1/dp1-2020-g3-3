@@ -46,14 +46,23 @@ public class ClienteService{
 	@Transactional
 	public void saveCliente(Cliente cliente) throws DataIntegrityViolationException{
 		
-		clienteRepository.save(cliente);
-		String cl = cliente.getApellidos() + ", " + cliente.getNombre();
-		log.info("Cliente guardado: {}", cl);
+		if(cliente.getId() == null) {
+			
+			clienteRepository.save(cliente);
+			String cl = cliente.getApellidos() + ", " + cliente.getNombre();
+			log.info("Cliente guardado: {}", cl);
+			
+			userService.saveUser(cliente.getUser());
+			authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "cliente");
+			log.info("Autoridad establecida: {}", cliente.getUser().getAuth());
+			
+		}else {
+			clienteRepository.save(cliente);
+			String cl = cliente.getApellidos() + ", " + cliente.getNombre();
+			log.info("Cliente actualizado: {}", cl);
+		}
 		
-		userService.saveUser(cliente.getUser());
 		
-		authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "cliente");
-		log.info("Autoridad establecida: {}", cliente.getUser().getAuth());
 	}
 
 	@Transactional(readOnly = true)

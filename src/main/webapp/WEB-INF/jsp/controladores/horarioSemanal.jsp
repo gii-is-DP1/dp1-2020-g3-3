@@ -96,7 +96,8 @@
 		</tbody>
 	</table>
 	
-	<script>
-	
-	</script>
+	<spring:url value="/controladores/{pControlId}/horario" var="editUrl">
+    <spring:param name="pControlId" value="${pControlId}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default" style="float:right;">Volver</a>
 </aerolineasAAAFC:layout>

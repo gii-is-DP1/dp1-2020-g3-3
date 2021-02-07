@@ -15,9 +15,9 @@
 		<input type="hidden" name= "id" value= "${vuelo.id}"/>
 		
 		<div class="form-group has-feedback">
-			<aerolineasAAAFC:inputField label="Fecha de Salida" name="fechaSalida" type="datetime-local" placeholder="yyyy-MM-dd'T'HH:mm" pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])'T'(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$" />
+			<aerolineasAAAFC:inputField label="Fecha de Salida" name="fechaSalida" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$" />
 
-			<aerolineasAAAFC:inputField label="Fecha de Llegada" name="fechaLlegada" type="datetime-local" placeholder="yyyy-MM-dd'T'HH:mm" pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])'T'(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$"/>
+			<aerolineasAAAFC:inputField label="Fecha de Llegada" name="fechaLlegada" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$"/>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Aeropuerto de Salida</label>
 				<div class="col-sm-10">

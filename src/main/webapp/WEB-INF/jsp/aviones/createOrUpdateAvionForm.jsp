@@ -18,14 +18,14 @@
     	<input type="hidden" name= "version" value= "${avion.version}"/>
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Tipo de avión" name="tipoAvion"/>
-            <aerolineasAAAFC:inputField label="Capacidad de pasajeros" name="capacidadPasajero"/>
-            <aerolineasAAAFC:inputField label="Horas acumuladas" name="horasAcumuladas"/>
+            <aerolineasAAAFC:inputField label="Capacidad de pasajeros" name="capacidadPasajero" type="number"/>
+            <aerolineasAAAFC:inputField label="Horas acumuladas" name="horasAcumuladas" type="number"/>
             <aerolineasAAAFC:inputField label="Fecha de fabricación" type="date" name="fechaFabricacion"/>
             <aerolineasAAAFC:inputField label="Disponibilidad" name="disponibilidad"/>
             <aerolineasAAAFC:inputField label="Fecha de revisión" type="date" name="fechaRevision"/>
-            <aerolineasAAAFC:inputField label="Plazas clase económica" name="plazasEconomica"/>
-            <aerolineasAAAFC:inputField label="Plazas clase ejecutiva" name="plazasEjecutiva"/>
-            <aerolineasAAAFC:inputField label="Plazas primera clase" name="plazasPrimera"/>
+            <aerolineasAAAFC:inputField label="Plazas clase económica" name="plazasEconomica" type="number"/>
+            <aerolineasAAAFC:inputField label="Plazas clase ejecutiva" name="plazasEjecutiva" type="number"/>
+            <aerolineasAAAFC:inputField label="Plazas primera clase" name="plazasPrimera" type="number"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

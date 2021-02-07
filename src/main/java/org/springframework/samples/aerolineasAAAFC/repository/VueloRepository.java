@@ -9,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 
-
 public interface VueloRepository extends CrudRepository<Vuelo,Integer> {
 	
 	

@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <aerolineasAAAFC:layout pageName="azafatos">
 
@@ -22,8 +23,8 @@
             <aerolineasAAAFC:inputField label="Salario" name="salario"/> 
             <aerolineasAAAFC:selectField label="Idiomas" name="idiomas" names="${idioma_types}"/>
             <aerolineasAAAFC:inputField label="IBAN" name="iban" />
-            <aerolineasAAAFC:inputField label="Username" name="user.username" />
-			<aerolineasAAAFC:inputField label="Password" name="user.password" type="password" />
+            <aerolineasAAAFC:inputField label="Usuario" name="user.username" />
+			<aerolineasAAAFC:inputField label="Contraseña" name="user.password" type="password" />
 			
 			<form:errors> </form:errors>
 			
