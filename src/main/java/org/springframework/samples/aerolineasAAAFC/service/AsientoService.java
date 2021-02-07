@@ -20,12 +20,12 @@ public class AsientoService {
 
 	private AsientoRepository asientoRepository;
 
-	private VueloRepository vueloRepository;
+	@Autowired
+	private VueloService vueloService;
 
 	@Autowired
 	public AsientoService(AsientoRepository asientoRepository, VueloRepository vueloRepository) {
 		this.asientoRepository = asientoRepository;
-		this.vueloRepository = vueloRepository;
 	}
 
 	@Transactional
@@ -45,7 +45,7 @@ public class AsientoService {
 
 	@Transactional(readOnly = true)
 	public List<Asiento> findAllAsientosByVuelo(Vuelo vuelo) {
-		return this.vueloRepository.findById(vuelo.getId()).get().getAsientos();
+		return this.vueloService.findVueloById((vuelo.getId())).getAsientos();
 	}
 
 	@Transactional(readOnly = true)

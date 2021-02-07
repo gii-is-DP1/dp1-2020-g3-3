@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -213,6 +214,14 @@ public class VueloService {
 	@Transactional(readOnly = true)
 	public Page<Vuelo> findVuelosConTodo(LocalDateTime fecha, double precio, String iataOrigen, String iataDestino, Pageable pageable){
 		return vueloRepository.findVuelosConTodo(fecha, precio, iataOrigen, iataDestino, pageable);
+	}
+
+	public Collection<Vuelo> findVuelosAzafato(int azafatoId, int mes, int año) {
+		return vueloRepository.findVuelosAzafato(azafatoId, mes, año);
+	}
+
+	public Collection<Vuelo> findVuelosControl(int pControlId, int mes, int año) {
+		return vueloRepository.findVuelosControl(pControlId, mes, año);
 	}
 
 

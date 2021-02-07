@@ -32,7 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class AzafatoService {
 
 	public AzafatoRepository azafatoRepository;
-	private VueloRepository vueloRepository;
+	
+	@Autowired
+	private VueloService vueloService;
 
 	@Autowired
 	private UserService userService;
@@ -42,9 +44,8 @@ public class AzafatoService {
 
 
 	@Autowired
-	public AzafatoService(AzafatoRepository azafatoRepository, VueloRepository vueloRepository) {
+	public AzafatoService(AzafatoRepository azafatoRepository) {
 		this.azafatoRepository = azafatoRepository;
-		this.vueloRepository = vueloRepository;
 	}
 
 	@Transactional(readOnly = true)
@@ -90,7 +91,7 @@ public class AzafatoService {
 	
 	
 	public Collection<Vuelo> horario(int azafatoId, int mes, int año) {
-		return this.vueloRepository.findVuelosAzafato(azafatoId, mes, año);
+		return this.vueloService.findVuelosAzafato(azafatoId, mes, año);
 	}
 
 	
