@@ -123,8 +123,6 @@ public class AzafatoController {
 		}
 		else {
 			azafato.setId(azafatoId);
-			azafato.incrementVersion();
-
 			try {
 				this.azafatoService.saveAzafato(azafato);
 			} catch (DataIntegrityViolationException e) {

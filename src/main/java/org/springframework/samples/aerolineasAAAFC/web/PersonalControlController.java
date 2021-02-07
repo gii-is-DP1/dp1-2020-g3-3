@@ -132,6 +132,7 @@ public class PersonalControlController {
 	@PostMapping(value = "/controladores/{pControlId}/edit")
 	public String processUpdatePersonalControlForm(@Valid PersonalControl pControl, BindingResult result, @PathVariable("pControlId") int pControlId,
 			ModelMap model, Map<String, Object> roles, @RequestParam(value = "version", required=false) Integer version) {
+		
 		PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
 		if(pControlToUpdate.getVersion()!=version) {
 			model.put("message","Modificación de personal de control ya existente. ¡Prueba de nuevo!");
@@ -144,14 +145,12 @@ public class PersonalControlController {
 	    rol.add(Rol.COPILOTO);
 	    rol.add(Rol.INGENIERO_DE_VUELO);
 	    roles.put("roles", rol);
-		
+	    BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","user.username");
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			pControl.incrementVersion();
 			pControl.setId(pControlId);
-			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","user.username");
 			try {
 				this.pControlService.savePersonalControl(pControl);
 			} catch (DataIntegrityViolationException e) {

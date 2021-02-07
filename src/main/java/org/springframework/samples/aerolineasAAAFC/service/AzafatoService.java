@@ -73,6 +73,7 @@ public class AzafatoService {
 				userService.saveUser(azafato.getUser());
 				authoritiesService.saveAuthorities(azafato.getUser().getUsername(), "azafato");
 			}else {
+				azafato.setVersion(azafato.getVersion()+1);
 				azafatoRepository.save(azafato);	
 			}
 		}

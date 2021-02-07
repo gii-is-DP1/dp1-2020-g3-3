@@ -26,9 +26,15 @@ public class AvionService {
 	
 	@Transactional
 	public void saveAvion(Avion avion) throws DataAccessException{
-		avionRepository.save(avion);
-		if(avion.getId()==null)
+		if(avion.getId() == null) {
 			avion.setVersion(1);
+			avionRepository.save(avion);
+		}else {
+			avion.setVersion(avion.getVersion()+1);
+			avionRepository.save(avion);
+		}
+		
+
 	}
 	
 	@Transactional(readOnly = true)
