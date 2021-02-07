@@ -2,7 +2,6 @@ package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
@@ -44,13 +43,14 @@ public class BilleteController {
 	private final AsientoService asientoService;
 
 	@Autowired
-	public BilleteController(BilleteService billeteService, ClienteService clienteService,VueloService vueloService, AsientoService asientoService) {
+	public BilleteController(BilleteService billeteService, ClienteService clienteService, VueloService vueloService,
+			AsientoService asientoService) {
 		this.billeteService = billeteService;
-		this.clienteService =  clienteService;
+		this.clienteService = clienteService;
 		this.vueloService = vueloService;
 		this.asientoService = asientoService;
 	}
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
@@ -60,33 +60,32 @@ public class BilleteController {
 	 * Alta de un nuevo billete
 	 */
 	@GetMapping(value = "/billetes/{vueloId}/new")
-	public String initCreationBilleteForm(@PathVariable("vueloId") int vueloId,
-			Map<String, Object> model) {
-		if( SecurityContextHolder.getContext().getAuthentication()!=null) {
+	public String initCreationBilleteForm(@PathVariable("vueloId") int vueloId, Map<String, Object> model) {
+		if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			Billete billete = new Billete();
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String name = authentication.getName(); //name corresponde al nif del usuario
+			String name = authentication.getName(); // name corresponde al nif del usuario
 			model.put("billete", billete);
-			Vuelo vuelo=this.vueloService.findVueloById(vueloId);
+			Vuelo vuelo = this.vueloService.findVueloById(vueloId);
 			List<Asiento> asientos = this.asientoService.findAsientosSinOcupar(vuelo);
-			model.put("asientos",asientos);
-			model.put("nAsientos",asientos.size());
-			model.put("vuelo",vuelo);
-			Cliente cliente=clienteService.findClienteByNif(name);
+			model.put("asientos", asientos);
+			model.put("nAsientos", asientos.size());
+			model.put("vuelo", vuelo);
+			Cliente cliente = clienteService.findClienteByNif(name);
 			model.put("cliente", cliente);
 			DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 			LocalDate today = LocalDate.now();
 			String aux = today.format(d);
-			model.put("fechaReserva",aux);
+			model.put("fechaReserva", aux);
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		}else {
+		} else {
 			return "user/createClienteForm.jsp";
 		}
 	}
 
 	@PostMapping(value = "/billetes/{vueloId}/new")
-	public String processCreationBilleteForm(@PathVariable("vueloId") int vueloId,
-			@Valid Billete billete, BindingResult result,Map<String, Object> model) {
+	public String processCreationBilleteForm(@PathVariable("vueloId") int vueloId, @Valid Billete billete,
+			BindingResult result, Map<String, Object> model) {
 		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -96,26 +95,58 @@ public class BilleteController {
 		}
 	}
 
+	// Vista que muestra el billete comprado
+	@GetMapping(value = "/billetes/{billeteId}")
+	public String previewBillete(@PathVariable("billeteId") int billeteId, Map<String, Object> model) {
+		// Apartado de validacion
+
+		Billete billete = this.billeteService.findBilleteById(billeteId);
+
+		if (billete == null) {
+			return "/oups"; // Vista de error
+		}
+
+		else if (SecurityContextHolder.getContext().getAuthentication() != null) {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String name = authentication.getName(); // name corresponde al nif del usuario
+
+			if (name.equals(billete.getCliente().getNif())) {
+				model.put("billete", billete);
+				Cliente cliente = billete.getCliente();
+				model.put("cliente", cliente);
+			}
+			
+			else {
+				return "user/createClienteForm.jsp";
+			}
+			
+		} else {
+			return "user/createClienteForm.jsp";
+		}
+
+		return "billetes/billetePreview";
+	}
+
 	/*
 	 * Modificacion de un billete
 	 */
-	@GetMapping(value = "/billetes/{billeteId}/edit")
+	@GetMapping(value = "/billetes/{billeteId}/edit") //DEPRECATED
 	public String initUpdateBilleteForm(@PathVariable("billeteId") int billeteId, ModelMap model) {
 		Billete billete = this.billeteService.findBilleteById(billeteId);
 		model.addAttribute(billete);
 		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/billetes/{billeteId}/edit")
+	@PostMapping(value = "/billetes/{billeteId}/edit") //DEPRECATED
 	public String processUpdateBilleteForm(@Valid Billete billete, BindingResult result,
-			@PathVariable("billeteId") int billeteId,
-			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
-		Billete billeteToUpdate=this.billeteService.findBilleteById(billeteId);
+			@PathVariable("billeteId") int billeteId, ModelMap model,
+			@RequestParam(value = "version", required = false) Integer version) {
+		Billete billeteToUpdate = this.billeteService.findBilleteById(billeteId);
 
-		if(billeteToUpdate.getVersion()!=version) {
-			model.put("message","Concurrent modification of billete! Try again!");
-			return initUpdateBilleteForm(billeteId,model);
-			}
+		if (billeteToUpdate.getVersion() != version) {
+			model.put("message", "Concurrent modification of billete! Try again!");
+			return initUpdateBilleteForm(billeteId, model);
+		}
 		if (result.hasErrors()) {
 			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 		} else {
@@ -128,30 +159,31 @@ public class BilleteController {
 
 	@RequestMapping(value = { "/billetes/datos" }, method = RequestMethod.GET)
 	public String ShowDatosBillete(ModelMap model,
-			@RequestParam(name = "apellidos", defaultValue = "") String apellidos, @PageableDefault(value=20) Pageable paging) {
-		
+			@RequestParam(name = "apellidos", defaultValue = "") String apellidos,
+			@PageableDefault(value = 20) Pageable paging) {
+
 		if (apellidos.trim().isEmpty()) {
 			Page<Billete> pages = this.billeteService.findBilletes(paging);
 			model.addAttribute("number", pages.getNumber());
 			model.addAttribute("totalPages", pages.getTotalPages());
 			model.addAttribute("totalElements", pages.getTotalElements());
 			model.addAttribute("size", pages.getSize());
-			model.addAttribute("billetes",pages.getContent());
+			model.addAttribute("billetes", pages.getContent());
 		} else {
 			Page<Billete> pages = this.billeteService.findBilletePorApellido(apellidos.toUpperCase(), paging);
-			
-			if(pages.getContent().isEmpty()) {
-				model.put("msg","No hay billetes para el cliente buscado.");
-				model.addAttribute("number",0);
+
+			if (pages.getContent().isEmpty()) {
+				model.put("msg", "No hay billetes para el cliente buscado.");
+				model.addAttribute("number", 0);
 				model.addAttribute("totalPages", 1);
 				model.addAttribute("totalElements", 1);
 				model.addAttribute("size", 1);
-			}else {
+			} else {
 				model.addAttribute("number", pages.getNumber());
 				model.addAttribute("totalPages", pages.getTotalPages());
 				model.addAttribute("totalElements", pages.getTotalElements());
 				model.addAttribute("size", pages.getSize());
-				model.addAttribute("billetes",pages.getContent());
+				model.addAttribute("billetes", pages.getContent());
 			}
 		}
 		return "billetes/billetesDatosList";

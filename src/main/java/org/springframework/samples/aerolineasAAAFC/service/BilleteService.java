@@ -175,7 +175,6 @@ public class BilleteService {
 		return billeteRepository.findById(id).get();
 	}
 
-
 	public Page<Billete> findBilletePorApellido(String apellidos, Pageable page) {
 		return billeteRepository.findByApellido(apellidos.toUpperCase(), page);
 	}

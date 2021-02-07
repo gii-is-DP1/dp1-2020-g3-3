@@ -24,6 +24,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.AsientoService;
@@ -82,6 +83,8 @@ public class BilleteControllerTests {
 	private Vuelo vuelol;
 	
 	private Asiento asiento;
+	
+	private Cliente cliente;
 
 	@BeforeEach
 	void setup() {
@@ -118,7 +121,9 @@ public class BilleteControllerTests {
 		asientosSinOcupar.add(asiento);
 		given(this.asientoService.findAsientosSinOcupar(vuelol)).willReturn(asientosSinOcupar);
 		
-		
+		cliente = new Cliente();
+		cliente.setNif("spring");
+		billetazo.setCliente(cliente);
 	}
 
 	@WithMockUser(value = "spring")
@@ -149,7 +154,6 @@ public class BilleteControllerTests {
 		mockMvc.perform (post("/billetes/{billeteId}/edit", TEST_BILLETE_ID)
 				.with(csrf())
 				.param("coste", "5")
-//				.param("asiento", "F99")
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
 		.andExpect(view().name("redirect:/billetes/"+ billetazo.getId()));
@@ -161,14 +165,10 @@ public class BilleteControllerTests {
 		mockMvc.perform (post("/billetes/{billeteId}/edit", TEST_BILLETE_ID)
 				.with(csrf())
 				.param("coste", "DireStraits")
-//				.param("asiento", "F99")
 				.param("fechaReserva", "1999/11/03")
 				.param("clase", "ECONOMICA"))
-		//.param("cliente",)
-		//.param("vuelos",))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("billete"))
-		//.andExpect(model().attributeHasFieldErrors("owner", "address"))
 		.andExpect(model().attributeHasFieldErrors("billete", "coste"))
 		.andExpect(view().name("billetes/createOrUpdateBilleteForm"));
 	}
@@ -181,14 +181,32 @@ public class BilleteControllerTests {
 				.param("coste", "-5")
 				.param("asiento", "F99")
 				.param("fechaReserva", "1999/11/03"))
-		//.param("cliente",)
-		//.param("vuelos",))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("billete"))
-		//.andExpect(model().attributeHasFieldErrors("owner", "address"))
 		.andExpect(model().attributeHasFieldErrors("billete", "coste"))
 		.andExpect(view().name("billetes/createOrUpdateBilleteForm"));
 	}
-
-
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowPreviewBillete() throws Exception {
+		mockMvc.perform (get("/billetes/{billeteId}", TEST_BILLETE_ID))
+		.andExpect(model().attributeExists("cliente"))
+		.andExpect(model().attributeExists("billete"))
+		.andExpect(view().name("billetes/billetePreview"));
+	}
+	
+	@WithMockUser(value = "usuarioNoValido")
+	@Test
+	void testShowPreviewBilleteErrorUser() throws Exception {
+		mockMvc.perform (get("/billetes/{billeteId}", TEST_BILLETE_ID))
+		.andExpect(view().name("user/createClienteForm.jsp"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowPreviewBilleteErrorBilleteInexistente() throws Exception {
+		mockMvc.perform (get("/billetes/{billeteId}", 128391))
+		.andExpect(view().name("/oups"));
+	}
 }
