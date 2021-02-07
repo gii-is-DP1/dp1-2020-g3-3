@@ -132,6 +132,7 @@ public class PersonalControlController {
 	@PostMapping(value = "/controladores/{pControlId}/edit")
 	public String processUpdatePersonalControlForm(@Valid PersonalControl pControl, BindingResult result, @PathVariable("pControlId") int pControlId,
 			ModelMap model, Map<String, Object> roles, @RequestParam(value = "version", required=false) Integer version) {
+		
 		PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
 		if(pControlToUpdate.getVersion()!=version) {
 			model.put("message","Modificación de personal de control ya existente. ¡Prueba de nuevo!");

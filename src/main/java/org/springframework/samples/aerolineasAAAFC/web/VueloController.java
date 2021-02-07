@@ -152,8 +152,13 @@ public class VueloController {
 		model.put("personalControl", this.pControlService.findPersonalControlNoPageable());
 		model.put("azafatos", this.azafatoService.findAzafatosNoPageable());
 		
-		
 		Vuelo vueloToUpdate = this.vueloService.findVueloById(vueloId);
+		if (vueloToUpdate.getVersion() != version) {
+			model.put("message", "Modificación de vuelo ya existente. ¡Prueba de nuevo!");
+			return initUpdateVueloForm(vueloId, model);
+		}
+		
+		
 		BeanUtils.copyProperties(vuelo, vueloToUpdate, "id","aeropuertoOrigen","aeropuertoDestino","coste"); 
 		if(result.hasErrors()) {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
