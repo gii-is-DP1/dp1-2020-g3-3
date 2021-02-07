@@ -27,7 +27,9 @@ public class PersonalControlService {
 
 
 	private PersonalControlRepository pControlRepository;
-	private VueloRepository vueloRepository;
+	
+	@Autowired
+	private VueloService vueloService;
 	
 	@Autowired
 	private UserService userService;
@@ -39,7 +41,6 @@ public class PersonalControlService {
 	@Autowired
 	public PersonalControlService(PersonalControlRepository pControlRepository, VueloRepository vueloRepository) {
 		this.pControlRepository = pControlRepository;
-		this.vueloRepository = vueloRepository;
 	}
 	
 	public PersonalControl findPersonalControlByNif(String nif) {
@@ -84,7 +85,7 @@ public class PersonalControlService {
 	
 	public Collection<Vuelo> horario(int pControlId, int mes, int año) {
 		
-		return this.vueloRepository.findVuelosControl(pControlId, mes, año);
+		return this.vueloService.findVuelosControl(pControlId, mes, año);
 	}
 
 
