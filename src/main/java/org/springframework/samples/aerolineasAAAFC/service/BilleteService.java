@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.aerolineasAAAFC.deprecated.EquipajeService;
+import org.springframework.samples.aerolineasAAAFC.deprecated.MenuService;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
@@ -23,8 +25,7 @@ import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Plato;
 import org.springframework.samples.aerolineasAAAFC.model.menu.PlatoBase;
 import org.springframework.samples.aerolineasAAAFC.repository.BilleteRepository;
-import org.springframework.samples.aerolineasAAAFC.repository.EquipajeRepository;
-import org.springframework.samples.aerolineasAAAFC.repository.MenuRepository;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,18 +36,19 @@ public class BilleteService {
 
 	private BilleteRepository billeteRepository;
 
-	private MenuRepository menuRepository;
+	private MenuService menuService;
 
-	private EquipajeRepository equipajeRepository;
+	private EquipajeService equipajeService;
 
-	@Autowired
 	private PlatoBaseService platoBaseService;
 
 	@Autowired
-	public BilleteService(BilleteRepository billeteRepository, MenuRepository menuRepository, EquipajeRepository equipajeRepository) {
+	public BilleteService(BilleteRepository billeteRepository, MenuService menuService, 
+			EquipajeService equipajeService, PlatoBaseService platoBaseService) {
 		this.billeteRepository = billeteRepository;
-		this.menuRepository = menuRepository;
-		this.equipajeRepository = equipajeRepository;
+		this.menuService= menuService;
+		this.equipajeService = equipajeService;
+		this.platoBaseService = platoBaseService;
 	}
 
 	@Transactional
@@ -115,7 +117,7 @@ public class BilleteService {
 				else {
 
 					if (menu.getBillete().getMenus().equals(null)) {
-						menuRepository.save(menu);
+						menuService.saveMenu(menu);
 						Set<Menu> newSetMenus = new HashSet<Menu>();
 						newSetMenus.add(menu);
 						menu.getBillete().setMenus(newSetMenus);
@@ -123,7 +125,7 @@ public class BilleteService {
 						if (menu.getBillete().getMenus().size() >= 3) {
 							throw new TooManyItemsBilleteException("Ya ha introducido el máximo de menús permitido.");
 						} else {
-							menuRepository.save(menu);
+							menuService.saveMenu(menu);
 							menu.getBillete().getMenus().add(menu);
 							menu.getBillete().setCoste(menu.getBillete().getCoste() + aux1.getPrecio()
 									+ aux2.getPrecio() + aux3.getPrecio());
@@ -138,10 +140,10 @@ public class BilleteService {
 	}
 
 	@Transactional
-	public void saveEquipaje(Equipaje equipaje) throws DataAccessException, TooManyItemsBilleteException {
+	public void saveEquipaje(Equipaje equipaje) throws DataAccessException, TooManyItemsBilleteException, EquipajePriceException {
 
 		if (equipaje.getBillete().getEquipajes().equals(null)) {
-			equipajeRepository.save(equipaje);
+			equipajeService.saveEquipaje(equipaje);
 			Set<Equipaje> newSetEquipajes = new HashSet<Equipaje>();
 			newSetEquipajes.add(equipaje);
 			equipaje.getBillete().setEquipajes(newSetEquipajes);
@@ -153,7 +155,7 @@ public class BilleteService {
 			}
 
 			else {
-				equipajeRepository.save(equipaje);
+				equipajeService.saveEquipaje(equipaje);
 				equipaje.getBillete().getEquipajes().add(equipaje);
 				equipaje.getBillete()
 						.setCoste(equipaje.getBillete().getCoste() + equipaje.getEquipajeBase().getPrecio());
@@ -180,7 +182,7 @@ public class BilleteService {
 
 
 	public Page<Billete> findBilletePorApellido(String apellidos, Pageable page) {
-		return billeteRepository.findByApellido(apellidos, page);
+		return billeteRepository.findByApellido(apellidos.toUpperCase(), page);
 	}
 
 	@Transactional(readOnly = true)
@@ -211,12 +213,12 @@ public class BilleteService {
 
 	@Transactional(readOnly = true)
 	public Collection<Menu> findMenus() {
-		return StreamSupport.stream(menuRepository.findAll().spliterator(), false).collect(Collectors.toList());
+		return StreamSupport.stream(menuService.findMenus().spliterator(), false).collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<Equipaje> findEquipajes() {
-		return StreamSupport.stream(equipajeRepository.findAll().spliterator(), false).collect(Collectors.toList());
+		return StreamSupport.stream(equipajeService.findEquipajes().spliterator(), false).collect(Collectors.toList());
 	}
 
 	public Page<Billete> findBilletes(Pageable page) {

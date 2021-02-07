@@ -10,6 +10,7 @@ import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.EquipajeBase;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.EquipajeBaseService;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -56,7 +57,7 @@ public class EquipajeController {
 			try {
 				equipaje.setBillete(this.billeteService.findBilleteById(billeteId));
 				this.billeteService.saveEquipaje(equipaje);
-			} catch (TooManyItemsBilleteException e) {
+			} catch (TooManyItemsBilleteException  | EquipajePriceException e) {
 				result.reject(e.getMessage());
 				e.printStackTrace();
 				return VIEWS_EQUIPAJE_CREATE_FORM;
