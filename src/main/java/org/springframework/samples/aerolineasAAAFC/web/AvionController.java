@@ -77,7 +77,6 @@ public class AvionController {
 			return VIEWS_AVION_CREATE_OR_UPDATE_FORM;
 		} else {
 			this.avionService.saveAvion(avion);
-
 			return "redirect:/aviones/" + avion.getId();
 		}
 	}

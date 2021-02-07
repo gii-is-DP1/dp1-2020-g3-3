@@ -103,13 +103,14 @@ public class ClienteController {
 //			model.put("message","Concurrent modification of client! Try again!");
 //			return initUpdateClienteForm(clienteId,model);
 //			}
+		
+		Cliente clienteToUpdate = this.clienteService.findClienteById(clienteId);
+		BeanUtils.copyProperties(cliente, clienteToUpdate, "id","nif","user.username","user.password","fechaNacimiento"); 
 		if(result.hasErrors()) {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			cliente.setId(clienteId);
-			Cliente clienteToUpdate = this.clienteService.findClienteById(clienteId);
-			BeanUtils.copyProperties(cliente, clienteToUpdate, "id","nif","username");    
 			try {
 				this.clienteService.saveCliente(cliente);
 			} catch (DataIntegrityViolationException e) {

@@ -46,7 +46,7 @@ public class Avion extends BaseEntity{
 	
 	@Column(name = "fecha_fabricacion")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaFabricacion;
 	
 	@Column(name = "disponibilidad")
@@ -55,7 +55,7 @@ public class Avion extends BaseEntity{
 	
 	@Column(name = "fecha_revision")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate fechaRevision;
 	
 	@Column(name = "plazas_economica")

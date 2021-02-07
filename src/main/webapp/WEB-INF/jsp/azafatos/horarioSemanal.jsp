@@ -96,7 +96,9 @@
 		</tbody>
 	</table>
 	
-	<script>
-	
-	</script>
+	<spring:url value="/azafatos/{azafatoId}/horario" var="editUrl">
+    <spring:param name="azafatoId" value="${azafatoId}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default" style="float:right;">Volver</a>
+
 </aerolineasAAAFC:layout>

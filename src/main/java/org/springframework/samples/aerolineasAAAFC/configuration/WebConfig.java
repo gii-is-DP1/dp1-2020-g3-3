@@ -1,13 +1,19 @@
 package org.springframework.samples.aerolineasAAAFC.configuration;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-
+@EnableSpringDataWebSupport
 public class WebConfig implements WebMvcConfigurer {
 	
 	@Autowired
@@ -18,7 +24,6 @@ public class WebConfig implements WebMvcConfigurer {
     	
         registry.addConverter(idToEntityConverter);
     }
-   
     
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {

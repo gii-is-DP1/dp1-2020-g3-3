@@ -149,7 +149,7 @@ public class PersonalControlController {
 			pControl.setId(pControlId);
 			PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
 //			pControl.incrementVersion();
-			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","username");
+			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","user.username");
 			try {
 				this.pControlService.savePersonalControl(pControl);
 			} catch (DataIntegrityViolationException e) {

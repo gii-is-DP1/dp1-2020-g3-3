@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <aerolineasAAAFC:layout pageName="azafatos">
 
@@ -35,12 +36,13 @@
 			</td>
         </tr>
     </table>
-
-  	<spring:url value="/azafatos/{azafatoId}/edit" var="editUrl">
-        <spring:param name="azafatoId" value="${azafato.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default" style="float:left;">Editar Azafato</a>
-
+	<sec:authorize 	access="hasAnyAuthority('admin','personalOficina')">
+	  	<spring:url value="/azafatos/{azafatoId}/edit" var="editUrl">
+	        <spring:param name="azafatoId" value="${azafato.id}"/>
+	    </spring:url>
+	    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default" style="float:left;">Editar Azafato</a>
+	</sec:authorize>
+	
 	<spring:url value="/azafatos/{azafatoId}/horario" var="editUrl">
         <spring:param name="azafatoId" value="${azafato.id}"/>
     </spring:url>
@@ -50,32 +52,30 @@
     <br/>
   
   	<h2>Vuelos en los que formó parte de la tripulación</h2>
-
-    <table class="table table-striped">
-        <thead>
-	        <tr>
-	            <th>Ruta</th>
-	            <th>Fecha de salida</th>
-	            <th>Fecha de llegada</th>
-	        </tr>
-	        </thead>
-	        <tbody>
-		        <c:forEach var="vuelo" items="${azafato.vuelos}">
-		            <tr>
-		            	<td>
-		                    <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoOrigen.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}"/></b> -
-		                    <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoDestino.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoDestino.codigoIATA}"/></b>
-		                </td>
-		                <td>
-		                    <aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd HH:mm"/>
-		                </td>
-		                <td>  
-		                    <aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd HH:mm"/>
-		                </td>
-		            </tr>
-		        </c:forEach>
-        </tbody>
-    </table>
-
-
+	<div>
+	    <table class="table table-striped">
+	        <thead>
+		        <tr>
+		            <th>Ruta</th>
+		            <th>Fecha de salida</th>
+		            <th>Fecha de llegada</th>
+		        </tr>
+		        </thead>
+		        <tbody>
+			        <c:forEach var="vuelo" items="${azafato.vuelos}">
+			            <tr>
+			            	<td>
+			                    <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoOrigen.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoOrigen.codigoIATA}"/></b> -
+			                    <b onclick="javascript:location.href='/aeropuertos/${vuelo.aeropuertoDestino.id}'" onmouseover="" style="cursor: pointer;"><c:out value="${vuelo.aeropuertoDestino.codigoIATA}"/></b>
+			                </td>
+			                <td>
+			                    <aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="yyyy-MM-dd HH:mm"/>
+			                </td>
+			                <td>  
+			                    <aerolineasAAAFC:localDateTime date="${vuelo.fechaLlegada}" pattern="yyyy-MM-dd HH:mm"/>
+			                </td>
+			            </tr>
+			        </c:forEach>
+	        </tbody>
+	    </table>
 </aerolineasAAAFC:layout>

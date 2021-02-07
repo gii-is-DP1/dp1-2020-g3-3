@@ -66,7 +66,7 @@ public class AvionServiceTests {
 		
 		//FECHA DE REVISIÓN
 		assertThat(a.getFechaRevision())
-		.isEqualTo(LocalDate.of(2017, Month.SEPTEMBER, 24));
+		.isEqualTo(LocalDate.of(2020, Month.SEPTEMBER, 24));
 		
 		//PLAZAS ECONÓMICAS
 		assertThat(a.getPlazasEconomica())

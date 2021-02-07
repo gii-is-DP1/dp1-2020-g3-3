@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!-- .jsp para mostrar el listado de todos los controladores -->
 
@@ -55,14 +56,17 @@
 		                <td>
 		                    <c:out value="${personalControl.salario}"/>
 		                </td>
-		                <td>						
+		                <td>	
+		                				
 		                	<spring:url value="/controladores/{personalControlId}/edit" var="personalControlUrl">
 		        				<spring:param name="personalControlId" value="${personalControl.id}"/>
 		    				</spring:url>
 		    				<a href="${fn:escapeXml(personalControlUrl)}" class="btn btn-default">Editar</a>
 		    				
-		    				<spring:url value="/controladores/${personalControl.id}/delete" var="personalControlUrl"></spring:url>
-		    				<a href="${fn:escapeXml(personalControlUrl)}" class="btn btn-default">Eliminar</a>
+		    				<sec:authorize 	access="hasAuthority('admin')">	
+			    				<spring:url value="/controladores/${personalControl.id}/delete" var="personalControlUrl"></spring:url>
+			    				<a href="${fn:escapeXml(personalControlUrl)}" class="btn btn-default">Eliminar</a>
+		    				</sec:authorize>
 		                </td>   
 		            </tr>
 		        </c:forEach>

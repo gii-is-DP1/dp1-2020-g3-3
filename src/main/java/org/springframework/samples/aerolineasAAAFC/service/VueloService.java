@@ -82,15 +82,12 @@ public class VueloService {
 					vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), vuelo.getFechaSalida(), vuelo.getFechaLlegada(), vuelo.getAeropuertoOrigen().getCodigoIATA(), vuelo.getAeropuertoDestino().getCodigoIATA(),
 					vuelo.getAvion().getTipoAvion(), vuelo.getAzafatos().size(), vuelo.getPersonalOficina().size(), vuelo.getPersonalControl().size(), vuelo.getCoste());
 
-			vueloRepository.save(vuelo);
-			log.info("vuelo {} guardado", vuelo.getId());
+			this.vueloRepository.save(vuelo);
 
 			//Si es un vuelo nuevo, genera los asientos
 			//Si viene de un update, los dejara tal cual
 			if(vuelo.getAsientos().isEmpty()) { 
-				log.info("Inserción de asientos");
 				asientoService.saveManyAsientos(vuelo);
-				log.info("asientos insertados");
 			}
 		}
 	}

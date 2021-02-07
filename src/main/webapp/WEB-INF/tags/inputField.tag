@@ -10,7 +10,9 @@
 <%@ attribute name="placeholder" required="false" rtexprvalue="true"
               description="input placeholder"%>
 <%@ attribute name="pattern" required="false" rtexprvalue="true"
-              description="input placeholder"%>
+              description="input pattern"%>
+<%@ attribute name="id" required="false" rtexprvalue="true"
+              description="input id"%>
               
 <spring:bind path="${name}">
     <c:set var="cssGroup" value="form-group ${status.error ? 'has-error' : '' }"/>
@@ -19,7 +21,7 @@
         <label class="col-sm-2 control-label">${label}</label>
 
         <div class="col-sm-10">
-            <form:input class="form-control" path="${name}" type="${type}" placeholder="${placeholder}" pattern="${pattern}"/>
+            <form:input class="form-control" id="${id}" path="${name}" type="${type}" placeholder="${placeholder}" pattern="${pattern}"/>
             <c:if test="${valid}">
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
             </c:if>
