@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Assertions;
@@ -23,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.EquipajeBase;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
@@ -40,8 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class BilleteServiceTests {
-
-
+	
 	@Autowired
 	protected BilleteService billeteService;
 	
@@ -70,7 +72,7 @@ public class BilleteServiceTests {
 		List<Asiento> asientos = this.asientoService.findAsientosSinOcupar(vuelo);
 		Asiento asiento = asientos.size()==0?null : asientos.get(0);
 		
-		long nBilletes = this.billeteService.findNumBilletesByVuelo(idVuelo);
+		int nBilletes = this.billeteService.findBilletesByVuelo(idVuelo).size();
 
 		Billete billete = new Billete();
 
@@ -82,7 +84,7 @@ public class BilleteServiceTests {
 		
 		this.billeteService.saveBillete(billete);
 		
-		long nBilletes2 = this.billeteService.findNumBilletesByVuelo(idVuelo);
+		int nBilletes2 = this.billeteService.findBilletesByVuelo(idVuelo).size();
 		
 		assertThat(nBilletes2).isEqualTo(nBilletes + 1);
 		//Probamos que el precio se actualiza
@@ -224,9 +226,7 @@ public class BilleteServiceTests {
 			
 		try {
 			this.billeteService.saveEquipaje(e);
-		} catch (DataAccessException e1) {
-			e1.printStackTrace();
-		} catch (TooManyItemsBilleteException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		equipajes = this.billeteService.findEquipajes();
@@ -259,9 +259,7 @@ public class BilleteServiceTests {
 		try {
 			this.billeteService.saveEquipaje(e1);
 			this.billeteService.saveEquipaje(e2);
-		} catch (DataAccessException ex) {
-			ex.printStackTrace();
-		} catch (TooManyItemsBilleteException ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		Assertions.assertThrows(TooManyItemsBilleteException.class, () ->{
@@ -280,7 +278,7 @@ public class BilleteServiceTests {
 		e.setEquipajeBase(eb);
 			
 		Assertions.assertThrows(ConstraintViolationException.class, () ->{
-			this.billeteService.saveEquipaje(e);});
+		this.billeteService.saveEquipaje(e);});
 	}
 	
 	@Test
@@ -289,7 +287,7 @@ public class BilleteServiceTests {
 		Page<Billete> billetes = this.billeteService.findBilletePorApellido("Soto Ramirez",page);
 		
 		assertThat(billetes.getContent()).isNotEmpty();
-	}
+	}	
 	
 	@Test
 	void shouldFindBilletesCliente() {
@@ -304,5 +302,63 @@ public class BilleteServiceTests {
 		
 		assertThat(billetes).isNotEmpty();
 	}
-
+	
+	@Test
+	void shouldFindMenusByVuelo() {
+		Set<Menu> menus = this.billeteService.findMenusByVuelo(2);
+		
+		Pageable page = PageRequest.of(0, 20);
+		Page<Billete> billetes = this.billeteService.findBilletes(page);
+		Set<Menu> s = billetes.getContent().stream().filter(x -> x.getAsiento().getVuelo().getId().equals(2))
+		.flatMap(x -> x.getMenus().stream()).collect(Collectors.toSet());
+		
+		assertThat(menus).isNotEmpty();
+		assertThat(menus.size()).isEqualTo(s.size());
+	}
+	
+	@Test
+	void shouldFindBilletesByVuelo() {
+		List<Billete> billetes1 = this.billeteService.findBilletesByVuelo(2);
+		
+		Pageable page = PageRequest.of(0, 20);
+		Page<Billete> billetes2 = this.billeteService.findBilletes(page);
+		List<Billete> l = billetes2.getContent();
+		
+		assertThat(billetes1).isNotEmpty();
+		assertThat(billetes1.size()).isEqualTo(l.size());
+	}
+	
+	@Test
+	void shouldFindClientesBilletesByVuelo() {
+		Set<Cliente> clientes = this.billeteService.findClientesBilletesByVuelo(2);
+		
+		Pageable page = PageRequest.of(0, 20);
+		Page<Billete> billetes2 = this.billeteService.findBilletes(page);
+		Set<Cliente> s = billetes2.getContent().stream().filter(x -> x.getAsiento().getVuelo().getId().equals(2))
+				.map(x -> x.getCliente()).collect(Collectors.toSet());;
+		
+		for(Cliente c : clientes) {
+			System.out.println(c.getApellidos());
+		}
+		
+		assertThat(clientes).isNotEmpty();
+		assertThat(clientes.size()).isEqualTo(s.size());
+	}
+	
+	@Test
+	void shouldFindNumBilletesByVuelo() {
+		Set<Cliente> clientes = this.billeteService.findClientesBilletesByVuelo(2);
+		
+		Pageable page = PageRequest.of(0, 20);
+		Page<Billete> billetes2 = this.billeteService.findBilletes(page);
+		Set<Cliente> s = billetes2.getContent().stream().filter(x -> x.getAsiento().getVuelo().getId().equals(2))
+				.map(x -> x.getCliente()).collect(Collectors.toSet());;
+		
+		for(Cliente c : clientes) {
+			System.out.println(c.getApellidos());
+		}
+		
+		assertThat(clientes).isNotEmpty();
+		assertThat(clientes.size()).isEqualTo(s.size());
+	}
 }

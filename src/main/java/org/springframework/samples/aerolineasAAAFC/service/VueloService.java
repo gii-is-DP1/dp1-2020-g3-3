@@ -55,7 +55,8 @@ public class VueloService {
 		LocalDateTime llegada = vuelo.getFechaLlegada();
 
 		long horasVuelo = salida.until(llegada, ChronoUnit.HOURS);
-		log.info("horas de Vuelo {}: {}", vuelo.getId(), horasVuelo);
+		log.info("horas de Vuelo {}: {}", vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+
+		vuelo.getAeropuertoDestino().getCodigoIATA(), horasVuelo);
 		int horasAcum = vuelo.getAvion().getHorasAcumuladas();
 		log.info("horas acumuladas del avión {}: {}", vuelo.getAvion().getId(), horasAcum);
 		long horasTotal = horasVuelo + horasAcum;
@@ -75,10 +76,10 @@ public class VueloService {
 			throw new DisponibilidadAvionException("El avión no está disponible porque debe pasar una revisión");
 		}else{
 			vuelo.getAvion().setHorasAcumuladas(horasAcum);
-			log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion(), horasAcum);
+			log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion().getTipoAvion(), horasAcum);
 			log.info("Vuelo {}, con fecha de Salida {} y Llegada {}, con origen {} y destino {}.\n"
 					+ "Asociado al avión {}, a los azafatos {}, oficinistas {} y controladores {}, con un coste base de {}.", 
-					vuelo.getId(), vuelo.getFechaSalida(), vuelo.getFechaLlegada(), vuelo.getAeropuertoOrigen().getCodigoIATA(), vuelo.getAeropuertoDestino().getCodigoIATA(),
+					vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), vuelo.getFechaSalida(), vuelo.getFechaLlegada(), vuelo.getAeropuertoOrigen().getCodigoIATA(), vuelo.getAeropuertoDestino().getCodigoIATA(),
 					vuelo.getAvion().getTipoAvion(), vuelo.getAzafatos().size(), vuelo.getPersonalOficina().size(), vuelo.getPersonalControl().size(), vuelo.getCoste());
 
 			vueloRepository.save(vuelo);

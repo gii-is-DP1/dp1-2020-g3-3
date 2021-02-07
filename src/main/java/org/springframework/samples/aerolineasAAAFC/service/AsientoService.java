@@ -11,7 +11,6 @@ import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.AsientoRepository;
-import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,7 @@ public class AsientoService {
 	private VueloService vueloService;
 
 	@Autowired
-	public AsientoService(AsientoRepository asientoRepository, VueloRepository vueloRepository) {
+	public AsientoService(AsientoRepository asientoRepository) {
 		this.asientoRepository = asientoRepository;
 	}
 
@@ -45,7 +44,7 @@ public class AsientoService {
 
 	@Transactional(readOnly = true)
 	public List<Asiento> findAllAsientosByVuelo(Vuelo vuelo) {
-		return this.vueloService.findVueloById((vuelo.getId())).getAsientos();
+		return this.vueloService.findVueloById(vuelo.getId()).getAsientos();
 	}
 
 	@Transactional(readOnly = true)
@@ -164,3 +163,4 @@ public class AsientoService {
 
 	}
 }
+

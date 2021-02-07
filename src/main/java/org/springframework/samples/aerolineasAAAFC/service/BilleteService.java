@@ -5,15 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.aerolineasAAAFC.deprecated.EquipajeService;
+import org.springframework.samples.aerolineasAAAFC.deprecated.MenuService;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
@@ -23,8 +21,7 @@ import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Plato;
 import org.springframework.samples.aerolineasAAAFC.model.menu.PlatoBase;
 import org.springframework.samples.aerolineasAAAFC.repository.BilleteRepository;
-import org.springframework.samples.aerolineasAAAFC.repository.EquipajeRepository;
-import org.springframework.samples.aerolineasAAAFC.repository.MenuRepository;
+import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,18 +32,19 @@ public class BilleteService {
 
 	private BilleteRepository billeteRepository;
 
-	private MenuRepository menuRepository;
+	private MenuService menuService;
 
-	private EquipajeRepository equipajeRepository;
+	private EquipajeService equipajeService;
 
-	@Autowired
 	private PlatoBaseService platoBaseService;
 
 	@Autowired
-	public BilleteService(BilleteRepository billeteRepository, MenuRepository menuRepository, EquipajeRepository equipajeRepository) {
+	public BilleteService(BilleteRepository billeteRepository, MenuService menuService, 
+			EquipajeService equipajeService, PlatoBaseService platoBaseService) {
 		this.billeteRepository = billeteRepository;
-		this.menuRepository = menuRepository;
-		this.equipajeRepository = equipajeRepository;
+		this.menuService= menuService;
+		this.equipajeService = equipajeService;
+		this.platoBaseService = platoBaseService;
 	}
 
 	@Transactional
@@ -72,6 +70,7 @@ public class BilleteService {
 		billete.setFechaReserva(today);
 
 		billeteRepository.save(billete);
+		//Ocupamos el asiento
 		a.setLibre(false);
 	}
 
@@ -98,7 +97,6 @@ public class BilleteService {
 				throw new PlatosNoValidosException(2);
 
 			else { // Esta comprobacion es solo necesaria si usamos el service directamente, se
-					// *****
 					// puede eliminar
 				if (aux1.getTipoPlato().getName().equals("primerPlato"))
 					cont1 = 1;
@@ -115,7 +113,7 @@ public class BilleteService {
 				else {
 
 					if (menu.getBillete().getMenus().equals(null)) {
-						menuRepository.save(menu);
+						menuService.saveMenu(menu);
 						Set<Menu> newSetMenus = new HashSet<Menu>();
 						newSetMenus.add(menu);
 						menu.getBillete().setMenus(newSetMenus);
@@ -123,7 +121,7 @@ public class BilleteService {
 						if (menu.getBillete().getMenus().size() >= 3) {
 							throw new TooManyItemsBilleteException("Ya ha introducido el máximo de menús permitido.");
 						} else {
-							menuRepository.save(menu);
+							menuService.saveMenu(menu);
 							menu.getBillete().getMenus().add(menu);
 							menu.getBillete().setCoste(menu.getBillete().getCoste() + aux1.getPrecio()
 									+ aux2.getPrecio() + aux3.getPrecio());
@@ -138,10 +136,10 @@ public class BilleteService {
 	}
 
 	@Transactional
-	public void saveEquipaje(Equipaje equipaje) throws DataAccessException, TooManyItemsBilleteException {
+	public void saveEquipaje(Equipaje equipaje) throws DataAccessException, TooManyItemsBilleteException, EquipajePriceException {
 
 		if (equipaje.getBillete().getEquipajes().equals(null)) {
-			equipajeRepository.save(equipaje);
+			equipajeService.saveEquipaje(equipaje);
 			Set<Equipaje> newSetEquipajes = new HashSet<Equipaje>();
 			newSetEquipajes.add(equipaje);
 			equipaje.getBillete().setEquipajes(newSetEquipajes);
@@ -153,7 +151,7 @@ public class BilleteService {
 			}
 
 			else {
-				equipajeRepository.save(equipaje);
+				equipajeService.saveEquipaje(equipaje);
 				equipaje.getBillete().getEquipajes().add(equipaje);
 				equipaje.getBillete()
 						.setCoste(equipaje.getBillete().getCoste() + equipaje.getEquipajeBase().getPrecio());
@@ -174,49 +172,36 @@ public class BilleteService {
 
 	@Transactional(readOnly = true)
 	public Billete findBilleteById(int id) throws DataAccessException {
-		Optional<Billete> b = billeteRepository.findById(id);
-		return b.get();
+		return billeteRepository.findById(id).get();
 	}
 
-
 	public Page<Billete> findBilletePorApellido(String apellidos, Pageable page) {
-		return billeteRepository.findByApellido(apellidos, page);
+		return billeteRepository.findByApellido(apellidos.toUpperCase(), page);
 	}
 
 	@Transactional(readOnly = true)
 	public Set<Cliente> findClientesBilletesByVuelo(int id) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).map(x -> x.getCliente())
-				.collect(Collectors.toSet());
-	}
-
-	@Transactional(readOnly = true)
-	public Long findNumBilletesByVuelo(int id) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).collect(Collectors.counting());
+		return billeteRepository.findClientesBilletesByVuelo(id);
 	}
 
 	@Transactional(readOnly = true)
 	public List<Billete> findBilletesByVuelo(int id) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).collect(Collectors.toList());
+		return billeteRepository.findBilletesByVuelo(id);
 	}
 
 	@Transactional(readOnly = true)
 	public Set<Menu> findMenusByVuelo(int id) {
-		return StreamSupport.stream(billeteRepository.findAll().spliterator(), false)
-				.filter(x -> x.getAsiento().getVuelo().getId().equals(id)).flatMap(x -> x.getMenus().stream())
-				.collect(Collectors.toSet());
+		return billeteRepository.findMenusByVuelo(id);
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<Menu> findMenus() {
-		return StreamSupport.stream(menuRepository.findAll().spliterator(), false).collect(Collectors.toList());
+		return menuService.findMenus();
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<Equipaje> findEquipajes() {
-		return StreamSupport.stream(equipajeRepository.findAll().spliterator(), false).collect(Collectors.toList());
+		return equipajeService.findEquipajes();
 	}
 
 	public Page<Billete> findBilletes(Pageable page) {
