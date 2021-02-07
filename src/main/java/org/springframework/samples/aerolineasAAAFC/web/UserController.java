@@ -27,6 +27,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -108,6 +110,20 @@ public class UserController {
 			return "redirect:/personalOficina/" + resultado.getId();
 		}
 		
-		return "welcome";
+		return "redirect:/";
 	}
+	
+
+    @GetMapping(value = "/login")
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
+
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error", "Invalid username and password!");
+        }
+        
+        model.setViewName("/login");
+        return model;
+
+    }
 }

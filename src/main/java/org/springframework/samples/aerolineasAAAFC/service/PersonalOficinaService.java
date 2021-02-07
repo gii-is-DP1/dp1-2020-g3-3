@@ -43,10 +43,13 @@ public class PersonalOficinaService {
 
 	@Transactional
 	public void savePersonalOficina(PersonalOficina pOficina) throws DataIntegrityViolationException{
-
-		pOficinaRepository.save(pOficina);
-		userService.saveUser(pOficina.getUser());
-		authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
+		if(pOficina.getId() == null) {
+			pOficinaRepository.save(pOficina);
+			userService.saveUser(pOficina.getUser());
+			authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
+		}else {
+			pOficinaRepository.save(pOficina);
+		}
 	}
 	
 	@Transactional(readOnly = true)

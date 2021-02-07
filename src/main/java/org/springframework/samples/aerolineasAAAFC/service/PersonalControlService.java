@@ -54,9 +54,13 @@ public class PersonalControlService {
 	
 	@Transactional
 	public void savePersonalControl(PersonalControl pControl) throws DataIntegrityViolationException{
-		pControlRepository.save(pControl);
-		userService.saveUser(pControl.getUser());
-		authoritiesService.saveAuthorities(pControl.getUser().getUsername(), "personalControl");
+		if(pControl.getId() == null) {
+			pControlRepository.save(pControl);
+			userService.saveUser(pControl.getUser());
+			authoritiesService.saveAuthorities(pControl.getUser().getUsername(), "personalControl");
+		}else {
+			pControlRepository.save(pControl);
+		}
 	
 	}
 	

@@ -75,8 +75,8 @@ public class VueloService {
 			vuelo.getAvion().setDisponibilidad(false);
 			throw new DisponibilidadAvionException("El avión no está disponible porque debe pasar una revisión");
 		}else{
-			vuelo.getAvion().setHorasAcumuladas(horasAcum);
-			log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion().getTipoAvion(), horasAcum);
+			vuelo.getAvion().setHorasAcumuladas((int) horasTotal);
+			log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion().getTipoAvion(), horasTotal);
 			log.info("Vuelo {}, con fecha de Salida {} y Llegada {}, con origen {} y destino {}.\n"
 					+ "Asociado al avión {}, a los azafatos {}, oficinistas {} y controladores {}, con un coste base de {}.", 
 					vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), vuelo.getFechaSalida(), vuelo.getFechaLlegada(), vuelo.getAeropuertoOrigen().getCodigoIATA(), vuelo.getAeropuertoDestino().getCodigoIATA(),
