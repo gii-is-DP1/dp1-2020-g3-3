@@ -3,42 +3,27 @@ package org.springframework.samples.aerolineasAAAFC.service.businessrules;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
-import com.sun.jmx.mbeanserver.Introspector;
+import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 
 public class AeropuertoValidator implements 
-ConstraintValidator<AeropuertoConstraint, Object>{
-
-	private String firstAttribute ;
-	private String secondAttribute ;
+ConstraintValidator<AeropuertoConstraint, Vuelo>{
 
 	@Override
-	public void initialize(final AeropuertoConstraint constraintAnnotation) {
-		firstAttribute  = constraintAnnotation.value()[0];
-		secondAttribute  = constraintAnnotation.value()[1];
+	public void initialize(AeropuertoConstraint constraintAnnotation) {
 
 	}
 
-	@SuppressWarnings("restriction")
 	@Override
-	public boolean isValid(final Object object,final ConstraintValidatorContext context) {
-		try {
-			Aeropuerto origen = (Aeropuerto) Introspector.elementFromComplex(object, firstAttribute);
+	public boolean isValid(Vuelo vuelo, ConstraintValidatorContext context) {
+			String origen = vuelo.getAeropuertoOrigen().getCodigoIATA();
 			
-			Aeropuerto destino =(Aeropuerto) Introspector.elementFromComplex(object,
-					secondAttribute);
+			String destino = vuelo.getAeropuertoDestino().getCodigoIATA();
 			
 			boolean res= true;
 			
 			if(origen.equals(destino)) {res=false;}
 
 			return res;
-			
-		} catch (final Exception e) {
-			throw new IllegalArgumentException(e);
-		}
-
-
 	}
 
 }

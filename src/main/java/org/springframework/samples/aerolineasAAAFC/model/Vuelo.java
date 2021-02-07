@@ -31,7 +31,7 @@ import lombok.Setter;
 * Entidad simple que representa un vuelo
 */
 
-@AeropuertoConstraint(value={"aeropuertoOrigen","aeropuertoDestino"})
+@AeropuertoConstraint
 @VueloPilotoConstraint
 @VueloTCPConstraint
 @Getter
