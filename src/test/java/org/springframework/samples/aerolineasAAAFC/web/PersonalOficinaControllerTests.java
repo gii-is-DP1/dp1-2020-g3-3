@@ -77,6 +77,7 @@ public class PersonalOficinaControllerTests {
 		carlos.setNif("70292959Z");
 		carlos.setIban("ES 1804875866011781392136");
 		carlos.setSalario(1000.);
+		carlos.setVersion(1);
 		
 		carlosUser = new User();
 		carlosUser.setUsername("70292959Z");

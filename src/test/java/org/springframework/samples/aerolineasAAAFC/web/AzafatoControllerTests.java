@@ -79,7 +79,7 @@ public class AzafatoControllerTests {
 		Martina.setApellidos("Perez");
 		Martina.setNif("11571749N");
 		Martina.setIban("ES 01225905418408934560815");
-		
+		Martina.setVersion(1);
 
 		IdiomaType lng = new IdiomaType();
 		lng.setIdioma("FR");

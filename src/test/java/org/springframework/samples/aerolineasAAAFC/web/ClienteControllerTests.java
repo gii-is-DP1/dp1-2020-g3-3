@@ -81,6 +81,7 @@ public class ClienteControllerTests {
 		dolores.setIban("ES 4422000418403334567812");
 		dolores.setFechaNacimiento(LocalDate.of(1989, 12, 03));
 		dolores.setEmail("doloresram@gmail.com");
+		dolores.setVersion(1);
 
 		doloresUser = new User();
 		doloresUser.setUsername("29565800A");

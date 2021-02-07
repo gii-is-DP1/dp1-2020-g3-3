@@ -13,6 +13,7 @@
 	
 	<form:form modelAttribute="vuelo" class="form-horizontal" id="add-vuelo-form">
 		<input type="hidden" name= "id" value= "${vuelo.id}"/>
+		 <input type="hidden" name= "version" value= "${vuelo.version}"/>
 		
 		<div class="form-group has-feedback">
 			<aerolineasAAAFC:inputField label="Fecha de Salida" name="fechaSalida" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])T(00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9])$" />
@@ -57,9 +58,9 @@
 				<label class="col-sm-2 control-label">Personal Oficina</label>
 				<div class="col-sm-10">
 					<select name="personalOficina" id="personalOficina" multiple>
-						<c:forEach items="${pOficina}" var="oficina">
-							<option value="${oficina.id}"><c:out
-									value="${oficina.nombre} ${oficina.apellidos}" /></option>
+						<c:forEach items="${personalOficina}" var="personalOficina">
+							<option value="${personalOficina.id}"><c:out
+									value="${personalOficina.nombre} ${personalOficina.apellidos}" /></option>
 						</c:forEach>
 					</select>
 				</div>
@@ -68,9 +69,9 @@
 				<label class="col-sm-2 control-label">Personal Control</label>
 				<div class="col-sm-10">
 					<select name="personalControl" id="personalControl" multiple>
-						<c:forEach items="${pControl}" var="pControl">
-							<option value="${pControl.id}"><c:out
-									value="${pControl.nombre} ${pControl.apellidos} - ${pControl.rol}" /></option>
+						<c:forEach items="${personalControl}" var="personalControl">
+							<option value="${personalControl.id}"><c:out
+									value="${personalControl.nombre} ${personalControl.apellidos} - ${personalControl.rol}" /></option>
 						</c:forEach>
 					</select>
 				</div>

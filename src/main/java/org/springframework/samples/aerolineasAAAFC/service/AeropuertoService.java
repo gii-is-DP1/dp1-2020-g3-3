@@ -30,6 +30,9 @@ public class AeropuertoService {
 		if(!(aux.matches("^(\\+|\\d)[0-9]{7,16}$"))) {
 			throw new TelefonoErroneoException("");
 		} else {
+			if(aeropuerto.getId()==null)
+				aeropuerto.setVersion(1);
+			
 			aeropuertoRepository.save(aeropuerto);
 		}
 	}

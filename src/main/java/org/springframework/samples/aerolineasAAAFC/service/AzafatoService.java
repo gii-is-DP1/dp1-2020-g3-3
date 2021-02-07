@@ -68,6 +68,7 @@ public class AzafatoService {
 			throw new IdiomasNoSuficientesException("Parece que no ha introducido 2 o más idiomas para este empleado");
 		}else {
 			if(azafato.getId() == null) {
+				azafato.setVersion(1);
 				azafatoRepository.save(azafato);		
 				userService.saveUser(azafato.getUser());
 				authoritiesService.saveAuthorities(azafato.getUser().getUsername(), "azafato");

@@ -11,7 +11,7 @@
         <c:if test="${aeropuerto['new']}">Nuevo </c:if> Aeropuerto
     </h2>
     <form:form modelAttribute="aeropuerto" class="form-horizontal" id="add-aeropuerto-form">
-          <input type="hidden" name= "id" value= "${aeropuerto.id}"/>
+        <input type="hidden" name= "id" value= "${aeropuerto.id}"/>
     	<input type="hidden" name= "version" value= "${aeropuerto.version}"/>
         <div class="form-group has-feedback">
             <aerolineasAAAFC:inputField label="Nombre del aeropuerto" name="nombre"/>

@@ -129,12 +129,12 @@ public class PersonalControlController {
 	@PostMapping(value = "/controladores/{pControlId}/edit")
 	public String processUpdatePersonalControlForm(@Valid PersonalControl pControl, BindingResult result, @PathVariable("pControlId") int pControlId,
 			ModelMap model, Map<String, Object> roles, @RequestParam(value = "version", required=false) Integer version) {
-		
-//		PersonalControl PersonalControlToUpdate = this.pControlService.findPersonalControlById(pControlId);		    
-//		if(PersonalControlToUpdate.getVersion()!=version) {
-//			model.put("message","Concurrent modification of Controller Try again!");
-//			return initUpdatePersonalControlForm(pControlId,model,roles);
-//			}
+		PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
+		if(pControlToUpdate.getVersion()!=version) {
+			model.put("message","Modificación de personal de control ya existente. ¡Prueba de nuevo!");
+			return initUpdatePersonalControlForm(pControlId,model, roles);
+			}
+ 
 		
 		List<Rol> rol = new ArrayList<Rol>();
 	    rol.add(Rol.PILOTO);
@@ -146,9 +146,8 @@ public class PersonalControlController {
 			return VIEWS_PERSONALCONTROL_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+			pControl.incrementVersion();
 			pControl.setId(pControlId);
-			PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
-//			pControl.incrementVersion();
 			BeanUtils.copyProperties(pControl, pControlToUpdate, "id","nif","user.username");
 			try {
 				this.pControlService.savePersonalControl(pControl);

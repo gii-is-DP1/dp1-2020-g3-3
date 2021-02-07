@@ -98,11 +98,11 @@ public class ClienteController {
 	public String processUpdateClienteForm(@Valid Cliente cliente, BindingResult result, 
 			@PathVariable("clienteId") int clienteId, ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
 		
-//		Cliente clienteToUpdate2 = this.clienteService.findClienteById(clienteId);
-//		if(clienteToUpdate2.getVersion()!=version) {
-//			model.put("message","Concurrent modification of client! Try again!");
-//			return initUpdateClienteForm(clienteId,model);
-//			}
+		Cliente clienteToUpdate2 = this.clienteService.findClienteById(clienteId);
+		if(clienteToUpdate2.getVersion()!=version) {
+			model.put("message","Modificación de cliente ya existente. ¡Prueba de nuevo!");
+			return initUpdateClienteForm(clienteId,model);
+			}
 		
 		Cliente clienteToUpdate = this.clienteService.findClienteById(clienteId);
 		BeanUtils.copyProperties(cliente, clienteToUpdate, "id","nif","user.username","user.password","fechaNacimiento"); 
@@ -110,6 +110,7 @@ public class ClienteController {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+			cliente.incrementVersion();
 			cliente.setId(clienteId);
 			try {
 				this.clienteService.saveCliente(cliente);

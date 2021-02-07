@@ -97,6 +97,7 @@ public class VueloControllerTests {
 		vuelol.setFechaSalida(LocalDateTime.of(2020, 12, 10, 12, 23));
 		vuelol.setFechaLlegada(LocalDateTime.of(2020, 12, 10, 19, 23));
 		vuelol.setCoste(30000.0);
+		vuelol.setVersion(1);
 		
 		//PERSONAL OFICINA
 		Set<PersonalOficina> pOficina = new HashSet<PersonalOficina>();

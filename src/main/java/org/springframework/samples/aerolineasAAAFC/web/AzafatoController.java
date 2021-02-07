@@ -103,15 +103,15 @@ public class AzafatoController {
 	}
 	
 	@PostMapping(value = "/azafatos/{azafatoId}/edit")
-	public String processUpdateAzafatoForm(@Valid Azafato azafato, BindingResult result, @PathVariable("azafatoId") int azafatoId,
-											ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+	public String processUpdateAzafatoForm(@Valid Azafato azafato, BindingResult result,
+			@PathVariable("azafatoId") int azafatoId,ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
 		
-//		Azafato azToUpdate = this.azafatoService.findAzafatoById(azafatoId);
+		Azafato azToUpdate = this.azafatoService.findAzafatoById(azafatoId);
 
-//		if(azToUpdate.getVersion() != version) {
-//			model.put("message","Concurrent modification of azafato! Try again!");
-//			return initUpdateAzafatoForm(azafatoId,model);
-//			} 
+		if(azToUpdate.getVersion() != version) {
+			model.put("message","Modificación de azafato ya existente. ¡Prueba de nuevo!");
+			return initUpdateAzafatoForm(azafatoId,model);
+			} 
 		
 		Azafato azafatoToUpdate = this.azafatoService.findAzafatoById(azafatoId);
 		BeanUtils.copyProperties(azafato, azafatoToUpdate, "id","nif","user.username");  
@@ -120,7 +120,8 @@ public class AzafatoController {
 		}
 		else {
 			azafato.setId(azafatoId);
-			
+			azafato.incrementVersion();
+
 			try {
 				this.azafatoService.saveAzafato(azafato);
 			} catch (DataIntegrityViolationException e) {
