@@ -136,7 +136,9 @@ public class AzafatoControllerTests {
 				.param("salario", "1400")
 				.param("user.username", "11571749N")
 				.param("user.password", "AAAAAAA"))
-		.andExpect(status().is3xxRedirection());
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/azafatos/null"));
+		
 	}
 
 
