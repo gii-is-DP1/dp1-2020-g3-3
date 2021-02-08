@@ -18,10 +18,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalControlRepository;
-import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class PersonalControlService {
 
@@ -57,11 +59,13 @@ public class PersonalControlService {
 		if(pControl.getId() == null) {
 			pControl.setVersion(1);
 			pControlRepository.save(pControl);
+			log.info("Controlador {} creado.", pControl.getId());
 			userService.saveUser(pControl.getUser());
 			authoritiesService.saveAuthorities(pControl.getUser().getUsername(), "personalControl");
 		}else {
 			pControl.setVersion(pControl.getVersion()+1);
 			pControlRepository.save(pControl);
+			log.info("Controlador {} actualizado.", pControl.getId());
 		}
 	
 	}
@@ -85,12 +89,12 @@ public class PersonalControlService {
 
 	@Transactional
 	public void deletePersonalControlById(int id) throws DataAccessException {
+		log.info("Controlador {} eliminado.", id);
 		pControlRepository.deleteById(id);
 	}
 	
 	
 	public Collection<Vuelo> horario(int pControlId, int mes, int año) {
-		
 		return this.vueloService.findVuelosControl(pControlId, mes, año);
 	}
 

@@ -1,8 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -15,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
@@ -23,7 +20,6 @@ import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -104,6 +100,7 @@ public class ClienteController {
 			Cliente clienteC = this.clienteService.findClienteByNif(usuario);
 			int clienteCID = clienteC.getId();
 			if(clienteId != clienteCID) {
+				log.warn("El cliente {} está intentado editar el cliente {}", clienteCID, clienteId);
 				return "redirect:/clientes/" + clienteCID;
 			}
 		}
@@ -204,6 +201,7 @@ public class ClienteController {
 			Cliente clienteC = this.clienteService.findClienteByNif(usuario);
 			int clienteCID = clienteC.getId();
 			if(clienteId != clienteCID) {
+				log.warn("El cliente {} está intentado entrar en el perfil del cliente {}", clienteCID, clienteId);
 				ModelAndView mav = new ModelAndView("clientes/clienteDetails");
 				mav.addObject(this.clienteService.findClienteById(clienteCID));
 				return mav;

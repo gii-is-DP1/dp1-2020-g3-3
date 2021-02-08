@@ -10,6 +10,9 @@ import org.springframework.samples.aerolineasAAAFC.repository.AuthoritiesReposit
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AuthoritiesService {
 
@@ -29,6 +32,7 @@ public class AuthoritiesService {
 		authoritiesRepository.save(authorities);
 	}
 
+	@SuppressWarnings("serial")
 	@Transactional
 	public void saveAuthorities(String username, String role) throws DataAccessException {
 		Authorities authority = new Authorities();
@@ -38,7 +42,9 @@ public class AuthoritiesService {
 			authority.setAuthority(role);
 			//user.get().getAuth().add(authority);
 			authoritiesRepository.save(authority);
+			log.info("autoridad {} establecida para el usuario {}.", role, username);
 		}else
+			log.error("El usuario {} no se encuentra en la base de datos.", username);
 			throw new DataAccessException("User '" + username + "' not found!") {};
 	}
 

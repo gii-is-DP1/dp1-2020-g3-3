@@ -12,10 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.repository.ClienteRepository;
@@ -49,18 +46,14 @@ public class ClienteService{
 		if(cliente.getId() == null) {
 			cliente.setVersion(1);
 			clienteRepository.save(cliente);
-			String cl = cliente.getApellidos() + ", " + cliente.getNombre();
-			log.info("Cliente guardado: {}", cl);
+			log.info("Cliente {} guardado.", cliente.getId());
 			
 			userService.saveUser(cliente.getUser());
 			authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "cliente");
-			log.info("Autoridad establecida: {}", cliente.getUser().getAuth());
-			
 		}else {
 			cliente.setVersion(cliente.getVersion()+1);
 			clienteRepository.save(cliente);
-			String cl = cliente.getApellidos() + ", " + cliente.getNombre();
-			log.info("Cliente actualizado: {}", cl);
+			log.info("Cliente {} actualizado.", cliente.getId());
 		}
 		
 		
@@ -97,6 +90,7 @@ public class ClienteService{
 
 	@Transactional
 	public void deleteClienteById(int id) throws DataAccessException{
+		log.info("Cliente {} eliminado.", id);
 		clienteRepository.deleteById(id);
 	}
 	

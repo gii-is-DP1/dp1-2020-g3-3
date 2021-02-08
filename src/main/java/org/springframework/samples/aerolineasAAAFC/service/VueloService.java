@@ -55,8 +55,7 @@ public class VueloService {
 		LocalDateTime llegada = vuelo.getFechaLlegada();
 
 		long horasVuelo = salida.until(llegada, ChronoUnit.HOURS);
-		log.info("horas de Vuelo {}: {}", vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+
-		vuelo.getAeropuertoDestino().getCodigoIATA(), horasVuelo);
+		log.info("horas de Vuelo {}: {}", vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), horasVuelo);
 		int horasAcum = vuelo.getAvion().getHorasAcumuladas();
 		log.info("horas acumuladas del avión {}: {}", vuelo.getAvion().getId(), horasAcum);
 		long horasTotal = horasVuelo + horasAcum;
@@ -65,33 +64,30 @@ public class VueloService {
 		log.info("año en el que se tiene que revisar el avión {}: {}", vuelo.getAvion().getId(), añosSinRevisar);
 
 		if(salida.isAfter(llegada)) {
-			log.error("Error, horas imposibles");
+			log.error("El vuelo {} tiene un horario de vuelo imposible. Fecha Salida {}, Fecha Llegada {}.", 
+					vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), vuelo.getFechaSalida(), vuelo.getFechaLlegada());
 			throw new HorasImposiblesException("Horas de vuelo imposibles");
 		}else if(horasVuelo > 14){
-			log.error("Error, más de 14 horas de vuelo");
+			log.error("El vuelo {} tiene más de 14 de vuelo.", vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA());
 			throw new HorasMaximasVueloException("Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
 		}else if(horasTotal > 600 || horasTotal > 30000 || añosSinRevisar.isEqual(LocalDate.now()) || añosSinRevisar.isBefore(LocalDate.now())) {
-			log.error("Error, más 600 horas acumuladas o muchas cosas");
+			log.error("El avión {} no puede volar porque necesita una revisión.", vuelo.getAvion().getId());
 			vuelo.getAvion().setDisponibilidad(false);
 			throw new DisponibilidadAvionException("El avión no está disponible porque debe pasar una revisión");
 		}else{
 			vuelo.getAvion().setHorasAcumuladas((int) horasTotal);
-			log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion().getTipoAvion(), horasTotal);
-			log.info("Vuelo {}, con fecha de Salida {} y Llegada {}.\n"
-					+ "Asociado al avión {}, a los azafatos {}, oficinistas {} y controladores {}, con un coste base de {}.", 
-					vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), vuelo.getFechaSalida(), vuelo.getFechaLlegada(),
-					vuelo.getAvion().getTipoAvion(), vuelo.getAzafatos().size(), vuelo.getPersonalOficina().size(), vuelo.getPersonalControl().size(), vuelo.getCoste());
+			log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion().getId(), horasTotal);
 			
 			if(vuelo.getId()==null) {
 				vuelo.setVersion(1);
 				this.vueloRepository.save(vuelo);
+				log.info("vuelo {} creado.", vuelo.getId());
 			}else {
 				vuelo.setVersion(vuelo.getVersion()+1);
 				this.vueloRepository.save(vuelo);
+				log.info("vuelo {} actualizado.", vuelo.getId());
 			}
 			
-			
-			log.info("vuelo guardado {}.", vuelo.getId());
 			//Si es un vuelo nuevo, genera los asientos
 			//Si viene de un update, los dejara tal cual
 			if(vuelo.getAsientos() == null || vuelo.getAsientos().isEmpty()) { 
@@ -100,7 +96,6 @@ public class VueloService {
 			
 		}
 	}
-
 
 	@Transactional
 	public void eliminarVuelo(int id) throws DataAccessException {

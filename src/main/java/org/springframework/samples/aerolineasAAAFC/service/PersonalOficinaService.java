@@ -9,12 +9,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.repository.PersonalOficinaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class PersonalOficinaService {
 
@@ -46,11 +48,13 @@ public class PersonalOficinaService {
 		if(pOficina.getId() == null) {
 			pOficina.setVersion(1);
 			pOficinaRepository.save(pOficina);
+			log.info("Personal de Oficina {} creado.", pOficina.getId());
 			userService.saveUser(pOficina.getUser());
 			authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
 		}else {
 			pOficina.setVersion(pOficina.getVersion()+1);
 			pOficinaRepository.save(pOficina);
+			log.info("Personal de Oficina {} actualizado.", pOficina.getId());
 		}
 	}
 	
@@ -72,6 +76,7 @@ public class PersonalOficinaService {
 
 	@Transactional
 	public void deletePersonalOficinaById(int id) throws DataAccessException {
+		log.info("Personal de Oficina {} eliminado.", id);
 		pOficinaRepository.deleteById(id);
 	}
 }
