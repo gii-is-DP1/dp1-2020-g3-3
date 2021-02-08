@@ -3,8 +3,6 @@ package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.samples.aerolineasAAAFC.service.businessrules.AvionConstraint;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,6 +24,7 @@ import lombok.Setter;
 */
 
 
+@AvionConstraint
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
