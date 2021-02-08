@@ -3,6 +3,7 @@ package org.springframework.samples.aerolineasAAAFC.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
@@ -43,9 +45,15 @@ public class Azafato extends Person{
 
 	// Relaciones de tabla:
 
-	@ManyToMany
+	@ManyToMany(mappedBy="azafatos")
 	@OrderBy("fechaSalida DESC")
 	@EqualsAndHashCode.Exclude 
 	private Set<Vuelo> vuelos;
-
+	
+	@PreRemove
+	private void removeAzafatosFromEntities() {
+	    for (Vuelo v: vuelos) {
+	        v.getAzafatos().remove(this);
+	    }	   
+	}
 }

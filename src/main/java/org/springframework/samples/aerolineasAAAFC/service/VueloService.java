@@ -114,10 +114,10 @@ public class VueloService {
 		}
 	}
 
-	@Transactional
-	public void eliminarVuelo(int id) throws DataAccessException {
-		vueloRepository.deleteById(id);
-	}
+//	@Transactional
+//	public void eliminarVuelo(int id) throws DataAccessException { TODO Los vuelos no se eliminan
+//		vueloRepository.deleteById(id);
+//	}
 
 	@Transactional(readOnly = true)
 	public Vuelo findVueloById(int id) throws DataAccessException{

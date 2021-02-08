@@ -390,19 +390,19 @@ public class VueloServiceTests {
 		
 		assertThrows(DisponibilidadAvionException.class, () -> { this.vueloService.saveVuelo(vuelo); });
 	}
-	
-	
-	//TEST DE BORRADO
-	@Test
-	@Transactional
-	public void shouldDeleteVueloById() {
-		Collection<Vuelo> vuelos = this.vueloService.findVuelos();
-		int found = vuelos.size();
-
-		this.vueloService.eliminarVuelo(1);
-		
-		int found2 = this.vueloService.findVuelos().size();
-		assertThat(found2).isEqualTo(found - 1);
-	}
+//	
+//	
+//	//TEST DE BORRADO
+//	@Test
+//	@Transactional
+//	public void shouldDeleteVueloById() {
+//		Collection<Vuelo> vuelos = this.vueloService.findVuelos();
+//		int found = vuelos.size();
+//
+//		this.vueloService.eliminarVuelo(1);
+//		
+//		int found2 = this.vueloService.findVuelos().size();
+//		assertThat(found2).isEqualTo(found - 1);
+//	}
 
 }

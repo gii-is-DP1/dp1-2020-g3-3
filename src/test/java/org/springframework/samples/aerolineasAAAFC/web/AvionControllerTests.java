@@ -9,7 +9,7 @@ import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
 import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
-import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;

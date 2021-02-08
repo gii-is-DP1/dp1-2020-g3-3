@@ -79,8 +79,7 @@ public class AzafatoServiceTests {
 	
 	@Test
 	void getVuelosByDateSuccessful() {
-		Azafato personal = this.azafatoService.findAzafatoById(1);
-		Collection<Vuelo> vuelos = this.azafatoService.horario(personal.getId(), 01, 2021);
+		Collection<Vuelo> vuelos = this.azafatoService.horario(1, 1, 2021);
 		
 		int found = vuelos.size();
 		
@@ -96,14 +95,14 @@ public class AzafatoServiceTests {
 	
 	@ParameterizedTest
 	@CsvSource ({
-		"2019-06-05, 1",
-		"2021-01-11, 2",
+		"2021-01-12, 2",
+		"2021-05-24, 1",
 		"2021-01-01, 0",
 		"2021-05-24, 1"
 	})
 	void getVuelosSemana(String fecha, int total) {
 		LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ISO_DATE);
-		Collection<Vuelo> vuelos = this.azafatoService.horarioSemanalConFecha(1, date.getDayOfWeek(), date.getDayOfYear(),date.getYear());
+		Collection<Vuelo> vuelos = this.azafatoService.horarioSemanalConFecha(1, date.getDayOfWeek(), date.getDayOfYear(), date.getYear());
 		
 		int found = vuelos.size();
 		
