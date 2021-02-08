@@ -20,14 +20,45 @@
 
 			<c:choose>
 				<c:when test="${nAsientos >0}">
-					<c:out value="Precio de plaza económica: ${vuelo.coste} EUR"></c:out>
-					<br>
-					<c:out value="Precio de plaza ejecutiva: ${vuelo.coste*1.25} EUR"></c:out>
-					<br>
-					<c:out
-						value="Precio de plaza en primera clase: ${vuelo.coste*1.75} EUR"></c:out>
-					<br>
-					<br>
+					<c:choose>
+						<c:when test="${descuento}">
+							<h3 class="centrado">¡Rápido, este billete está al 25% de
+								descuento!</h3>
+							<p class="centrado">
+								Precio de plaza económica:<span
+									style="text-decoration: line-through;color:red;"> <c:out
+										value="${vuelo.coste} EUR"></c:out></span>
+								<c:out value="${vuelo.coste * 0.75}"></c:out>
+								EUR
+							</p>
+							<p class="centrado">
+								Precio de plaza en primera clase:<span
+									style="text-decoration: line-through;color:red;"> <c:out
+										value="${vuelo.coste * 1.25} EUR"></c:out></span>
+								<c:out value="${vuelo.coste * 0.75 *1.25}"></c:out>
+								EUR
+							</p>
+							<p class="centrado">
+								Precio de plaza económica: <span
+									style="text-decoration: line-through;color:red;"> <c:out
+										value="${vuelo.coste * 1.75} EUR"></c:out></span>
+								<c:out value="${vuelo.coste * 0.75 *1.75}"></c:out>
+								EUR
+							</p>
+						</c:when>
+						<c:otherwise>
+							<c:out value="Precio de plaza económica: ${vuelo.coste} EUR"></c:out>
+							<br>
+							<c:out value="Precio de plaza ejecutiva: ${vuelo.coste*1.25} EUR"></c:out>
+							<br>
+							<c:out
+								value="Precio de plaza en primera clase: ${vuelo.coste*1.75} EUR"></c:out>
+							<br>
+							<br>
+						</c:otherwise>
+					</c:choose>
+
+
 					<select name="asiento">
 						<c:forEach items="${asientos}" var="asiento">
 							<option value="${vuelo.id},${asiento.nombre}">${asiento.nombre}${'  '}${asiento.clase}</option>

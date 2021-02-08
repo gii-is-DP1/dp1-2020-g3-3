@@ -1,5 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -82,6 +83,12 @@ public class BilleteController {
 				DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 				String aux = today.format(d);
 				model.put("fechaReserva", aux);
+				
+				//Comprobamos si el vuelo tiene descuento
+				long dif = (Duration.between(hoy, vuelo.getFechaSalida()).toDays());
+				boolean descuento = dif <= 7? true : false;
+				model.put("descuento", descuento); //Que haya descuento implica un cambio en todos los precios del jsp
+				
 			}
 
 			else {

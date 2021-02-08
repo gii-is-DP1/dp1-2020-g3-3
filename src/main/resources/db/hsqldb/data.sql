@@ -242,6 +242,8 @@ INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id,version)
 VALUES (300,2,'2020-04-06',2,1);
 INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id,version)
 VALUES (300,4,'2020-04-06',2,1);
+INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id,version)
+VALUES (300,9,'2020-04-06',2,1);
 
 
 --PlatoType

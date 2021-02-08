@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 import java.text.ParseException;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
@@ -25,6 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.EquipajeBase;
@@ -93,6 +96,49 @@ public class BilleteServiceTests {
 	
 	@Test
 	@Transactional
+	public void shouldInsertBilleteIntoDatabaseAndGenerateBilleteDescuento() throws ParseException, HorasMaximasVueloException, DisponibilidadAvionException {
+
+		int idVuelo = 2;
+		Vuelo vuelo = this.vueloService.findVueloById(idVuelo);
+
+		vuelo.setFechaSalida(LocalDateTime.now().plusDays(5)); //Hacemos que el vuelo tenga descuento
+		vuelo.setFechaLlegada(LocalDateTime.now().plusDays(5).plusHours(2));
+		
+		List<Asiento> asientos = this.asientoService.findAsientosSinOcupar(vuelo);
+		Asiento asiento = asientos.size()==0?null : asientos.get(0);
+		
+		int nBilletes = this.billeteService.findBilletesByVuelo(idVuelo).size();
+
+		Billete billete = new Billete();
+
+		billete.setAsiento(asiento);
+		
+		double oldCoste = vuelo.getCoste();
+		
+		if(asiento.getClase() == Clase.EJECUTIVA) {
+			oldCoste = oldCoste * 1.25;
+		}
+		
+		else if(asiento.getClase() == Clase.PRIMERACLASE) {
+			oldCoste = oldCoste * 1.75;
+		}
+
+		billete.setCoste(12);
+		LocalDate reserva = LocalDate.parse("2010-05-16", DateTimeFormatter.ISO_DATE);
+		billete.setFechaReserva(reserva);
+		
+		this.billeteService.saveBillete(billete);
+		
+		int nBilletes2 = this.billeteService.findBilletesByVuelo(idVuelo).size();
+		
+		assertThat(nBilletes2).isEqualTo(nBilletes + 1);
+		//Probamos que el precio se actualiza
+		assertThat(oldCoste * 0.75).isEqualTo(billete.getCoste()); 
+		//Comprobamos que realmente hemos descontado un 25% sobre el precio del billete
+	}
+	
+	@Test
+	@Transactional
 	public void shouldInsertMenuIntoDatabaseAndGenerateId() {
 		Collection<Menu> menus = this.billeteService.findMenus();
 		int found = menus.size();
@@ -125,9 +171,55 @@ public class BilleteServiceTests {
 			e.getMessage();
 		}
 		menus = this.billeteService.findMenus();
+		
 		assertThat(menus.size()).isEqualTo(found + 1);
-		//Probamos que el precio se actualiza
-		assertThat(costeAntiguo + p1.getPlatoBase().getPrecio() + p2.getPlatoBase().getPrecio() + p3.getPlatoBase().getPrecio()).isEqualTo(b.getCoste());
+		//Probamos que el precio se actualiza y como el billete es de primera clase, el menú es gratis
+		assertThat(costeAntiguo).isEqualTo(b.getCoste());
+	
+	}
+	
+	@Test
+	@Transactional
+	public void shouldInsertMenuIntoDatabaseAndGenerateIdForECONOMICA() {
+		Collection<Menu> menus = this.billeteService.findMenus();
+		int found = menus.size();
+		
+		Billete b = this.billeteService.findBilleteById(4);
+		double costeAntiguo = b.getCoste();
+		
+		Plato p1 = new Plato();
+		p1.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Sopa de miso"));
+		
+		Plato p2 = new Plato();
+		p2.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Arroz con ternera al curry"));
+		
+		Plato p3 = new Plato();
+		p3.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Manzana"));
+		
+		Menu m = new Menu();
+		m.setPlato1(p1);
+		m.setPlato2(p2);
+		m.setPlato3(p3);
+		m.setBillete(b);
+		
+		log.info("Introducimos platosBase: {} de id {}", p1.getPlatoBase().getTipoPlato().getName(), p1.getPlatoBase().getId());
+		log.info("Introducimos platosBase: {} de id {}", p2.getPlatoBase().getTipoPlato().getName(), p2.getPlatoBase().getId());
+		log.info("Introducimos platosBase: {} de id {}", p3.getPlatoBase().getTipoPlato().getName(), p3.getPlatoBase().getId());
+		
+		try {
+			this.billeteService.saveMenu(m);
+		} catch (DataAccessException | TooManyItemsBilleteException | PlatosNoValidosException e) {
+			e.getMessage();
+		}
+		menus = this.billeteService.findMenus();
+		
+		System.out.println(Duration.between(m.getBillete().getAsiento().getVuelo().getFechaSalida(), 
+				m.getBillete().getAsiento().getVuelo().getFechaLlegada()).toHours());
+		
+		assertThat(menus.size()).isEqualTo(found + 1);
+		//Probamos que el precio se actualiza y como el billete es de primera clase, el menú es gratis
+		assertThat(costeAntiguo + p3.getPlatoBase().getPrecio() + p2.getPlatoBase().getPrecio() +
+				p1.getPlatoBase().getPrecio()).isEqualTo(b.getCoste());
 	
 	}
 	
