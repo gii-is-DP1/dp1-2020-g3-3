@@ -3,6 +3,7 @@ package org.springframework.samples.aerolineasAAAFC.model;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -144,6 +145,22 @@ class ValidatorTests {
 		assertThat(violation.getMessage()).isEqualTo("El cliente debe de ser mayor de edad");
 	}
 	
+	// Equipaje
+	@Test
+	@Transactional
+	public void shouldNotValidateEquipajeMedidasNoValido() {
+		Equipaje equipaje = new Equipaje();
+		equipaje.setPeso(34);
+
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Equipaje>> constraintViolations = validator.validate(equipaje);
+		
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Equipaje> violation = constraintViolations.iterator().next();
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("peso");
+		assertThat(violation.getMessage()).isEqualTo("El peso debe de estar entre los 3kg y 32kg");
+	}
+	
 	// IdiomaType
 	@Test
 	@Transactional
@@ -241,23 +258,385 @@ class ValidatorTests {
 		assertThat(violation.getMessage()).isEqualTo("El salario debe ser mayor o igual a 1000.0 euros.");
 	}
 	
-	
-	// Equipaje
+	// Vuelo
 	@Test
 	@Transactional
-	public void shouldNotValidateEquipajeMedidasNoValido() {
-
-		Equipaje equipaje = new Equipaje();
-		equipaje.setPeso(34);
-
+	public void shouldNotValidateVueloConAeropuertosInvalidos() {
+		//setup
+		//personal de control
+		PersonalControl control1 = new PersonalControl();
+		control1.setNombre("Prueba");
+		control1.setApellidos("Prueba Prueba");
+		control1.setNif("44609112Z");
+		control1.setIban("ES 5731907139014156532185");
+		control1.setSalario(1950.);
+		control1.setRol(Rol.PILOTO);
+		
+		User user1 = new User();
+		user1.setUsername("44609112Z");
+		user1.setPassword("*pepe_csfay");
+		control1.setUser(user1);  
+		
+		PersonalControl control2 = new PersonalControl();
+		control2.setNombre("Prueba");
+		control2.setApellidos("Prueba Prueba");
+		control2.setNif("11205603A");
+		control2.setIban("ES 9220809651614798675661");
+		control2.setSalario(1850.);
+		control2.setRol(Rol.PILOTO);
+		
+		User user2 = new User();
+		user2.setUsername("11205603A");
+		user2.setPassword("*pepe_csfay");
+		control2.setUser(user2);
+		
+		Set<PersonalControl> controladores = new HashSet<PersonalControl>();
+		controladores.add(control1);
+		controladores.add(control2);
+		
+		//personal de oficina
+		PersonalOficina oficina = new PersonalOficina();
+		oficina.setNombre("Prueba");
+		oficina.setApellidos("Prueba Prueba");
+		oficina.setNif("04191826F");
+		oficina.setIban("ES 2714658485517569488638");
+		oficina.setSalario(1950.);
+		
+		User user3 = new User();
+		user3.setUsername("04191826F");
+		user3.setPassword("*pepe_csfay");
+		oficina.setUser(user3); 
+		
+		Set<PersonalOficina> oficinistas = new HashSet<PersonalOficina>();
+		oficinistas.add(oficina);
+		
+		//azafatos
+		IdiomaType i1 = new IdiomaType();
+		i1.setIdioma("ES");
+		IdiomaType i2 = new IdiomaType();
+		i2.setIdioma("EN");
+		Set<IdiomaType> idiomas = new HashSet<IdiomaType>();
+		idiomas.add(i1);
+		idiomas.add(i2);
+		
+		Azafato azafato1 = new Azafato();
+		azafato1.setNombre("Prueba");
+		azafato1.setApellidos("Prueba Prueba");
+		azafato1.setNif("03306147N");
+		azafato1.setIban("ES 7200815441293335552948");
+		azafato1.setSalario(1800.);
+		azafato1.setIdiomas(idiomas);
+		
+		User user4 = new User();
+		user4.setUsername("03306147N");
+		user4.setPassword("*pepe_csfay");
+		azafato1.setUser(user4);
+		
+		Azafato azafato2 = new Azafato();
+		azafato2.setNombre("Prueba");
+		azafato2.setApellidos("Prueba Prueba");
+		azafato2.setNif("93445866V");
+		azafato2.setIban("ES 3304877815338453291669");
+		azafato2.setSalario(1800.);
+		azafato2.setIdiomas(idiomas);
+		
+		User user5 = new User();
+		user5.setUsername("93445866V");
+		user5.setPassword("*pepe_csfay");
+		azafato1.setUser(user5); 
+		
+		Set<Azafato> azafatos = new HashSet<Azafato>();
+		azafatos.add(azafato1);
+		azafatos.add(azafato2);
+		
+		//aeropuertos
+		Aeropuerto aero1 = new Aeropuerto();
+		aero1.setNombre("Aeropuerto de Sevilla");
+		aero1.setLocalizacion("Sevilla, España");
+		aero1.setCodigoIATA("SVQ");
+		aero1.setTelefono("+34954449000");
+		
+		//avion
+		Avion avion = new Avion();
+		avion.setCapacidadPasajero(55);
+		avion.setPlazasEconomica(30);
+		avion.setPlazasEjecutiva(15);
+		avion.setPlazasPrimera(10);
+		avion.setHorasAcumuladas(0);
+		
+		LocalDate today = LocalDate.parse("2020-12-12");
+		
+		avion.setFechaFabricacion(today);
+		avion.setFechaRevision(today);
+		avion.setDisponibilidad(true);
+		
+		//vuelo a testear
+		Vuelo vuelo = new Vuelo();
+		vuelo.setFechaSalida(LocalDateTime.of(2021, 1, 5, 14, 0));
+		vuelo.setFechaLlegada(LocalDateTime.of(2021, 1, 5, 17, 0));
+		vuelo.setCoste(100.);
+		vuelo.setPersonalControl(controladores);
+		vuelo.setAzafatos(azafatos);
+		vuelo.setPersonalOficina(oficinistas);
+		vuelo.setAeropuertoOrigen(aero1);
+		vuelo.setAeropuertoDestino(aero1);
+		vuelo.setAvion(avion);
+		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Equipaje>> constraintViolations = validator.validate(equipaje);
+		Set<ConstraintViolation<Vuelo>> constraintViolations = validator.validate(vuelo);
 
 		assertThat(constraintViolations.size()).isEqualTo(1);
-		ConstraintViolation<Equipaje> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("peso");
-		assertThat(violation.getMessage()).isEqualTo("El peso debe de estar entre los 3kg y 32kg");
-
+		ConstraintViolation<Vuelo> violation = constraintViolations.iterator().next();
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("");
+		assertThat(violation.getMessage()).isEqualTo("El aeropuerto origen y destino deben ser diferentes");
 	}
+	
+	@Test
+	@Transactional
+	public void shouldNotValidateVueloConControladoresInsuficientes() {
+		//setup
+		//personal de control
+		PersonalControl control1 = new PersonalControl();
+		control1.setNombre("Prueba");
+		control1.setApellidos("Prueba Prueba");
+		control1.setNif("44609112Z");
+		control1.setIban("ES 5731907139014156532185");
+		control1.setSalario(1950.);
+		control1.setRol(Rol.PILOTO);
+		
+		User user1 = new User();
+		user1.setUsername("44609112Z");
+		user1.setPassword("*pepe_csfay");
+		control1.setUser(user1);  
+		
+		Set<PersonalControl> controladores = new HashSet<PersonalControl>();
+		controladores.add(control1);
+		
+		//personal de oficina
+		PersonalOficina oficina = new PersonalOficina();
+		oficina.setNombre("Prueba");
+		oficina.setApellidos("Prueba Prueba");
+		oficina.setNif("04191826F");
+		oficina.setIban("ES 2714658485517569488638");
+		oficina.setSalario(1950.);
+		
+		User user3 = new User();
+		user3.setUsername("04191826F");
+		user3.setPassword("*pepe_csfay");
+		oficina.setUser(user3); 
+		
+		Set<PersonalOficina> oficinistas = new HashSet<PersonalOficina>();
+		oficinistas.add(oficina);
+		
+		//azafatos
+		IdiomaType i1 = new IdiomaType();
+		i1.setIdioma("ES");
+		IdiomaType i2 = new IdiomaType();
+		i2.setIdioma("EN");
+		Set<IdiomaType> idiomas = new HashSet<IdiomaType>();
+		idiomas.add(i1);
+		idiomas.add(i2);
+		
+		Azafato azafato1 = new Azafato();
+		azafato1.setNombre("Prueba");
+		azafato1.setApellidos("Prueba Prueba");
+		azafato1.setNif("03306147N");
+		azafato1.setIban("ES 7200815441293335552948");
+		azafato1.setSalario(1800.);
+		azafato1.setIdiomas(idiomas);
+		
+		User user4 = new User();
+		user4.setUsername("03306147N");
+		user4.setPassword("*pepe_csfay");
+		azafato1.setUser(user4);
+		
+		Azafato azafato2 = new Azafato();
+		azafato2.setNombre("Prueba");
+		azafato2.setApellidos("Prueba Prueba");
+		azafato2.setNif("93445866V");
+		azafato2.setIban("ES 3304877815338453291669");
+		azafato2.setSalario(1800.);
+		azafato2.setIdiomas(idiomas);
+		
+		User user5 = new User();
+		user5.setUsername("93445866V");
+		user5.setPassword("*pepe_csfay");
+		azafato1.setUser(user5); 
+		
+		Set<Azafato> azafatos = new HashSet<Azafato>();
+		azafatos.add(azafato1);
+		azafatos.add(azafato2);
+		
+		//aeropuertos
+		Aeropuerto aero1 = new Aeropuerto();
+		aero1.setNombre("Aeropuerto de Sevilla");
+		aero1.setLocalizacion("Sevilla, España");
+		aero1.setCodigoIATA("SVQ");
+		aero1.setTelefono("+34954449000");
+		
+		Aeropuerto aero2 = new Aeropuerto();
+		aero2.setNombre("Aeropuerto de Málaga");
+		aero2.setLocalizacion("Málaga, España");
+		aero2.setCodigoIATA("AGP");
+		aero2.setTelefono("+34913211000");
+		
+		//avion
+		Avion avion = new Avion();
+		avion.setCapacidadPasajero(55);
+		avion.setPlazasEconomica(30);
+		avion.setPlazasEjecutiva(15);
+		avion.setPlazasPrimera(10);
+		avion.setHorasAcumuladas(0);
+		
+		LocalDate today = LocalDate.parse("2020-12-12");
+		
+		avion.setFechaFabricacion(today);
+		avion.setFechaRevision(today);
+		avion.setDisponibilidad(true);
+		
+		//vuelo a testear
+		Vuelo vuelo = new Vuelo();
+		vuelo.setFechaSalida(LocalDateTime.of(2021, 1, 5, 14, 0));
+		vuelo.setFechaLlegada(LocalDateTime.of(2021, 1, 5, 17, 0));
+		vuelo.setCoste(100.);
+		vuelo.setPersonalControl(controladores);
+		vuelo.setAzafatos(azafatos);
+		vuelo.setPersonalOficina(oficinistas);
+		vuelo.setAeropuertoOrigen(aero1);
+		vuelo.setAeropuertoDestino(aero2);
+		vuelo.setAvion(avion);
+		
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Vuelo>> constraintViolations = validator.validate(vuelo);
 
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Vuelo> violation = constraintViolations.iterator().next();
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("");
+		assertThat(violation.getMessage()).isEqualTo("Un vuelo de menos de 8 horas debe tener 2 pilotos, en caso de ser más de 8 horas, tendrá un mínimo de 3");
+	}
+	
+	@Test
+	@Transactional
+	public void shouldNotValidateVueloConAzafatosInsuficientes() {
+		//setup
+		//personal de control
+		PersonalControl control1 = new PersonalControl();
+		control1.setNombre("Prueba");
+		control1.setApellidos("Prueba Prueba");
+		control1.setNif("44609112Z");
+		control1.setIban("ES 5731907139014156532185");
+		control1.setSalario(1950.);
+		control1.setRol(Rol.PILOTO);
+		
+		User user1 = new User();
+		user1.setUsername("44609112Z");
+		user1.setPassword("*pepe_csfay");
+		control1.setUser(user1);  
+		
+		PersonalControl control2 = new PersonalControl();
+		control2.setNombre("Prueba");
+		control2.setApellidos("Prueba Prueba");
+		control2.setNif("11205603A");
+		control2.setIban("ES 9220809651614798675661");
+		control2.setSalario(1850.);
+		control2.setRol(Rol.PILOTO);
+		
+		User user2 = new User();
+		user2.setUsername("11205603A");
+		user2.setPassword("*pepe_csfay");
+		control2.setUser(user2);
+		
+		Set<PersonalControl> controladores = new HashSet<PersonalControl>();
+		controladores.add(control1);
+		controladores.add(control2);
+		
+		//personal de oficina
+		PersonalOficina oficina = new PersonalOficina();
+		oficina.setNombre("Prueba");
+		oficina.setApellidos("Prueba Prueba");
+		oficina.setNif("04191826F");
+		oficina.setIban("ES 2714658485517569488638");
+		oficina.setSalario(1950.);
+		
+		User user3 = new User();
+		user3.setUsername("04191826F");
+		user3.setPassword("*pepe_csfay");
+		oficina.setUser(user3); 
+		
+		Set<PersonalOficina> oficinistas = new HashSet<PersonalOficina>();
+		oficinistas.add(oficina);
+		
+		//azafatos
+		IdiomaType i1 = new IdiomaType();
+		i1.setIdioma("ES");
+		IdiomaType i2 = new IdiomaType();
+		i2.setIdioma("EN");
+		Set<IdiomaType> idiomas = new HashSet<IdiomaType>();
+		idiomas.add(i1);
+		idiomas.add(i2);
+		
+		Azafato azafato1 = new Azafato();
+		azafato1.setNombre("Prueba");
+		azafato1.setApellidos("Prueba Prueba");
+		azafato1.setNif("03306147N");
+		azafato1.setIban("ES 7200815441293335552948");
+		azafato1.setSalario(1800.);
+		azafato1.setIdiomas(idiomas);
+		
+		User user4 = new User();
+		user4.setUsername("03306147N");
+		user4.setPassword("*pepe_csfay");
+		azafato1.setUser(user4);
+		
+		Set<Azafato> azafatos = new HashSet<Azafato>();
+		azafatos.add(azafato1);
+		
+		//aeropuertos
+		Aeropuerto aero1 = new Aeropuerto();
+		aero1.setNombre("Aeropuerto de Sevilla");
+		aero1.setLocalizacion("Sevilla, España");
+		aero1.setCodigoIATA("SVQ");
+		aero1.setTelefono("+34954449000");
+		
+		Aeropuerto aero2 = new Aeropuerto();
+		aero2.setNombre("Aeropuerto de Málaga");
+		aero2.setLocalizacion("Málaga, España");
+		aero2.setCodigoIATA("AGP");
+		aero2.setTelefono("+34913211000");
+		
+		//avion
+		Avion avion = new Avion();
+		avion.setCapacidadPasajero(55);
+		avion.setPlazasEconomica(30);
+		avion.setPlazasEjecutiva(15);
+		avion.setPlazasPrimera(10);
+		avion.setHorasAcumuladas(0);
+		
+		LocalDate today = LocalDate.parse("2020-12-12");
+		
+		avion.setFechaFabricacion(today);
+		avion.setFechaRevision(today);
+		avion.setDisponibilidad(true);
+		
+		//vuelo a testear
+		Vuelo vuelo = new Vuelo();
+		vuelo.setFechaSalida(LocalDateTime.of(2021, 1, 5, 14, 0));
+		vuelo.setFechaLlegada(LocalDateTime.of(2021, 1, 5, 17, 0));
+		vuelo.setCoste(100.);
+		vuelo.setPersonalControl(controladores);
+		vuelo.setAzafatos(azafatos);
+		vuelo.setPersonalOficina(oficinistas);
+		vuelo.setAeropuertoOrigen(aero1);
+		vuelo.setAeropuertoDestino(aero2);
+		vuelo.setAvion(avion);
+		
+		Validator validator = createValidator();
+		Set<ConstraintViolation<Vuelo>> constraintViolations = validator.validate(vuelo);
+
+		assertThat(constraintViolations.size()).isEqualTo(1);
+		ConstraintViolation<Vuelo> violation = constraintViolations.iterator().next();
+		assertThat(violation.getPropertyPath().toString()).isEqualTo("");
+		assertThat(violation.getMessage()).isEqualTo("Para todos los aviones con más de 19 asientos es obligatorio que cuenten con un tripulante de cabina de pasajeros (TCP) para poder operar."
+																		+ " A partir de 50 asientos deben de ir 2 TCP a bordo; por cada bloque de 50 asientos adicionales, sumaremos un TCP más.");
+	}
 }
