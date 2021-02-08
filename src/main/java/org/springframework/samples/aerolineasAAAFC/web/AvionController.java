@@ -137,7 +137,7 @@ public class AvionController {
 		return mav;
 	}
 	
-	@GetMapping(value = "/aviones/rutaAviones")
+	@GetMapping(value = "/aviones/estadoAviones")
 	public String showAvionesListPersonal(Map<String, Object> model, @PageableDefault(value=20) Pageable paging) {
 		
 		Page<Avion> pages = avionService.findAviones(paging);
@@ -147,7 +147,7 @@ public class AvionController {
 		model.put("size", pages.getSize());
 		model.put("aviones",pages.getContent());
 
-		return "aviones/rutaAviones";
+		return "aviones/estadoAviones";
 	}
 	
 	
