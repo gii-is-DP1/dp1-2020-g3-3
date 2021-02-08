@@ -7,9 +7,6 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
-<!-- Archivo .jsp que muestra el listado de todos los aviones, a su vez se
-puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
-
 <aerolineasAAAFC:layout pageName="aviones">
     <h2 class="centrado">Estado de aviones</h2>
 

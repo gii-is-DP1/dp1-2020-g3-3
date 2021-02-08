@@ -211,5 +211,13 @@ public class AvionControllerTests {
 		.andExpect(model().attributeExists("aviones"))
 		.andExpect(view().name("aviones/avionesList"));
 	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowEstadoAviones() throws Exception {
+		mockMvc.perform(get("/aviones/estadoAviones"))
+		.andExpect(model().attributeExists("aviones"))
+		.andExpect(view().name("aviones/estadoAviones"));
+	}
 
 }
