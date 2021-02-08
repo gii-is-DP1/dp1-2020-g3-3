@@ -1,6 +1,8 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashSet;
@@ -37,7 +39,7 @@ public class BilleteService {
 
 	@Autowired
 	private EquipajeService equipajeService;
-	
+
 	@Autowired
 	private PlatoBaseService platoBaseService;
 
@@ -49,27 +51,44 @@ public class BilleteService {
 	@Transactional
 	public void saveBillete(Billete billete) throws DataAccessException {
 		Asiento a = billete.getAsiento();
+		
+		LocalDateTime today1 = LocalDateTime.now();
+		LocalDateTime fechaSalida = billete.getAsiento().getVuelo().getFechaSalida();
+		long dif = (Duration.between(today1, fechaSalida).toDays());
 
-		if (a.getClase().equals(Clase.ECONOMICA)) {
-			billete.setCoste(a.getVuelo().getCoste());
+		if (a.getClase().equals(Clase.ECONOMICA)) {  
+			if (dif <= 7) { //Si sale en 7 días o menos, tendrá descuento
+				billete.setCoste(a.getVuelo().getCoste() * 0.75);
+			} else {
+				billete.setCoste(a.getVuelo().getCoste());
+			}
 		}
 
 		else if (a.getClase().equals(Clase.EJECUTIVA)) {
-			billete.setCoste(1.25 * a.getVuelo().getCoste());
+			if (dif <= 7) {
+				billete.setCoste(1.25 * a.getVuelo().getCoste() * 0.75);
+			} else {
+				billete.setCoste(1.25 * a.getVuelo().getCoste());
+			}
 		}
 
 		else if (a.getClase().equals(Clase.PRIMERACLASE)) {
-			billete.setCoste(1.75 * a.getVuelo().getCoste());
+			if (dif <= 7) {
+				billete.setCoste(1.75 * a.getVuelo().getCoste() * 0.75);
+			} else {
+				billete.setCoste(1.75 * a.getVuelo().getCoste());
+			}
 		}
 
-		DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDate today = LocalDate.now();
-		String aux = today.format(d);
-		today = LocalDate.parse(aux, d);
-		billete.setFechaReserva(today);
+		DateTimeFormatter d2 = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+		LocalDate today2 = LocalDate.now();
+		String aux2 = today2.format(d2);
+		today2 = LocalDate.parse(aux2, d2);
+		billete.setFechaReserva(today2);
 
 		billeteRepository.save(billete);
-		//Ocupamos el asiento
+		// Ocupamos el asiento
 		a.setLibre(false);
 	}
 
@@ -122,9 +141,18 @@ public class BilleteService {
 						} else {
 							menuService.saveMenu(menu);
 							menu.getBillete().getMenus().add(menu);
-							menu.getBillete().setCoste(menu.getBillete().getCoste() + aux1.getPrecio()
-									+ aux2.getPrecio() + aux3.getPrecio());
-							// Le añadimos el precio del menu
+
+							LocalDateTime fechaLlegada = menu.getBillete().getAsiento().getVuelo().getFechaLlegada();
+							LocalDateTime fechaSalida = menu.getBillete().getAsiento().getVuelo().getFechaSalida();
+
+							// Verifica la RN, si son más de 5 horas de vuelo, los menús son gratis
+							long dif = (Duration.between(fechaSalida, fechaLlegada).toHours());
+
+							if (!(dif >= 5) && menu.getBillete().getAsiento().getClase().equals(Clase.ECONOMICA)) { //precio solo aplicado a ECONOMICA
+								menu.getBillete().setCoste(menu.getBillete().getCoste() + aux1.getPrecio()
+										+ aux2.getPrecio() + aux3.getPrecio());
+								// Le añadimos el precio del menu
+							}
 						}
 					}
 				}
@@ -135,7 +163,8 @@ public class BilleteService {
 	}
 
 	@Transactional
-	public void saveEquipaje(Equipaje equipaje) throws DataAccessException, TooManyItemsBilleteException, EquipajePriceException {
+	public void saveEquipaje(Equipaje equipaje)
+			throws DataAccessException, TooManyItemsBilleteException, EquipajePriceException {
 
 		if (equipaje.getBillete().getEquipajes().equals(null)) {
 			equipajeService.saveEquipaje(equipaje);
