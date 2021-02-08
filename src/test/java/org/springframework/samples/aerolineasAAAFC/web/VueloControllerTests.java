@@ -51,7 +51,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers=VueloController.class,
 includeFilters = {@ComponentScan.Filter(value = AzafatoFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
-@ComponentScan.Filter(value = AzafatoFormatter.class, type = FilterType.ASSIGNABLE_TYPE)},
+@ComponentScan.Filter(value = AvionFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
+@ComponentScan.Filter(value = AeropuertoFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
+@ComponentScan.Filter(value = PersonalOficinaFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
+@ComponentScan.Filter(value = PersonalControlFormatter.class, type = FilterType.ASSIGNABLE_TYPE)},
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
 public class VueloControllerTests {
@@ -128,27 +131,40 @@ public class VueloControllerTests {
 		pOficina1.setId(1);
 		pOficina.add(pOficina1);
 		vuelol.setPersonalOficina(pOficina);
+		given(this.personalOficinaService.findPersonalOficinaById(1)).willReturn(pOficina1);
 		
 		//AZAFATOS
 		Set<Azafato> azafatos = new HashSet<Azafato>();
 		azafato1 = new Azafato();
 		azafato1.setId(1);
 		azafatos.add(azafato1);
+		given(this.azafatoService.findAzafatoById(1)).willReturn(azafato1);
+		
 		azafato2 = new Azafato();
 		azafato2.setId(2);
 		azafatos.add(azafato2);
+		given(this.azafatoService.findAzafatoById(2)).willReturn(azafato2);
+		
 		azafato3 = new Azafato();
 		azafato3.setId(3);
 		azafatos.add(azafato3);
+		given(this.azafatoService.findAzafatoById(3)).willReturn(azafato3);
+		
 		azafato4 = new Azafato();
 		azafato4.setId(4);
 		azafatos.add(azafato4);
+		given(this.azafatoService.findAzafatoById(4)).willReturn(azafato4);
+		
 		azafato5 = new Azafato();
 		azafato5.setId(5);
 		azafatos.add(azafato5);
+		given(this.azafatoService.findAzafatoById(5)).willReturn(azafato5);
+		
 		azafato6 = new Azafato();
 		azafato6.setId(6);
 		azafatos.add(azafato6);
+		given(this.azafatoService.findAzafatoById(6)).willReturn(azafato6);
+		
 		vuelol.setAzafatos(azafatos);
 		
 		//CONTROLADORES
@@ -157,18 +173,26 @@ public class VueloControllerTests {
 		pControl1.setRol(Rol.PILOTO);
 		pControl1.setId(1);
 		pControl.add(pControl1);
+		given(this.personalControlService.findPersonalControlById(1)).willReturn(pControl1);
+		
 		pControl2 = new PersonalControl();
 		pControl2.setRol(Rol.PILOTO);
 		pControl2.setId(2);
 		pControl.add(pControl2);
+		given(this.personalControlService.findPersonalControlById(2)).willReturn(pControl2);
+		
 		pControl3 = new PersonalControl();
 		pControl3.setRol(Rol.COPILOTO);
 		pControl3.setId(3);
 		pControl.add(pControl3);
+		given(this.personalControlService.findPersonalControlById(3)).willReturn(pControl3);
+		
 		pControl4 = new PersonalControl();
 		pControl4.setRol(Rol.INGENIERO_DE_VUELO);
 		pControl4.setId(4);
 		pControl.add(pControl4);
+		given(this.personalControlService.findPersonalControlById(4)).willReturn(pControl4);
+		
 		vuelol.setPersonalControl(pControl.stream().collect(Collectors.toSet()));
 		
 		//AEROPUERTOS
@@ -176,10 +200,13 @@ public class VueloControllerTests {
 		aeropuertoOrigen.setCodigoIATA("MAD");
 		aeropuertoOrigen.setId(1);
 		vuelol.setAeropuertoOrigen(aeropuertoOrigen);
+		given(this.aeropuertoService.findAeropuertoById(1)).willReturn(aeropuertoOrigen);
+		
 		aeropuertoDestino = new Aeropuerto();
 		aeropuertoDestino.setCodigoIATA("SVQ");
 		aeropuertoDestino.setId(2);
 		vuelol.setAeropuertoDestino(aeropuertoDestino);
+		given(this.aeropuertoService.findAeropuertoById(2)).willReturn(aeropuertoDestino);
 		
 		//AVIÓN
 		avion = new Avion();
@@ -191,6 +218,7 @@ public class VueloControllerTests {
 		avion.setPlazasEconomica(60);
 		avion.setPlazasEjecutiva(40);
 		avion.setPlazasPrimera(20);
+		given(this.avionService.findAvionById(1)).willReturn(avion);
 
 		vuelol.setAvion(avion);
 		
@@ -229,6 +257,20 @@ public class VueloControllerTests {
 		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
 	}
 	
+	@WithMockUser(value = "spring")
+	@Test
+	void testInitUpdateForm() throws Exception{
+		mockMvc.perform(get("/vuelos/"+TEST_VUELO_ID+"/edit"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("vuelo"))
+		.andExpect(model().attributeExists("aeropuertos"))
+		.andExpect(model().attributeExists("aviones"))
+		.andExpect(model().attributeExists("personalOficina"))
+		.andExpect(model().attributeExists("personalControl"))
+		.andExpect(model().attributeExists("azafatos"))
+		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
+	}
+	
 
 	@WithMockUser(value = "spring")
 	@Test
@@ -242,7 +284,7 @@ public class VueloControllerTests {
 				.param("azafatos", "1","2","3")
 				.param("personalControl", "1","2")
 				.param("aeropuertoOrigen", "1")
-				.param("aeropuertoDestino", "1")
+				.param("aeropuertoDestino", "2")
 				.param("avion", "1"))
 		.andExpect(view().name("redirect:/vuelos"));
 	}
@@ -252,18 +294,16 @@ public class VueloControllerTests {
 	void testProcessCreationFormHasErrors() throws Exception{
 		mockMvc.perform(post("/vuelos/new")
 				.param("fechaSalida", LocalDateTime.of(2021, 1,1,10,50).toString())
-				.param("fechaLlegada", LocalDateTime.of(2021,1,1,9,50).toString())
-				.param("coste", String.valueOf(99.0))
+				.param("fechaLlegada", LocalDateTime.of(2020,1,1,9,50).toString())
 				.with(csrf())
+				.param("coste", "350.")
+				.param("personalOficina", "1")
+				.param("azafatos", "1","2","3")
+				.param("personalControl", "1","2")
 				.param("aeropuertoOrigen", "1")
 				.param("aeropuertoDestino", "2")
-				.param("avion", "3")
-				.param("personalOficina", "1")
-				.param("personalControl", "1", "2","3")
-				.param("azafatos", "1", "2", "3", "4", "5", "6","7"))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("vuelo"))
-		.andExpect(model().attributeHasFieldErrors("vuelo", "fechaLlegada"))
+				.param("avion", "1"))
+		.andExpect(status().is3xxRedirection())
 		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
 	}
 	
@@ -287,13 +327,17 @@ public class VueloControllerTests {
 	void testProcessUpdateVueloError() throws Exception{
 		mockMvc.perform(post("/vuelos/{vueloId}/edit", TEST_VUELO_ID)
 				.with(csrf())
-				.param("version", "1")
-				.param("fechaSalida", LocalDateTime.of(2021, 1,1,10,50).toString().toString())
-				.param("fechaLlegada", LocalDateTime.of(2021, 1,1,9,50).toString().toString())
-				.param("coste", String.valueOf(99.0)))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeHasErrors("vuelo"))
-		.andExpect(model().attributeHasFieldErrors("vuelo", "fechaLlegada"))
+				.param("version", String.valueOf(vuelol.getVersion()+1))
+				.param("fechaSalida", LocalDateTime.of(2022,01,24,10,00).toString())
+				.param("fechaLlegada", LocalDateTime.of(2021,01,24,15,00).toString())
+				.param("coste", "350.")
+				.param("personalOficina", "1")
+				.param("azafatos", "1","2","3")
+				.param("personalControl", "1","2")
+				.param("aeropuertoOrigen", "1")
+				.param("aeropuertoDestino", "2")
+				.param("avion", "1"))
+		.andExpect(status().is3xxRedirection())
 		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
 	}
 	

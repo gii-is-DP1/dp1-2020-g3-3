@@ -92,20 +92,21 @@ public class VueloController {
 		return this.avionService.findAvionesNoPageable();
 	}
 	
-	@ModelAttribute("azafatos")
-	public Collection<Azafato> populateAzafatos() {
-		return this.azafatoService.findAzafatosNoPageable();
-	}
-	
 	@ModelAttribute("personalOficina")
-	public Collection<PersonalOficina> populateOficinistas() {
+	public Collection<PersonalOficina> populatePersonalOficina() {
 		return this.pOficinaService.findPersonalNoPageable();
 	}
 	
 	@ModelAttribute("personalControl")
-	public Collection<PersonalControl> populateControladores() {
+	public Collection<PersonalControl> populatePersonalControl() {
 		return this.pControlService.findPersonalControlNoPageable();
 	}
+	
+	@ModelAttribute("azafatos")
+	public Collection<Azafato> populateAzafatos() {
+		return this.azafatoService.findAzafatosNoPageable();
+	}
+
 	
 	@GetMapping(value = "/vuelos/new") 
 	public String initCreationVueloForm(Map<String, Object> model) {
@@ -146,7 +147,7 @@ public class VueloController {
 	@GetMapping(value = "/vuelos/{vueloId}/edit")
 	public String initUpdateVueloForm(@PathVariable("vueloId") int vueloId, ModelMap model) {
 		Vuelo vuelo = this.vueloService.findVueloById(vueloId);
-		model.addAttribute("vuelo", vuelo);
+		model.addAttribute(vuelo);
 		return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 	}
 	
