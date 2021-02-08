@@ -172,27 +172,36 @@ public class VueloControllerTests {
 		//AEROPUERTOS
 		aeropuertoOrigen = new Aeropuerto();
 		aeropuertoOrigen.setCodigoIATA("MAD");
+		aeropuertoOrigen.setId(1);
 		vuelol.setAeropuertoOrigen(aeropuertoOrigen);
 		aeropuertoDestino = new Aeropuerto();
 		aeropuertoDestino.setCodigoIATA("SVQ");
+		aeropuertoDestino.setId(2);
 		vuelol.setAeropuertoDestino(aeropuertoDestino);
 		
 		//AVIÓN
 		avion = new Avion();
+		avion.setId(1);
+		avion.setFechaFabricacion(LocalDate.of(2021, 01, 01));
+		avion.setFechaRevision(LocalDate.of(2021, 01, 01));
 		avion.setCapacidadPasajero(120);
+		avion.setHorasAcumuladas(0);
 		avion.setPlazasEconomica(60);
 		avion.setPlazasEjecutiva(40);
 		avion.setPlazasPrimera(20);
+
 		vuelol.setAvion(avion);
 		
 		given(this.vueloService.findVueloById(TEST_VUELO_ID)).willReturn(vuelol);
 		
+		
+		given(this.azafatoService.findAzafatosNoPageable()).willReturn(azafatos);
 		List<Vuelo> lista = new ArrayList<Vuelo>();
 		lista.add(vuelol);
-		Page pagina = new PageImpl<Vuelo>(lista);
+		Page<Vuelo> pagina = new PageImpl<Vuelo>(lista);
 		Pageable paging = PageRequest.of(0, 20);
 		
-		Page pagina1 = new PageImpl<PersonalControl>(pControl);
+		Page<PersonalControl> pagina1 = new PageImpl<PersonalControl>(pControl);
 		Pageable paging1 = PageRequest.of(0, 20);
 		
 		given(this.personalControlService.findPersonalControl(paging1)).willReturn(pagina1);
@@ -226,13 +235,13 @@ public class VueloControllerTests {
 				.with(csrf())
 				.param("fechaSalida", LocalDateTime.of(2022,01,24,10,00).toString())
 				.param("fechaLlegada", LocalDateTime.of(2022,01,24,15,00).toString())
-				.param("coste", "350.0")
-				.param("aeropuertoOrigen", "1")
-				.param("aeropuertoDestino", "2")
-				.param("avion", "1")
+				.param("coste", "350.")
 				.param("personalOficina", "1")
-				.param("personalControl", "1", "2","3")
-				.param("azafatos", "1", "2", "3", "4", "5", "6"))
+				.param("azafatos", "1","2","3")
+				.param("personalControl", "1","2")
+				.param("aeropuertoOrigen", "1")
+				.param("aeropuertoDestino", "1")
+				.param("avion", "1"))
 		.andExpect(view().name("redirect:/vuelos"));
 	}
 	
@@ -240,10 +249,16 @@ public class VueloControllerTests {
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception{
 		mockMvc.perform(post("/vuelos/new")
+				.param("fechaSalida", LocalDateTime.of(2021, 1,1,10,50).toString())
+				.param("fechaLlegada", LocalDateTime.of(2021,1,1,9,50).toString())
+				.param("coste", String.valueOf(99.0))
 				.with(csrf())
-				.param("fechaSalida", LocalDate.of(2020, Month.AUGUST, 21).toString())
-				.param("fechaLlegada", LocalDate.of(2020, Month.AUGUST, 15).toString())
-				.param("coste", String.valueOf(99.0)))
+				.param("aeropuertoOrigen", "1")
+				.param("aeropuertoDestino", "2")
+				.param("avion", "3")
+				.param("personalOficina", "1")
+				.param("personalControl", "1", "2","3")
+				.param("azafatos", "1", "2", "3", "4", "5", "6","7"))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("vuelo"))
 		.andExpect(model().attributeHasFieldErrors("vuelo", "fechaLlegada"))
@@ -252,29 +267,27 @@ public class VueloControllerTests {
 	
 	
 	//TEST DE ACTUALIZACION
-	/*
-	 * este test redirecciona al formulario de nuevo, asi que hay 
-	 * algun error en el paso de atributos con el tipo date, ya que
-	 * el controlador funciona bien redirigiendo los errores
-	 */
-//	@WithMockUser(value = "spring")
-//	@Test
-//	void testProcessUpdateVueloSuccess() throws Exception{
-//		mockMvc.perform(post("/vuelos/{vueloId}/edit", TEST_VUELO_ID)
-//				.with(csrf())
-//				.param("fechaSalida", LocalDate.of(2020, Month.AUGUST, 21).toString())
-//				.param("fechaLlegada", LocalDate.of(2020, Month.AUGUST, 22).toString())
-//				.param("coste", String.valueOf(100.0)))
-//		.andExpect(view().name("redirect:/vuelos/{vueloId}"));
-//	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessUpdateVueloSuccess() throws Exception{
+		mockMvc.perform(post("/vuelos/{vueloId}/edit", TEST_VUELO_ID)
+				.with(csrf())
+				.param("version", "1")
+				.param("fechaSalida", LocalDateTime.of(2021, 1,1,10,50).toString())
+				.param("fechaLlegada", LocalDateTime.of(2021, 1,1,11,50).toString())
+				.param("coste", String.valueOf(100.0)))
+		.andExpect(view().name("redirect:/vuelos/{vueloId}"));
+	}
 	
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateVueloError() throws Exception{
 		mockMvc.perform(post("/vuelos/{vueloId}/edit", TEST_VUELO_ID)
 				.with(csrf())
-				.param("fechaSalida", LocalDate.of(2020, Month.AUGUST, 21).toString())
-				.param("fechaLlegada", LocalDate.of(2020, Month.AUGUST, 15).toString())
+				.param("version", "1")
+				.param("fechaSalida", LocalDateTime.of(2021, 1,1,10,50).toString().toString())
+				.param("fechaLlegada", LocalDateTime.of(2021, 1,1,9,50).toString().toString())
 				.param("coste", String.valueOf(99.0)))
 		.andExpect(status().isOk())
 		.andExpect(model().attributeHasErrors("vuelo"))
@@ -282,24 +295,19 @@ public class VueloControllerTests {
 		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
 	}
 	
-	@WithMockUser(value = "spring")
-	@Test
-	void testshowVuelosListInicial() throws Exception{
-		mockMvc.perform(get("/vuelos"))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeExists("vuelos"))
-		.andExpect(view().name("vuelos/vuelosList"));
-	}
-	
-	@WithMockUser(value = "spring")
-	@Test
-	void testshowVuelosListConFecha() throws Exception{
-		//Creo que habria que añadir un nuevo given() para devolver una lista de vuelos en esa fecha (?)
-		mockMvc.perform(get("/vuelos?fecha=2020-12-10"))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeExists("vuelos"))
-		.andExpect(view().name("vuelos/vuelosList"));
-	}
+//	@WithMockUser(value = "spring")
+//	@Test
+//	void testshowVuelosListInicial() throws Exception{
+//		List<Vuelo> lista = new ArrayList<Vuelo>();
+//		lista.add(vuelol);
+//		Page<Vuelo> pagina = new PageImpl<Vuelo>(lista);
+//		Pageable paging = PageRequest.of(0, 20);
+//		given(this.vueloService.findVuelosOrdered(paging)).willReturn(pagina);
+//		mockMvc.perform(get("/vuelos"))
+//		.andExpect(status().isOk())
+//		.andExpect(model().attributeExists("vuelos"))
+//		.andExpect(view().name("vuelos/vuelosList"));
+//	}
 	
 	@WithMockUser(value = "spring")
 	@Test

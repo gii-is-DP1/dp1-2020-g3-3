@@ -175,6 +175,7 @@ public class AzafatoControllerTests {
 	void testProcessUpdateAzafatosFormSuccess() throws Exception {
 		mockMvc.perform(post("/azafatos/{azafatoId}/edit", TEST_AZAFATO_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Amelie")
 				.param("apellidos", "Meyer")
 				.param("nif", "11571749N")
@@ -191,6 +192,7 @@ public class AzafatoControllerTests {
 	void testProcessUpdateAzafatoFormError() throws Exception {
 		mockMvc.perform(post("/azafatos/{azafatoId}/edit", TEST_AZAFATO_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Erik")
 				.param("apellidos", "Fischer")
 				.param("nif", "XXX")

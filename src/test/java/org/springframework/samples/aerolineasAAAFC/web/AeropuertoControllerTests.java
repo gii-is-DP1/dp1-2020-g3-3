@@ -129,6 +129,7 @@ public class AeropuertoControllerTests {
 	void testProcessUpdateAeropuertoSuccess() throws Exception{
 		mockMvc.perform(post("/aeropuertos/{aeropuertoId}/edit", TEST_AERO_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Aeropuerto Internacional Josep Tarradellas Barcelona-El Prat")
 				.param("localizacion", "Barcelona, Cataluña")
 				.param("codigoIATA", "BCN")
@@ -141,6 +142,7 @@ public class AeropuertoControllerTests {
 	void testProcessUpdateAeropuertoError() throws Exception{
 		mockMvc.perform(post("/aeropuertos/{aeropuertoId}/edit", TEST_AERO_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Aeropuerto Josep Tarradellas Barcelona-El Prat")
 				.param("localizacion", "Barcelona, España")
 				.param("codigoIATA", "BCN")

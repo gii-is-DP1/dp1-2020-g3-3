@@ -40,6 +40,9 @@ import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @WebMvcTest(controllers=PersonalOficinaController.class,
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
@@ -164,6 +167,7 @@ public class PersonalOficinaControllerTests {
 	void testProcessUpdatePersonalOficinaFormSuccess() throws Exception {
 		mockMvc.perform(post("/personalOficina/{pOficinaId}/edit", TEST_PERSONALOFICINA_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Carlos")
 				.param("apellidos", "Bloggs")
 				.param("nif", "70292959Z")
@@ -179,6 +183,7 @@ public class PersonalOficinaControllerTests {
 	void testProcessUpdatePersonalOficinaFormError() throws Exception {
 		mockMvc.perform(post("/personalOficina/{pOficinaId}/edit", TEST_PERSONALOFICINA_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Joe")
 				.param("apellidos", "Bloggs")
 				.param("nif", "uvedoblexdxdxd")
@@ -229,6 +234,26 @@ public class PersonalOficinaControllerTests {
 	}
 
 
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessFindFormByNif() throws Exception {
+		given(this.personalOficinaService.findPersonalOficinaByNif(carlos.getNif())).willReturn(carlos);
+		log.info("Carlos: " + carlos);
+
+		mockMvc.perform(get("/personalOficinafind")
+				.param("nif", "70292959Z"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/personalOficina/" + TEST_PERSONALOFICINA_ID));
+	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessFindFormNoPersonalControlFound() throws Exception {
+		mockMvc.perform(get("/personalOficinafind")
+				.param("nif", ""))
+		.andExpect(status().is2xxSuccessful())
+		.andExpect(view().name("personalOficina/personalOficinaList"));
+	}
 
 
 
