@@ -5,54 +5,16 @@
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
 
 <aerolineasAAAFC:layout pageName="azafatos">
-	<style>
-/*  	table#tablaVuelos th:nth-child(5){  */
-/*  		visibility: hidden;  */
-/*  	}  */
-	
-/*  	table#tablaVuelos td:nth-child(5){  */
-/*  		visibility: hidden; */
-/*  	} */
- 	#columnaT{ 
- 		visibility: visible; 
- 	}
-/*  	#columna.columnas{  */
-/*  		visibility: hidden;  */
-/*  	}  */
-	</style>
-	
-<%-- 	<spring:url value="/resources/scripts/hideAndShowDetails.js" var="hideAndShowDetails"/> --%>
-<%-- 	<script src="${hideAndShowDetails}"></script> --%>
-
-	<script>
-	function openDetalles() {
-		document.getElementById("columnaT").style.visibility = "visible";
-		var columnas = document.getElementsByClassName("columna");
-		for(var i=0; i<columnas.length; i++){
-			columnas.item(i).toggle();
-		}
-		document.getElementById("abrir").style.visibility = "hidden";
-		document.getElementById("cerrar").style.visibility = "visible";
-	}
-
-	function closeDetalles(){
-		document.getElementById("columnaT").style.visibility = "hidden";
-		var columnas = document.getElementsByClassName("columna");
-		for(var i=0; i<columnas.length; i++){
-			columnas.item(i).toggle();
-		}
-		document.getElementById("abrir").style.visibility = "visible";
-		document.getElementById("cerrar").style.visibility = "hidden";
-	}
-	</script>
 	
 	<script>
-	var columnas = document.getElementsByClassName("columna");
-	console.log(columnas);
-	console.log(columnas[0]);
-	console.log(columnas[1]);
+	function toggleDetalles(param) {
+		if(document.getElementById(param).style.visibility == "visible"){
+			document.getElementById(param).style.visibility = "hidden";
+		}else{
+			document.getElementById(param).style.visibility = "visible";
+		}
+	}
 	</script>
-	
 	
 	<h1 style="text-align:center;">Vuelos de la semana del <c:out value = "${diaS}"/> día <c:out value="${diaM}"/>/<c:out value="${mes}"/>/<c:out value="${anyo}"/></h1>
 	<div style="padding: 5% 0% 0% 43%">
@@ -61,9 +23,7 @@
 			<button type="submit" class="btn btn-default">Buscar</button>
 		</form>
 	</div>
-	
-	<a href="javascript:void(0)" onclick="openDetalles()" id="abrir" class="abre" style="float:right; visibility:hidden;">Ver detalles</a>
-	<a href="javascript:void(0)" onclick="closeDetalles()" id="cerrar" class="cierra" style="float:right; visibility:visible;">Cerrar detalles</a>
+
 
 	<table id="tablaVuelos" class="table table-striped">
 		<thead>
@@ -72,7 +32,8 @@
 				<th>Avión</th>
 				<th>Fecha de salida</th>
 				<th>Ruta</th>
-				<th id="columnaT">Detalles</th>
+				<th>Detalles</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -82,8 +43,9 @@
 					<td><c:out value="${vuelo.avion.tipoAvion}" /></td>
 					<td><aerolineasAAAFC:localDateTime date="${vuelo.fechaSalida}" pattern="dd-MM-yyyy HH:mm" /></td>
 					<td><c:out value="${vuelo.aeropuertoOrigen.codigoIATA} - ${vuelo.aeropuertoDestino.codigoIATA}" /></td>
-					<td id="columna${bucle.index+1}" class="columna" style="visibility:visible;">
-						<div>
+					<td><a href="javascript:void(0)" onclick="toggleDetalles('columna${bucle.index+1}')" class="btn btn-default">Ver detalles</a></td>
+					<td>
+						<div id="columna${bucle.index+1}" style="visibility:hidden;">
 							<b>Más detalles del vuelo</b> <br>
 							<em>Lugar de salida:</em> <c:out value="${vuelo.aeropuertoOrigen.localizacion}"/><br>
 							<em>Lugar de llegada:</em> <c:out value="${vuelo.aeropuertoDestino.localizacion}"/><br>
