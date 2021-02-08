@@ -185,7 +185,7 @@ public class VueloController {
 				
 			}
 			
-			return "redirect:/vuelos";
+			return "redirect:/vuelos/{vueloId}";
 		}
 	}
 	
