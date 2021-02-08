@@ -37,7 +37,11 @@
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>
-        <root level="warn">
+    <root level="warn">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console" />
+    </root>
+    <root level="error">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>

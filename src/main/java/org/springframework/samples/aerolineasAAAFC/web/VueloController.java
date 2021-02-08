@@ -154,8 +154,6 @@ public class VueloController {
 	@PostMapping(value = "/vuelos/{vueloId}/edit")
 	public String processUpdateVueloForm(@Valid Vuelo vuelo, BindingResult result, ModelMap model,
 			@PathVariable("vueloId") int vueloId, @RequestParam(value = "version", required=false) Integer version) {
-
-
 		
 		Vuelo vueloToUpdate = this.vueloService.findVueloById(vueloId);
 		if (vueloToUpdate.getVersion() != version) {

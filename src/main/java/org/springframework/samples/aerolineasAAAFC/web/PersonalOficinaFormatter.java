@@ -25,7 +25,7 @@ public class PersonalOficinaFormatter implements Formatter<PersonalOficina> {
 
 	@Override
 	public String print(PersonalOficina personalOficina, Locale locale) {
-		return personalOficina.getNombre();
+		return personalOficina.getNombre() + personalOficina.getApellidos();
 	}
 
 	@Override

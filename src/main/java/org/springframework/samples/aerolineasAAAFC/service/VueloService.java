@@ -16,6 +16,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
@@ -55,29 +56,39 @@ public class VueloService {
 		LocalDateTime llegada = vuelo.getFechaLlegada();
 
 		long horasVuelo = salida.until(llegada, ChronoUnit.HOURS);
-		log.info("horas de Vuelo {}: {}", vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), horasVuelo);
-		int horasAcum = vuelo.getAvion().getHorasAcumuladas();
-		log.info("horas acumuladas del avión {}: {}", vuelo.getAvion().getId(), horasAcum);
-		long horasTotal = horasVuelo + horasAcum;
-		log.info("horas acumuladas del avión {} después del vuelo: {}", vuelo.getAvion().getId(), horasTotal);
-		LocalDate añosSinRevisar = vuelo.getAvion().getFechaRevision().plusYears(2);
-		log.info("año en el que se tiene que revisar el avión {}: {}", vuelo.getAvion().getId(), añosSinRevisar);
-
-		if(salida.isAfter(llegada)) {
-			log.error("El vuelo {} tiene un horario de vuelo imposible. Fecha Salida {}, Fecha Llegada {}.", 
-					vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), vuelo.getFechaSalida(), vuelo.getFechaLlegada());
-			throw new HorasImposiblesException("Horas de vuelo imposibles");
-		}else if(horasVuelo > 14){
-			log.error("El vuelo {} tiene más de 14 de vuelo.", vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA());
-			throw new HorasMaximasVueloException("Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
-		}else if(horasTotal > 600 || horasTotal > 30000 || añosSinRevisar.isEqual(LocalDate.now()) || añosSinRevisar.isBefore(LocalDate.now())) {
-			log.error("El avión {} no puede volar porque necesita una revisión.", vuelo.getAvion().getId());
-			vuelo.getAvion().setDisponibilidad(false);
-			throw new DisponibilidadAvionException("El avión no está disponible porque debe pasar una revisión");
-		}else{
-			vuelo.getAvion().setHorasAcumuladas((int) horasTotal);
-			log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion().getId(), horasTotal);
-			
+		if(vuelo.getId() != null) {
+			if(!vuelo.getHorasVuelo().equals(horasVuelo)) {
+				throw new HorasImposiblesException("Las horas de vuelo deben de ser las mismas");
+			}
+		}
+		vuelo.setHorasVuelo(horasVuelo);
+		Avion avion = this.vueloRepository.findById(vuelo.getId()).get().getAvion();
+		
+		if(vuelo.getAvion().getId() != avion.getId() || avion == null) { //Si al actualizar se cambia de avión hace las comprobaciones o si el vuelo es nuevo
+			log.info("horas de Vuelo {}: {}", vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), horasVuelo);
+			int horasAcum = vuelo.getAvion().getHorasAcumuladas();
+			log.info("horas acumuladas del avión {}: {}", vuelo.getAvion().getId(), horasAcum);
+			long horasTotal = horasVuelo + horasAcum;
+			log.info("horas acumuladas del avión {} después del vuelo: {}", vuelo.getAvion().getId(), horasTotal);
+			LocalDate añosSinRevisar = vuelo.getAvion().getFechaRevision().plusYears(2);
+			log.info("año en el que se tiene que revisar el avión {}: {}", vuelo.getAvion().getId(), añosSinRevisar);
+	
+			if(salida.isAfter(llegada)) {
+				log.error("El vuelo {} tiene un horario de vuelo imposible. Fecha Salida {}, Fecha Llegada {}.", 
+						vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), vuelo.getFechaSalida(), vuelo.getFechaLlegada());
+				throw new HorasImposiblesException("Horas de vuelo imposibles");
+			}else if(horasVuelo > 14){
+				log.error("El vuelo {} tiene más de 14 de vuelo.", vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA());
+				throw new HorasMaximasVueloException("Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
+			}else if(horasTotal > 600 || horasTotal > 30000 || añosSinRevisar.isEqual(LocalDate.now()) || añosSinRevisar.isBefore(LocalDate.now())) {
+				log.error("El avión {} no puede volar porque necesita una revisión.", vuelo.getAvion().getId());
+				vuelo.getAvion().setDisponibilidad(false);
+				throw new DisponibilidadAvionException("El avión no está disponible porque debe pasar una revisión");
+			}else{
+				
+				vuelo.getAvion().setHorasAcumuladas((int) horasTotal);
+				log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion().getId(), horasTotal);
+		}	
 			if(vuelo.getId()==null) {
 				vuelo.setVersion(1);
 				this.vueloRepository.save(vuelo);

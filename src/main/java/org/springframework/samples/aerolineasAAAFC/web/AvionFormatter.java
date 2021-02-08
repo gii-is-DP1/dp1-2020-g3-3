@@ -22,7 +22,7 @@ public class AvionFormatter implements Formatter<Avion>{
 	
 	@Override
 	public String print(Avion object, Locale locale) {
-		String res = object.getId() + " - " + object.getTipoAvion() + "(" + object.getCapacidadPasajero() + ")";
+		String res = object.getId() + " - " + object.getTipoAvion() + " (" + object.getCapacidadPasajero() + ")";
 		return res;
 	}
 

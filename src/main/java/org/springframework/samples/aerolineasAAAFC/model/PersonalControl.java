@@ -41,9 +41,6 @@ public class PersonalControl extends Person{
 	
 	@ManyToMany
 	@OrderBy("fechaSalida DESC")
-	@JoinTable(name = "control_vuelo",
-	   joinColumns = @JoinColumn(name = "personal_control_id"),
-	   inverseJoinColumns = @JoinColumn(name= "vuelos_id"))
 	@EqualsAndHashCode.Exclude
 	private Set<Vuelo> vuelos;
 

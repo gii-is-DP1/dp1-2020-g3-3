@@ -37,11 +37,7 @@ public class PersonalOficina extends Person{
 	
 	@ManyToMany
 	@OrderBy("fechaSalida DESC")
-	@EqualsAndHashCode.Exclude
-	@JoinTable(name = "oficina_vuelo",
-	   joinColumns = @JoinColumn(name = "personal_oficina_id"),
-	   inverseJoinColumns = @JoinColumn(name= "vuelos_id"))
-	
+	@EqualsAndHashCode.Exclude	
 	private Collection<Vuelo> vuelos;
 
 	
