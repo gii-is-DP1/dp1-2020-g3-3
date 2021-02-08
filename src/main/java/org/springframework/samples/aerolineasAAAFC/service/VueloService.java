@@ -84,15 +84,13 @@ public class VueloService {
 
 			this.vueloRepository.save(vuelo);
 			log.info("vuelo guardado {}.", vuelo.getId());
-			Vuelo vueloa = this.findVueloById(vuelo.getId());
 			//Si es un vuelo nuevo, genera los asientos
 			//Si viene de un update, los dejara tal cual
-			if(vuelo.getAsientos() == null) { 
+			if(vuelo.getAsientos() == null || vuelo.getAsientos().isEmpty()) { 
 				asientoService.saveManyAsientos(vuelo);
 			}
 			if(vuelo.getId()==null)
 				vuelo.setVersion(1);
-			
 			
 		}
 	}

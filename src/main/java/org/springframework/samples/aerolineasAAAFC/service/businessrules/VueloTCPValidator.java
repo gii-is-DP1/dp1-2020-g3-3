@@ -33,10 +33,8 @@ ConstraintValidator<VueloTCPConstraint, Vuelo>{
 			}else {
 				if(azafatos < 1) res = false;
 			}
-
+			
 			return res;
-
-		
 	}
 
 }

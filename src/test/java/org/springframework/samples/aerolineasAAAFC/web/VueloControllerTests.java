@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,9 +30,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
+import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
+import org.springframework.samples.aerolineasAAAFC.model.Rol;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.AsientoService;
@@ -87,6 +90,24 @@ public class VueloControllerTests {
 	private MockMvc mockMvc;
 	
 	private Vuelo vuelol;
+	private PersonalOficina pOficina1;
+	
+	private Azafato azafato1;
+	private Azafato azafato2;
+	private Azafato azafato3;
+	private Azafato azafato4;
+	private Azafato azafato5;
+	private Azafato azafato6;
+	
+	private PersonalControl pControl1;
+	private PersonalControl pControl2;
+	private PersonalControl pControl3;
+	private PersonalControl pControl4;
+	
+	private Aeropuerto aeropuertoOrigen;
+	private Aeropuerto aeropuertoDestino;
+	
+	private Avion avion;
 	
 	@BeforeEach
 	void setup() {
@@ -101,32 +122,68 @@ public class VueloControllerTests {
 		
 		//PERSONAL OFICINA
 		Set<PersonalOficina> pOficina = new HashSet<PersonalOficina>();
-		//PersonalOficina pOficina = new PersonalOficina();
-		pOficina.add(this.personalOficinaService.findPersonalOficinaById(1));
+		pOficina1 = new PersonalOficina();
+		pOficina1.setId(1);
+		pOficina.add(pOficina1);
 		vuelol.setPersonalOficina(pOficina);
 		
 		//AZAFATOS
 		Set<Azafato> azafatos = new HashSet<Azafato>();
-		azafatos.add(this.azafatoService.findAzafatoById(1));
-		azafatos.add(this.azafatoService.findAzafatoById(2));
-		azafatos.add(this.azafatoService.findAzafatoById(3));
-		azafatos.add(this.azafatoService.findAzafatoById(4));
+		azafato1 = new Azafato();
+		azafato1.setId(1);
+		azafatos.add(azafato1);
+		azafato2 = new Azafato();
+		azafato2.setId(2);
+		azafatos.add(azafato2);
+		azafato3 = new Azafato();
+		azafato3.setId(3);
+		azafatos.add(azafato3);
+		azafato4 = new Azafato();
+		azafato4.setId(4);
+		azafatos.add(azafato4);
+		azafato5 = new Azafato();
+		azafato5.setId(5);
+		azafatos.add(azafato5);
+		azafato6 = new Azafato();
+		azafato6.setId(6);
+		azafatos.add(azafato6);
 		vuelol.setAzafatos(azafatos);
 		
 		//CONTROLADORES
-		Set<PersonalControl> pControl = new HashSet<PersonalControl>();
-		pControl.add(this.personalControlService.findPersonalControlById(1));
-		pControl.add(this.personalControlService.findPersonalControlById(2));
-		pControl.add(this.personalControlService.findPersonalControlById(4));
-		pControl.add(this.personalControlService.findPersonalControlById(5));
-		vuelol.setPersonalControl(pControl);
+		List<PersonalControl> pControl = new ArrayList<PersonalControl>();
+		pControl1 = new PersonalControl();
+		pControl1.setRol(Rol.PILOTO);
+		pControl1.setId(1);
+		pControl.add(pControl1);
+		pControl2 = new PersonalControl();
+		pControl2.setRol(Rol.PILOTO);
+		pControl2.setId(2);
+		pControl.add(pControl2);
+		pControl3 = new PersonalControl();
+		pControl3.setRol(Rol.COPILOTO);
+		pControl3.setId(3);
+		pControl.add(pControl3);
+		pControl4 = new PersonalControl();
+		pControl4.setRol(Rol.INGENIERO_DE_VUELO);
+		pControl4.setId(4);
+		pControl.add(pControl4);
+		vuelol.setPersonalControl(pControl.stream().collect(Collectors.toSet()));
 		
 		//AEROPUERTOS
-		vuelol.setAeropuertoOrigen(this.aeropuertoService.findAeropuertoById(1));
-		vuelol.setAeropuertoDestino(this.aeropuertoService.findAeropuertoById(2));
+		aeropuertoOrigen = new Aeropuerto();
+		aeropuertoOrigen.setCodigoIATA("MAD");
+		vuelol.setAeropuertoOrigen(aeropuertoOrigen);
+		aeropuertoDestino = new Aeropuerto();
+		aeropuertoDestino.setCodigoIATA("SVQ");
+		vuelol.setAeropuertoDestino(aeropuertoDestino);
 		
 		//AVIÓN
-		vuelol.setAvion(this.avionService.findAvionById(2));
+		avion = new Avion();
+		avion.setCapacidadPasajero(120);
+		avion.setPlazasEconomica(60);
+		avion.setPlazasEjecutiva(40);
+		avion.setPlazasPrimera(20);
+		vuelol.setAvion(avion);
 		
 		given(this.vueloService.findVueloById(TEST_VUELO_ID)).willReturn(vuelol);
 		
@@ -135,6 +192,10 @@ public class VueloControllerTests {
 		Page pagina = new PageImpl<Vuelo>(lista);
 		Pageable paging = PageRequest.of(0, 20);
 		
+		Page pagina1 = new PageImpl<PersonalControl>(pControl);
+		Pageable paging1 = PageRequest.of(0, 20);
+		
+		given(this.personalControlService.findPersonalControl(paging1)).willReturn(pagina1);
 		given(this.vueloService.findVuelosConFecha(null, paging)).willReturn(pagina);
 		
 		LocalDateTime fechita = LocalDateTime.of(2020, 12, 10, 0, 0);
@@ -151,8 +212,8 @@ public class VueloControllerTests {
 		.andExpect(model().attributeExists("vuelo"))
 		.andExpect(model().attributeExists("aeropuertos"))
 		.andExpect(model().attributeExists("aviones"))
-		.andExpect(model().attributeExists("pOficina"))
-		.andExpect(model().attributeExists("pControl"))
+		.andExpect(model().attributeExists("personalOficina"))
+		.andExpect(model().attributeExists("personalControl"))
 		.andExpect(model().attributeExists("azafatos"))
 		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
 	}
@@ -163,14 +224,14 @@ public class VueloControllerTests {
 	void testProcessCreationFormSuccess() throws Exception{
 		mockMvc.perform(post("/vuelos/new")
 				.with(csrf())
-				.param("fechaSalida", LocalDateTime.of(2020,01,24,10,00).toString())
-				.param("fechaLlegada", LocalDateTime.of(2020,01,24,15,00).toString())
+				.param("fechaSalida", LocalDateTime.of(2022,01,24,10,00).toString())
+				.param("fechaLlegada", LocalDateTime.of(2022,01,24,15,00).toString())
 				.param("coste", "350.0")
 				.param("aeropuertoOrigen", "1")
 				.param("aeropuertoDestino", "2")
 				.param("avion", "1")
 				.param("personalOficina", "1")
-				.param("personalControl", "1", "2")
+				.param("personalControl", "1", "2","3")
 				.param("azafatos", "1", "2", "3", "4", "5", "6"))
 		.andExpect(view().name("redirect:/vuelos"));
 	}
