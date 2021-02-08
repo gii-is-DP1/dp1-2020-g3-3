@@ -235,10 +235,17 @@ public class VueloControllerTests {
 		Pageable paging1 = PageRequest.of(0, 20);
 		
 		given(this.personalControlService.findPersonalControl(paging1)).willReturn(pagina1);
-		given(this.vueloService.findVuelosConFecha(null, paging)).willReturn(pagina);
 		
 		LocalDateTime fechita = LocalDateTime.of(2020, 12, 10, 0, 0);
+		int mes = fechita.getMonthValue();
+		int anyo = fechita.getYear();
+		given(this.vueloService.findVuelosByMes(mes,anyo,paging)).willReturn(pagina);
 		given(this.vueloService.findVuelosConFecha(fechita, paging)).willReturn(pagina);
+		
+		LocalDate fechaii = LocalDate.now();
+		int mesii = fechaii.getMonthValue();
+		int anyoii = fechaii.getYear();
+		given(this.vueloService.findVuelosByMes(mesii,anyoii,paging)).willReturn(pagina);
 	}
 	
 	//TESTS DE INSERCION
@@ -293,17 +300,17 @@ public class VueloControllerTests {
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception{
 		mockMvc.perform(post("/vuelos/new")
-				.param("fechaSalida", LocalDateTime.of(2021, 1,1,10,50).toString())
-				.param("fechaLlegada", LocalDateTime.of(2020,1,1,9,50).toString())
 				.with(csrf())
+				.param("fechaSalida", LocalDateTime.of(2021, 1,1,10,50).toString())
+				.param("fechaLlegada", LocalDateTime.of(2021,1,1,12,50).toString())
 				.param("coste", "350.")
 				.param("personalOficina", "1")
 				.param("azafatos", "1","2","3")
 				.param("personalControl", "1","2")
 				.param("aeropuertoOrigen", "1")
-				.param("aeropuertoDestino", "2")
+				.param("aeropuertoDestino", "1")
 				.param("avion", "1"))
-		.andExpect(status().is3xxRedirection())
+		.andExpect(status().is2xxSuccessful())
 		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
 	}
 	
@@ -318,7 +325,13 @@ public class VueloControllerTests {
 				.param("version", "1")
 				.param("fechaSalida", LocalDateTime.of(2021, 1,1,10,50).toString())
 				.param("fechaLlegada", LocalDateTime.of(2021, 1,1,11,50).toString())
-				.param("coste", String.valueOf(100.0)))
+				.param("coste", String.valueOf(100.0))
+				.param("personalOficina", "1")
+				.param("azafatos", "1","2","3")
+				.param("personalControl", "1","2")
+				.param("aeropuertoOrigen", "2")
+				.param("aeropuertoDestino", "1")
+				.param("avion", "1"))
 		.andExpect(view().name("redirect:/vuelos/{vueloId}"));
 	}
 	
@@ -337,23 +350,28 @@ public class VueloControllerTests {
 				.param("aeropuertoOrigen", "1")
 				.param("aeropuertoDestino", "2")
 				.param("avion", "1"))
-		.andExpect(status().is3xxRedirection())
+		.andExpect(status().is2xxSuccessful())
 		.andExpect(view().name("vuelos/createOrUpdateVueloForm"));
 	}
 	
-//	@WithMockUser(value = "spring")
-//	@Test
-//	void testshowVuelosListInicial() throws Exception{
-//		List<Vuelo> lista = new ArrayList<Vuelo>();
-//		lista.add(vuelol);
-//		Page<Vuelo> pagina = new PageImpl<Vuelo>(lista);
-//		Pageable paging = PageRequest.of(0, 20);
-//		given(this.vueloService.findVuelosOrdered(paging)).willReturn(pagina);
-//		mockMvc.perform(get("/vuelos"))
-//		.andExpect(status().isOk())
-//		.andExpect(model().attributeExists("vuelos"))
-//		.andExpect(view().name("vuelos/vuelosList"));
-//	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testshowVuelosListInicial() throws Exception{
+		mockMvc.perform(get("/vuelos"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("vuelos"))
+		.andExpect(view().name("vuelos/vuelosList"));
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testshowVuelosList() throws Exception{
+		mockMvc.perform(get("/vuelos?fecha=2020-12-10"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("vuelos"))
+		.andExpect(view().name("vuelos/vuelosList"));
+	}
 	
 	@WithMockUser(value = "spring")
 	@Test
