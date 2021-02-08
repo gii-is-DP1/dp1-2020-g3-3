@@ -79,6 +79,8 @@ public class BilleteControllerTests {
 	
 	private Vuelo vuelol;
 	
+	private Vuelo vueloPasado;
+	
 	private Asiento asiento;
 	
 	private Cliente cliente;
@@ -97,6 +99,12 @@ public class BilleteControllerTests {
 		vuelol.setFechaLlegada(LocalDateTime.of(2021, Month.DECEMBER, 11, 12, 23));
 		vuelol.setCoste(100.0);
 		
+		vueloPasado = new Vuelo();
+		vueloPasado.setId(TEST_VUELO_ID + 1);
+		vueloPasado.setFechaSalida(LocalDateTime.of(2020, Month.DECEMBER, 10, 12, 23));
+		vueloPasado.setFechaLlegada(LocalDateTime.of(2020, Month.DECEMBER, 11, 12, 23));
+		vueloPasado.setCoste(100.0);
+		
 		asiento = new Asiento();
 		asiento.setLibre(true);
 		asiento.setNombre("A1");
@@ -110,6 +118,7 @@ public class BilleteControllerTests {
 
 		given(this.billeteService.findBilleteById(TEST_BILLETE_ID)).willReturn(billetazo);
 		given(this.vueloService.findVueloById(TEST_VUELO_ID)).willReturn(vuelol);
+		given(this.vueloService.findVueloById(TEST_VUELO_ID + 1)).willReturn(vueloPasado);
 		
 		List<Asiento> asientosSinOcupar = new ArrayList<Asiento>();
 		asientosSinOcupar.add(asiento);
@@ -123,21 +132,43 @@ public class BilleteControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/billetes/10/new")).andExpect(status().isOk())
+		mockMvc.perform(get("/billetes/" + TEST_VUELO_ID + "/new"))
+		.andExpect(status().isOk())
 		.andExpect(model().attributeExists("billete"))
 		.andExpect(view().name("billetes/createOrUpdateBilleteForm"));
+	}
+	
+	@WithMockUser(value = "usuarioMalvado")
+	@Test
+	void testInitCreationFormErrorFecha() throws Exception {
+		mockMvc.perform(get("/billetes/" + (TEST_VUELO_ID + 1) + "/new"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/exception"));
 	}
 
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/billetes/{billeteId}/new", TEST_BILLETE_ID)
+		mockMvc.perform(post("/billetes/{vueloId}/new", TEST_VUELO_ID)
 				.param("coste", "12.54")
 				.param("asiento", "0,A1")
-				.param("fechaReserva", "1999/11/03")
+				.param("fechaReserva", "2022/11/03")
 				.with(csrf()))
-		.andExpect(status().is3xxRedirection());
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/billetes/null")); //Null ya que el Mock no guarda el billete realmente
+	}
+	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessCreationFormErrorFecha() throws Exception {
+		mockMvc.perform(post("/billetes/{vueloId}/new", (TEST_VUELO_ID + 1))
+				.param("coste", "12.54")
+				.param("asiento", "0,A1")
+				.param("fechaReserva", "2021/11/03")
+				.with(csrf()))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/exception"));
 	}
 	
 	@WithMockUser(value = "spring")
