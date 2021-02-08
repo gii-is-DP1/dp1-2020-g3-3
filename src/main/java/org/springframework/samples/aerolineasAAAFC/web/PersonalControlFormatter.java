@@ -23,13 +23,14 @@ public class PersonalControlFormatter implements Formatter<PersonalControl> {
 
 	@Override
 	public String print(PersonalControl personalControl, Locale locale) {
-		return personalControl.getNombre() + personalControl.getApellidos() + " - " + personalControl.getRol();
+		return personalControl.getId() + " - " + personalControl.getNombre()+ " " + personalControl.getApellidos() + ", " + personalControl.getRol();
 	}
 
 	@Override
 	public PersonalControl parse(String text, Locale locale) throws ParseException {
-		int id = Integer.valueOf(text.toString());
-		PersonalControl pControl = this.personalControlService.findPersonalControlById(Integer.valueOf(text.trim()));
+		String[] aux = text.split("-");
+		int id = Integer.valueOf(aux[0].trim());
+		PersonalControl pControl = this.personalControlService.findPersonalControlById(id);
 
 			if (pControl != null && pControl.getId().equals(id)) {
 				return pControl;

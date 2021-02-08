@@ -28,8 +28,9 @@ public class AvionFormatter implements Formatter<Avion>{
 
 	@Override
 	public Avion parse(String text, Locale locale) throws ParseException {
-		
-		Avion avion = this.avionService.findAvionById(Integer.valueOf(text.trim()));
+		String[] aux = text.split("-");
+		Integer id = Integer.valueOf(aux[0].trim());
+		Avion avion = this.avionService.findAvionById(id);
 		
 		if(avion == null) {
 			throw new ParseException("type not found: " + text, 0);
