@@ -29,12 +29,12 @@ import lombok.Setter;
 public class Azafato extends Person{
 
 	// Atributos
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
+	@EqualsAndHashCode.Exclude 
+	@OrderBy("idioma")
 	@JoinTable(name = "idiomas_azafato", 
 	joinColumns = @JoinColumn(name = "azafato_id"),
 	inverseJoinColumns = @JoinColumn(name = "idioma_types_id"))
-	@EqualsAndHashCode.Exclude 
-	@OrderBy("idioma")
 	private Set<IdiomaType> idiomas;
 
 	@Column(name = "salario")

@@ -21,7 +21,7 @@ public class AeropuertoFormatter implements Formatter<Aeropuerto>{
 
 	@Override
 	public String print(Aeropuerto object, Locale locale) {
-		return object.getCodigoIATA();
+		return object.getNombre() + ", " + object.getCodigoIATA();
 	}
 
 	@Override
