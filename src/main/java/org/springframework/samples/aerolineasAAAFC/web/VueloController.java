@@ -19,8 +19,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
+import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
+import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AeropuertoService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
@@ -88,7 +91,21 @@ public class VueloController {
 	public Collection<Avion> populateAviones() {
 		return this.avionService.findAvionesNoPageable();
 	}
-
+	
+	@ModelAttribute("azafatos")
+	public Collection<Azafato> populateAzafatos() {
+		return this.azafatoService.findAzafatosNoPageable();
+	}
+	
+	@ModelAttribute("personalOficina")
+	public Collection<PersonalOficina> populateOficinistas() {
+		return this.pOficinaService.findPersonalNoPageable();
+	}
+	
+	@ModelAttribute("personalControl")
+	public Collection<PersonalControl> populateControladores() {
+		return this.pControlService.findPersonalControlNoPageable();
+	}
 	
 	@GetMapping(value = "/vuelos/new") 
 	public String initCreationVueloForm(Map<String, Object> model) {
@@ -136,8 +153,6 @@ public class VueloController {
 	@PostMapping(value = "/vuelos/{vueloId}/edit")
 	public String processUpdateVueloForm(@Valid Vuelo vuelo, BindingResult result, ModelMap model,
 			@PathVariable("vueloId") int vueloId, @RequestParam(value = "version", required=false) Integer version) {
-
-
 		
 		Vuelo vueloToUpdate = this.vueloService.findVueloById(vueloId);
 		if (vueloToUpdate.getVersion() != version) {

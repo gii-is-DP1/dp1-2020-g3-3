@@ -54,6 +54,9 @@ public class Vuelo extends BaseEntity{
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime  fechaLlegada;
 	
+	@Column(name = "horas_vuelo")
+	private Long  horasVuelo; //Se calcula a partir de la fechaSalida y fechaLlegada
+	
 	@NotNull
 	@Positive
 	@Column(name = "coste")
@@ -63,22 +66,28 @@ public class Vuelo extends BaseEntity{
 	// Relaciones de tabla:
 	
 //  -- Personal
-	@ManyToMany(mappedBy = "vuelos")
+	@ManyToMany
 	@EqualsAndHashCode.Exclude
 	@OrderBy("id")
+	@JoinTable(name = "oficina_vuelo",
+	   joinColumns = @JoinColumn(name = "vuelos_id"),
+	   inverseJoinColumns = @JoinColumn(name= "personal_oficina_id"))
 	private Set<PersonalOficina> personalOficina;
 	
 	@ManyToMany
 	@EqualsAndHashCode.Exclude
+	@OrderBy("id")
 	@JoinTable(name = "azafatos_vuelo",
 	   joinColumns = @JoinColumn(name = "vuelos_id"),
 	   inverseJoinColumns = @JoinColumn(name= "azafatos_id"))
-	@OrderBy("id")
 	private Set<Azafato> azafatos;
 	
-	@ManyToMany(mappedBy="vuelos")
+	@ManyToMany
 	@EqualsAndHashCode.Exclude
 	@OrderBy("id")
+	@JoinTable(name = "control_vuelo",
+	   joinColumns = @JoinColumn(name = "vuelos_id"),
+	   inverseJoinColumns = @JoinColumn(name= "personal_control_id"))
 	private Set<PersonalControl> personalControl;
 	
 //	-- Billete

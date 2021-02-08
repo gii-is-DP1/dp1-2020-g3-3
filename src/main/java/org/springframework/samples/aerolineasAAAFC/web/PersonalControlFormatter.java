@@ -23,7 +23,7 @@ public class PersonalControlFormatter implements Formatter<PersonalControl> {
 
 	@Override
 	public String print(PersonalControl personalControl, Locale locale) {
-		return personalControl.getNombre();
+		return personalControl.getNombre() + personalControl.getApellidos() + " - " + personalControl.getRol();
 	}
 
 	@Override

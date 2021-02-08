@@ -21,7 +21,7 @@ public class AzafatoFormatter implements Formatter<Azafato> {
 
 	@Override
 	public String print(Azafato azafato, Locale locale) {
-		return azafato.getNombre();
+		return azafato.getNombre() + azafato.getApellidos();
 	}
 
 	@Override
