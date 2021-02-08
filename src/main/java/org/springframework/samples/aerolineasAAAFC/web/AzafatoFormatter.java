@@ -21,13 +21,14 @@ public class AzafatoFormatter implements Formatter<Azafato> {
 
 	@Override
 	public String print(Azafato azafato, Locale locale) {
-		return azafato.getNombre() + azafato.getApellidos();
+		return azafato.getId() + " - " + azafato.getNombre() + " " + azafato.getApellidos();
 	}
 
 	@Override
 	public Azafato parse(String text, Locale locale) throws ParseException {
-		int id = Integer.valueOf(text.toString());
-		Azafato a = this.azafatoService.findAzafatoById(Integer.valueOf(text.trim()));
+		String[] aux = text.split("-");
+		int id = Integer.valueOf(aux[0].trim());
+		Azafato a = this.azafatoService.findAzafatoById(id);
 
 			if (a != null && a.getId().equals(id)) {
 				return a;

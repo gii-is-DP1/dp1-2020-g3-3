@@ -125,10 +125,10 @@ public class VueloController {
 			try {
 				this.vueloService.saveVuelo(vuelo);
 			} catch (HorasImposiblesException e) {
-				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
+				result.rejectValue("fechaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 			} catch (HorasMaximasVueloException e) {
-				result.rejectValue("horaLlegada", "invalid", "Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
+				result.rejectValue("fechaLlegada", "invalid", "Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;	
 			} catch (DisponibilidadAvionException e) {
 				result.rejectValue("avion", "invalid", "El avión no está disponible porque debe pasar una revisión");
@@ -152,8 +152,8 @@ public class VueloController {
 	}
 	
 	@PostMapping(value = "/vuelos/{vueloId}/edit")
-	public String processUpdateVueloForm(@Valid Vuelo vuelo, BindingResult result, ModelMap model,
-			@PathVariable("vueloId") int vueloId, @RequestParam(value = "version", required=false) Integer version) {
+	public String processUpdateVueloForm(@Valid Vuelo vuelo, BindingResult result, ModelMap model,@PathVariable("vueloId") int vueloId, 
+										@RequestParam(value = "version", required=false) Integer version) {
 		
 		Vuelo vueloToUpdate = this.vueloService.findVueloById(vueloId);
 		if (vueloToUpdate.getVersion() != version) {
@@ -162,7 +162,7 @@ public class VueloController {
 		}
 		
 		
-		BeanUtils.copyProperties(vuelo, vueloToUpdate, "id","aeropuertoOrigen","aeropuertoDestino","coste"); 
+		BeanUtils.copyProperties(vuelo, vueloToUpdate, "id","aeropuertoOrigen","aeropuertoDestino","coste","horasVuelo"); 
 		if(result.hasErrors()) {
 			return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 		}
@@ -171,10 +171,10 @@ public class VueloController {
 			try {
 				this.vueloService.saveVuelo(vuelo);
 			} catch (HorasImposiblesException e) {
-				result.rejectValue("horaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
+				result.rejectValue("fechaLlegada", "invalid", "La hora de llegada debe ser posterior a la de salida");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 			} catch (HorasMaximasVueloException e) {
-				result.rejectValue("horaLlegada", "invalid", "Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
+				result.rejectValue("fechaLlegada", "invalid", "Ningún avión puede superar el límite de 14 horas seguidas en vuelo");
 				return VIEWS_VUELO_CREATE_OR_UPDATE_FORM;
 			}catch (DisponibilidadAvionException e) {
 					result.rejectValue("avion", "invalid", "El avión no está disponible porque debe pasar una revisión");

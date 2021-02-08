@@ -25,13 +25,14 @@ public class PersonalOficinaFormatter implements Formatter<PersonalOficina> {
 
 	@Override
 	public String print(PersonalOficina personalOficina, Locale locale) {
-		return personalOficina.getNombre() + personalOficina.getApellidos();
+		return personalOficina.getId() + " - " + personalOficina.getNombre() + " " + personalOficina.getApellidos();
 	}
 
 	@Override
 	public PersonalOficina parse(String text, Locale locale) throws ParseException {
-		int id = Integer.valueOf(text.toString());
-		PersonalOficina pOficina = this.personalOficinaService.findPersonalOficinaById(Integer.valueOf(text.trim()));
+		String[] aux = text.split("-");
+		Integer id = Integer.valueOf(aux[0].trim());
+		PersonalOficina pOficina = this.personalOficinaService.findPersonalOficinaById(id);
 
 			if (pOficina != null && pOficina.getId().equals(id)) {
 				return pOficina;

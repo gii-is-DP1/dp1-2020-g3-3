@@ -21,13 +21,14 @@ public class AeropuertoFormatter implements Formatter<Aeropuerto>{
 
 	@Override
 	public String print(Aeropuerto object, Locale locale) {
-		return object.getNombre() + ", " + object.getCodigoIATA();
+		return object.getId() + " - " + object.getNombre() + ", " + object.getCodigoIATA();
 	}
 
 	@Override
 	public Aeropuerto parse(String text, Locale locale) throws ParseException {
-		
-		Aeropuerto aeropuerto = this.aeropuertoService.findAeropuertoById(Integer.valueOf(text.trim()));
+		String[] aux = text.split("-");
+		Integer id = Integer.valueOf(aux[0].trim());
+		Aeropuerto aeropuerto = this.aeropuertoService.findAeropuertoById(id);
 		
 		if(aeropuerto == null) {
 			throw new ParseException("type not found: " + text, 0);

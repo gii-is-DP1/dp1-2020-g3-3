@@ -52,17 +52,23 @@ public class VueloService {
 
 	@Transactional
 	public void saveVuelo(Vuelo vuelo) throws DataAccessException, HorasImposiblesException, HorasMaximasVueloException, DisponibilidadAvionException{
+		
 		LocalDateTime salida = vuelo.getFechaSalida();
 		LocalDateTime llegada = vuelo.getFechaLlegada();
-
-		long horasVuelo = salida.until(llegada, ChronoUnit.HOURS);
+		
+		long horasVuelo = salida.until(llegada, ChronoUnit.HOURS); //Horas de vuelo total
+		
+		Avion avion = null;
+		
 		if(vuelo.getId() != null) {
-			if(!vuelo.getHorasVuelo().equals(horasVuelo)) {
+			long horasVueloAux = vuelo.getHorasVuelo();
+			if(horasVueloAux != horasVuelo) {
 				throw new HorasImposiblesException("Las horas de vuelo deben de ser las mismas");
 			}
+			avion =  this.findVueloById(vuelo.getId()).getAvion();
 		}
+		
 		vuelo.setHorasVuelo(horasVuelo);
-		Avion avion = this.vueloRepository.findById(vuelo.getId()).get().getAvion();
 		
 		if(vuelo.getAvion().getId() != avion.getId() || avion == null) { //Si al actualizar se cambia de avión hace las comprobaciones o si el vuelo es nuevo
 			log.info("horas de Vuelo {}: {}", vuelo.getAeropuertoOrigen().getCodigoIATA()+"-"+vuelo.getAeropuertoDestino().getCodigoIATA(), horasVuelo);
@@ -89,6 +95,7 @@ public class VueloService {
 				vuelo.getAvion().setHorasAcumuladas((int) horasTotal);
 				log.info("Horas acumuladas  del avión {} tras comprobar errores: {}", vuelo.getAvion().getId(), horasTotal);
 		}	
+			
 			if(vuelo.getId()==null) {
 				vuelo.setVersion(1);
 				this.vueloRepository.save(vuelo);
