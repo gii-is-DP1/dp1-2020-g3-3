@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
+import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.menu.PlatoBase;
 import org.springframework.samples.aerolineasAAAFC.model.menu.PlatoType;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
@@ -52,6 +53,8 @@ public class MenuControllerTests {
 	private PlatoType pt1;
 	private PlatoType pt2;
 	private PlatoType pt3;
+	
+	private Cliente cliente;
 
 	@BeforeEach
 	void setup() {
@@ -77,9 +80,14 @@ public class MenuControllerTests {
 		p2.setTipoPlato(pt2);
 		p3.setTipoPlato(pt3);
 		
+		cliente = new Cliente();
+		cliente.setNif("spring");
+		
 		given(this.platoBaseService.findPlatosBase()).willReturn(Lists.newArrayList(p1,p2,p3));
 		
-		aSevillaVamos = this.billeteService.findBilleteById(TEST_BILLETE_ID);
+		aSevillaVamos = new Billete();
+		aSevillaVamos.setCliente(cliente);
+		aSevillaVamos.setId(TEST_BILLETE_ID);
 		given(this.billeteService.findBilleteById(TEST_BILLETE_ID)).willReturn(aSevillaVamos);
 	}
 
@@ -92,6 +100,14 @@ public class MenuControllerTests {
 		.andExpect(status().isOk())
 		.andExpect(view().name("billetes/createOrUpdateMenuForm"));
 	}
+	
+	@WithMockUser(value = "el_mas_hacker") //Test con usuario malicioso
+	@Test
+	void testInitCreationFormErrorUser() throws Exception {
+		mockMvc.perform(get("/billetes/{billeteId}/menus/new",TEST_BILLETE_ID))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/exception"));
+	}
 
 	@WithMockUser(value = "spring")
 	@Test
@@ -102,7 +118,7 @@ public class MenuControllerTests {
 				.param("plato2", "Risotto vegetal")
 				.param("plato3", "Manzana"))
 		.andExpect(status().is3xxRedirection())
-		.andExpect(view().name("redirect:/billetes/datos"));
+		.andExpect(view().name("redirect:/billetes/"+TEST_BILLETE_ID));
 		
 	}
 
@@ -118,6 +134,18 @@ public class MenuControllerTests {
 		.andExpect(model().attributeHasFieldErrors("menu", "plato2"))
 		.andExpect(model().attributeHasFieldErrors("menu", "plato3"))
 		.andExpect(view().name("billetes/createOrUpdateMenuForm"));
+	}
+	
+	@WithMockUser(value = "el_mas_hacker")
+	@Test
+	void testProcessCreationFormHasErrorsUser() throws Exception {
+		mockMvc.perform(post("/billetes/{billeteId}/menus/new",TEST_BILLETE_ID)
+				.with(csrf())
+				.param("plato1", "Sopa de miso")
+				.param("plato2", "Risotto vegetal")
+				.param("plato3", "Manzana"))
+		.andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/exception"));
 	}
 
 }

@@ -48,9 +48,6 @@ public class BilleteControllerTests {
 	private static final int TEST_BILLETE_ID = 2;
 	private static final int TEST_VUELO_ID = 0;
 
-	@Autowired
-	private BilleteController billeteController;
-
 	@MockBean
 	private BilleteService billeteService;
 	
