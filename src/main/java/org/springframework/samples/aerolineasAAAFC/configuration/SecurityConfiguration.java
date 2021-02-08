@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				
 				//Crear un cliente y editarlo
 				.antMatchers("/user/new").permitAll()
-				.antMatchers("clientes/{clienteId}/edit").authenticated()
+				.antMatchers("/clientes/{clienteId}/edit").authenticated()
 				.antMatchers("/clientes/new").hasAnyAuthority("admin","personalOficina")
 				//Historial compra cliente
 				.antMatchers("/clientes/{clienteId}/compras").hasAnyAuthority("admin","personalOficina")

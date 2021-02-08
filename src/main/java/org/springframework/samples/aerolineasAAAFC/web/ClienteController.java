@@ -91,7 +91,23 @@ public class ClienteController {
 	 */
 
 	@GetMapping(value = "/clientes/{clienteId}/edit")
-	public String initUpdateClienteForm(@PathVariable("clienteId") int clienteId, ModelMap model) {
+	public String initUpdateClienteForm(@PathVariable("clienteId") int clienteId, ModelMap model, Authentication authentication) {
+		
+		//Evita que otros clientes editen perfiles de otros
+		String usuario = authentication.getName();
+		Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
+		String rol = "";
+		for(GrantedAuthority auth: autoridad) {
+			rol = auth.getAuthority();
+		}
+		if(rol.equals("cliente")) {
+			Cliente clienteC = this.clienteService.findClienteByNif(usuario);
+			int clienteCID = clienteC.getId();
+			if(clienteId != clienteCID) {
+				return "redirect:/clientes/" + clienteCID;
+			}
+		}
+		
 		Cliente cliente = this.clienteService.findClienteById(clienteId);
 		model.addAttribute(cliente);
 		return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
@@ -99,12 +115,12 @@ public class ClienteController {
 
 	@PostMapping(value = "/clientes/{clienteId}/edit")
 	public String processUpdateClienteForm(@Valid Cliente cliente, BindingResult result, 
-			@PathVariable("clienteId") int clienteId, ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
-		
+			@PathVariable("clienteId") int clienteId, ModelMap model, @RequestParam(value = "version", required=false) Integer version,Authentication authentication) {
+
 		Cliente clienteToUpdate2 = this.clienteService.findClienteById(clienteId);
 		if(clienteToUpdate2.getVersion()!=version) {
 			model.put("message","Modificación de cliente ya existente. ¡Prueba de nuevo!");
-			return initUpdateClienteForm(clienteId,model);
+			return initUpdateClienteForm(clienteId,model,authentication);
 			}
 		
 		Cliente clienteToUpdate = this.clienteService.findClienteById(clienteId);

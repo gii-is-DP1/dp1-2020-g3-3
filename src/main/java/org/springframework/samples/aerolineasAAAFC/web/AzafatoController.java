@@ -98,8 +98,21 @@ public class AzafatoController {
 	 *  Update sobre un azafato
 	 */
 	@GetMapping(value = "/azafatos/{azafatoId}/edit")
-	public String initUpdateAzafatoForm(@PathVariable("azafatoId") int azafatoId, ModelMap model) {
-
+	public String initUpdateAzafatoForm(@PathVariable("azafatoId") int azafatoId, ModelMap model, Authentication authentication) {
+		//Evita que otros azafatos editen perfiles de otros
+		String usuario = authentication.getName();
+		Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
+		String rol = "";
+		for(GrantedAuthority auth: autoridad) {
+			rol = auth.getAuthority();
+		}
+		if(rol.equals("azafato")) {
+			Azafato azaC = this.azafatoService.findAzafatoByNif(usuario);
+			int azaCID = azaC.getId();
+			if(azafatoId != azaCID) {
+				return "redirect:/azafatos/"+azaCID;
+			}
+		}
 		Azafato azafato = this.azafatoService.findAzafatoById(azafatoId);
 		model.addAttribute(azafato);
 		return VIEWS_AZAFATO_CREATE_OR_UPDATE_FORM;
@@ -107,13 +120,13 @@ public class AzafatoController {
 
 	@PostMapping(value = "/azafatos/{azafatoId}/edit")
 	public String processUpdateAzafatoForm(@Valid Azafato azafato, BindingResult result,
-			@PathVariable("azafatoId") int azafatoId,ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+			@PathVariable("azafatoId") int azafatoId,ModelMap model, @RequestParam(value = "version", required=false) Integer version, Authentication authentication) {
 
 		Azafato azToUpdate = this.azafatoService.findAzafatoById(azafatoId);
 
 		if(azToUpdate.getVersion() != version) {
 			model.put("message","Modificación de azafato ya existente. ¡Prueba de nuevo!");
-			return initUpdateAzafatoForm(azafatoId,model);
+			return initUpdateAzafatoForm(azafatoId,model,authentication);
 		} 
 
 		Azafato azafatoToUpdate = this.azafatoService.findAzafatoById(azafatoId);
@@ -191,7 +204,7 @@ public class AzafatoController {
 	@GetMapping("/azafatos/{azafatoId}")
 	public ModelAndView showAzafato(@PathVariable("azafatoId") int azafatoId, Authentication authentication) {
 
-		//Evita que otros oficinistas entren a perfiles de otros
+		//Evita que otros azafatos entren a perfiles de otros
 		String usuario = authentication.getName();
 		Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
 		String rol = "";
