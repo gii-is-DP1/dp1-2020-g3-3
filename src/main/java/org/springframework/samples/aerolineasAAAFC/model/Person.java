@@ -39,7 +39,7 @@ public class Person extends BaseEntity{
 	
 	@Column(name = "iban", unique = true)
 	@NotEmpty
-	@Pattern(message = "Debe corresponder al formato: ES, un espacio en blanco y 22 dígitos" ,regexp="^ES\\s\\d{22}$")
+	@Pattern(regexp="^ES\\s\\d{22}$", message = "Debe corresponder al formato: ES, un espacio en blanco y 22 dígitos")
 	protected String iban;
 	
 	@OneToOne(cascade = CascadeType.ALL)
