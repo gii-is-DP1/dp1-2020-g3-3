@@ -1,6 +1,7 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -67,43 +68,70 @@ public class BilleteController {
 			String name = authentication.getName(); // name corresponde al nif del usuario
 			model.put("billete", billete);
 			Vuelo vuelo = this.vueloService.findVueloById(vueloId);
-			List<Asiento> asientos = this.asientoService.findAsientosSinOcupar(vuelo);
-			model.put("asientos", asientos);
-			model.put("nAsientos", asientos.size());
-			model.put("vuelo", vuelo);
-			Cliente cliente = clienteService.findClienteByNif(name);
-			model.put("cliente", cliente);
-			DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-			LocalDate today = LocalDate.now();
-			String aux = today.format(d);
-			model.put("fechaReserva", aux);
-			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+			LocalDateTime hoy = LocalDateTime.now();
+
+			if (vuelo.getFechaSalida().isAfter(hoy)) {
+				List<Asiento> asientos = this.asientoService.findAsientosSinOcupar(vuelo);
+				model.put("asientos", asientos);
+				model.put("nAsientos", asientos.size());
+				model.put("vuelo", vuelo);
+				Cliente cliente = clienteService.findClienteByNif(name);
+				model.put("cliente", cliente);
+
+				LocalDate today = LocalDate.now();
+				DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+				String aux = today.format(d);
+				model.put("fechaReserva", aux);
+			}
+
+			else {
+				return "redirect:/exception";
+			}
+
 		} else {
 			return "user/createClienteForm.jsp";
 		}
+		return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/billetes/{vueloId}/new")
 	public String processCreationBilleteForm(@PathVariable("vueloId") int vueloId, @Valid Billete billete,
 			BindingResult result, Map<String, Object> model) {
-		if (result.hasErrors()) {
-			return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
-		} else {
-			this.billeteService.saveBillete(billete);
+		if (SecurityContextHolder.getContext().getAuthentication() != null) {
+			if (result.hasErrors()) {
+				return VIEWS_BILLETE_CREATE_OR_UPDATE_FORM;
+			} else {
+				LocalDateTime hoy = LocalDateTime.now();
+				Vuelo vuelo = this.vueloService.findVueloById(vueloId);
+				// Ya que el id de vuelo en asiento se puede cambiar, comprobamos que ambos
+				// coinciden
+				int vueloIdDeAsiento = billete.getAsiento().getVuelo().getId();
+				int vueloIdDeVuelo = vuelo.getId();
+				
+				//Comprobamos que los IDs sean iguales, si se intenta hacer 
+				//POST hacking, se comprará un billete si el asiento formateado existe
+				//es análogo a acceder a la compra de forma legal, solo que cambiando url y value
+				if (vuelo.getFechaSalida().isAfter(hoy) && (vueloIdDeAsiento == vueloIdDeVuelo)) {
+					//Recordemos que la fecha reserva y coste nos dan igual, ya que se establecen a nivel service
+					this.billeteService.saveBillete(billete);
+				} else {
+					return "redirect:/exception";
+				}
 
-			return "redirect:/billetes/" + billete.getId();
+			}
+		} else {
+			return "redirect:/exception";
 		}
+		return "redirect:/billetes/" + billete.getId();
 	}
 
 	// Vista que muestra el billete comprado
 	@GetMapping(value = "/billetes/{billeteId}")
 	public String previewBillete(@PathVariable("billeteId") int billeteId, Map<String, Object> model) {
-		// Apartado de validacion
 
 		Billete billete = this.billeteService.findBilleteById(billeteId);
 
 		if (billete == null) {
-			model.put("message", "Parece que ha accedido a un billete no registrado...");
 			return "redirect:/exception"; // Vista de error
 		}
 
@@ -115,12 +143,10 @@ public class BilleteController {
 				model.put("billete", billete);
 				Cliente cliente = billete.getCliente();
 				model.put("cliente", cliente);
-			}
-			
-			else {
+			} else {
 				return "redirect:/exception";
 			}
-			
+
 		} else {
 			return "login";
 		}
