@@ -92,10 +92,9 @@ public class VueloService {
 			
 			
 			log.info("vuelo guardado {}.", vuelo.getId());
-			
 			//Si es un vuelo nuevo, genera los asientos
 			//Si viene de un update, los dejara tal cual
-			if(vuelo.getAsientos().isEmpty()) { 
+			if(vuelo.getAsientos() == null || vuelo.getAsientos().isEmpty()) { 
 				asientoService.saveManyAsientos(vuelo);
 			}
 			
