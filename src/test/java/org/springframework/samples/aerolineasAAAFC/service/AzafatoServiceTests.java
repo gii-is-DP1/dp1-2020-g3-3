@@ -80,11 +80,11 @@ public class AzafatoServiceTests {
 	@Test
 	void getVuelosByDateSuccessful() {
 		Azafato personal = this.azafatoService.findAzafatoById(1);
-		Collection<Vuelo> vuelos = this.azafatoService.horario(personal.getId(), 01, 2015);
+		Collection<Vuelo> vuelos = this.azafatoService.horario(personal.getId(), 01, 2021);
 		
 		int found = vuelos.size();
 		
-		assertThat(found).isEqualTo(1);
+		assertThat(found).isEqualTo(2);
 	}
 	
 	@Test
@@ -97,9 +97,9 @@ public class AzafatoServiceTests {
 	@ParameterizedTest
 	@CsvSource ({
 		"2019-06-05, 1",
-		"2021-01-10, 1",
+		"2021-01-11, 2",
 		"2021-01-01, 0",
-		"2015-01-20, 1"
+		"2021-05-24, 1"
 	})
 	void getVuelosSemana(String fecha, int total) {
 		LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ISO_DATE);
@@ -123,7 +123,7 @@ public class AzafatoServiceTests {
 		azafato.setNombre("Rafael");
 		azafato.setApellidos("Nadal Parera");
 		azafato.setIban("ES 3332020458401202067812");
-		azafato.setNif("84493294B");
+		azafato.setNif("46081291D");
 		azafato.setSalario(2340.);
 		
 		//AÑADIMOS IDIOMAS AL AZAFATO
@@ -138,7 +138,7 @@ public class AzafatoServiceTests {
 		
 		//ESTABLECEMOS SU USUARIO
 		User user = new User();
-		user.setUsername("84493294B");
+		user.setUsername("46081291D");
 		user.setPassword("*pepe_csfay");
 		azafato.setUser(user);    
 

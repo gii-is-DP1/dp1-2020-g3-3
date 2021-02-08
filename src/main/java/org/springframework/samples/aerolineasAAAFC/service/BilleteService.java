@@ -116,10 +116,11 @@ public class BilleteService {
 			PlatoBase aux2 = platoBaseService.findPlatoBaseByName(p2.getPlatoBase().getName());
 			PlatoBase aux3 = platoBaseService.findPlatoBaseByName(p3.getPlatoBase().getName());
 
-			if (aux1 == null || aux2 == null || aux3 == null)
+			if (aux1 == null || aux2 == null || aux3 == null) {
+				log.error("No se ha introducido algún plato en el menú {}.",menu.getId());
 				throw new PlatosNoValidosException(2);
-
-			else { // Esta comprobacion es solo necesaria si usamos el service directamente, se
+			
+			}else { // Esta comprobacion es solo necesaria si usamos el service directamente, se
 					// puede eliminar
 				if (aux1.getTipoPlato().getName().equals("primerPlato"))
 					cont1 = 1;
@@ -130,10 +131,11 @@ public class BilleteService {
 				if (aux3.getTipoPlato().getName().equals("postre"))
 					cont3 = 1;
 
-				if (cont1 != 1 || cont2 != 1 || cont3 != 1)
+				if (cont1 != 1 || cont2 != 1 || cont3 != 1) {
+					log.error("Se ha intentado introdur más de un plato específico en el menú {}.",menu.getId());
 					throw new PlatosNoValidosException(3);
 
-				else {
+				}else {
 
 					if (menu.getBillete().getMenus().equals(null)) {
 						menuService.saveMenu(menu);

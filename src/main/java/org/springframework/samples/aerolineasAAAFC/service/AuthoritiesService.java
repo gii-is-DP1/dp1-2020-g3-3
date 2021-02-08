@@ -40,12 +40,12 @@ public class AuthoritiesService {
 		if(user.isPresent()) {
 			authority.setUser(user.get());
 			authority.setAuthority(role);
-			//user.get().getAuth().add(authority);
 			authoritiesRepository.save(authority);
 			log.info("autoridad {} establecida para el usuario {}.", role, username);
-		}else
+		}else {
 			log.error("El usuario {} no se encuentra en la base de datos.", username);
 			throw new DataAccessException("User '" + username + "' not found!") {};
+		}
 	}
 
 

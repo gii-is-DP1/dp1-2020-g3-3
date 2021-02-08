@@ -47,7 +47,6 @@ public class ClienteService{
 			cliente.setVersion(1);
 			clienteRepository.save(cliente);
 			log.info("Cliente {} guardado.", cliente.getId());
-			
 			userService.saveUser(cliente.getUser());
 			authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "cliente");
 		}else {

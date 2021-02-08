@@ -174,6 +174,7 @@ public class PersonalControlControllerTests {
 	void testProcessUpdatePersonalControlFormSuccess() throws Exception {
 		mockMvc.perform(post("/controladores/{pControlId}/edit", TEST_PERSONALCONTROL_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Juan")
 				.param("apellidos", "Fernandez Romero")
 				.param("nif", "64112428C")
@@ -190,6 +191,7 @@ public class PersonalControlControllerTests {
 	void testProcessUpdatePersonalControlFormError() throws Exception {
 		mockMvc.perform(post("/controladores/{pControlId}/edit", TEST_PERSONALCONTROL_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Camile")
 				.param("apellidos", "Bernard")
 				.param("nif", "58963425")
@@ -236,8 +238,8 @@ public class PersonalControlControllerTests {
 	void testProcessFindFormNoPersonalControlFound() throws Exception {
 		mockMvc.perform(get("/controladoresfind")
 				.param("nif", ""))
-		.andExpect(status().is3xxRedirection())
-		.andExpect(view().name("redirect:/controladores"));
+		.andExpect(status().is2xxSuccessful())
+		.andExpect(view().name("controladores/personalControlList"));
 	}
 
 	

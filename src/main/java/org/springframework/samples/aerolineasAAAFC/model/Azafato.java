@@ -45,9 +45,6 @@ public class Azafato extends Person{
 
 	@ManyToMany
 	@OrderBy("fechaSalida DESC")
-	@JoinTable(name = "azafatos_vuelo",
-			   joinColumns = @JoinColumn(name = "azafatos_id"),
-			   inverseJoinColumns = @JoinColumn(name= "vuelos_id"))
 	@EqualsAndHashCode.Exclude 
 	private Set<Vuelo> vuelos;
 

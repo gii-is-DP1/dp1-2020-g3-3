@@ -171,6 +171,7 @@ public class ClienteControllerTests {
 	void testProcessUpdateClienteSuccess() throws Exception {
 		mockMvc.perform(post("/clientes/{clienteId}/edit",TEST_CLIENTE_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Dolores")
 				.param("apellidos", "Ramos Ceballos")
 				.param("nif", "86437755Y")
@@ -188,6 +189,7 @@ public class ClienteControllerTests {
 	void testProcessUpdateClienteError() throws Exception {
 		mockMvc.perform(post("/clientes/{clienteId}/edit",TEST_CLIENTE_ID)
 				.with(csrf())
+				.param("version", "1")
 				.param("nombre", "Dolores")
 				.param("apellidos", "Ramos Ceballos")
 				.param("nif", "29565800A")
@@ -228,8 +230,9 @@ public class ClienteControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessFindFormNoClientesFound() throws Exception {
-		mockMvc.perform(get("/clientesfind").param("nif", "")).andExpect(status().is3xxRedirection())
-		.andExpect(view().name("redirect:/clientes"));
+		mockMvc.perform(get("/clientesfind").param("nif", ""))
+		.andExpect(status().is2xxSuccessful())
+		.andExpect(view().name("clientes/clientesList"));
 	}
 
 	//OTROS

@@ -78,22 +78,22 @@ public class PersonalControlServiceTests {
 	@Test
 	void getVuelosByDateSuccessful() {
 
-		Collection<Vuelo> vuelos = this.personalControlService.horario(1, 01, 2015);
+		Collection<Vuelo> vuelos = this.personalControlService.horario(1, 01, 2021);
 		
 		int found = vuelos.size();
 		
-		assertThat(found).isEqualTo(1);
+		assertThat(found).isEqualTo(3);
 	}
 	
 	@ParameterizedTest
 	@CsvSource ({
-		"2021-01-11, 1",
-		"2021-01-05, 2",
-		"2015-01-21, 1",
-		"2021-01-07, 2",
-		"2021-01-08, 2",
+		"2021-01-11, 2",
+		"2021-01-05, 0",
+		"2015-01-21, 0",
+		"2021-01-07, 0",
+		"2021-01-08, 0",
 		"2021-02-06, 1",
-		"2021-01-10, 2"
+		"2021-01-10, 0"
 	})
 	void getVuelosSemana(String fecha, int total) {
 		LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ISO_DATE);

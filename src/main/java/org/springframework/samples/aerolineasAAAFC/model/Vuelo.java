@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -67,8 +68,11 @@ public class Vuelo extends BaseEntity{
 	@OrderBy("id")
 	private Set<PersonalOficina> personalOficina;
 	
-	@ManyToMany(mappedBy="vuelos")
+	@ManyToMany
 	@EqualsAndHashCode.Exclude
+	@JoinTable(name = "azafatos_vuelo",
+	   joinColumns = @JoinColumn(name = "vuelos_id"),
+	   inverseJoinColumns = @JoinColumn(name= "azafatos_id"))
 	@OrderBy("id")
 	private Set<Azafato> azafatos;
 	
