@@ -49,6 +49,7 @@ public class PersonalOficinaService {
 			userService.saveUser(pOficina.getUser());
 			authoritiesService.saveAuthorities(pOficina.getUser().getUsername(), "personalOficina");
 		}else {
+			pOficina.setVersion(pOficina.getVersion()+1);
 			pOficinaRepository.save(pOficina);
 		}
 	}

@@ -104,7 +104,6 @@ public class AvionController {
 				model.put("message", "Modificación de avión ya existente. ¡Prueba de nuevo!");
 				return initUpdateAvionForm(avionId, model);
 			}
-			avion.incrementVersion();
 			avion.setId(avionId);
 			this.avionService.saveAvion(avion);
 

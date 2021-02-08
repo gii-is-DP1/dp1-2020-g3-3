@@ -63,22 +63,22 @@ INSERT INTO authorities(id,username,authority) VALUES (19,'39658948W','personalO
 
 
 --Aeropuertos
-INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de Sao Paulo Guarulhos','Sao Paulo, Brasil' , 'GRU', '+551124452945');
-INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de Madrid-Barajas','Madrid, España' , 'MAD', '+34913211000');
-INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de Londres-Heathrow','Londres, Reino Unido' , 'LHR', '+448443351801');
-INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de Paris-Orly','Paris, Francia' , 'ORY', '+33892563950');
-INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto Internacional de Tokio','Tokio, Japon' , 'HND', '+81357578111');
-INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto Internacional John F. Kennedy','Nueva York, Estados Unidos' , 'JFK', '+17182444444');
-INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto Internacional de Los Angeles','Los Angeles, Estados Unidos' , 'LAX', '+18554635252');
-INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono)
-VALUES ('Aeropuerto de Berlin-Brandeburgo Willy Brandt','Berlin, Alemania' , 'BER', '+4930609160910');
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono,version)
+VALUES ('Aeropuerto de Sao Paulo Guarulhos','Sao Paulo, Brasil' , 'GRU', '+551124452945', 1);
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono,version)
+VALUES ('Aeropuerto de Madrid-Barajas','Madrid, España' , 'MAD', '+34913211000', 1);
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono,version)
+VALUES ('Aeropuerto de Londres-Heathrow','Londres, Reino Unido' , 'LHR', '+448443351801', 1);
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono,version)
+VALUES ('Aeropuerto de Paris-Orly','Paris, Francia' , 'ORY', '+33892563950', 1);
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono,version)
+VALUES ('Aeropuerto Internacional de Tokio','Tokio, Japon' , 'HND', '+81357578111', 1);
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono,version)
+VALUES ('Aeropuerto Internacional John F. Kennedy','Nueva York, Estados Unidos' , 'JFK', '+17182444444', 1);
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono,version)
+VALUES ('Aeropuerto Internacional de Los Angeles','Los Angeles, Estados Unidos' , 'LAX', '+18554635252', 1);
+INSERT INTO aeropuertos(nombre,localizacion,codigo_IATA,telefono,version)
+VALUES ('Aeropuerto de Berlin-Brandeburgo Willy Brandt','Berlin, Alemania' , 'BER', '+4930609160910', 1);
 
 --Aviones
 INSERT INTO aviones(tipo_avion,capacidad_pasajero, horas_acumuladas,fecha_fabricacion,disponibilidad,fecha_revision,plazas_economica,plazas_ejecutiva,plazas_primera,version)
@@ -95,26 +95,26 @@ VALUES ('Airbus A330', 335 , 300, '2015-01-20', true, '2020-03-10', 250, 75, 10,
 
 --Vuelos
 
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('11-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('11-01-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,1);
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('24-05-2021 8:30','dd-MM-yyyy hh:mm'),parsedatetime('24-05-2021 10:55','dd-MM-yyyy hh:mm'),40,2,3,2);
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('17-01-2021 23:30','dd-MM-yyyy hh:mm'),parsedatetime('18-01-2021 03:40','dd-MM-yyyy hh:mm'),250,6,5,3);
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('03-06-2019 7:10','dd-MM-yyyy hh:mm'),parsedatetime('03-06-2019 13:20','dd-MM-yyyy hh:mm'),300,6,7,4);
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('15-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('15-02-2021 21:30','dd-MM-yyyy hh:mm'),200,1,2,1);
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('20-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('20-01-2021 21:30','dd-MM-yyyy hh:mm'),150,1,6,1);
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('06-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('06-02-2021 18:30','dd-MM-yyyy hh:mm'),500,2,1,3);
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,4);
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),200,3,4,2);
-INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id) 
-VALUES (parsedatetime('10-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-02-2021 21:30','dd-MM-yyyy hh:mm'),350,2,3,3);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('11-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('11-01-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,1, 1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('24-05-2021 8:30','dd-MM-yyyy hh:mm'),parsedatetime('24-05-2021 10:55','dd-MM-yyyy hh:mm'),40,2,3,2, 1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('17-01-2021 23:30','dd-MM-yyyy hh:mm'),parsedatetime('18-01-2021 03:40','dd-MM-yyyy hh:mm'),250,6,5,3, 1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('03-06-2019 7:10','dd-MM-yyyy hh:mm'),parsedatetime('03-06-2019 13:20','dd-MM-yyyy hh:mm'),300,6,7,4, 1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('15-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('15-02-2021 21:30','dd-MM-yyyy hh:mm'),200,1,2,1, 1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('20-01-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('20-01-2021 21:30','dd-MM-yyyy hh:mm'),150,1,6,1, 1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('06-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('06-02-2021 18:30','dd-MM-yyyy hh:mm'),500,2,1,3, 1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),300,1,2,4, 1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),200,3,4,2, 1);
+INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,version) 
+VALUES (parsedatetime('10-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-02-2021 21:30','dd-MM-yyyy hh:mm'),350,2,3,3, 1);
 
 
 

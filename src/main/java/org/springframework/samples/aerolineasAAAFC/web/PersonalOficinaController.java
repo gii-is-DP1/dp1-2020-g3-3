@@ -98,19 +98,18 @@ public class PersonalOficinaController {
 	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina personalOficina, BindingResult result, @PathVariable("pOficinaId") int pOficinaId,
 			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
 		
-		PersonalOficina personalOficinaToUpdate=this.pOficinaService.findPersonalOficinaById(pOficinaId);
+		PersonalOficina personalOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
 
 		if(personalOficinaToUpdate.getVersion()!=version) {
 			model.put("message","Modificación de personal de oficina ya existente. ¡Prueba de nuevo!");
 			return initUpdatePersonalOficinaForm(pOficinaId,model);
 			}
-		PersonalOficina personalOficinaToUpdate2 = this.pOficinaService.findPersonalOficinaById(pOficinaId);
-		BeanUtils.copyProperties(personalOficina, personalOficinaToUpdate2, "id","nif","user.username");
+
+		BeanUtils.copyProperties(personalOficina, personalOficinaToUpdate, "id","nif","user.username");
 		if(result.hasErrors()) {
 			return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			personalOficina.incrementVersion();
 			personalOficina.setId(pOficinaId);
 			try {
 				this.pOficinaService.savePersonalOficina(personalOficina);

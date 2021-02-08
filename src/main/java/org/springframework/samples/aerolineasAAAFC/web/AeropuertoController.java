@@ -90,7 +90,6 @@ public class AeropuertoController {
 				model.put("message", "Modificación de aeropuerto ya existente. ¡Prueba de nuevo!");
 				return initUpdateAeropuertoForm(aeropuertoId, model);
 			}
-			aeropuerto.incrementVersion();
 			aeropuerto.setId(aeropuertoId);
 			try {
 				this.aeropuertoService.saveAeropuerto(aeropuerto);
