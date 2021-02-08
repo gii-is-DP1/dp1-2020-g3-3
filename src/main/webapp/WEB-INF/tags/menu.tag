@@ -30,7 +30,7 @@
 
 			<div class="header-left">
 				<sec:authorize access="!isAuthenticated()">
-					<a href="/">Sobre Nosotros</a> 
+					<a href="https://github.com/gii-is-DP1/dp1-2020-g3-3">Sobre Nosotros</a> 
 				</sec:authorize>
 				<sec:authorize access="hasAnyAuthority('admin','azafato','personalControl','personalOficina')">
 					<a href="/clientes">Clientes</a>

@@ -11,15 +11,15 @@
 
 
 </head>
-<body>
-<div class="container-fluid text-center">
+<body style="background-color: #f1f1f1;">
+<div class="container-fluid text-center" style="margin-top: 10%">
 	<div>
-		<spring:url value="/resources/images/logo.png" var="logo" />
-		<img class="imagen" alt="AAAFC logo" src="${logo}" style="width:10%;">
+		<spring:url value="/resources/images/logoT.png" var="logo" />
+		<img class="imagen" alt="AAAFC logo" src="${logo}" style="width:30%;">
 	</div>
 
    <form method="POST" action="/login" style="max-width: 350px; margin:0 auto;">
-   	<div class="border border-secondary p-3 rounded">
+   	<div class="border border-secondary p-3 rounded" style="background-color: white;">
    		<h2>Iniciar Sesión</h2>
    		 <p>
          	<label for="username" class="sr-only">Usuario</label>
