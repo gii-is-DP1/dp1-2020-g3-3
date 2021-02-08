@@ -97,12 +97,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				//Permisos para eliminar diferentes entidades de la empresa
 				.antMatchers("/aeropuertos/{aeropuertoId}/delete","/aviones/{avionId}/delete","clientes/{clienteId}/delete").hasAnyAuthority("admin","personalOficina")
 				
-				
-				
-				
-				
-				
-				
 				.antMatchers("/users/new").permitAll()		
 				.antMatchers("/login*").permitAll()
 				.anyRequest().denyAll()

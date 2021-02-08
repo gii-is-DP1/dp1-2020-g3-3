@@ -1,44 +1,34 @@
 package org.springframework.samples.aerolineasAAAFC.web;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.samples.aerolineasAAAFC.model.Avion;
-import org.springframework.samples.aerolineasAAAFC.model.Billete;
-import org.springframework.samples.aerolineasAAAFC.model.Cliente;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalOficinaService;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class PersonalOficinaController {
 
@@ -99,6 +89,7 @@ public class PersonalOficinaController {
 			PersonalOficina pOfiC = this.pOficinaService.findPersonalOficinaByNif(usuario);
 			int pOfiCID = pOfiC.getId();
 			if(pOficinaId != pOfiCID) {
+				log.warn("El oficinista {} está intentado editar el oficinista {}", pOfiCID, pOficinaId);
 				return "redirect:/personalOficina/"+pOfiCID;
 			}
 		}
@@ -190,6 +181,7 @@ public class PersonalOficinaController {
 			PersonalOficina pOfiC = this.pOficinaService.findPersonalOficinaByNif(usuario);
 			int pOfiCID = pOfiC.getId();
 			if(pOficinaId != pOfiCID) {
+				log.warn("El oficinista {} está intentado entrar en el perfil del oficinista {}", pOfiCID, pOficinaId);
 				ModelAndView mav = new ModelAndView("personalOficina/oficinistaDetails");
 				mav.addObject(this.pOficinaService.findPersonalOficinaById(pOfiCID));
 				return mav;

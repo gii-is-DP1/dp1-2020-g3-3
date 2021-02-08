@@ -1,7 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -17,17 +16,16 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
-import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.repository.AzafatoRepository;
-import org.springframework.samples.aerolineasAAAFC.repository.VueloRepository;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AzafatoService {
 
@@ -65,16 +63,19 @@ public class AzafatoService {
 	public void saveAzafato(Azafato azafato) throws  DataIntegrityViolationException, IdiomasNoSuficientesException{ 
 		
 		if(azafato.getIdiomas().size() < 2){
-			throw new IdiomasNoSuficientesException("Parece que no ha introducido 2 o más idiomas para este empleado");
+			log.error("El azafato que se intenta añadir tiene menos de 2 idiomas {}.", azafato.getId());
+			throw new IdiomasNoSuficientesException("Parece que no ha introducido 2 o más idiomas para este empleado.");
 		}else {
 			if(azafato.getId() == null) {
 				azafato.setVersion(1);
-				azafatoRepository.save(azafato);		
+				azafatoRepository.save(azafato);	
+				log.info("Azafato {} creado.", azafato.getId());
 				userService.saveUser(azafato.getUser());
 				authoritiesService.saveAuthorities(azafato.getUser().getUsername(), "azafato");
 			}else {
 				azafato.setVersion(azafato.getVersion()+1);
 				azafatoRepository.save(azafato);	
+				log.info("Azafato {} actualizado.", azafato.getId());
 			}
 		}
 	}
@@ -92,6 +93,7 @@ public class AzafatoService {
 	
 	@Transactional
 	public void eliminarAzafato(int id) throws DataAccessException {
+		log.info("Azafato {} eliminado.", id);
 		azafatoRepository.deleteById(id);
 	}
 	

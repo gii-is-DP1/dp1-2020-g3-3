@@ -3,42 +3,28 @@ package org.springframework.samples.aerolineasAAAFC.web;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.logging.log4j2.Log4J2LoggingSystem;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
-import org.springframework.samples.aerolineasAAAFC.model.Azafato;
-import org.springframework.samples.aerolineasAAAFC.model.Billete;
-import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Rol;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.PersonalControlService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.NifDuplicadoException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -51,8 +37,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import net.bytebuddy.asm.Advice.Local;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class PersonalControlController {
 
@@ -128,6 +115,7 @@ public class PersonalControlController {
 					PersonalControl pControlC = this.pControlService.findPersonalControlByNif(usuario);
 					int pControlCID = pControlC.getId();
 					if(pControlId != pControlCID) {
+						log.warn("El controlador {} está intentado editar el controlador {}", pControlCID, pControlId);
 						return "redirect:/controladores" + pControlCID;
 					}
 				}
@@ -235,6 +223,7 @@ public class PersonalControlController {
 			PersonalControl pControlC = this.pControlService.findPersonalControlByNif(usuario);
 			int pControlCID = pControlC.getId();
 			if(pControlId != pControlCID) {
+				log.warn("El controlador {} está intentado entrar en el perfil del controlador {}", pControlCID, pControlId);
 				ModelAndView mav = new ModelAndView("controladores/controladorDetails");
 				mav.addObject(this.pControlService.findPersonalControlById(pControlCID));
 				return mav;

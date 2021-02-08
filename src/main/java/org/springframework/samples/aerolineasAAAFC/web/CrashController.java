@@ -15,9 +15,7 @@
  */
 package org.springframework.samples.aerolineasAAAFC.web;
 
-import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller

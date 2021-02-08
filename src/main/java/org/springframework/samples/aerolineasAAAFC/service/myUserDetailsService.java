@@ -1,7 +1,6 @@
 package org.springframework.samples.aerolineasAAAFC.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -29,16 +28,15 @@ public class myUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		log.info("username: {}", username);
 		
 		User user = repository.findByUsername(username);
 		
-        log.info("USER: {}", user);
-        
 		if (user == null) {
-            throw new UsernameNotFoundException("No user found with username: "+ username);
+			log.error("El usuario {} no se encuentra en el sistema.", username);
+            throw new UsernameNotFoundException("No user found with username: "+ username+".");
         }	
-        
+		
+		log.info("el usuario {} entró en el sistema.", username);
         boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
@@ -58,7 +56,7 @@ public class myUserDetailsService implements UserDetailsService{
             authorities.add(new SimpleGrantedAuthority(role));
         }
 		
-		log.info("Autoridades del usuario: {}", authorities);
+		log.info("Autoridades del usuario: {}.", authorities);
 		
 		return authorities;
 	}

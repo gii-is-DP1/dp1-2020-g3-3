@@ -27,8 +27,12 @@ import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePr
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class BilleteService {
 
@@ -88,6 +92,7 @@ public class BilleteService {
 		billete.setFechaReserva(today2);
 
 		billeteRepository.save(billete);
+		log.info("billete {} guardado.", billete.getId());
 		// Ocupamos el asiento
 		a.setLibre(false);
 	}
@@ -137,6 +142,7 @@ public class BilleteService {
 						menu.getBillete().setMenus(newSetMenus);
 					} else {
 						if (menu.getBillete().getMenus().size() >= 3) {
+							log.error("El menu {} no se puede añadir porque ya se ha introducido el máximo permitido", menu.getId());
 							throw new TooManyItemsBilleteException("Ya ha introducido el máximo de menús permitido.");
 						} else {
 							menuService.saveMenu(menu);
@@ -175,6 +181,7 @@ public class BilleteService {
 
 		else {
 			if (equipaje.getBillete().getEquipajes().size() >= 3) {
+				log.error("El equipaje {} no se puede añadir porque ya se ha introducido el máximo permitido", equipaje.getId());
 				throw new TooManyItemsBilleteException("Ya ha introducido el máximo de equipajes permitido.");
 			}
 

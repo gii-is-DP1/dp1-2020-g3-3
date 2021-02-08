@@ -18,9 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.aerolineasAAAFC.model.Azafato;
-import org.springframework.samples.aerolineasAAAFC.model.Cliente;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
-import org.springframework.samples.aerolineasAAAFC.model.PersonalOficina;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AzafatoService;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
@@ -40,6 +38,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class AzafatoController {
 
@@ -110,6 +111,7 @@ public class AzafatoController {
 			Azafato azaC = this.azafatoService.findAzafatoByNif(usuario);
 			int azaCID = azaC.getId();
 			if(azafatoId != azaCID) {
+				log.warn("El azafato {} está intentado editar el azafato {}", azaCID, azafatoId);
 				return "redirect:/azafatos/"+azaCID;
 			}
 		}
@@ -215,6 +217,7 @@ public class AzafatoController {
 			Azafato azaC = this.azafatoService.findAzafatoByNif(usuario);
 			int azaCID = azaC.getId();
 			if(azafatoId != azaCID) {
+				log.warn("El azafato {} está intentado entrar en el perfil del azafato {}", azaCID, azafatoId);
 				ModelAndView mav = new ModelAndView("azafatos/azafatoDetails");
 				mav.addObject(this.azafatoService.findAzafatoById(azaCID));
 				return mav;

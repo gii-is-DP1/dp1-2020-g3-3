@@ -14,6 +14,9 @@ import org.springframework.samples.aerolineasAAAFC.repository.AsientoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AsientoService {
 
@@ -159,7 +162,7 @@ public class AsientoService {
 		}
 
 		vuelo.setAsientos(asientos);
-
+		log.info("asientos establecidos para el vuelo {}.", vuelo.getId());
 		return vuelo;
 
 	}
