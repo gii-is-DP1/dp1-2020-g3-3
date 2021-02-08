@@ -71,21 +71,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				
 				
 				//Permisos para acceder a listas generales
-				.antMatchers("/aeropuertos","/aviones","/billetes/datos","/clientes","/clientesfind","/vuelos","vuelos/{vueloId}/clientes","/vuelos/historial")
+				.antMatchers("/aeropuertos","/aviones","/billetes/datos","/clientes","/clientesfind","/vuelos","/vuelos/{vueloId}/clientes","/vuelos/historial")
 				.hasAnyAuthority("admin","personalOficina","azafato","personalControl")
 				
 				.antMatchers("/vuelos/ofertas").hasAnyAuthority("admin","personalOficina")
 				//Permisos para acceder a listas del personal
 				.antMatchers("/controladores","/controladoresfind","/azafatos","/azafatosfind").hasAnyAuthority("admin","personalOficina")
 				//Permisos para acceder la lista de los oficinistas, añadirlos, editarlos
-				.antMatchers("/personalOficina","/personalOficinafind","personalOficina/new","personalOficina/{pOficinaId}/edit").hasAuthority("admin")
+				.antMatchers("/personalOficina","/personalOficinafind","/personalOficina/new","/personalOficina/{pOficinaId}/edit").hasAuthority("admin")
 				//Permisos para acceder al estado de los aviones
 				.antMatchers("/aviones/estadoAviones").hasAnyAuthority("admin","personalOficina","personalControl")
 				//Permisos para acceder a los detalles de diferentes entidades de la empresa
-				.antMatchers("/aeropuertos/{aeropuertoId}","/aviones/{avionId}","vuelos/{vueloId}").hasAnyAuthority("admin","personalOficina","azafato","personalControl")
+				.antMatchers("/aeropuertos/{aeropuertoId}","/aviones/{avionId}","/vuelos/{vueloId}").hasAnyAuthority("admin","personalOficina","azafato","personalControl")
 				
 				//Eliminar personal
-				.antMatchers("azafatos/{azafatoId}/delete","personalOficina/{pOficinaId}/delete","controladores/{pControlId}/delete").hasAuthority("admin")
+				.antMatchers("/azafatos/{azafatoId}/delete","/personalOficina/{pOficinaId}/delete","/controladores/{pControlId}/delete").hasAuthority("admin")
 				
 				
 				//Permisos para crear y editar diferentes entidades de la empresa
@@ -95,7 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.hasAnyAuthority("admin","personalOficina")
 				
 				//Permisos para eliminar diferentes entidades de la empresa
-				.antMatchers("/aeropuertos/{aeropuertoId}/delete","/aviones/{avionId}/delete","clientes/{clienteId}/delete").hasAnyAuthority("admin","personalOficina")
+				.antMatchers("/aeropuertos/{aeropuertoId}/delete","/aviones/{avionId}/delete","/clientes/{clienteId}/delete").hasAnyAuthority("admin","personalOficina")
 				
 				.antMatchers("/users/new").permitAll()		
 				.antMatchers("/login*").permitAll()
