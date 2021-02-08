@@ -42,7 +42,7 @@ public class Aeropuerto extends BaseEntity{
 
 	@Column(name = "telefono")
 	@NotEmpty
-	@Pattern(regexp="^(\\+|\\d)[0-9]{7,16}$")
+	@Pattern(regexp="^(\\+|\\d)[0-9]{7,16}$", message="El número de teléfono asociado a este aeropuerto no es correcto.")
 	private String telefono;
 
 	// Relaciones de tabla:

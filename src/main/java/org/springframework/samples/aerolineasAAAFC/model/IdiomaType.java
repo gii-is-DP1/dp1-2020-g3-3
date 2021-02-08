@@ -20,7 +20,7 @@ import lombok.Setter;
 public class IdiomaType extends BaseEntity{
 
 	@Column(name = "idioma")
-	@Pattern(regexp="^[A-Z]{2}$") //Siguiendo los códigos ISO 639-1
+	@Pattern(regexp="^[A-Z]{2}$", message = "El nombre del idioma no se adapta a los códigos ISO 639-1") //Siguiendo los códigos ISO 639-1
 	private String idioma; 
 	
 	//Indicando que idiomas es de tipo Agregación (puede seguir habiendo idiomas sin X azafatos)

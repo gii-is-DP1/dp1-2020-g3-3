@@ -30,7 +30,7 @@ public class PersonalOficina extends Person{
 	// Atributos
 	
 	@Column(name = "salario")
-	@Min(value = 1000)
+	@Min(value = 1000, message = "El salario debe ser mayor o igual a 1000.0 euros.")
 	private Double Salario;
 
 	// Relaciones de tabla:
