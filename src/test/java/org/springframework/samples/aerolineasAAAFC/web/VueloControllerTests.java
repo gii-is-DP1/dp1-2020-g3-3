@@ -50,6 +50,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers=VueloController.class,
+includeFilters = {@ComponentScan.Filter(value = AzafatoFormatter.class, type = FilterType.ASSIGNABLE_TYPE),
+@ComponentScan.Filter(value = AzafatoFormatter.class, type = FilterType.ASSIGNABLE_TYPE)},
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
 public class VueloControllerTests {
