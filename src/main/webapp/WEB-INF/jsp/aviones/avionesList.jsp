@@ -71,6 +71,8 @@ puede acceder a la ficha de cada avión (por id) para editarlo o borrarlo -->
 					<td></td><td></td><td></td><td></td><td></td><td></td>
 					<td><a href="<spring:url value="/aviones/new" htmlEscape="true"/>"class="btn btn-default">Nuevo Avión</a></td>
 				</tr>
+			</sec:authorize>
+			<sec:authorize 	access="hasAnyAuthority('admin','personalOficina','personalControl')">
 				<tr>
 					<td></td><td></td><td></td><td></td><td></td><td></td>
 					<td><a href="<spring:url value="/aviones/estadoAviones" htmlEscape="true"/>"class="btn btn-default centrado">Ver estado aviones</a></td>

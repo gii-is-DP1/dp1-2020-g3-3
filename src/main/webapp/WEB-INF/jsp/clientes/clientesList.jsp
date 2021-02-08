@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="aerolineasAAAFC" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!-- Pagina en la que se mostraran los clientes y se permitirá eliminarlos -->
 
@@ -29,7 +30,7 @@
 				<th class="centrado">IBAN</th>
 				<th class="centrado">Fecha de Nacimiento</th>
 				<th class="centrado">Email</th>
-				<th class="centrado" width="15%">Opciones</th>
+				<sec:authorize 	access="hasAnyAuthority('admin','personalOficina')"><th class="centrado" width="15%">Opciones</th></sec:authorize>
 
 
 			</tr>
@@ -47,17 +48,19 @@
 							<td><c:out value="${cliente.iban}"/></td>
 							<td><aerolineasAAAFC:localDate date="${cliente.fechaNacimiento}" pattern="dd-MM-yyy"/></td>
 							<td><c:out value="${cliente.email}"/></td>
-							<td>
-								<spring:url value="/clientes/{clienteId}/edit" var="clientesUrl">
-			        				<spring:param name="clienteId" value="${cliente.id}"/>
-			    				</spring:url>
-			    				<a href="${fn:escapeXml(clientesUrl)}" class="btn btn-default">Editar</a>
-			    				
-			    				<spring:url value="/clientes/{clienteId}/delete" var="clientesUrl">
-			        				<spring:param name="clienteId" value="${cliente.id}"/>
-			    				</spring:url>
-			    				<a href="${fn:escapeXml(clientesUrl)}" class="btn btn-default">Eliminar</a>
-							</td>
+							<sec:authorize 	access="hasAnyAuthority('admin','personalOficina')">
+								<td>
+									<spring:url value="/clientes/{clienteId}/edit" var="clientesUrl">
+				        				<spring:param name="clienteId" value="${cliente.id}"/>
+				    				</spring:url>
+				    				<a href="${fn:escapeXml(clientesUrl)}" class="btn btn-default">Editar</a>
+				    				
+				    				<spring:url value="/clientes/{clienteId}/delete" var="clientesUrl">
+				        				<spring:param name="clienteId" value="${cliente.id}"/>
+				    				</spring:url>
+				    				<a href="${fn:escapeXml(clientesUrl)}" class="btn btn-default">Eliminar</a>
+								</td>
+							</sec:authorize>
 						
 						</tr>
 					</c:forEach>
@@ -69,10 +72,12 @@
 					</tr>
 				</c:otherwise>
 			</c:choose>
-			<tr>
-				<td></td><td></td><td></td><td></td><td></td><td></td>
-				<td><a href="<spring:url value="/clientes/new" htmlEscape="true"/>" class="btn btn-default">Nuevo Cliente</a></td>
-			</tr>
+			<sec:authorize 	access="hasAnyAuthority('admin','personalOficina')">
+				<tr>
+					<td></td><td></td><td></td><td></td><td></td><td></td>
+					<td><a href="<spring:url value="/clientes/new" htmlEscape="true"/>" class="btn btn-default">Nuevo Cliente</a></td>
+				</tr>
+			</sec:authorize>
 		</tbody>
 
 	</table>

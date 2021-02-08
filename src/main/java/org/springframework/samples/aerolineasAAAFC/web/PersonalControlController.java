@@ -115,7 +115,22 @@ public class PersonalControlController {
 	 *  UPDATE CONTROLADOR
 	 */
 	@GetMapping(value = "/controladores/{pControlId}/edit")
-	public String initUpdatePersonalControlForm(@PathVariable("pControlId") int pControlId, ModelMap model, Map<String, Object> roles) {
+	public String initUpdatePersonalControlForm(@PathVariable("pControlId") int pControlId, ModelMap model, Map<String, Object> roles, Authentication authentication) {
+		
+		//Evita que otros controladores editen perfiles de otros
+				String usuario = authentication.getName();
+				Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
+				String rolc = "";
+				for(GrantedAuthority auth: autoridad) {
+					rolc = auth.getAuthority();
+				}
+				if(rolc.equals("personalControl")) {
+					PersonalControl pControlC = this.pControlService.findPersonalControlByNif(usuario);
+					int pControlCID = pControlC.getId();
+					if(pControlId != pControlCID) {
+						return "redirect:/controladores" + pControlCID;
+					}
+				}
 		
 		PersonalControl pControl = this.pControlService.findPersonalControlById(pControlId);
 		model.addAttribute(pControl);
@@ -131,12 +146,12 @@ public class PersonalControlController {
 	
 	@PostMapping(value = "/controladores/{pControlId}/edit")
 	public String processUpdatePersonalControlForm(@Valid PersonalControl pControl, BindingResult result, @PathVariable("pControlId") int pControlId,
-			ModelMap model, Map<String, Object> roles, @RequestParam(value = "version", required=false) Integer version) {
+			ModelMap model, Map<String, Object> roles, @RequestParam(value = "version", required=false) Integer version, Authentication authentication) {
 		
 		PersonalControl pControlToUpdate = this.pControlService.findPersonalControlById(pControlId);
 		if(pControlToUpdate.getVersion()!=version) {
 			model.put("message","Modificación de personal de control ya existente. ¡Prueba de nuevo!");
-			return initUpdatePersonalControlForm(pControlId,model, roles);
+			return initUpdatePersonalControlForm(pControlId,model, roles, authentication);
 			}
  
 		
@@ -209,7 +224,7 @@ public class PersonalControlController {
 	@GetMapping("/controladores/{pControlId}")
 	public ModelAndView showControlador(@PathVariable("pControlId") int pControlId, Authentication authentication) {
 		
-		//Evita que otros oficinistas entren a perfiles de otros
+		//Evita que otros controladores entren a perfiles de otros
 		String usuario = authentication.getName();
 		Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
 		String rol = "";

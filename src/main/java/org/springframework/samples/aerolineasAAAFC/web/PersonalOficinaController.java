@@ -87,7 +87,21 @@ public class PersonalOficinaController {
 	// Update sobre un oficinista
 	
 	@GetMapping(value = "/personalOficina/{pOficinaId}/edit")
-	public String initUpdatePersonalOficinaForm(@PathVariable("pOficinaId") int pOficinaId, ModelMap model) {
+	public String initUpdatePersonalOficinaForm(@PathVariable("pOficinaId") int pOficinaId, ModelMap model, Authentication authentication) {
+		//Evita que otros oficinistas editen perfiles de otros
+		String usuario = authentication.getName();
+		Collection<? extends GrantedAuthority> autoridad  = authentication.getAuthorities();
+		String rol = "";
+		for(GrantedAuthority auth: autoridad) {
+			rol = auth.getAuthority();
+		}
+		if(rol.equals("personalOficina")) {
+			PersonalOficina pOfiC = this.pOficinaService.findPersonalOficinaByNif(usuario);
+			int pOfiCID = pOfiC.getId();
+			if(pOficinaId != pOfiCID) {
+				return "redirect:/personalOficina/"+pOfiCID;
+			}
+		}
 		PersonalOficina personalOficina = this.pOficinaService.findPersonalOficinaById(pOficinaId);
 		model.addAttribute(personalOficina);
 		return VIEWS_PERSONALOFICINA_CREATE_OR_UPDATE_FORM;
@@ -96,13 +110,14 @@ public class PersonalOficinaController {
 	
 	@PostMapping(value = "/personalOficina/{pOficinaId}/edit")
 	public String processUpdatePersonalOficinaForm(@Valid PersonalOficina personalOficina, BindingResult result, @PathVariable("pOficinaId") int pOficinaId,
-			ModelMap model, @RequestParam(value = "version", required=false) Integer version) {
+			ModelMap model, @RequestParam(value = "version", required=false) Integer version, Authentication authentication) {
+
 		
 		PersonalOficina personalOficinaToUpdate = this.pOficinaService.findPersonalOficinaById(pOficinaId);
 
 		if(personalOficinaToUpdate.getVersion()!=version) {
 			model.put("message","Modificación de personal de oficina ya existente. ¡Prueba de nuevo!");
-			return initUpdatePersonalOficinaForm(pOficinaId,model);
+			return initUpdatePersonalOficinaForm(pOficinaId,model,authentication);
 			}
 
 		BeanUtils.copyProperties(personalOficina, personalOficinaToUpdate, "id","nif","user.username");
