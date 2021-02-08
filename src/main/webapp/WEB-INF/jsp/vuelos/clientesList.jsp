@@ -7,12 +7,12 @@
 
 
 <aerolineasAAAFC:layout pageName="clientes">
-	<h2>Clientes</h2>
-	<table id="tablaClientes" class="table table-striped">
+	<h2 class="centrado">Clientes del vuelo <c:out value="${vueloId}"/></h2>
+	<table id="tablaClientes" class="table table-striped centrado">
 		<thead>
 			<tr>
-				<th>Numero</th>
-				<th>Nombre y apellidos</th>
+				<th class="centrado">Numero</th>
+				<th class="centrado">Nombre y apellidos</th>
 			</tr>
 		</thead>
 
