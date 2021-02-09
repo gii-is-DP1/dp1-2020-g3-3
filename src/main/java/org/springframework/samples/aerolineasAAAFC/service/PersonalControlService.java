@@ -65,6 +65,7 @@ public class PersonalControlService {
 		}else {
 			pControl.setVersion(pControl.getVersion()+1);
 			pControlRepository.save(pControl);
+			userService.saveUser(pControl.getUser());
 			log.info("Controlador {} actualizado.", pControl.getId());
 		}
 	

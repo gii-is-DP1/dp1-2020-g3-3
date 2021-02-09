@@ -121,7 +121,7 @@ public class ClienteController {
 			}
 		
 		Cliente clienteToUpdate = this.clienteService.findClienteById(clienteId);
-		BeanUtils.copyProperties(cliente, clienteToUpdate, "id","nif","user.username","user.password","fechaNacimiento"); 
+		BeanUtils.copyProperties(cliente, clienteToUpdate, "id","nif","user.username","fechaNacimiento"); 
 		if(result.hasErrors()) {
 			return VIEWS_CLIENTE_CREATE_OR_UPDATE_FORM;
 		}

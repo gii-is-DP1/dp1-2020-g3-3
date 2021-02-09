@@ -19,7 +19,6 @@ import org.springframework.samples.aerolineasAAAFC.model.Azafato;
 import org.springframework.samples.aerolineasAAAFC.model.IdiomaType;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.IdiomasNoSuficientesException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,7 +111,7 @@ public class AzafatoServiceTests {
 	//TEST DE INSERCIÓN
 	@Test
 	@Transactional
-	public void shouldInsertAzafato2Idiomas() throws IbanDuplicadoException, IdiomasNoSuficientesException {
+	public void shouldInsertAzafato2Idiomas() throws IdiomasNoSuficientesException {
 
 		Collection<Azafato> azafatos = this.azafatoService.findAzafatosNoPageable();
 		int found = azafatos.size();
