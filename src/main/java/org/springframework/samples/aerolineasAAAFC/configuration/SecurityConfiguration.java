@@ -18,15 +18,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- * @author japarejo
- */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -55,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/clientes/{clienteId}/compras").hasAnyAuthority("admin","personalOficina")
 				
 				//Compra billetes
-				.antMatchers("/billetes/{vueloId}/new","/billetes/{billeteId}/equipajes/new","/billetes/{billeteId}/menus/new").authenticated()
+				.antMatchers("/billetes/{billeteId}","/billetes/{vueloId}/new","/billetes/{billeteId}/equipajes/new","/billetes/{billeteId}/menus/new").authenticated()
 				
 				//Permisos para acceder a los perfiles
 				.antMatchers("/users/miPerfil").authenticated()
@@ -71,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				
 				
 				//Permisos para acceder a listas generales
-				.antMatchers("/aeropuertos","/aviones","/billetes/datos","/clientes","/clientesfind","/vuelos","/vuelos/{vueloId}/clientes","/vuelos/historial")
+				.antMatchers("/vuelos/{vueloId}/showMenusByVuelo","/aeropuertos","/aviones","/billetes/datos","/clientes","/clientesfind","/vuelos","/vuelos/{vueloId}/clientes","/vuelos/historial")
 				.hasAnyAuthority("admin","personalOficina","azafato","personalControl")
 				
 				.antMatchers("/vuelos/ofertas").hasAnyAuthority("admin","personalOficina")

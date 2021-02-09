@@ -184,7 +184,7 @@ VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-0
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,horas_vuelo,version) 
 VALUES (parsedatetime('07-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('07-02-2021 21:30','dd-MM-yyyy hh:mm'),200,3,4,2,10, 1);
 INSERT INTO vuelos(fecha_salida,fecha_llegada,coste,aeropuerto_origen_id,aeropuerto_destino_id,avion_id,horas_vuelo,version) 
-VALUES (parsedatetime('10-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('10-02-2021 21:30','dd-MM-yyyy hh:mm'),350,2,3,3,10, 1);
+VALUES (parsedatetime('16-02-2021 10:40','dd-MM-yyyy hh:mm'),parsedatetime('16-02-2021 21:30','dd-MM-yyyy hh:mm'),350,2,3,3,10, 1);
 
 
 
@@ -350,7 +350,9 @@ INSERT INTO asientos(nombre,libre,clase,vuelo_id) VALUES
 				   ('C3',true,1,2),
 				   ('C2',true,0,2),
 				   ('D1',true,0,2),
-				   ('D3',true,0,2);
+				   ('D3',true,0,2),
+				   ('D3',true,0,10),
+				   ('D4',true,1,10);
 
 --Billetes
 INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id,version)
