@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.samples.aerolineasAAAFC.deprecated.EquipajeService;
 import org.springframework.samples.aerolineasAAAFC.deprecated.MenuService;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Clase;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.DatosGanancias;
 import org.springframework.samples.aerolineasAAAFC.model.equipaje.Equipaje;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Menu;
 import org.springframework.samples.aerolineasAAAFC.model.menu.Plato;
@@ -26,6 +28,7 @@ import org.springframework.samples.aerolineasAAAFC.repository.BilleteRepository;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.EquipajePriceException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.PlatosNoValidosException;
 import org.springframework.samples.aerolineasAAAFC.service.exceptions.TooManyItemsBilleteException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +49,9 @@ public class BilleteService {
 
 	@Autowired
 	private PlatoBaseService platoBaseService;
+	
+	@Autowired
+	private DatosGananciasService datosGananciasService;
 
 	@Autowired
 	public BilleteService(BilleteRepository billeteRepository) {
@@ -243,5 +249,24 @@ public class BilleteService {
 
 	public Page<Billete> findBilletes(Pageable page) {
 		return billeteRepository.findAll(page);
+	}
+	
+	@Scheduled(fixedDelay=15000)
+	public void consultaGanancias(){
+		LocalDate today = LocalDate.now();
+		today = today.minusDays(7); //Creamos la fecha de justo hace una semana
+		
+		List<Billete> gananciasBilletes = this.datosGananciasService.findGanancias(today);
+		DatosGanancias dG = this.datosGananciasService.findDatosGananciasById(1);
+		
+		if(gananciasBilletes != null){
+			Double gananciasSemanales = gananciasBilletes.stream().mapToDouble(x -> x.getCoste()).sum();
+			dG.setGananciasSemanales(gananciasSemanales);
+			this.datosGananciasService.saveDatosGanancias(dG);
+		}
+		else {
+			dG.setGananciasSemanales(0.0);
+			this.datosGananciasService.saveDatosGanancias(dG);
+		}
 	}
 }

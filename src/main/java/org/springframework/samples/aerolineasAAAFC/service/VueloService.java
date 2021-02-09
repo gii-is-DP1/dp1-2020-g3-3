@@ -49,7 +49,7 @@ public class VueloService {
 	public VueloService(VueloRepository vueloRepository){
 		this.vueloRepository = vueloRepository;
 	}
-
+	
 	@Transactional
 	public void saveVuelo(Vuelo vuelo) throws DataAccessException, HorasImposiblesException, HorasMaximasVueloException, DisponibilidadAvionException{
 
