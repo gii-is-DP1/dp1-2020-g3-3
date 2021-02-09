@@ -115,6 +115,7 @@
     </table> 
     
     <spring:url value="/vuelos" var="url"></spring:url>
+        <a href="/vuelos/${vuelo.getId()}/showMenusByVuelo" class="btn btn-default" style="float:left;">Mostrar platos de menús</a>
     <a href="${fn:escapeXml(url)}" class="btn btn-default" style="float:right;">Volver</a>
     
 </aerolineasAAAFC:layout>

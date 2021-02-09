@@ -83,12 +83,12 @@ public class BilleteController {
 				DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 				String aux = today.format(d);
 				model.put("fechaReserva", aux);
-				
-				//Comprobamos si el vuelo tiene descuento
+
+				// Comprobamos si el vuelo tiene descuento
 				long dif = (Duration.between(hoy, vuelo.getFechaSalida()).toDays());
-				boolean descuento = dif <= 7? true : false;
-				model.put("descuento", descuento); //Que haya descuento implica un cambio en todos los precios del jsp
-				
+				boolean descuento = dif <= 7 ? true : false;
+				model.put("descuento", descuento); // Que haya descuento implica un cambio en todos los precios del jsp
+
 			}
 
 			else {
@@ -114,12 +114,14 @@ public class BilleteController {
 				// coinciden
 				int vueloIdDeAsiento = billete.getAsiento().getVuelo().getId();
 				int vueloIdDeVuelo = vuelo.getId();
-				
-				//Comprobamos que los IDs sean iguales, si se intenta hacer 
-				//POST hacking, se comprará un billete si el asiento formateado existe
-				//es análogo a acceder a la compra de forma legal, solo que cambiando url y value
+
+				// Comprobamos que los IDs sean iguales, si se intenta hacer
+				// POST hacking, se comprará un billete si el asiento formateado existe
+				// es análogo a acceder a la compra de forma legal, solo que cambiando url y
+				// value
 				if (vuelo.getFechaSalida().isAfter(hoy) && (vueloIdDeAsiento == vueloIdDeVuelo)) {
-					//Recordemos que la fecha reserva y coste nos dan igual, ya que se establecen a nivel service
+					// Recordemos que la fecha reserva y coste nos dan igual, ya que se establecen a
+					// nivel service
 					this.billeteService.saveBillete(billete);
 				} else {
 					return "redirect:/exception";
@@ -150,6 +152,36 @@ public class BilleteController {
 				model.put("billete", billete);
 				Cliente cliente = billete.getCliente();
 				model.put("cliente", cliente);
+
+				LocalDateTime aux1 = billete.getAsiento().getVuelo().getFechaSalida();
+				String fechaSalida = aux1.format(DateTimeFormatter.ofPattern("hh:mm dd/MM/yyyy"));
+				model.put("fechaSalida", fechaSalida);
+
+				LocalDateTime aux2 = billete.getAsiento().getVuelo().getFechaLlegada();
+				String fechaLlegada = aux2.format(DateTimeFormatter.ofPattern("hh:mm dd/MM/yyyy"));
+				model.put("fechaLlegada", fechaLlegada);
+
+				LocalDate aux3 = billete.getFechaReserva();
+				String fechaReserva = aux3.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				model.put("fechaReserva", fechaReserva);
+
+				boolean hayEquipajeIni = billete.getEquipajes() != null;
+				boolean hayMenuIni = billete.getMenus() != null;
+
+				if (hayEquipajeIni) {
+					model.put("numEquipajes", billete.getEquipajes().size());
+					model.put("equipajes",billete.getEquipajes());
+				}
+
+				else
+					model.put("numEquipajes", 0);
+
+				if (hayMenuIni) {
+					model.put("numMenus", billete.getMenus().size());
+					model.put("menus",billete.getMenus());
+				} else
+					model.put("numMenus", 0);
+
 			} else {
 				return "redirect:/exception";
 			}

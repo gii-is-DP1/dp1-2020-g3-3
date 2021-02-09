@@ -17,10 +17,9 @@
 				names="${equipajes}"/>
 		</div>
 		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-sm-offset-2 col-sm-10 centrado" style="margin-left:8%;">
 				<button class="btn btn-default" type="submit">Añadir
 					equipaje</button>
-
 			</div>
 		</div>
 	</form:form>

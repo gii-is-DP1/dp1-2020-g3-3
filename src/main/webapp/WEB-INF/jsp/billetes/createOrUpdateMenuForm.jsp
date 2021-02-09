@@ -48,9 +48,8 @@
 
 		</div>
 		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-sm-offset-2 col-sm-10 centrado" style="margin-left:6%;">
 				<button class="btn btn-default" type="submit">Añadir menú</button>
-
 			</div>
 		</div>
 	</form:form>
