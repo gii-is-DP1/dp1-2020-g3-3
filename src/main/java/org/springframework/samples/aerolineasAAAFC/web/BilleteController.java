@@ -15,10 +15,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.aerolineasAAAFC.model.Asiento;
 import org.springframework.samples.aerolineasAAAFC.model.Billete;
 import org.springframework.samples.aerolineasAAAFC.model.Cliente;
+import org.springframework.samples.aerolineasAAAFC.model.DatosGanancias;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
 import org.springframework.samples.aerolineasAAAFC.service.AsientoService;
 import org.springframework.samples.aerolineasAAAFC.service.BilleteService;
 import org.springframework.samples.aerolineasAAAFC.service.ClienteService;
+import org.springframework.samples.aerolineasAAAFC.service.DatosGananciasService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,14 +45,16 @@ public class BilleteController {
 	private final ClienteService clienteService;
 	private final VueloService vueloService;
 	private final AsientoService asientoService;
+	private final DatosGananciasService datosGananciasService;
 
 	@Autowired
 	public BilleteController(BilleteService billeteService, ClienteService clienteService, VueloService vueloService,
-			AsientoService asientoService) {
+			AsientoService asientoService, DatosGananciasService datosGananciasService) {
 		this.billeteService = billeteService;
 		this.clienteService = clienteService;
 		this.vueloService = vueloService;
 		this.asientoService = asientoService;
+		this.datosGananciasService = datosGananciasService;
 	}
 
 	@InitBinder
@@ -198,6 +202,10 @@ public class BilleteController {
 			@RequestParam(name = "apellidos", defaultValue = "") String apellidos,
 			@PageableDefault(value = 20) Pageable paging) {
 
+		//Propuesta a+
+		DatosGanancias dG = this.datosGananciasService.findDatosGananciasById(1); 
+		model.addAttribute("gananciasSemanales", dG.getGananciasSemanales());
+		///////
 		if (apellidos.trim().isEmpty()) {
 			Page<Billete> pages = this.billeteService.findBilletes(paging);
 			model.addAttribute("number", pages.getNumber());

@@ -362,7 +362,7 @@ VALUES (300,2,'2020-04-06',2,1);
 INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id,version)
 VALUES (300,4,'2020-04-06',2,1);
 INSERT INTO billetes(coste,asiento_id,fecha_reserva,cliente_id,version)
-VALUES (300,9,'2020-04-06',2,1);
+VALUES (300,9,'2021-02-8',2,1);
 
 
 --PlatoType
@@ -447,3 +447,6 @@ INSERT INTO equipajes_base(name, dimensiones, precio) VALUES ('Pequeño','36x36x
 
 --Equipaje
 INSERT INTO equipajes(billete_id, peso, equipajes_base_id) VALUES (1,15,1);
+
+--Propuesta A+
+INSERT INTO datos_ganancias(ganancias_semanales) VALUES (0.0);
