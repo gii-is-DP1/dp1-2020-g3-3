@@ -215,7 +215,7 @@ public class AzafatoControllerTests {
 	//TEST DE ELIMINACIÓN
 	@WithMockUser(value = "spring")
 	@Test
-	void testDeleteCliente() throws Exception{
+	void testDeleteAzfato() throws Exception{
 		mockMvc.perform(get("/azafatos/{azafatoId}/delete", TEST_AZAFATO_ID))
 		.andExpect(status().isFound())
 		.andExpect(model().attributeDoesNotExist("azafato"))

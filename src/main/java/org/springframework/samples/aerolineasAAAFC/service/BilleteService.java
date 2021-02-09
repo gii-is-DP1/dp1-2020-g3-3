@@ -244,5 +244,4 @@ public class BilleteService {
 	public Page<Billete> findBilletes(Pageable page) {
 		return billeteRepository.findAll(page);
 	}
-
 }

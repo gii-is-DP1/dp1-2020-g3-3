@@ -3,11 +3,9 @@ package org.springframework.samples.aerolineasAAAFC.web;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.aerolineasAAAFC.model.Aeropuerto;
 import org.springframework.samples.aerolineasAAAFC.model.Avion;
 import org.springframework.samples.aerolineasAAAFC.service.AuthoritiesService;
 import org.springframework.samples.aerolineasAAAFC.service.AvionService;
-import org.springframework.samples.aerolineasAAAFC.service.UserService;
 import org.springframework.samples.aerolineasAAAFC.service.VueloService;
 import org.springframework.samples.aerolineasAAAFC.configuration.SecurityConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,7 +28,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 

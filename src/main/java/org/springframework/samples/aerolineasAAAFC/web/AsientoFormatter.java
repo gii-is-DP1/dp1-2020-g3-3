@@ -47,5 +47,4 @@ public class AsientoFormatter implements Formatter<Asiento> {
 		}
 		throw new ParseException("type not found: " + text, 0);
 	}
-
 } 
