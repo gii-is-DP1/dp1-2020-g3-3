@@ -213,9 +213,6 @@ public class BilleteServiceTests {
 		}
 		menus = this.billeteService.findMenus();
 		
-		System.out.println(Duration.between(m.getBillete().getAsiento().getVuelo().getFechaSalida(), 
-				m.getBillete().getAsiento().getVuelo().getFechaLlegada()).toHours());
-		
 		assertThat(menus.size()).isEqualTo(found + 1);
 		//Probamos que el precio se actualiza y como el billete es de primera clase, el menú es gratis
 		assertThat(costeAntiguo + p3.getPlatoBase().getPrecio() + p2.getPlatoBase().getPrecio() +
@@ -228,6 +225,8 @@ public class BilleteServiceTests {
 	public void shouldNotInsertTooManyMenus() {
 		
 		Billete b = this.billeteService.findBilleteById(3);
+		int found = b.getMenus().size();
+		
 		Plato p1 = new Plato();
 		p1.setPlatoBase(this.platoBaseService.findPlatoBaseByName("Sopa de miso"));
 		
@@ -269,6 +268,10 @@ public class BilleteServiceTests {
 		Assertions.assertThrows(TooManyItemsBilleteException.class, () ->{
 			this.billeteService.saveMenu(m3);});
 	
+		int menusNew = b.getMenus().size();
+		
+		assertThat(menusNew).isEqualTo(found + 3); //+3 dado que deja insertar los 3 primeros
+		
 	}
 	
 	@Test
