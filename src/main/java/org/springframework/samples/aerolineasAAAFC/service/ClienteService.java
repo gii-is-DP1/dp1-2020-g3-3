@@ -52,6 +52,7 @@ public class ClienteService{
 		}else {
 			cliente.setVersion(cliente.getVersion()+1);
 			clienteRepository.save(cliente);
+			userService.saveUser(cliente.getUser());
 			log.info("Cliente {} actualizado.", cliente.getId());
 		}
 		

@@ -75,6 +75,7 @@ public class AzafatoService {
 			}else {
 				azafato.setVersion(azafato.getVersion()+1);
 				azafatoRepository.save(azafato);	
+				userService.saveUser(azafato.getUser());
 				log.info("Azafato {} actualizado.", azafato.getId());
 			}
 		}

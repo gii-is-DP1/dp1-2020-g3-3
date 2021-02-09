@@ -30,8 +30,13 @@ public class UserService{
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
 		
-		String BCrpytPss = bCryptPasswordEncoder.encode(user.getPassword());
-		user.setPassword(BCrpytPss);
+		if(!user.getPassword().matches("^\\$2[ayb]\\$.{56}$")) {
+			log.info("contraseña raw: {}", user.getPassword());
+			String BCrpytPss = bCryptPasswordEncoder.encode(user.getPassword());
+			user.setPassword(BCrpytPss);
+			log.info("contraseña encriptada: {}", user.getPassword());
+		}
+		
 		userRepository.save(user);
 		log.info("Se ha creado un nuevo usuario: {}.", user.getUsername());
 		

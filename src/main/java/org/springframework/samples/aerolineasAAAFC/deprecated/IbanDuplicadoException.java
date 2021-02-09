@@ -1,4 +1,4 @@
-package org.springframework.samples.aerolineasAAAFC.service.exceptions;
+package org.springframework.samples.aerolineasAAAFC.deprecated;
 
 public class IbanDuplicadoException extends Exception{
 	

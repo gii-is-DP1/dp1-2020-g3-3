@@ -54,6 +54,7 @@ public class PersonalOficinaService {
 		}else {
 			pOficina.setVersion(pOficina.getVersion()+1);
 			pOficinaRepository.save(pOficina);
+			userService.saveUser(pOficina.getUser());
 			log.info("Personal de Oficina {} actualizado.", pOficina.getId());
 		}
 	}

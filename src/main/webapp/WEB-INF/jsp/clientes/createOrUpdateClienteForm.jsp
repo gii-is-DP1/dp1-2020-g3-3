@@ -20,7 +20,7 @@
     	<c:if test="${not cliente['new']}"><input type="hidden" name= "nif" value= "${cliente.nif}"/></c:if>
     	<c:if test="${not cliente['new']}"><input type="hidden" name= "fechaNacimiento" value= "${cliente.fechaNacimiento}"/></c:if>
     	<c:if test="${not cliente['new']}"><input type="hidden" name= "user.username" value= "${cliente.user.username}"/></c:if>
-    	<c:if test="${not cliente['new']}"><input type="hidden" name= "user.password" value= "${cliente.user.password}"/></c:if>	
+    	<c:if test="${not cliente['new']}"><input type="hidden" name= "user.password" value= "${cliente.user.password}"/></c:if>
 		<div class="form-group has-feedback">
 		
 			<aerolineasAAAFC:inputField label="Nombre" name="nombre" />

@@ -17,7 +17,6 @@ import org.springframework.samples.aerolineasAAAFC.model.PersonalControl;
 import org.springframework.samples.aerolineasAAAFC.model.Rol;
 import org.springframework.samples.aerolineasAAAFC.model.User;
 import org.springframework.samples.aerolineasAAAFC.model.Vuelo;
-import org.springframework.samples.aerolineasAAAFC.service.exceptions.IbanDuplicadoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,7 +92,7 @@ public class PersonalControlServiceTests {
 		"2021-01-07, 0",
 		"2021-01-08, 0",
 		"2021-02-06, 1",
-		"2021-01-10, 0"
+		"2021-02-14, 1"
 	})
 	void getVuelosSemana(String fecha, int total) {
 		LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ISO_DATE);
@@ -135,7 +134,7 @@ public class PersonalControlServiceTests {
 	
 	@Test
 	@Transactional
-	void shouldNotInsertPersonalIbanDupl() throws IbanDuplicadoException {
+	void shouldNotInsertPersonalIbanDupl(){
 		
 		PersonalControl pc = new PersonalControl();
 		pc.setNombre("Juan");
