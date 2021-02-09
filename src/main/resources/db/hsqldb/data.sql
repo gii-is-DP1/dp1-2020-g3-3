@@ -10,6 +10,76 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'01446551N','cliente');
 INSERT INTO users(username,password) VALUES ('29565800A','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
 INSERT INTO authorities(id,username,authority) VALUES (3,'29565800A','cliente');
 
+INSERT INTO users(username,password) VALUES ('53095948B','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (20,'53095948B','cliente');
+
+INSERT INTO users(username,password) VALUES ('51281472M','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (21,'51281472M','cliente');
+
+INSERT INTO users(username,password) VALUES ('37417495Z','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (22,'37417495Z','cliente');
+
+INSERT INTO users(username,password) VALUES ('78231883M','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (23,'78231883M','cliente');
+
+INSERT INTO users(username,password) VALUES ('86955418P','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (24,'86955418P','cliente');
+
+INSERT INTO users(username,password) VALUES ('44985950C','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (25,'44985950C','cliente');
+
+INSERT INTO users(username,password) VALUES ('01121476L','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (26,'01121476L','cliente');
+
+INSERT INTO users(username,password) VALUES ('66189988J','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (27,'66189988J','cliente');
+
+INSERT INTO users(username,password) VALUES ('01591869Q','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (28,'01591869Q','cliente');
+
+INSERT INTO users(username,password) VALUES ('45925623M','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (29,'45925623M','cliente');
+
+INSERT INTO users(username,password) VALUES ('26012828N','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (30,'26012828N','cliente');
+
+INSERT INTO users(username,password) VALUES ('92707785Y','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (31,'92707785Y','cliente');
+
+INSERT INTO users(username,password) VALUES ('30652787C','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (32,'30652787C','cliente');
+
+INSERT INTO users(username,password) VALUES ('05331813E','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (33,'05331813E','cliente');
+
+INSERT INTO users(username,password) VALUES ('68206309Q','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (34,'68206309Q','cliente');
+
+INSERT INTO users(username,password) VALUES ('64480827M','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (35,'64480827M','cliente');
+
+INSERT INTO users(username,password) VALUES ('46365134D','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (36,'46365134D','cliente');
+
+INSERT INTO users(username,password) VALUES ('74450342D','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (37,'74450342D','cliente');
+
+INSERT INTO users(username,password) VALUES ('26981596C','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (38,'26981596C','cliente');
+
+INSERT INTO users(username,password) VALUES ('33947403R','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (39,'33947403R','cliente');
+
+INSERT INTO users(username,password) VALUES ('79402056F','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (40,'79402056F','cliente');
+
+INSERT INTO users(username,password) VALUES ('41362916S','$2a$10$wj45hFhSMHd1pOClxqz7uu6FCpo17QTjbKkZNt50qqzBqNv8eKpLe');--Fly_High14&
+INSERT INTO authorities(id,username,authority) VALUES (41,'41362916S','cliente');
+
+INSERT INTO users(username,password) VALUES ('25337905R','$2a$10$TgksF0KdfWGU7OQuZDOfoedqOmH4xGGOiHiJyv8mmgNYs1c/H0ju2'); --Fly_Low14&
+INSERT INTO authorities(id,username,authority) VALUES (42,'25337905R','cliente');
+
+
 --Personal Control
 INSERT INTO users(username,password) VALUES ('17579447H','$2a$10$4MjJVeCg8uvaj07m4Gkcx.sz3WHdEK0pxKqQ1RoBqxVRcBTENwkv6');--P9012%adsa
 INSERT INTO authorities(id,username,authority) VALUES (4,'17579447H','personalControl');
@@ -183,9 +253,56 @@ INSERT INTO oficina_vuelo(personal_oficina_id,vuelos_id) VALUES (1, 1), (1, 2), 
 
 --Clientes
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username, version)
-VALUES ('Maria', 'Soto Ramirez', '01446551N', 'C/Enladrillada,2 1ºB Sevilla', 'ES 7771056418401234567893', '1995-03-08','marisotoram@hotmail.com','01446551N',1);
+VALUES ('Maria', 'Soto Ramirez', '01446551N', 'Calle Enladrillada 2 1ºB, Sevilla', 'ES 7771056418401234567893', '1995-03-08','marisotoram@hotmail.com','01446551N',1);--1
 INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
-VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera ,15 3ºB Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','29565800A',1); 
+VALUES ('Dolores', 'Ramos Ceballos', '29565800A', 'Calle Parera 15 3ºB, Sevilla', 'ES 4422000418403334567812', '1989-12-03','dolrace89@gmail.com','29565800A',1);--2
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Antonio', 'Escalera Dominguez', '53095948B', 'Calle Granada 20, Sevilla', 'ES 5300811873077967918686', '1999-01-09','antescdom@gmail.com','53095948B',1);--3
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Angel', 'Viñuelas Gonzalez', '51281472M', 'Calle Jaen 29, Sevilla', 'ES 1120959343764187759634', '2000-02-09','angvingon@gmail.com','51281472M',1);--4 
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Felipe', 'Torregrosa Perales', '37417495Z', 'Calle Huelva 19, Sevilla', 'ES 4520952456952581127691', '1987-10-03','feltorper@gmail.com','37417495Z',1);--5
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Pepe', 'Peña Perez', '78231883M', 'Calle Francia 2, Sevilla', 'ES 7830046679802112497376', '1989-12-03','pepepe123@gmail.com','78231883M',1);--6
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Maria', 'Marquez Marruecos', '86955418P', 'Calle Tanger 38, Sevilla', 'ES 2430041341185666737512', '1979-01-23','marmarmar@gmail.com','86955418P',1);--7 
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Francisco', 'Rodriguez Pino', '44985950C', 'Calle Alegria 1, Sevilla', 'ES 3701829215278566571915', '1975-06-02','frarodpin@gmail.com','44985950C',1);--8
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Fernando', 'Fernan Gomez', '01121476L', 'Calle Sombra s/n, Sevilla', 'ES 4304876892611973891661', '1998-11-14','ferfergom@gmail.com','01121476L',1);--9
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Lola', 'Lopez Lozano', '66189988J', 'Calle Parra 1, Sevilla', 'ES 2704873357673776525121', '1979-12-03','lololo79@gmail.com','66189988J',1);--10
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Raquel', 'Ramos Cortes', '01591869Q', 'Calle Tiempo 2, Sevilla', 'ES 4030042236339696243817', '1978-07-03','raqramcor@gmail.com','01591869Q',1);--11
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Mireia', 'Salgado Sanchez', '45925623M', 'Calle Jaen 3, Sevilla', 'ES 9820381594017531661829', '1969-10-12','mirsalsan@gmail.com','45925623M',1);--12
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Florentino', 'Soriano Romero', '26012828N', 'Calle Lluvia 36, Sevilla', 'ES 0931908959697449267647', '1988-11-01','flosorrom@gmail.com','26012828N',1);--13
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Tomas', 'Perez Corchos', '92707785Y', 'Calle Azufre 12, Sevilla', 'ES 8204876649448562157231', '2000-04-04','tompercor@gmail.com','92707785Y',1);--14
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Juan Alberto', 'Garcia', '30652787C', 'Calle Illojuan 1, Malaga', 'ES 2930045999116843272975', '1994-06-22','lmdshow@gmail.com','30652787C',1);--15
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Sergio', 'Garcia', '05331813E', 'Calle Knekrin 123, Madrid', 'ES 5420801664204774138228', '1984-05-23','knekro@gmail.com','05331813E',1);--16
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Ibai', 'Llanos Garatea', '68206309Q', 'Calle G2calle 1, Sevilla', 'ES 5220958773172921145178', '1995-03-26','ibai@gmail.com','68206309Q',1);--17
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Guillermo', 'Diaz Ibañez', '64480827M', 'Calle Trotu 12, Andorra', 'ES 8020801134232811778938', '1993-05-09','willyrex@gmail.com','64480827M',1);--18
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Ruben', 'Doblas Gundersen', '46365134D', 'Calle Impuestos s/n, Andorra', 'ES 2931901366575522628647', '1990-02-13','rubius@gmail.com','46365134D',1);--19
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Brie', 'Larson', '74450342D', 'Calle Fama 1, California', 'ES 4700757226561892965624', '1989-10-01','captainmarvel@gmail.com','74450342D',1);--20
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Scarlet', 'Johansson Sloan', '26981596C', 'Calle Fama 2, Nueva York', 'ES 1401282486533982276954', '1984-11-22','blackwidow@gmail.com','26981596C',1);--21
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Christopher', 'Evans', '33947403R', 'Calle Fama 3, Boston', 'ES 5400811635313515195414', '1981-06-13','captainamerica9@gmail.com','33947403R',1);--22
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Robert', 'Downey Jr.', '79402056F', 'Calle Fama 4, Nueva York', 'ES 1420807998407523744884', '1965-04-04','ironman@gmail.com','79402056F',1);--23
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Samuel', 'Leroy Jackson', '41362916S', 'Calle Fama 5, Washington', 'ES 8820954359276741171875', '1948-12-21','sonofab@gmail.com','41362916S',1);--24
+INSERT INTO clientes(nombre,apellidos,nif,direccion_facturacion,iban,fecha_nacimiento,email,username,version)
+VALUES ('Eric', 'Marlon Bishop', '25337905R', 'Calle Fama 6, Texas', 'ES 7520959738716468662258', '1967-12-13','jamiefoxx@gmail.com','25337905R',1);--25
+
 
 --Idiomas
 INSERT INTO idioma_types(idioma) VALUES ('ES');
