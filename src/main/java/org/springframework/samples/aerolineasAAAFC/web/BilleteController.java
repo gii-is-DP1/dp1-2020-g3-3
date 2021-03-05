@@ -45,16 +45,16 @@ public class BilleteController {
 	private final ClienteService clienteService;
 	private final VueloService vueloService;
 	private final AsientoService asientoService;
-	private final DatosGananciasService datosGananciasService;
+	//private final DatosGananciasService datosGananciasService;
 
 	@Autowired
 	public BilleteController(BilleteService billeteService, ClienteService clienteService, VueloService vueloService,
-			AsientoService asientoService, DatosGananciasService datosGananciasService) {
+			AsientoService asientoService/*, DatosGananciasService datosGananciasService*/) {
 		this.billeteService = billeteService;
 		this.clienteService = clienteService;
 		this.vueloService = vueloService;
 		this.asientoService = asientoService;
-		this.datosGananciasService = datosGananciasService;
+		//this.datosGananciasService = datosGananciasService;
 	}
 
 	@InitBinder
@@ -203,8 +203,8 @@ public class BilleteController {
 			@PageableDefault(value = 20) Pageable paging) {
 
 		//Propuesta a+
-		DatosGanancias dG = this.datosGananciasService.findDatosGananciasById(1); 
-		model.addAttribute("gananciasSemanales", dG.getGananciasSemanales());
+		//DatosGanancias dG = this.datosGananciasService.findDatosGananciasById(1); 
+		//model.addAttribute("gananciasSemanales", dG.getGananciasSemanales());
 		///////
 		if (apellidos.trim().isEmpty()) {
 			Page<Billete> pages = this.billeteService.findBilletes(paging);
