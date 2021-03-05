@@ -251,7 +251,7 @@ public class BilleteService {
 		return billeteRepository.findAll(page);
 	}
 	
-	@Scheduled(cron="0 0 * * 0")
+	@Scheduled(cron="0 0 0 15 * ?")
 	public void consultaGanancias(){
 		LocalDate today = LocalDate.now();
 		today = today.minusDays(7); //Creamos la fecha de justo hace una semana

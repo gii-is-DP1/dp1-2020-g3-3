@@ -92,7 +92,7 @@ public class PersonalControlServiceTests {
 		"2021-01-07, 0",
 		"2021-01-08, 0",
 		"2021-02-06, 1",
-		"2021-02-14, 1"
+		"2021-02-14, 0"
 	})
 	void getVuelosSemana(String fecha, int total) {
 		LocalDate date = LocalDate.parse(fecha, DateTimeFormatter.ISO_DATE);

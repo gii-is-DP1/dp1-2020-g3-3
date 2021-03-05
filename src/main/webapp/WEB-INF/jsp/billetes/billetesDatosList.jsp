@@ -79,6 +79,6 @@
 		</ul>
 	</div>
 	
-				<h2 class="centrado">Ganancias semanales: 	<fmt:formatNumber value="${gananciasSemanales}" maxFractionDigits="2"/> EUR</h2>
+				<!--  <h2 class="centrado">Ganancias semanales: 	<fmt:formatNumber value="${gananciasSemanales}" maxFractionDigits="2"/> EUR</h2>-->
         
 </aerolineasAAAFC:layout>
